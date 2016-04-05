@@ -2,19 +2,29 @@
 
 class ad_skip_hire_locations
 {
+    # protected variables
     protected $cpt_prefix;
     protected $menu_parent;
 
+    /**
+     * build the requirements for the locations class
+     */
     public function __construct()
     {
+        # set variables
         $this->cpt_prefix = 'ash_locations'; 
         $this->menu_parent = 'ad_skip_hire'; 
 
-        # register post type
-        add_action('init', [$this, 'location_post_type']);
-        add_filter( 'cmb2_meta_boxes', [$this, 'register_meta_fields']);
+        # hook into wordpress using class
+        add_action( 'init', [$this, 'location_post_type'] );
+        add_filter( 'cmb2_meta_boxes', [$this, 'register_meta_fields'] );
+        add_filter( 'manage_ash_locations_posts_columns', [$this, 'modify_post_columns'] );
+        add_action( 'manage_ash_locations_posts_custom_column', [$this, 'modify_table_content'], 10, 2);
     }
 
+    /**
+     * registers the post type location
+     */
     public function location_post_type() 
     {
         $labels = [
@@ -50,11 +60,14 @@ class ad_skip_hire_locations
         register_post_type($this->cpt_prefix, $args);
     }
 
+    /**
+     * registers the meta fields using the CMB2 library. 
+     */
     public function register_meta_fields() 
     {
         $location_fields = new_cmb2_box([
             'id'            => $this->cpt_prefix . '_metabox',
-            'title'         => __( 'Test Metabox', 'cmb2' ),
+            'title'         => __( 'Location Information', 'ash' ),
             'object_types'  => [$this->cpt_prefix],
             'context'       => 'normal',
             'priority'      => 'high',
@@ -62,11 +75,58 @@ class ad_skip_hire_locations
         ]);
 
         $location_fields->add_field([
-            'name'       => __( 'Location Name', 'cmb2' ),
-            'desc'       => '',
-            'id'         => $this->cpt_prefix . '_name',
-            'type'       => 'text',
-            // 'show_on_cb' => 'ash_hide_if_no_cats', // function should return a bool value
+            'name'          => __('Location', 'ash'),
+            'desc'          => 'Drag the marker to set the exact location',
+            'id'            => $this->cpt_prefix . '_location',
+            'type'          => 'pw_map',
+            'split_values'  => true, // Save latitude and longitude as two separate fields
         ]);
+
+        $location_fields->add_field([
+            'name'          => __('Within Radius', 'ash'),
+            'desc'          => 'Enter a distance you will deliver from the defined location',
+            'id'            => $this->cpt_prefix . '_radius',
+            'type'          => 'text',
+        ]);
+    }
+
+    /**
+     * modifies the column headers to allow the adding of post_meta
+     * @param  array $defaults
+     * @return array $defaults
+     */
+    public function modify_post_columns( $defaults )
+    {
+        # remove date columns
+        unset($defaults['date']);
+
+        # add in new column arrays
+        $defaults['radius'] = "Radius";
+        $defaults['latitude'] = "Latitude";
+        $defaults['longitude'] = "Longitude";
+
+        # return
+        return $defaults;
+    }
+
+    /**
+     * adds the custom meta data into the admin tables, allows for easy over view of information.
+     * @param  string $column_name
+     * @param  int $post_id
+     * @return mixed
+     */
+    public function modify_table_content( $column_name, $post_id )
+    {
+        if($column_name == 'latitude') {
+            echo get_post_meta( $post_id, $this->cpt_prefix . '_location_latitude', true );
+        }
+
+        if($column_name == 'longitude') {
+            echo get_post_meta( $post_id, $this->cpt_prefix . '_location_longitude', true );
+        }
+
+        if($column_name == 'radius') {
+            echo get_post_meta( $post_id, $this->cpt_prefix . '_radius', true ) . ' km';
+        }
     }
 }
