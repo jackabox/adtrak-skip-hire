@@ -20,7 +20,7 @@ if ( ! defined( 'WPINC' ) ) {
 require plugin_dir_path(__FILE__) . 'includes/classes/SkipHire.php';
 
 function run_skip_hire() {
-    $plugin = new SkipHire();
+    $plugin = new ad_skip_hire();
 }
 
 run_skip_hire();
