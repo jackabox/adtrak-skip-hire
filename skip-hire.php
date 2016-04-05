@@ -22,6 +22,10 @@ if ( file_exists( plugin_dir_path(__FILE__) . 'vendor/cmb2/init.php' ) ) {
     require_once plugin_dir_path(__FILE__) . 'vendor/cmb2/init.php';
 }
 
+if(!class_exists('PW_CMB2_Field_Google_Maps') && file_exists( plugin_dir_path(__FILE__) . 'vendor/cmb_field_map/cmb-field-map.php' )) {
+    require_once plugin_dir_path(__FILE__) . 'vendor/cmb_field_map/cmb-field-map.php';
+}
+
 function update_cmb2_meta_box_url( $url ) {
     $url = plugins_url('vendor/cmb2', __FILE__);
     return $url;
