@@ -1,17 +1,26 @@
 <?php 
 
-class ad_skip_hire_coupons 
+class ad_skip_hire_coupons
 {
+    # protected variables
     protected $cpt_prefix;
     protected $menu_parent;
 
+    /**
+     * build the requriements for the coupons class
+     */
     public function __construct()
     {
+        # set variables
         $this->cpt_prefix = 'ash_coupons'; 
         $this->menu_parent = 'ad_skip_hire'; 
 
-        # register post type
+        # hook into wordpress using actions
         add_action('init', [$this, 'coupon_post_type']);
+        add_filter( 'cmb2_meta_boxes', [$this, 'register_meta_fields'] );
+        add_filter( 'manage_ash_coupons_posts_columns', [$this, 'modify_post_columns'] );
+        add_action( 'manage_ash_coupons_posts_custom_column', [$this, 'modify_table_content'], 10, 2);
+
     }
 
     public function coupon_post_type() 
@@ -47,5 +56,42 @@ class ad_skip_hire_coupons
         ];
 
         register_post_type($this->cpt_prefix, $args);
+    }
+    
+    /**
+     * registers the meta fields using the CMB2 library. 
+     */
+    public function register_meta_fields() 
+    {
+        $order_fields = new_cmb2_box([
+            'id'            => $this->cpt_prefix . '_metabox',
+            'title'         => __( 'Order Information', 'ash' ),
+            'object_types'  => [$this->cpt_prefix],
+            'context'       => 'normal',
+            'priority'      => 'high',
+            'show_names'    => true, // Show field names on the left
+        ]);
+    }
+
+    /**
+     * modifies the column headers to allow the adding of post_meta
+     * @param  array $defaults
+     * @return array $defaults
+     */
+    public function modify_post_columns( $defaults )
+    {
+        # return
+        return $defaults;
+    }
+
+    /**
+     * adds the custom meta data into the admin tables, allows for easy over view of information.
+     * @param  string $column_name
+     * @param  int $post_id
+     * @return mixed
+     */
+    public function modify_table_content( $column_name, $post_id )
+    {
+
     }
 }

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @wordpress-plugin
  * Plugin Name:       Skip Hire
@@ -11,7 +10,6 @@
  * License:           MIT
  */
 
-
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
     die;
@@ -22,6 +20,7 @@ if ( file_exists( plugin_dir_path(__FILE__) . 'vendor/cmb2/init.php' ) ) {
     require_once plugin_dir_path(__FILE__) . 'vendor/cmb2/init.php';
 }
 
+# include google maps field, if not already declared
 if(!class_exists('PW_CMB2_Field_Google_Maps') && file_exists( plugin_dir_path(__FILE__) . 'vendor/cmb_field_map/cmb-field-map.php' )) {
     require_once plugin_dir_path(__FILE__) . 'vendor/cmb_field_map/cmb-field-map.php';
 }
