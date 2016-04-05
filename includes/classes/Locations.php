@@ -12,6 +12,7 @@ class ad_skip_hire_locations
 
         # register post type
         add_action('init', [$this, 'location_post_type']);
+        add_filter( 'cmb2_meta_boxes', [$this, 'register_meta_fields']);
     }
 
     public function location_post_type() 
@@ -47,5 +48,25 @@ class ad_skip_hire_locations
         ];
 
         register_post_type($this->cpt_prefix, $args);
+    }
+
+    public function register_meta_fields() 
+    {
+        $location_fields = new_cmb2_box([
+            'id'            => $this->cpt_prefix . '_metabox',
+            'title'         => __( 'Test Metabox', 'cmb2' ),
+            'object_types'  => [$this->cpt_prefix],
+            'context'       => 'normal',
+            'priority'      => 'high',
+            'show_names'    => true, // Show field names on the left
+        ]);
+
+        $location_fields->add_field([
+            'name'       => __( 'Location Name', 'cmb2' ),
+            'desc'       => '',
+            'id'         => $this->cpt_prefix . '_name',
+            'type'       => 'text',
+            // 'show_on_cb' => 'ash_hide_if_no_cats', // function should return a bool value
+        ]);
     }
 }

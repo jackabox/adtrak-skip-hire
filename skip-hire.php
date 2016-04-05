@@ -17,10 +17,19 @@ if ( ! defined( 'WPINC' ) ) {
     die;
 }
 
-require plugin_dir_path(__FILE__) . 'includes/classes/SkipHire.php';
-
-function run_skip_hire() {
-    $plugin = new ad_skip_hire();
+# require cmb2  
+if ( file_exists( plugin_dir_path(__FILE__) . 'vendor/cmb2/init.php' ) ) {
+    require_once plugin_dir_path(__FILE__) . 'vendor/cmb2/init.php';
 }
 
-run_skip_hire();
+function update_cmb2_meta_box_url( $url ) {
+    $url = plugins_url('vendor/cmb2', __FILE__);
+    return $url;
+}
+add_filter( 'cmb2_meta_box_url', 'update_cmb2_meta_box_url' );
+
+if ( file_exists( plugin_dir_path(__FILE__) . 'includes/classes/SkipHire.php' ) ) {
+    require plugin_dir_path(__FILE__) . 'includes/classes/SkipHire.php';
+}
+
+$plugin = new ad_skip_hire();
