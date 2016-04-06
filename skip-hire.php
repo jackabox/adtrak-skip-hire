@@ -45,13 +45,43 @@ register_activation_hook( __FILE__ , 'ash_activate_plugin' );
 
 function ash_activate_plugin()
 {
-    # generate required pages
     $booking_form = [
-        'post_title'    => 'Booking Form',
+        'post_title'    => 'Booking',
         'post_content'  => '[ash_booking_form]',
         'post_status'   => 'publish',
         'post_type'     => 'page'
     ];
 
-    wp_insert_post( $booking_form );
+    $page_exists = get_page_by_title( $booking_form['post_title'] );
+
+    if($page_exists == null) {
+        $post_id = wp_insert_post( $booking_form );
+
+        $confirmation = [
+            'post_title'    => 'Confirmation',
+            'post_content'  => '[ash_booking_confirmation]',
+            'post_status'   => 'publish',
+            'post_type'     => 'page',
+            'post_parent'   => $post_id,
+        ];
+        wp_insert_post( $confirmation );
+
+        $response = [
+            'post_title'    => 'Success',
+            'post_content'  => '[ash_booking_success]',
+            'post_status'   => 'publish',
+            'post_type'     => 'page',
+            'post_parent'   => $post_id,
+        ];
+        wp_insert_post( $response );
+
+        $failure = [
+            'post_title'    => 'Error',
+            'post_content'  => '[ash_booking_error]',
+            'post_status'   => 'publish',
+            'post_type'     => 'page',
+            'post_parent'   => $post_id,
+        ];
+        wp_insert_post( $failure );
+    }
 }
