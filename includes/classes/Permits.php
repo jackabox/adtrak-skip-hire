@@ -66,7 +66,7 @@ class ad_skip_hire_permits
     {
         $permit_fields = new_cmb2_box([
             'id'            => $this->cpt_prefix . '_fields',
-            'title'         => __( 'Order Information', 'ash' ),
+            'title'         => __( 'Permit Details', 'ash' ),
             'object_types'  => [ $this->cpt_prefix ],
             'context'       => 'normal',
             'priority'      => 'high',
