@@ -80,6 +80,8 @@ class ad_skip_hire_permits
             'after_field'   => ' days',
             'attributes'    => [
                 'placeholder' => __( '5', 'ash' ),
+                'type'        => 'number',
+                'pattern'     => '\d*',
             ],
         ]);
 
@@ -90,12 +92,13 @@ class ad_skip_hire_permits
             'after_field'   => ' days',
             'attributes'    => [
                 'placeholder' => __( '5', 'ash' ),
+                'type'        => 'number',
+                'pattern'     => '\d*',
             ],
         ]);
 
         $permit_fields->add_field([
             'name'          => __( 'Price', 'ash' ),
-            // 'desc'          => __( 'How much does the permit cost?', 'ash' ),
             'id'            => $this->cpt_prefix . '_price',
             'type'          => 'text_money',
             'before_field'  => '£'

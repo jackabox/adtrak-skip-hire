@@ -2,9 +2,13 @@
 
 class ad_skip_hire_skips
 {
+    # protected variables
     protected $cpt_prefix;
     protected $menu_parent;
 
+    /**
+     * build the requirements for the skip class
+     */
     public function __construct()
     {
         $this->cpt_prefix = 'ash_skips'; 
@@ -17,6 +21,9 @@ class ad_skip_hire_skips
         add_action( 'manage_' . $this->cpt_prefix . '_posts_custom_column', [$this, 'modify_table_content'], 10, 2);
     }
 
+    /**
+     * register the skip post type
+     */
     public function skip_post_type() 
     {
         $labels = [
@@ -72,8 +79,9 @@ class ad_skip_hire_skips
             'type'          => 'text_small',
             'after_field'   => ' m',
             'attributes'    => [
-                    'type'      => 'number',
-                    'pattern'   => '\d*',
+                'placeholder' => __( '5', 'ash' ),
+                'type'        => 'number',
+                'pattern'     => '\d*',
             ],
         ]);
 
@@ -83,8 +91,9 @@ class ad_skip_hire_skips
             'type'          => 'text_small',
             'after_field'   => ' m',
             'attributes'    => [
-                    'type'      => 'number',
-                    'pattern'   => '\d*',
+                'placeholder' => __( '5', 'ash' ),
+                'type'        => 'number',
+                'pattern'     => '\d*',
             ],
         ]);
 
@@ -94,8 +103,9 @@ class ad_skip_hire_skips
             'type'          => 'text_small',
             'after_field'   => ' m',
             'attributes'    => [
-                    'type'      => 'number',
-                    'pattern'   => '\d*',
+                'placeholder' => __( '5', 'ash' ),
+                'type'        => 'number',
+                'pattern'     => '\d*',
             ],
         ]);
 
@@ -112,8 +122,9 @@ class ad_skip_hire_skips
             'type'          => 'text_small',
             'after_field'   => ' bags',
             'attributes'    => [
-                    'type'      => 'number',
-                    'pattern'   => '\d*',
+                'placeholder' => __( '5', 'ash' ),
+                'type'        => 'number',
+                'pattern'     => '\d*',
             ],
         ]);
 
