@@ -55,9 +55,11 @@ class ad_skip_hire
 
     public function load_javascript()
     {
+        wp_register_script( 'jquery', plugins_url( '../../js/jquery-2.2.3.min.js', __FILE__ ), '', '2.2.3');
         wp_register_script( 'google_maps_api', 'https://maps.googleapis.com/maps/api/js', '', '', true );
-        wp_register_script( 'ash_custom', plugins_url( 'js/ash-custom-min.js', __FILE__ ), ['jquery'], '', true);
+        wp_register_script( 'ash_custom', plugins_url( '../../js/custom.min.js', __FILE__ ), ['jquery'], '1.0.0', true);
         
+        wp_enqueue_script('jquery');
         wp_enqueue_script('google_maps_api');
         wp_enqueue_script('ash_custom');
     }
@@ -110,7 +112,7 @@ class ad_skip_hire
      */
     public function shortcode_postcode( )
     { ?>
-        <form action="<?php echo home_url( '/booking-form/' ); ?>" method="POST" id="ash_postcode_form">
+        <form action="<?php echo get_permalink( get_page_by_title( 'Booking' ) ); ?>" method="POST" id="ash_postcode_form">
             <input type="hidden" id="ash_lat" name="ash_lat">
             <input type="hidden" id="ash_lng" name="ash_lng">
 
@@ -128,7 +130,34 @@ class ad_skip_hire
 
     public function shortcode_booking()
     {
-        if(isset($_REQUEST['ash_postcode'])) 
-            echo $_REQUEST['ash_postcode'];
+        $postcode = (isset($_REQUEST['ash_postcode'])) ? $_REQUEST['ash_postcode'] : NULL; 
+        $lat = (isset($_REQUEST['ash_lat'])) ? $_REQUEST['ash_lat'] : NULL; 
+        $lng = (isset($_REQUEST['ash_lng'])) ? $_REQUEST['ash_lng'] : NULL; 
+    ?>
+        <div id="ash_booking" class="ash-booking-holder">
+            <?php if($lat == null): 
+
+                echo "<p>Sorry, we couldn't find your location. Please try again using the form below.</p>";
+                echo do_shortcode('[ash_form_postcode]');
+
+            else: ?>
+                <h3>Skip Hire Prices</h3>
+                <p>We found the following skips available for delivery in the area of <?php echo strtoupper($postcode); ?>.</p>
+
+                <form action="<?php echo get_permalink( get_page_by_title( 'Confirmation' ) ) ?>">
+
+                    <!-- all of the skips here -->
+
+                    <!-- user details -->
+
+                    <!-- delivery details -->
+
+                    <!-- permit, waste, notes -->
+
+                    <!-- proceed to payment -->
+                </form>
+            <?php endif; ?>
+        </div>
+<?php
     }
 }
