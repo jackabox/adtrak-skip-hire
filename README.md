@@ -3,7 +3,7 @@
 Contributers: jackabox  
 Tags: skip, booking, crm  
 Tested up to: 4.4  
-Stable Tag: 1.0.0  
+Stable Tag:  ?
 Requires at least: 4.0  
 
 A plugin used to set radius for skip hire, process booking, and take payments.
@@ -14,14 +14,26 @@ This plugin will make it easy for a skip hire form to be added to a site. It wil
 
 ## Documentation
 
-Coming soon.
+Coming soon. WIP
 
-## Common Errors
+### Shortcodes
 
-### 1. DB_COLLATE Error  
+so there are shortcodes in, but the plugin will automatically create them, however you can add them manually just in case something goes wrong.
 
-If you get a DB error, you may have to define the `DB_COLLATE` in your wp_config.php, use the following..  
-`define('DB_COLLATE', 'utf8mb4_general_ci');`
+#### Post Code Form
 
-### Credits
-Herbert: Please check out the docs [here](http://getherbert.com/).
+we can use the postcode form anywhere on the site as it will allow us to display a short form, leading into the larger form. (Pulls lat/lng)
+
+> [ash_postcode_form]
+
+#### Booking Form
+
+these are automatically added and will generate all the necessary code on their pages. in case anything happens you can add them to ensure proper results
+
+> [ash_booking_form]
+
+> [ash_booking_confirmation]
+
+> [ash_booking_success]
+
+> [ash_booking_error]
