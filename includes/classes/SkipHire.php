@@ -25,8 +25,13 @@ class ad_skip_hire
         add_action( 'admin_menu', [$this, 'skip_admin_pages'] );
 
         # shortcodes
-        add_shortcode( 'ash_form_postcode', [$this, 'form_postcode'] );
-        add_shortcode( 'ash_booking_form', [$this, 'form_booking'] );
+        add_shortcode( 'ash_form_postcode', [$this, 'shortcode_postcode'] );
+        add_shortcode( 'ash_booking_form', [$this, 'shortcode_booking'] );
+
+        # javascript
+        add_action( 'wp_enqueue_scripts', [$this, 'load_javascript'] );
+
+        # css 
     }
 
     /**
@@ -46,6 +51,20 @@ class ad_skip_hire
         $this->coupons = new ad_skip_hire_coupons();
         $this->skips = new ad_skip_hire_skips();
         $this->orders = new ad_skip_hire_orders();
+    }
+
+    public function load_javascript()
+    {
+        wp_register_script( 'google_maps_api', 'https://maps.googleapis.com/maps/api/js', '', '', true );
+        wp_register_script( 'ash_custom', plugins_url( 'js/ash-custom-min.js', __FILE__ ), ['jquery'], '', true);
+        
+        wp_enqueue_script('google_maps_api');
+        wp_enqueue_script('ash_custom');
+    }
+
+    public function load_stylesheets()
+    {
+
     }
 
     public function skip_admin_pages() 
@@ -89,7 +108,7 @@ class ad_skip_hire
     /**
      * the shortcode contents for the postcode form (looking up lat and lang)
      */
-    public function form_postcode( )
+    public function shortcode_postcode( )
     { ?>
         <form action="<?php echo home_url( '/booking-form/' ); ?>" method="POST" id="ash_postcode_form">
             <input type="hidden" id="ash_lat" name="ash_lat">
@@ -105,5 +124,11 @@ class ad_skip_hire
             </p>
         </form>
 <?php 
+    }
+
+    public function shortcode_booking()
+    {
+        if(isset($_REQUEST['ash_postcode'])) 
+            echo $_REQUEST['ash_postcode'];
     }
 }
