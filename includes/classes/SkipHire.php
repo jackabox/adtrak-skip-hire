@@ -25,7 +25,7 @@ class ad_skip_hire
         add_action( 'admin_menu', [$this, 'skip_admin_pages'] );
 
         # shortcodes
-        add_shortcode( 'ash_form_postcode', [$this, 'shortcode_postcode'] );
+        add_shortcode( 'ash_postcode_form', [$this, 'shortcode_postcode'] );
         add_shortcode( 'ash_booking_form', [$this, 'shortcode_booking'] );
 
         # javascript
@@ -138,7 +138,7 @@ class ad_skip_hire
             <?php if($lat == null): 
 
                 echo "<p>Sorry, we couldn't find your location. Please try again using the form below.</p>";
-                echo do_shortcode('[ash_form_postcode]');
+                echo do_shortcode('[ash_postcode_form]');
 
             else: ?>
                 <h3>Skip Hire Prices</h3>
