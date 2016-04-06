@@ -16,10 +16,10 @@ class ad_skip_hire_orders
         $this->menu_parent = 'ad_skip_hire'; 
 
         # hook into wordpress actions
-        add_action('init', [$this, 'order_post_type']);
+        add_action( 'init', [$this, 'order_post_type'] );
         add_filter( 'cmb2_meta_boxes', [$this, 'register_meta_fields'] );
-        add_filter( 'manage_ash_orders_posts_columns', [$this, 'modify_post_columns'] );
-        add_action( 'manage_ash_orders_posts_custom_column', [$this, 'modify_table_content'], 10, 2);
+        add_filter( 'manage_' . $this->cpt_prefix . '_posts_columns', [$this, 'modify_post_columns'] );
+        add_action( 'manage_' . $this->cpt_prefix . '_posts_custom_column', [$this, 'modify_table_content'], 10, 2 );
     }
 
     /**
