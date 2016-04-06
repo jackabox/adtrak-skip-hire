@@ -39,3 +39,19 @@ if ( file_exists( plugin_dir_path( __FILE__ ) . 'includes/classes/SkipHire.php' 
 }
 
 $plugin = new ad_skip_hire();
+
+# activation
+register_activation_hook( __FILE__ , 'ash_activate_plugin' );
+
+function ash_activate_plugin()
+{
+    # generate required pages
+    $booking_form = [
+        'post_title'    => 'Booking Form',
+        'post_content'  => '[ash_booking_form]',
+        'post_status'   => 'publish',
+        'post_type'     => 'page'
+    ];
+
+    wp_insert_post( $booking_form );
+}
