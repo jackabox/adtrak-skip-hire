@@ -117,16 +117,13 @@ class ad_skip_hire_locations
      */
     public function modify_table_content( $column_name, $post_id )
     {
-        if($column_name == 'latitude') {
+        if( $column_name == 'latitude' )
             echo get_post_meta( $post_id, $this->cpt_prefix . '_location_latitude', true );
-        }
 
-        if($column_name == 'longitude') {
+        if( $column_name == 'longitude' )
             echo get_post_meta( $post_id, $this->cpt_prefix . '_location_longitude', true );
-        }
 
-        if($column_name == 'radius') {
+        if( $column_name == 'radius' )
             echo get_post_meta( $post_id, $this->cpt_prefix . '_radius', true ) . ' km';
-        }
     }
 }

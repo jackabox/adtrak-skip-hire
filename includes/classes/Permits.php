@@ -2,9 +2,13 @@
 
 class ad_skip_hire_permits
 {
+    # protected variables
     protected $cpt_prefix;
     protected $menu_parent;
 
+    /**
+     * build the requirements for the permits class
+     */
     public function __construct()
     {
         $this->cpt_prefix = 'ash_permits'; 
@@ -17,6 +21,9 @@ class ad_skip_hire_permits
         add_action( 'manage_ash_permits_posts_custom_column', [$this, 'modify_table_content'], 10, 2 );
     }
 
+    /**
+     * register the permit post type
+     */
     public function permit_post_type() 
     {
         $labels = [
@@ -102,7 +109,12 @@ class ad_skip_hire_permits
      */
     public function modify_post_columns( $defaults )
     {
-        # return
+        unset( $defaults['date'] );
+
+        $defaults['duration'] = "Duration";
+        $defaults['process'] = "Process Time";
+        $defaults['price'] = "Price";
+
         return $defaults;
     }
 
@@ -114,6 +126,14 @@ class ad_skip_hire_permits
      */
     public function modify_table_content( $column_name, $post_id )
     {
+        if( $column_name == 'duration' )
+            echo get_post_meta( $post_id, $this->cpt_prefix . '_duration', true ) . ' days';
+
+        if( $column_name == 'process' )
+            echo get_post_meta( $post_id, $this->cpt_prefix . '_process_time', true ) . ' days';
+
+        if( $column_name == 'price' )
+            echo '£' . get_post_meta( $post_id, $this->cpt_prefix . '_price', true );
 
     }
 }
