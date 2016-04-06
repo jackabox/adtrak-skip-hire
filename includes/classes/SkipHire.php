@@ -27,18 +27,17 @@ class ad_skip_hire
     public function load_dependencies()
     {
         // the class responsible for managing the orders
-        require_once plugin_dir_path(__FILE__) . 'Coupons.php';
         require_once plugin_dir_path(__FILE__) . 'Locations.php';
         require_once plugin_dir_path(__FILE__) . 'Permits.php';
-        require_once plugin_dir_path(__FILE__) . 'Orders.php';
+        require_once plugin_dir_path(__FILE__) . 'Coupons.php';
         require_once plugin_dir_path(__FILE__) . 'Skips.php';
+        require_once plugin_dir_path(__FILE__) . 'Orders.php';
 
-        $this->orders = new ad_skip_hire_orders();
-        $this->skips = new ad_skip_hire_skips();
         $this->locations = new ad_skip_hire_locations();
         $this->permits = new ad_skip_hire_permits();
         $this->coupons = new ad_skip_hire_coupons();
-
+        $this->skips = new ad_skip_hire_skips();
+        $this->orders = new ad_skip_hire_orders();
     }
 
     public function skip_admin_pages() 

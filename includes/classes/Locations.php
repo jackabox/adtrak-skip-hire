@@ -46,7 +46,7 @@ class ad_skip_hire_locations
             'hierarchical' => true,
             'description' => 'Delivery locations for the skips',
             'supports' => array( 'title'),
-            'public' => true,
+            'public' => false,
             'show_ui' => true,
             'show_in_menu' => $this->menu_parent,
             'publicly_queryable' => true,
@@ -71,7 +71,7 @@ class ad_skip_hire_locations
             'object_types'  => [$this->cpt_prefix],
             'context'       => 'normal',
             'priority'      => 'high',
-            'show_names'    => true, // Show field names on the left
+            'show_names'    => true,
         ]);
 
         $location_fields->add_field([
@@ -79,14 +79,14 @@ class ad_skip_hire_locations
             'desc'          => 'Drag the marker to set the exact location',
             'id'            => $this->cpt_prefix . '_location',
             'type'          => 'pw_map',
-            'split_values'  => true, // Save latitude and longitude as two separate fields
+            'split_values'  => true,
         ]);
 
         $location_fields->add_field([
             'name'          => __('Within Radius', 'ash'),
             'desc'          => 'Enter a distance you will deliver from the defined location',
             'id'            => $this->cpt_prefix . '_radius',
-            'type'          => 'text',
+            'type'          => 'text_small',
         ]);
     }
 

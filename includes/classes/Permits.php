@@ -11,10 +11,10 @@ class ad_skip_hire_permits
         $this->menu_parent = 'ad_skip_hire'; 
 
         # register post type
-        add_action('init', [$this, 'permit_post_type']);
+        add_action( 'init', [$this, 'permit_post_type'] );
         add_filter( 'cmb2_meta_boxes', [$this, 'register_meta_fields'] );
         add_filter( 'manage_ash_permits_posts_columns', [$this, 'modify_post_columns'] );
-        add_action( 'manage_ash_permits_posts_custom_column', [$this, 'modify_table_content'], 10, 2);
+        add_action( 'manage_ash_permits_posts_custom_column', [$this, 'modify_table_content'], 10, 2 );
     }
 
     public function permit_post_type() 
@@ -38,7 +38,7 @@ class ad_skip_hire_permits
             'hierarchical' => true,
             'description' => 'Orders made for skips',
             'supports' => array( 'title'),
-            'public' => true,
+            'public' => false,
             'show_ui' => true,
             'show_in_menu' => $this->menu_parent,
             'publicly_queryable' => true,
@@ -46,7 +46,7 @@ class ad_skip_hire_permits
             'query_var' => true,
             'can_export' => true,
             'rewrite' => true,
-            'capability_type' => 'post'
+            'capability_type' => 'post',
         ];
 
         register_post_type($this->cpt_prefix, $args);
@@ -57,13 +57,41 @@ class ad_skip_hire_permits
      */
     public function register_meta_fields() 
     {
-        $order_fields = new_cmb2_box([
-            'id'            => $this->cpt_prefix . '_metabox',
+        $permit_fields = new_cmb2_box([
+            'id'            => $this->cpt_prefix . '_fields',
             'title'         => __( 'Order Information', 'ash' ),
-            'object_types'  => [$this->cpt_prefix],
+            'object_types'  => [ $this->cpt_prefix ],
             'context'       => 'normal',
             'priority'      => 'high',
-            'show_names'    => true, // Show field names on the left
+            'show_names'    => true,
+        ]);
+
+        $permit_fields->add_field([
+            'name'          => __( 'Permit Length', 'ash' ),
+            'id'            => $this->cpt_prefix . '_duration',
+            'type'          => 'text_small',
+            'after_field'   => ' days',
+            'attributes'    => [
+                'placeholder' => __( '5', 'ash' ),
+            ],
+        ]);
+
+        $permit_fields->add_field([
+            'name'          => __( 'Process Time', 'ash' ),
+            'id'            => $this->cpt_prefix . '_process_time',
+            'type'          => 'text_small',
+            'after_field'   => ' days',
+            'attributes'    => [
+                'placeholder' => __( '5', 'ash' ),
+            ],
+        ]);
+
+        $permit_fields->add_field([
+            'name'          => __( 'Price', 'ash' ),
+            // 'desc'          => __( 'How much does the permit cost?', 'ash' ),
+            'id'            => $this->cpt_prefix . '_price',
+            'type'          => 'text_money',
+            'before_field'  => '£'
         ]);
     }
 
