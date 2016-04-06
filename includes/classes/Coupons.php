@@ -18,8 +18,8 @@ class ad_skip_hire_coupons
         # hook into wordpress using actions
         add_action('init', [$this, 'coupon_post_type']);
         add_filter( 'cmb2_meta_boxes', [$this, 'register_meta_fields'] );
-        add_filter( 'manage_ash_coupons_posts_columns', [$this, 'modify_post_columns'] );
-        add_action( 'manage_ash_coupons_posts_custom_column', [$this, 'modify_table_content'], 10, 2);
+        add_filter( 'manage_' . $this->cpt_prefix . '_posts_columns', [$this, 'modify_post_columns'] );
+        add_action( 'manage_' . $this->cpt_prefix . '_posts_custom_column', [$this, 'modify_table_content'], 10, 2 );
 
     }
 
@@ -44,7 +44,7 @@ class ad_skip_hire_coupons
             'hierarchical' => true,
             'description' => 'Coupon codes for Skip hire discount',
             'supports' => array( 'title'),
-            'public' => true,
+            'public' => false,
             'show_ui' => true,
             'show_in_menu' => $this->menu_parent,
             'publicly_queryable' => true,
@@ -63,13 +63,47 @@ class ad_skip_hire_coupons
      */
     public function register_meta_fields() 
     {
-        $order_fields = new_cmb2_box([
+        $coupon_fields = new_cmb2_box([
             'id'            => $this->cpt_prefix . '_metabox',
-            'title'         => __( 'Order Information', 'ash' ),
+            'title'         => __( 'Coupon Details', 'ash' ),
             'object_types'  => [$this->cpt_prefix],
             'context'       => 'normal',
             'priority'      => 'high',
             'show_names'    => true, // Show field names on the left
+        ]);
+
+        $coupon_fields->add_field([
+            'id'            => $this->cpt_prefix . '_type',
+            'name'          => __( 'Type', 'ash' ),
+            'type'          => 'select',
+            'options'       => [
+                'flat'    => __('Flat Discount', 'ash'),
+                'percent' => __('Percentage Discount', 'ash'),
+            ],
+        ]);
+
+        $coupon_fields->add_field([
+            'id'            => $this->cpt_prefix . '_amount',
+            'name'          => __( 'Amount', 'ash' ),
+            'type'          => 'text_small',
+            'attributes'    => [
+                    'type'      => 'number',
+                    'pattern'   => '\d*',
+            ],
+        ]);
+
+        $coupon_fields->add_field([
+            'id'            => $this->cpt_prefix . '_start_date',
+            'name'          => __( 'Start Date', 'ash' ),
+            'type'          => 'text_date',
+            'date_format'   => __( 'd/m/Y', 'ash' ),
+        ]);
+
+        $coupon_fields->add_field([
+            'id'            => $this->cpt_prefix . '_end_date',
+            'name'          => __( 'End Date', 'ash' ),
+            'type'          => 'text_date',
+            'date_format'   => __( 'd/m/Y', 'ash' ),
         ]);
     }
 
@@ -80,7 +114,12 @@ class ad_skip_hire_coupons
      */
     public function modify_post_columns( $defaults )
     {
-        # return
+        unset( $defaults['date'] );
+
+        $defaults['start_date'] = "Start Date";
+        $defaults['end_date'] = "End Date";
+        $defaults['amount'] = "Amount";
+
         return $defaults;
     }
 
@@ -92,6 +131,22 @@ class ad_skip_hire_coupons
      */
     public function modify_table_content( $column_name, $post_id )
     {
+        if( $column_name == 'start_date' )
+            echo get_post_meta( $post_id, $this->cpt_prefix . '_start_date', true );
 
+        if( $column_name == 'end_date' )
+            echo get_post_meta( $post_id, $this->cpt_prefix . '_end_date', true );
+
+        if( $column_name == 'amount' )
+        {
+            $type = get_post_meta( $post_id, $this->cpt_prefix . '_type', true );
+            $value = get_post_meta( $post_id, $this->cpt_prefix . '_amount', true );
+
+            if($type == 'percent') {
+                echo $value . '%';
+            } else {
+                echo '£' . $value;
+            }
+        }
     }
 }
