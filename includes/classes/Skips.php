@@ -13,8 +13,8 @@ class ad_skip_hire_skips
         # register post type
         add_action('init', [$this, 'skip_post_type']);
         add_filter( 'cmb2_meta_boxes', [$this, 'register_meta_fields'] );
-        add_filter( 'manage_ash_orders_posts_columns', [$this, 'modify_post_columns'] );
-        add_action( 'manage_ash_orders_posts_custom_column', [$this, 'modify_table_content'], 10, 2);
+        add_filter( 'manage_' . $this->cpt_prefix . '_posts_columns', [$this, 'modify_post_columns'] );
+        add_action( 'manage_' . $this->cpt_prefix . '_posts_custom_column', [$this, 'modify_table_content'], 10, 2);
     }
 
     public function skip_post_type() 
@@ -89,8 +89,8 @@ class ad_skip_hire_skips
         ]);
 
         $skip_fields->add_field([
-            'id'            => $this->cpt_prefix . '_depth',
-            'name'          => __( 'Depth', 'ash' ),
+            'id'            => $this->cpt_prefix . '_length',
+            'name'          => __( 'Length', 'ash' ),
             'type'          => 'text_small',
             'after_field'   => ' m',
             'attributes'    => [
@@ -116,6 +116,12 @@ class ad_skip_hire_skips
                     'pattern'   => '\d*',
             ],
         ]);
+
+        $skip_fields->add_field([
+            'id'            => $this->cpt_prefix . '_description',
+            'name'          => __( 'Description', 'ash'),
+            'type'          => 'textarea',
+        ]);
     }
 
     /**
@@ -126,6 +132,13 @@ class ad_skip_hire_skips
     public function modify_post_columns( $defaults )
     {
         # return
+        unset( $defaults['date'] );
+
+        $defaults['width'] = "Width";
+        $defaults['height'] = "Height";
+        $defaults['length'] = "Length";
+        $defaults['price'] = "Price";
+
         return $defaults;
     }
 
@@ -137,6 +150,17 @@ class ad_skip_hire_skips
      */
     public function modify_table_content( $column_name, $post_id )
     {
+        if( $column_name == 'width' )
+            echo get_post_meta( $post_id, $this->cpt_prefix . '_width', true ) . 'm';
+
+        if( $column_name == 'height' )
+            echo get_post_meta( $post_id, $this->cpt_prefix . '_height', true ) . 'm';
+
+        if( $column_name == 'length' )
+            echo get_post_meta( $post_id, $this->cpt_prefix . '_length', true ) . 'm';
+
+        if( $column_name == 'price' )
+            echo '£' . get_post_meta( $post_id, $this->cpt_prefix . '_price', true );
 
     }
 }
