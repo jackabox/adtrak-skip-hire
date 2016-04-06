@@ -38,7 +38,7 @@ class ad_skip_hire_skips
             'hierarchical' => true,
             'description' => 'Types of skips',
             'supports' => array( 'title'),
-            'public' => true,
+            'public' => false,
             'show_ui' => true,
             'show_in_menu' => $this->menu_parent,
             'publicly_queryable' => true,
@@ -57,13 +57,64 @@ class ad_skip_hire_skips
      */
     public function register_meta_fields() 
     {
-        $order_fields = new_cmb2_box([
+        $skip_fields = new_cmb2_box([
             'id'            => $this->cpt_prefix . '_metabox',
-            'title'         => __( 'Order Information', 'ash' ),
+            'title'         => __( 'Skip Details', 'ash' ),
             'object_types'  => [$this->cpt_prefix],
             'context'       => 'normal',
             'priority'      => 'high',
             'show_names'    => true, // Show field names on the left
+        ]);
+
+        $skip_fields->add_field([
+            'id'            => $this->cpt_prefix . '_width',
+            'name'          => __( 'Width', 'ash' ),
+            'type'          => 'text_small',
+            'after_field'   => ' m',
+            'attributes'    => [
+                    'type'      => 'number',
+                    'pattern'   => '\d*',
+            ],
+        ]);
+
+        $skip_fields->add_field([
+            'id'            => $this->cpt_prefix . '_height',
+            'name'          => __( 'Height', 'ash' ),
+            'type'          => 'text_small',
+            'after_field'   => ' m',
+            'attributes'    => [
+                    'type'      => 'number',
+                    'pattern'   => '\d*',
+            ],
+        ]);
+
+        $skip_fields->add_field([
+            'id'            => $this->cpt_prefix . '_depth',
+            'name'          => __( 'Depth', 'ash' ),
+            'type'          => 'text_small',
+            'after_field'   => ' m',
+            'attributes'    => [
+                    'type'      => 'number',
+                    'pattern'   => '\d*',
+            ],
+        ]);
+
+        $skip_fields->add_field([
+            'id'            => $this->cpt_prefix . '_price',
+            'name'          => __( 'Price', 'ash' ),
+            'type'          => 'text_money',
+            'before_field'  => '£',
+        ]);
+
+        $skip_fields->add_field([
+            'id'            => $this->cpt_prefix . '_capacity',
+            'name'          => __( 'Estimated Capacity', 'ash' ),
+            'type'          => 'text_small',
+            'after_field'   => ' bags',
+            'attributes'    => [
+                    'type'      => 'number',
+                    'pattern'   => '\d*',
+            ],
         ]);
     }
 
