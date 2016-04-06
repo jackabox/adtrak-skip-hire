@@ -118,9 +118,9 @@ class ad_skip_hire_skips
 
         $skip_fields->add_field([
             'id'            => $this->cpt_prefix . '_capacity',
-            'name'          => __( 'Estimated Capacity', 'ash' ),
+            'name'          => __( 'Capacity', 'ash' ),
             'type'          => 'text_small',
-            'after_field'   => ' bags',
+            'after_field'   => ' mt',
             'attributes'    => [
                 'placeholder' => __( '5', 'ash' ),
                 'type'        => 'number',
@@ -149,6 +149,7 @@ class ad_skip_hire_skips
         $defaults['height'] = "Height";
         $defaults['length'] = "Length";
         $defaults['price'] = "Price";
+        $defaults['capacity'] = "Capacity";
 
         return $defaults;
     }
@@ -169,6 +170,9 @@ class ad_skip_hire_skips
 
         if( $column_name == 'length' )
             echo get_post_meta( $post_id, $this->cpt_prefix . '_length', true ) . 'm';
+
+        if( $column_name == 'capacity' )
+            echo get_post_meta( $post_id, $this->cpt_prefix . '_capacity', true ) . 'mt';
 
         if( $column_name == 'price' )
             echo '£' . get_post_meta( $post_id, $this->cpt_prefix . '_price', true );
