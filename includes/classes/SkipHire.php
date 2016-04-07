@@ -133,19 +133,52 @@ class ad_skip_hire
         $postcode = (isset($_REQUEST['ash_postcode'])) ? $_REQUEST['ash_postcode'] : NULL; 
         $lat = (isset($_REQUEST['ash_lat'])) ? $_REQUEST['ash_lat'] : NULL; 
         $lng = (isset($_REQUEST['ash_lng'])) ? $_REQUEST['ash_lng'] : NULL; 
+        $skip = (isset($_REQUEST['ash_skip_id'])) ? $_REQUEST['ash_skip_id'] : NULL; 
     ?>
         <div id="ash_booking" class="ash-booking-holder">
-            <?php if($lat == null): 
+            <?php if($postcode == null && $lat == null): 
 
                 echo "<p>Sorry, we couldn't find your location. Please try again using the form below.</p>";
                 echo do_shortcode('[ash_postcode_form]');
 
-            else: ?>
-                <h3>Skip Hire Prices</h3>
+            elseif($skip == null): ?>
+                <h3>Choose a SKip</h3>
                 <p>We found the following skips available for delivery in the area of <?php echo strtoupper($postcode); ?>.</p>
 
-                <form action="<?php echo get_permalink( get_page_by_title( 'Confirmation' ) ) ?>">
+                <?php
+                // WP_Query arguments
+                $args = [
+                    'post_type'              => 'ash_skips',
+                    'post_status'            => 'publish',
+                    'posts_per_page'         => -1,
+                    'cache_results'          => true,
+                ];
 
+                $query = new WP_Query( $args );
+                if ( $query->have_posts() ): while ( $query->have_posts() ):
+                    $query->the_post(); ?>
+                    <div class="ash-skip" id="ash-skip-<?php echo get_the_ID(); ?>">
+                        <h3 class="ash-skip-title"><?php the_title(); ?></h3>
+                        <p class="ash-skip-description"><?php echo get_post_meta( get_the_ID(), 'ash_skips_description', true ); ?></p>
+                        <div class="ash-skip-meta">
+                            <span class="ash-skip-meta__width">Width: <?php echo get_post_meta( get_the_ID(), 'ash_skips_width', true ); ?></span>
+                            <span class="ash-skip-meta__height">Height: <?php echo get_post_meta( get_the_ID(), 'ash_skips_height', true ); ?></span>
+                            <span class="ash-skip-meta__length">Length: <?php echo get_post_meta( get_the_ID(), 'ash_skips_length', true ); ?></span>
+                            <span class="ash-skip-meta__capacity">Capacity: <?php echo get_post_meta( get_the_ID(), 'ash_skips_capacity', true ); ?></span>
+                        </div>
+                        <form action="#" method="POST">
+                            <input type="hidden" id="ash_postcode" name="ash_postcode" value="<?php echo $postcode; ?>">
+                            <input type="hidden" id="ash_skip_id" name="ash_skip_id" value="<?php echo get_the_ID(); ?>">
+                            <button type="submit" id="ash-skip-submit">Book This Skip</button>
+                        </form>
+                    </div>
+                <?php
+                endwhile; endif;
+                wp_reset_postdata();
+                ?>
+            <?php else: ?>
+                <h3>Your Details</h3>
+                <form action="#">
                     <!-- all of the skips here -->
 
                     <!-- user details -->
