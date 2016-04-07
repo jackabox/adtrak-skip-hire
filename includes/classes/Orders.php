@@ -15,9 +15,10 @@ class ad_skip_hire_orders
         $this->cpt_prefix = 'ash_orders'; 
         $this->menu_parent = 'ad_skip_hire'; 
 
-        # hook into wordpress actions
+        # post type, metabox and admin columns
         add_action( 'init', [$this, 'order_post_type'] );
         add_filter( 'cmb2_meta_boxes', [$this, 'register_meta_fields'] );
+        add_action( 'add_meta_boxes', [$this, 'custom_metabox']);
         add_filter( 'manage_' . $this->cpt_prefix . '_posts_columns', [$this, 'modify_post_columns'] );
         add_action( 'manage_' . $this->cpt_prefix . '_posts_custom_column', [$this, 'modify_table_content'], 10, 2 );
     }
@@ -28,33 +29,33 @@ class ad_skip_hire_orders
     public function order_post_type() 
     {
         $labels = [
-            'name' => _x( 'Orders', $this->cpt_prefix),
-            'singular_name' => _x( 'Order', $this->cpt_prefix),
-            'add_new' => _x( 'Add New', $this->cpt_prefix),
-            'add_new_item' => _x( 'Add New Order', $this->cpt_prefix),
-            'edit_item' => _x( 'Edit Order', $this->cpt_prefix ),
-            'new_item' => _x( 'New Order', $this->cpt_prefix),
-            'view_item' => _x( 'View Order', $this->cpt_prefix),
-            'search_items' => _x( 'Search Order', $this->cpt_prefix ),
-            'not_found' => _x( 'No Orders found', $this->cpt_prefix ),
-            'not_found_in_trash' => _x( 'No Orders found in Trash', $this->cpt_prefix ),
-            'menu_name' => _x( 'Manage Orders', $this->cpt_prefix ),
+            'name'                  => __( 'Orders', 'ash' ),
+            'singular_name'         => __( 'Order', 'ash' ),
+            'add_new'               => __( 'Add New', 'ash' ),
+            'add_new_item'          => __( 'Add New Order', 'ash' ),
+            'edit_item'             => __( 'Edit Order' , 'ash' ),
+            'new_item'              => __( 'New Order', 'ash' ),
+            'view_item'             => __( 'View Order', 'ash' ),
+            'search_items'          => __( 'Search Order' , 'ash' ),
+            'not_found'             => __( 'No Orders found', 'ash' ),
+            'not_found_in_trash'    => __( 'No Orders found in Trash', 'ash' ),
+            'menu_name'             => __( 'Manage Orders', 'ash' ),
         ];
      
         $args = [
-            'labels' => $labels,
-            'hierarchical' => true,
-            'description' => 'Orders made for skips',
-            'supports' => array( 'title'),
-            'public' => true,
-            'show_ui' => true,
-            'show_in_menu' => $this->menu_parent,
-            'publicly_queryable' => true,
-            'exclude_from_search' => true,
-            'query_var' => true,
-            'can_export' => true,
-            'rewrite' => true,
-            'capability_type' => 'post'
+            'labels'                => $labels,
+            'hierarchical'          => true,
+            'description'           => __( 'Orders made for skips', 'ash' ),
+            'supports'              => ['title'],
+            'public'                => false,
+            'show_ui'               => true,
+            'show_in_menu'          => $this->menu_parent,
+            'publicly_queryable'    => true,
+            'exclude_from_search'   => true,
+            'query_var'             => true,
+            'can_export'            => true,
+            'rewrite'               => true,
+            'capability_type'       => 'post',
         ];
 
         register_post_type($this->cpt_prefix, $args);
@@ -66,13 +67,108 @@ class ad_skip_hire_orders
     public function register_meta_fields() 
     {
         $order_fields = new_cmb2_box([
-            'id'            => $this->cpt_prefix . '_metabox',
-            'title'         => __( 'Order Information', 'ash' ),
+            'id'            => $this->cpt_prefix . '_order_metabox',
+            'title'         => __( 'Update Order & Delivery Date'),
             'object_types'  => [$this->cpt_prefix],
             'context'       => 'normal',
             'priority'      => 'high',
             'show_names'    => true, // Show field names on the left
         ]);
+
+        $order_fields->add_field([
+            'id'            => $this->cpt_prefix . '_status',
+            'name'          => __( 'Order Status', 'ash' ),
+            'type'          => 'select',
+            'options'       => [
+                'pending'    => __('Pending Payment', 'ash'),
+                'paid'       => __('Paid', 'ash'),
+                'complete'   => __('Complete', 'ash'),
+            ],
+        ]);
+
+        $order_fields->add_field([
+            'id'            => $this->cpt_prefix . '_delivery_date',
+            'name'          => __( 'Delivery Date', 'ash' ),
+            'type'          => 'text_date',
+            'date_format'   => __( 'd/m/Y'),
+        ]);
+
+        $order_fields->add_field([
+            'id'            => $this->cpt_prefix . '_delivery_slot',
+            'name'          => __( 'Delivery Slot', 'ash' ),
+            'type'          => 'select',
+            'options'       => [
+                'am'    => __('Morning', 'ash'),
+                'pm'    => __('Afternoon', 'ash'),
+            ],
+        ]);
+    }
+
+    public function custom_metabox()
+    {
+        add_meta_box( $this->cpt_prefix . '_information', 'Order Information', [$this, 'custom_metabox_information'], $this->cpt_prefix, 'normal', 'default');
+    }
+
+    public function custom_metabox_information()
+    {?>
+
+    <div class="cmb2-wrap form-table">
+        <div class="cmb2-metabox cmb-field-list">
+
+            <div class="cmb-row">
+                <div class="cmb-th">
+                    <p><b>Order #</b></p>
+                    <p><b>Name</b></p>
+                    <p><b>Email</b></p>
+                    <p><b>Phone</b></p>
+                </div>
+                <div class="cmb-td">
+                    <p><?php echo get_the_ID(); ?></p>
+                    <p><?php echo get_the_title(); ?></p>
+                    <p>a</p>
+                    <p>b</p>
+
+                </div>
+            </div>
+
+            <div class="cmb-row">
+                <div class="cmb-th">
+                    <p><b>Skip Choice</b></p>
+                    <p><b>Permit Needed</b></p>
+                    <p><b>Waste</b></p>
+                    <p><b>Price</b></p>
+                    <p><b>Payment Method</b></p>
+                </div>
+                <div class="cmb-td">
+                    <p>a</p>
+                    <p>b</p>
+                    <p>c</p>
+                    <p>d</p>
+                    <p>e</p>
+                </div>
+            </div>
+
+
+            <div class="cmb-row">
+                <div class="cmb-th">
+                    <p><b>Delivery Address</b> <br><br><br><br></p>
+                    <p><b>Delivery Notes</b></p>
+                </div>
+                <div class="cmb-td">
+                    <p>
+                        a, b <br>
+                        c, <br>
+                        d, <br>
+                        e 
+                    </p>
+                    <p>a</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+<?php
     }
 
     /**
