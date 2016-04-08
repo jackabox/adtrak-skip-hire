@@ -9,6 +9,8 @@
  * License:           MIT
  */
 
+require plugin_dir_path( __FILE__ )  . '/vendor/autoload.php';
+
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
     die;
