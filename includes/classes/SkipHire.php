@@ -45,6 +45,7 @@ class ad_skip_hire
         require_once plugin_dir_path( __FILE__ ) . 'Coupons.php';
         require_once plugin_dir_path( __FILE__ ) . 'Skips.php';
         require_once plugin_dir_path( __FILE__ ) . 'Orders.php';
+        require_once plugin_dir_path( __FILE__ ) . 'WpGeoQuery.php';
 
         $this->locations = new ad_skip_hire_locations();
         $this->permits = new ad_skip_hire_permits();
@@ -115,9 +116,22 @@ class ad_skip_hire
         $skip = (isset($_REQUEST['ash_skip_id'])) ? $_REQUEST['ash_skip_id'] : NULL; 
         
         if ( $skip == null && $lat != null ):
-            // TODO: Check if the lat long is within one of the radius, if so proceed, if not break
+            # run the geo query
+            $locations = new ASH_WP_Query_Geo([
+                'post_status' => 'publish',
+                'post_type' => 'ash_locations',
+                'posts_per_page' => -1,
+                'lat' => $lat,
+                'lng' =>  $lng,
+                'distance' => 10
+            ]);
 
-            $this->build_skip_form($postcode);
+            if( $locations->found_posts > 0 ) {
+                // $locations->reset_postdata();
+                $this->build_skip_form( $postcode );
+            } else {
+                echo "<p>We don't deliver skips to your location sorry.</p>";
+            }
 
         elseif ( $skip != null ): 
             var_dump($_POST);
@@ -152,7 +166,7 @@ class ad_skip_hire
             endif;
         else:
             echo "<p>Please enter a post code to see if we deliver to your area.</p>";
-            echo do_shortcode('[ash_postcode_form]');
+            $this->build_postcode_form();
         endif;
     }
 
@@ -165,17 +179,17 @@ class ad_skip_hire
         include_once plugin_dir_path( __FILE__ ) . '../views/postcodeForm.php';
     }
 
-    public function build_skip_form ( $postcode = NULL )
+    public function build_skip_form( $postcode = null )
     {
         include_once plugin_dir_path( __FILE__ ) . '../views/skipChoiceForm.php';
     }
 
-    public function build_booking_form ( $skip = NULL, $postcode = NULL )
+    public function build_booking_form( $skip = NULL, $postcode = NULL )
     { 
         include_once plugin_dir_path( __FILE__ ) . '../views/bookingForm.php';
     }
 
-    public function build_confirmation_form ( $args = [] )
+    public function build_confirmation_form( $args = [] )
     {
         include_once plugin_dir_path( __FILE__ ) . '../views/confirmationForm.php';
     }

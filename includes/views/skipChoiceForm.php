@@ -1,5 +1,5 @@
 <h3>Choose a SKip</h3>
-<p>We found the following skips available for delivery in the area of <?php echo strtoupper($postcode); ?>.</p>
+<p>We found the following skips available for delivery in your location.</p>
 
 <?php
 // WP_Query arguments
@@ -7,12 +7,13 @@ $args = [
     'post_type'              => 'ash_skips',
     'post_status'            => 'publish',
     'posts_per_page'         => -1,
-    'cache_results'          => true,
+    // 'cache_results'          => true,
 ];
 
-$query = new WP_Query( $args );
-if ( $query->have_posts() ): while ( $query->have_posts() ):
-    $query->the_post(); ?>
+$skips = new WP_Query( $args );
+
+if ( $skips->have_posts() ): while ( $skips->have_posts() ):
+    $skips->the_post(); ?>
     <div class="ash-skip" id="ash-skip-<?php echo get_the_ID(); ?>">
         <h4 class="ash-skip-title"><?php the_title(); ?></h4>
         <p class="ash-skip-description"><?php echo get_post_meta( get_the_ID(), 'ash_skips_description', true ); ?></p>

@@ -82,12 +82,12 @@ class ad_skip_hire_locations
             'split_values'  => true,
         ]);
 
-        $location_fields->add_field([
-            'name'          => __('Within Radius', 'ash'),
-            'desc'          => 'Enter a distance you will deliver from the defined location',
-            'id'            => $this->cpt_prefix . '_radius',
-            'type'          => 'text_small',
-        ]);
+        // $location_fields->add_field([
+        //     'name'          => __('Within Radius', 'ash'),
+        //     'desc'          => 'Enter a distance you will deliver from the defined location',
+        //     'id'            => $this->cpt_prefix . '_radius',
+        //     'type'          => 'text_small',
+        // ]);
     }
 
     /**
@@ -101,7 +101,7 @@ class ad_skip_hire_locations
         unset($defaults['date']);
 
         # add in new column arrays
-        $defaults['radius'] = "Radius";
+        // $defaults['radius'] = "Radius";
         $defaults['latitude'] = "Latitude";
         $defaults['longitude'] = "Longitude";
 
@@ -123,7 +123,7 @@ class ad_skip_hire_locations
         if( $column_name == 'longitude' )
             echo get_post_meta( $post_id, $this->cpt_prefix . '_location_longitude', true );
 
-        if( $column_name == 'radius' )
-            echo get_post_meta( $post_id, $this->cpt_prefix . '_radius', true ) . ' km';
+        // if( $column_name == 'radius' )
+        //     echo get_post_meta( $post_id, $this->cpt_prefix . '_radius', true ) . ' km';
     }
 }
