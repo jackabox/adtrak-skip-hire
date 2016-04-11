@@ -94,12 +94,12 @@ class ad_skip_hire_orders
         ]);
 
         $order_fields->add_field([
-            'id'            => $this->cpt_prefix . '_delivery_slot',
+            'id'            => $this->cpt_prefix . '_delivery_time',
             'name'          => __( 'Delivery Slot', 'ash' ),
             'type'          => 'select',
             'options'       => [
-                'am'    => __('Morning', 'ash'),
-                'pm'    => __('Afternoon', 'ash'),
+                'AM'    => __('Morning', 'ash'),
+                'PM'    => __('Afternoon', 'ash'),
             ],
         ]);
     }

@@ -6,11 +6,6 @@
     <fieldset class="ash__fieldset ash__fieldset-user">
         <legend class="ash__legend ash__legend-user">Your Details</legend>
 
-        <div class="ash__input ash__input--title">
-            <label for="ash_title">Title</label>
-            <input type="text" name="ash_title" id="ash_title" value="<?php if(isset($_POST['ash_title'])) echo $_POST['ash_title']; ?>">
-        </div>
-
         <div class="ash__input ash__input--forename">
             <label for="ash_forename">Forename</label>
             <input type="text" name="ash_forename" id="ash_forename" value="<?php if(isset($_POST['ash_forename'])) echo $_POST['ash_forename']; ?>">
@@ -155,5 +150,6 @@
     </fieldset>
 
     <!-- proceed to confirmation -->
+    <input type="hidden" name="ash_skip_id" id="ash_skip_id" value="<?php echo $_SESSION['ash_skip_id']; ?>">
     <input type="submit" name="ash_submit" id="ash_submit" class="ash__submit" value="Confirm Order">
 </form>

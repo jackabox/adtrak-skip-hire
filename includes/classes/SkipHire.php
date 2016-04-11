@@ -159,12 +159,9 @@ class ad_skip_hire
             }
 
         elseif ( $skip != null ): 
-            // var_dump($_POST);
-
             if( isset( $_POST['ash_submit'] ) ): 
                 foreach( $_POST as $key => $entry ):
                     if(
-                        $key == 'ash_title' ||
                         $key == 'ash_forename' ||
                         $key == 'ash_surname' ||
                         $key == 'ash_email' ||
@@ -174,7 +171,8 @@ class ad_skip_hire
                         $key == 'ash_delivery_county' ||
                         $key == 'ash_delivery_postcode' ||
                         $key == 'ash_delivery_date' ||
-                        $key == 'ash_delivery_time'
+                        $key == 'ash_delivery_time' ||
+                        $key == 'ash_skip_id'
                     ):
                         if( ( $entry == NULL ) || empty( $entry ) ):
                             echo "<p>There were errors with the form. Please fix them to proceed.</p>";
@@ -219,16 +217,70 @@ class ad_skip_hire
 
     public function build_confirmation_form( $args = [] )
     {
+        # create the post
+        $createPost = [
+            'post_title' => wp_strip_all_tags( $_POST['ash_forename'] . ' ' . $_POST['ash_surname'] ),
+            'post_content' => '',
+            'post_status' => 'publish',
+            'post_type' => 'ash_orders',
+        ];
+        # get the post id
+        $postID = wp_insert_post( $createPost );
+        # session
+        $_SESSION['ash_user'] = [
+            'id' => $postID,
+            'name' => $_POST['ash_forename'] . ' ' . $_POST['ash_surname'],
+        ];
+
+        $deliveryAddress = [
+            'address_1' => $_POST['ash_delivery_address_1'],
+            'address_2' => $_POST['ash_delivery_address_2'],
+            'city' => $_POST['ash_delivery_city'],
+            'county' => $_POST['ash_delivery_county'],
+            'postcode' => $_SESSION['ash_postcode'],
+        ];
+
+        if(isset($_POST['ash_billing_address_1']) && ($_POST['ash_billing_address_1'] != null)) {
+            $billingAddress = [
+                'address_1' => $_POST['ash_billing_address_1'],
+                'address_2' => $_POST['ash_billing_address_2'],
+                'city' => $_POST['ash_billing_city'],
+                'county' => $_POST['ash_billing_county'],
+                'postcode' => $_POST['ash_billing_postcode'],
+            ];
+        } else {
+            $billingAddress = $deliveryAddress;
+        }
+
+        # posted data - meta
+        add_post_meta( $postID, 'ash_orders_email', $_POST['ash_email'] );
+        add_post_meta( $postID, 'ash_orders_phone', $_POST['ash_phone'] );
+        add_post_meta( $postID, 'ash_orders_billing_address', $billingAddress );
+        add_post_meta( $postID, 'ash_orders_delivery_address', $deliveryAddress );
+        add_post_meta( $postID, 'ash_orders_delivery_date', $_POST['ash_delivery_date']);
+        add_post_meta( $postID, 'ash_orders_delivery_time', $_POST['ash_delivery_time'][0]);
+        add_post_meta( $postID, 'ash_orders_skip_id', $_SESSION['ash_skip_id']);
+        add_post_meta( $postID, 'ash_orders_permit_id', $_POST['ash_permit_id']);
+        add_post_meta( $postID, 'ash_orders_waste', $_POST['ash_waste']);
+        add_post_meta( $postID, 'ash_orders_notes', $_POST['ash_notes']);
+        # order status - meta
+        add_post_meta( $postID, 'ash_orders_status', 'pending');
+        # generate PayPal payee link
         $paymentLink = $this->paypal->generate_payment_link($_POST);
 
+        # Include Template
         include_once plugin_dir_path( __FILE__ ) . '../views/confirmationForm.php';
-
     }
 
     public function booking_form_process ( $args = [] )
     {
         $response = $this->paypal->authorised_payment_check();
 
+        // using the response update said user using sessions
+        // store paypal reference link in db. 
+        // update status to paid.
+        
+        // return thank you message to user with email confirmation. ;
         var_dump($response);
     }
 }
