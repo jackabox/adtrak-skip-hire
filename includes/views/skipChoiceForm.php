@@ -27,7 +27,6 @@ if ( $skips->have_posts() ): while ( $skips->have_posts() ):
         <p class="ash-skip__price">£<?php echo get_post_meta( get_the_ID(), 'ash_skips_price', true ); ?></p>
 
         <form action="#" method="POST" class="ash__form ash__form--skip">
-            <input type="hidden" id="ash_postcode" name="ash_postcode" value="<?php echo $postcode; ?>">
             <input type="hidden" id="ash_skip_id" name="ash_skip_id" value="<?php echo get_the_ID(); ?>">
             <button type="submit" id="ash-skip-submit">Book This Skip</button>
         </form>

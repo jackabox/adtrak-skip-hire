@@ -38,27 +38,27 @@
         
         <div class="ash__input ash__input--address">
             <label for="ash_delivery_address_1">Address Line 1</label>
-            <input type="tel" name="ash_delivery_address_1" id="ash_delivery_address_1" value="<?php if(isset($_POST['ash_delivery_address_1'])) echo $_POST['ash_delivery_address_1']; ?>">
+            <input type="text" name="ash_delivery_address_1" id="ash_delivery_address_1" value="<?php if(isset($_POST['ash_delivery_address_1'])) echo $_POST['ash_delivery_address_1']; ?>">
         </div>
 
         <div class="ash__input ash__input--address">
             <label for="ash_delivery_address_2">Address Line 2</label>
-            <input type="tel" name="ash_delivery_address_2" id="ash_delivery_address_2" value="<?php if(isset($_POST['ash_delivery_address_2'])) echo $_POST['ash_delivery_address_2']; ?>">
+            <input type="text" name="ash_delivery_address_2" id="ash_delivery_address_2" value="<?php if(isset($_POST['ash_delivery_address_2'])) echo $_POST['ash_delivery_address_2']; ?>">
         </div>
 
         <div class="ash__input ash__input--city">
             <label for="ash_delivery_city">City</label>
-            <input type="tel" name="ash_delivery_city" id="ash_delivery_city" value="<?php if(isset($_POST['ash_delivery_city'])) echo $_POST['ash_delivery_city']; ?>">
+            <input type="text" name="ash_delivery_city" id="ash_delivery_city" value="<?php if(isset($_POST['ash_delivery_city'])) echo $_POST['ash_delivery_city']; ?>">
         </div>
 
         <div class="ash__input ash__input--county">
             <label for="ash_delivery_county">County</label>
-            <input type="tel" name="ash_delivery_county" id="ash_delivery_county" value="<?php if(isset($_POST['ash_delivery_county'])) echo $_POST['ash_delivery_county']; ?>">
+            <input type="text" name="ash_delivery_county" id="ash_delivery_county" value="<?php if(isset($_POST['ash_delivery_county'])) echo $_POST['ash_delivery_county']; ?>">
         </div>
 
         <div class="ash__input ash__input--postcode">
             <label for="ash_delivery_postcode">Post Code</label>
-            <input type="tel" name="ash_postcode" id="ash_postcode" value="<?php echo (isset($_POST['ash_postcode'])) ? $_POST['ash_postcode'] : $postcode; ?>">
+            <input type="text" name="ash_postcode" id="ash_postcode" value="<?php echo $_SESSION["ash_postcode"]; ?>" disabled>
         </div>
 
         <p class="ash__show-billing"><a href="javascript:void(0);">Is your billing address different?</a></p>
@@ -69,27 +69,27 @@
         
         <div class="ash__input ash__input--address">
             <label for="ash_billing_address_1">Address Line 1</label>
-            <input type="tel" name="ash_billing_address_1" id="ash_billing_address_1" value="<?php if(isset($_POST['ash_billing_address_1'])) echo $_POST['ash_billing_address_1']; ?>">
+            <input type="text" name="ash_billing_address_1" id="ash_billing_address_1" value="<?php if(isset($_POST['ash_billing_address_1'])) echo $_POST['ash_billing_address_1']; ?>">
         </div>
 
         <div class="ash__input ash__input--address">
             <label for="ash_billing_address_2">Address Line 2</label>
-            <input type="tel" name="ash_billing_address_2" id="ash_billing_address_2" value="<?php if(isset($_POST['ash_billing_address_2'])) echo $_POST['ash_billing_address_2']; ?>">
+            <input type="text" name="ash_billing_address_2" id="ash_billing_address_2" value="<?php if(isset($_POST['ash_billing_address_2'])) echo $_POST['ash_billing_address_2']; ?>">
         </div>
 
         <div class="ash__input ash__input--city">
             <label for="ash_billing_city">City</label>
-            <input type="tel" name="ash_billing_city" id="ash_billing_city" value="<?php if(isset($_POST['ash_billing_city'])) echo $_POST['ash_delivery_county']; ?>">
+            <input type="text" name="ash_billing_city" id="ash_billing_city" value="<?php if(isset($_POST['ash_billing_city'])) echo $_POST['ash_delivery_county']; ?>">
         </div>
 
         <div class="ash__input ash__input--county">
             <label for="ash_billing_county">County</label>
-            <input type="tel" name="ash_billing_county" id="ash_billing_county" value="<?php if(isset($_POST['ash_billing_county'])) echo $_POST['ash_billing_county']; ?>">
+            <input type="text" name="ash_billing_county" id="ash_billing_county" value="<?php if(isset($_POST['ash_billing_county'])) echo $_POST['ash_billing_county']; ?>">
         </div>
 
         <div class="ash__input ash__input--postcode">
             <label for="ash_billing_postcode">Post Code</label>
-            <input type="tel" name="ash_billing_postcode" id="ash_billing_postcode" value="<?php if(isset($_POST['ash_billing_postcode'])) echo $_POST['ash_billing_postcode']; ?>">
+            <input type="text" name="ash_billing_postcode" id="ash_billing_postcode" value="<?php if(isset($_POST['ash_billing_postcode'])) echo $_POST['ash_billing_postcode']; ?>">
         </div>
     </fieldset>
 
@@ -152,8 +152,6 @@
             <label for="ash_notes">Additional Notes</label>
             <textarea name="ash_notes" id="ash_notes"><?php if(isset($_POST['ash_notes'])) echo $_POST['ash_notes']; ?></textarea>
         </div>
-
-        <input type="hidden" name="ash_skip_id" id="ash_skip_id" value="<?php echo (isset($_POST['ash_skip_id'])) ? $_POST['ash_skip_id'] : $skip; ?>">
     </fieldset>
 
     <!-- proceed to confirmation -->

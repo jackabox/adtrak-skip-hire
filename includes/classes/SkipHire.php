@@ -22,6 +22,9 @@ class ad_skip_hire
         # dependanices
         $this->load_dependencies();
 
+        # init
+        add_action('init', [$this, 'session_start']);
+
         # menu pages
         add_action( 'admin_menu', [$this, 'skip_admin_pages'] );
 
@@ -56,6 +59,16 @@ class ad_skip_hire
         $this->skips = new ad_skip_hire_skips();
         $this->orders = new ad_skip_hire_orders();
         $this->paypal = new ad_paypal_interface();
+    }
+
+    /**
+     * Inject session_start before the headers are called.
+     * @return [type] [description]
+     */
+    function session_start() {
+        if(!session_id()) {
+            session_start();
+        }
     }
 
     public function load_javascript()
@@ -118,7 +131,15 @@ class ad_skip_hire
         $lat = (isset($_REQUEST['ash_lat'])) ? $_REQUEST['ash_lat'] : NULL; 
         $lng = (isset($_REQUEST['ash_lng'])) ? $_REQUEST['ash_lng'] : NULL; 
         $skip = (isset($_REQUEST['ash_skip_id'])) ? $_REQUEST['ash_skip_id'] : NULL; 
+
+        # set sessions
+        if($skip != null)
+            $_SESSION['ash_skip_id'] = $skip;
         
+        if($postcode != null)
+            $_SESSION['ash_postcode'] = $postcode;
+
+        # load forms       
         if ( $skip == null && $lat != null ):
             # run the geo query
             $locations = new ASH_WP_Query_Geo([
@@ -138,7 +159,7 @@ class ad_skip_hire
             }
 
         elseif ( $skip != null ): 
-            var_dump($_POST);
+            // var_dump($_POST);
 
             if( isset( $_POST['ash_submit'] ) ): 
                 foreach( $_POST as $key => $entry ):
@@ -153,8 +174,7 @@ class ad_skip_hire
                         $key == 'ash_delivery_county' ||
                         $key == 'ash_delivery_postcode' ||
                         $key == 'ash_delivery_date' ||
-                        $key == 'ash_delivery_time' ||
-                        $key == 'ash_skip_id'
+                        $key == 'ash_delivery_time'
                     ):
                         if( ( $entry == NULL ) || empty( $entry ) ):
                             echo "<p>There were errors with the form. Please fix them to proceed.</p>";
@@ -178,7 +198,6 @@ class ad_skip_hire
             $this->build_postcode_form();
         endif;
     }
-
 
     /**
      * the shortcode contents for the postcode form (looking up lat and lang)
