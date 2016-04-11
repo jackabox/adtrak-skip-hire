@@ -125,8 +125,8 @@ class ad_skip_hire_orders
                 <div class="cmb-td">
                     <p><?php echo get_the_ID(); ?></p>
                     <p><?php echo get_the_title(); ?></p>
-                    <p>a</p>
-                    <p>b</p>
+                    <p><a href="mailto:<?php echo get_post_meta(get_the_ID(), $this->cpt_prefix . '_email', true); ?>"><?php echo get_post_meta(get_the_ID(), $this->cpt_prefix . '_email', true); ?></a></p>
+                    <p><?php echo get_post_meta(get_the_ID(), $this->cpt_prefix . '_phone', true); ?></p>
 
                 </div>
             </div>
@@ -136,32 +136,27 @@ class ad_skip_hire_orders
                     <p><b>Skip Choice</b></p>
                     <p><b>Permit Needed</b></p>
                     <p><b>Waste</b></p>
-                    <p><b>Price</b></p>
-                    <p><b>Payment Method</b></p>
+                    <p><b>Total Price</b></p>
+                    <p><b>PayPal ID</b></p>
                 </div>
                 <div class="cmb-td">
-                    <p>a</p>
-                    <p>b</p>
-                    <p>c</p>
-                    <p>d</p>
-                    <p>e</p>
+                    <p><?php echo get_the_title(get_post_meta(get_the_ID(), $this->cpt_prefix . '_skip_id', true)); ?></p>
+                    <p><?php echo get_the_title(get_post_meta(get_the_ID(), $this->cpt_prefix . '_permit_id', true)); ?></p>
+                    <p><?php $waste = get_post_meta(get_the_ID(), $this->cpt_prefix . '_waste', true); foreach($waste as $w): echo $w . ', '; endforeach; ?></p>
+                    <p>£<?php echo get_post_meta(get_the_ID(), $this->cpt_prefix . '_total', true); ?></p>
+                    <p>---</p>
                 </div>
             </div>
 
 
             <div class="cmb-row">
                 <div class="cmb-th">
-                    <p><b>Delivery Address</b> <br><br><br><br></p>
+                    <p><b>Delivery Address</b> <br><br><br><br><br></p>
                     <p><b>Delivery Notes</b></p>
                 </div>
                 <div class="cmb-td">
-                    <p>
-                        a, b <br>
-                        c, <br>
-                        d, <br>
-                        e 
-                    </p>
-                    <p>a</p>
+                    <p><?php $delivery = get_post_meta(get_the_ID(), $this->cpt_prefix . '_delivery_address', true); foreach($delivery as $d): echo $d . '<br>'; endforeach; ?></p>
+                    <p><?php echo get_post_meta(get_the_ID(), $this->cpt_prefix . '_notes', true); ?></p>
                 </div>
             </div>
 

@@ -237,7 +237,7 @@ class ad_skip_hire
             'address_2' => $_POST['ash_delivery_address_2'],
             'city' => $_POST['ash_delivery_city'],
             'county' => $_POST['ash_delivery_county'],
-            'postcode' => $_SESSION['ash_postcode'],
+            'postcode' => strtoupper($_SESSION['ash_postcode']),
         ];
 
         if(isset($_POST['ash_billing_address_1']) && ($_POST['ash_billing_address_1'] != null)) {
@@ -246,7 +246,7 @@ class ad_skip_hire
                 'address_2' => $_POST['ash_billing_address_2'],
                 'city' => $_POST['ash_billing_city'],
                 'county' => $_POST['ash_billing_county'],
-                'postcode' => $_POST['ash_billing_postcode'],
+                'postcode' => strtoupper($_POST['ash_billing_postcode']),
             ];
         } else {
             $billingAddress = $deliveryAddress;
@@ -265,6 +265,46 @@ class ad_skip_hire
         add_post_meta( $postID, 'ash_orders_notes', $_POST['ash_notes']);
         # order status - meta
         add_post_meta( $postID, 'ash_orders_status', 'pending');
+
+        $skipAmount = get_post_meta($_SESSION['ash_skip_id'], 'ash_skips_price', true);
+        $permitAmount = get_post_meta($_POST['ash_permit_id'], 'ash_permits_price', true);
+        $subTotal = $skipAmount + $permitAmount;
+
+        if(isset($_POST['ash_coupon_code']) && ($_POST['ash_coupon_code'] != null)) {
+            $couponCode = $_POST['ash_coupon_code'];
+            $coupon = new WP_Query([
+                'post_type'              => 'ash_coupons',
+                'post_status'            => 'publish',
+                'posts_per_page'         => -1,
+            ]);
+
+            if ( $coupon->have_posts() ): while ( $coupon->have_posts() ):
+                $coupon->the_post();
+
+                if($couponCode == get_the_title()) {
+                    $couponType = get_post_meta(get_the_ID(), 'ash_coupons_type', true);
+                    $couponAmmount = get_post_meta(get_the_ID(), 'ash_coupons_amount', true);
+
+                    if($couponType == 'percent') {
+                        $couponSaving = $subTotal * ($couponAmount / 100);
+                        $total = $subTotal - $couponSaving;
+                    } elseif ($couponType == 'flat') {
+                        $couponSaving = $couponAmount;
+                        $total = $subTotal - $couponSaving;
+                    }
+
+                    add_post_meta( $postID, 'ash_orders_discount', $couponSaving);
+                } else {
+                    $couponType = NULL;
+                }
+            endwhile; endif;
+        }
+
+        if(!isset($total))
+            $total = $subTotal;
+
+        add_post_meta( $postID, 'ash_orders_total', $total);
+
         # generate PayPal payee link
         $paymentLink = $this->paypal->generate_payment_link($_POST);
 
