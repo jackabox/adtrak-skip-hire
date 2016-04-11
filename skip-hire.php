@@ -12,21 +12,16 @@
 require plugin_dir_path( __FILE__ )  . '/vendor/autoload.php';
 
 // If this file is called directly, abort.
-if ( ! defined( 'WPINC' ) ) {
+if ( ! defined( 'WPINC' ) )
     die;
-}
 
 # require cmb2  
 if ( file_exists( plugin_dir_path( __FILE__ ) . 'vendor/cmb2/init.php' ) ) 
-{
     require_once plugin_dir_path( __FILE__ ) . 'vendor/cmb2/init.php';
-}
 
 # include google maps field, if not already declared
 if(!class_exists( 'PW_CMB2_Field_Google_Maps' ) && file_exists( plugin_dir_path( __FILE__ ) . 'vendor/cmb_field_map/cmb-field-map.php' ) ) 
-{
     require_once plugin_dir_path( __FILE__ ) . 'vendor/cmb_field_map/cmb-field-map.php';
-}
 
 function update_cmb2_meta_box_url( $url ) 
 {
@@ -39,8 +34,6 @@ if ( file_exists( plugin_dir_path( __FILE__ ) . 'includes/classes/SkipHire.php' 
 {
     require plugin_dir_path( __FILE__ ) . 'includes/classes/SkipHire.php';
 }
-
-$plugin = new ad_skip_hire();
 
 # activation
 register_activation_hook( __FILE__ , 'ash_activate_plugin' );
@@ -58,7 +51,6 @@ function ash_activate_plugin()
 
     if($page_exists == null) {
         $post_id = wp_insert_post( $booking_form );
-
         $confirmation = [
             'post_title'    => 'Confirmation',
             'post_content'  => '[ash_booking_confirmation]',
@@ -67,23 +59,7 @@ function ash_activate_plugin()
             'post_parent'   => $post_id,
         ];
         wp_insert_post( $confirmation );
-
-        $response = [
-            'post_title'    => 'Success',
-            'post_content'  => '[ash_booking_success]',
-            'post_status'   => 'publish',
-            'post_type'     => 'page',
-            'post_parent'   => $post_id,
-        ];
-        wp_insert_post( $response );
-
-        $failure = [
-            'post_title'    => 'Error',
-            'post_content'  => '[ash_booking_error]',
-            'post_status'   => 'publish',
-            'post_type'     => 'page',
-            'post_parent'   => $post_id,
-        ];
-        wp_insert_post( $failure );
     }
 }
+
+$plugin = new ad_skip_hire( );

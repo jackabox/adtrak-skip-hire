@@ -1,6 +1,6 @@
 <?php 
 
-class ad_skip_hire 
+class ad_skip_hire
 {
     protected $plugin_name;
     protected $version;
@@ -11,6 +11,7 @@ class ad_skip_hire
     protected $orders;
     protected $skips;
     protected $templates;
+    protected $paypal;
 
     public function __construct()
     {
@@ -46,12 +47,14 @@ class ad_skip_hire
         require_once plugin_dir_path( __FILE__ ) . 'Skips.php';
         require_once plugin_dir_path( __FILE__ ) . 'Orders.php';
         require_once plugin_dir_path( __FILE__ ) . 'WpGeoQuery.php';
+        require_once plugin_dir_path( __FILE__ ) . 'PayPal.php';
 
         $this->locations = new ad_skip_hire_locations();
         $this->permits = new ad_skip_hire_permits();
         $this->coupons = new ad_skip_hire_coupons();
         $this->skips = new ad_skip_hire_skips();
         $this->orders = new ad_skip_hire_orders();
+        $this->paypal = new ad_paypal_interface();
     }
 
     public function load_javascript()
@@ -156,11 +159,10 @@ class ad_skip_hire
                             echo "<p>There were errors with the form. Please fix them to proceed.</p>";
                             $this->build_booking_form();
                             break;
-                        else:
-                            $this->build_confirmation_form();
                         endif;
                     endif;
                 endforeach;
+                $this->build_confirmation_form();
             else:
                 $this->build_booking_form();
             endif;
@@ -191,7 +193,13 @@ class ad_skip_hire
 
     public function build_confirmation_form( $args = [] )
     {
+        $paymentLink = $this->paypal->generate_payment_link($_POST);
+
         include_once plugin_dir_path( __FILE__ ) . '../views/confirmationForm.php';
+
     }
 
+    public function process_paypal_payment( )
+    {
+    }
 }
