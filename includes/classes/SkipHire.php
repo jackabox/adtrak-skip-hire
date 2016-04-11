@@ -158,11 +158,17 @@ class ad_skip_hire
                         if( ( $entry == NULL ) || empty( $entry ) ):
                             echo "<p>There were errors with the form. Please fix them to proceed.</p>";
                             $this->build_booking_form();
+                            $pass = false;
                             break;
                         endif;
+                    else:
+                        $pass = true;
                     endif;
                 endforeach;
-                $this->build_confirmation_form();
+
+                if($pass == true):
+                    $this->build_confirmation_form();
+                endif;
             else:
                 $this->build_booking_form();
             endif;
