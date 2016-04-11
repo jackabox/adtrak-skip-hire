@@ -8,6 +8,8 @@ use PayPal\Api\Payer;
 use PayPal\Api\Payment;
 use PayPal\Api\RedirectUrls;
 use PayPal\Api\Transaction;
+use PayPal\Api\ExecutePayment;
+use PayPal\Api\PaymentExecution;
 
 class ad_paypal_interface 
 {
@@ -77,5 +79,43 @@ class ad_paypal_interface
         }
         $approvalUrl = $payment->getApprovalLink();
         return $approvalUrl;
+    }
+
+    public function authorised_payment_check () 
+    {
+        if (isset($_GET['success']) && $_GET['success'] == 'true') {
+            $paymentId = $_GET['paymentId'];
+            $payment = Payment::get($paymentId, $this->apiContext);
+
+            $execution = new PaymentExecution();
+            $execution->setPayerId($_GET['PayerID']);
+
+            $transaction = new Transaction();
+            $amount = new Amount(); 
+
+            $amount->setCurrency('GBP')
+                   ->setTotal(21);
+
+            $transaction->setAmount($amount);
+            $execution->addTransaction($transaction);
+
+            try {
+                $result = $payment->execute($execution, $this->apiContext);
+                try {
+                    $payment = Payment::get($paymentId, $this->apiContext);
+                } catch (Exception $ex) {
+                    // error
+                    exit(1);
+                }
+            } catch (Exception $ex) {
+                // error
+                exit(1);
+            }
+
+            return $payment;
+        } else {
+            // user canceled payment;
+            exit;
+        }
     }
 }

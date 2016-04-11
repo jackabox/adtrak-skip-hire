@@ -28,6 +28,7 @@ class ad_skip_hire
         # shortcodes
         add_shortcode( 'ash_postcode_form', [$this, 'build_postcode_form'] );
         add_shortcode( 'ash_booking_form', [$this, 'booking_form_director'] );
+        add_shortcode( 'ash_booking_confirmation', [$this, 'booking_form_process'] );
 
         # javascript
         add_action( 'wp_enqueue_scripts', [$this, 'load_javascript'] );
@@ -205,7 +206,10 @@ class ad_skip_hire
 
     }
 
-    public function process_paypal_payment( )
+    public function booking_form_process ( $args = [] )
     {
+        $response = $this->paypal->authorised_payment_check();
+
+        var_dump($response);
     }
 }
