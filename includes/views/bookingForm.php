@@ -147,6 +147,12 @@
             <label for="ash_notes">Additional Notes</label>
             <textarea name="ash_notes" id="ash_notes"><?php if(isset($_POST['ash_notes'])) echo $_POST['ash_notes']; ?></textarea>
         </div>
+        
+        <div calss="ash__input ash__input--coupon">
+            <label for="ash_coupon">Coupon Code</label>
+            <input type="text" name="ash_coupon" id="ash_coupon" value="<?php if(isset($_POST['ash_coupon'])) echo $_POST['ash_coupon']; ?>">
+        </div>
+        
     </fieldset>
 
     <!-- proceed to confirmation -->
