@@ -1,4 +1,4 @@
-<h3>Choose a SKip</h3>
+<h3>Choose a Skip</h3>
 <p>We found the following skips available for delivery in your location.</p>
 
 <?php
