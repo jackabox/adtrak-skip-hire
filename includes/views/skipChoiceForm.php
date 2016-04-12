@@ -7,7 +7,7 @@ $args = [
     'post_type'              => 'ash_skips',
     'post_status'            => 'publish',
     'posts_per_page'         => -1,
-    // 'cache_results'          => true,
+    'cache_results'          => true,
 ];
 
 $skips = new WP_Query( $args );

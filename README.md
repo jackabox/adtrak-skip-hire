@@ -4,6 +4,7 @@ Contributers: jackabox
 Tags: skip, booking, crm  
 Tested up to: 4.4  
 Stable Tag:  ?
+Beta Tag: 0.1
 Requires at least: 4.0  
 
 A plugin used to set radius for skip hire, process booking, and take payments.
@@ -33,7 +34,3 @@ these are automatically added and will generate all the necessary code on their 
 > [ash_booking_form]
 
 > [ash_booking_confirmation]
-
-> [ash_booking_success]
-
-> [ash_booking_error]
