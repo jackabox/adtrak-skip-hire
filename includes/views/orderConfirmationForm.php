@@ -27,7 +27,7 @@
             <tr>
                 <td>Coupon</td>
                 <td><?php echo $coupon['title']?></td>
-                <td>£<?php echo $coupon['price'] ?></td>
+                <td>-£<?php echo number_format( (float)$coupon['price'], 2, '.', ''); ?></td>
             </tr>
         <?php } ?>
 
@@ -74,18 +74,16 @@
         </tr>
         <tr>
             <td>Waste Options</td>
-            <td><?php $waste = $_POST['ash_waste']; foreach( $waste as $w ) { echo $w . ', '; } ?></td>
+            <td><?php $waste = $_POST['ash_waste']; $i = 1; foreach( $waste as $w ) { echo $w; echo ($i < count($waste)) ? ', ' : ''; $i++; } ?></td>
         </tr>
         <tr>
             <td>Additional Notes</td>
-            <td><?php echo $_POST['ash_notes'];?></td>
+            <td><?php echo $_POST['ash_notes']; ?></td>
         </tr>
     </tbody>
 </table>
 
 <p class="ash__payee-links">
     <a class="ash__payee-links--phone" href="tel:1231231231">Pay Via Phone</a> or 
-    <a class="ash__payee-links--paypal" href="<?php echo $paymentLink ?>" data-paypal-button="true">
-        <img src="//www.paypalobjects.com/en_US/i/btn/btn_xpressCheckout.gif" alt="Check out with PayPal" />
-    </a>
+    <a class="ash__payee-links--paypal" href="<?php echo $paymentLink ?>" data-paypal-button="true"><img src="//www.paypalobjects.com/en_US/i/btn/btn_xpressCheckout.gif" alt="Check out with PayPal" /></a>
 </p>

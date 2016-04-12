@@ -248,10 +248,10 @@ class ad_skip_hire
             $subTotal = $permit['price'] + $skip['price'];
 
             # Coupon
-            if( isset($_POST['ash_coupon_code'] ) ) {
+            if( isset($_POST['ash_coupon'] ) ) {
                 $coupons = new WP_Query([
                     'post_type'             => 'ash_coupons',
-                    's'                     => $_POST['ash_coupon_code'],
+                    's'                     => $_POST['ash_coupon'],
                     'posts_per_page'        => 1,
                 ]);
                 if ( $coupons->have_posts() ): while ( $coupons->have_posts() ): $coupons->the_post();
