@@ -21,6 +21,10 @@ class ad_skip_hire_orders
         add_action( 'add_meta_boxes', [$this, 'custom_metabox']);
         add_filter( 'manage_' . $this->cpt_prefix . '_posts_columns', [$this, 'modify_post_columns'] );
         add_action( 'manage_' . $this->cpt_prefix . '_posts_custom_column', [$this, 'modify_table_content'], 10, 2 );
+        
+        # filters
+        add_action( 'restrict_manage_posts', [$this, 'ash_orders_filter_columns'] );
+        add_filter( 'parse_query', [$this, 'ash_orders_parse_query'] );
     }
 
     /**
@@ -174,6 +178,16 @@ class ad_skip_hire_orders
     public function modify_post_columns( $defaults )
     {
         # return
+        unset($defaults['title']);
+        unset($defaults['date']);
+
+        $defaults['order'] = "Order #";
+        $defaults['title'] = "Name";
+        $defaults['date'] = "Order Placed";
+        $defaults['price'] = "Total Price";
+        $defaults['status'] = "Order Status";
+        $defaults['delivery'] = "Delivery Date";
+
         return $defaults;
     }
 
@@ -185,6 +199,80 @@ class ad_skip_hire_orders
      */
     public function modify_table_content( $column_name, $post_id )
     {
+        if( $column_name == 'order' )
+            echo get_the_ID();
 
+        if( $column_name == 'price' )
+            echo '£' . get_post_meta( $post_id, $this->cpt_prefix . '_total', true );
+
+        if( $column_name == 'status' ) {
+            $status = get_post_meta( $post_id, $this->cpt_prefix . '_status', true );
+
+            if($status = 'pending') {
+                echo "Pending Payment";
+            } elseif($status = 'paid') {
+                echo "Paid";
+            } elseif($status = 'complete') {
+                echo "Complete";
+            }
+        }
+
+        if( $column_name == 'delivery' )
+            echo get_post_meta( $post_id, $this->cpt_prefix . '_delivery_time', true ) . ' on ' . date('d/m/Y', strtotime(get_post_meta( $post_id, $this->cpt_prefix . '_delivery_date', true )));
+    }
+
+    /**
+     * filter the admin columns by order status
+     * @return [type] [description]
+     */
+    public function ash_orders_filter_columns()
+    {
+        $type = 'post';
+
+        if ( isset($_GET['post_type']) ) {
+            $type = $_GET['post_type'];
+        }
+
+        if ( $this->cpt_prefix == $type ) {
+            $values = [
+                'Pending Payment' => 'pending', 
+                'Paid' => 'paid',
+                'Complete' => 'complete',
+            ]; ?>
+            
+            <select name="ash_orders_filter_by_type">
+                <option value=""><?php _e('Filter By Status', 'ash'); ?></option>
+                <?php
+                    $current_v = isset( $_GET['ash_orders_filter_by_type'] ) ? $_GET['ash_orders_filter_by_type'] : '';
+                    foreach ( $values as $label => $value ) {
+                    printf
+                        (
+                            '<option value="%s"%s>%s</option>',
+                            $value,
+                            $value == $current_v ? ' selected="selected"' : '',
+                            $label
+                        );
+                    }
+                ?>
+            </select>
+        <?php
+        }
+    }
+
+    public function ash_orders_parse_query()
+    {
+        global $pagenow;
+        global $query;
+        
+        $type = 'ash_orders';
+        
+        if ( isset( $_GET['post_type'] ) ) {
+            $type = $_GET['post_type'];
+        }
+
+        if ( $this->cpt_prefix == $type && is_admin() && $pagenow == 'edit.php' && isset( $_GET['ash_orders_filter_by_type'] ) && $_GET['ash_orders_filter_by_type'] != '' ) {
+            $query->query_vars['meta_key'] = 'ash_orders_status';
+            $query->query_vars['meta_value'] = $_GET['ash_orders_filter_by_type'];
+        }
     }
 }
