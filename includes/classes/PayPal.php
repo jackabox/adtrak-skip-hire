@@ -29,32 +29,52 @@ class ad_paypal_interface
     {
         $payer = new Payer();
         $payer->setPaymentMethod("paypal");
+        $items = [];
 
-        $item1 = new Item();
-        $item1->setName('Sample')
-              ->setCurrency('GBP')
-              ->setQuantity(1)
-              ->setSku('12313')
-              ->setPrice('20.00');
+        if($skip) {
+            $item1 = new Item();
+            $item1->setName($skip['title'])
+                  ->setCurrency('GBP')
+                  ->setQuantity(1)
+                  ->setSku($skip['id'])
+                  ->setPrice($skip['price']);
 
-        $item2 = new Item();
-        $item2->setName('Permit')
-              ->setCurrency('GBP')
-              ->setQuantity(1)
-              ->setSku('12315')
-              ->setPrice('1.00');
+            $items[] = $item1;
+        }
+
+        if($permit) {
+            $item2 = new Item();
+            $item2->setName($permit['title'])
+                  ->setCurrency('GBP')
+                  ->setQuantity(1)
+                  ->setSku($permit['id'])
+                  ->setPrice($permit['price']);
+
+            $items[] = $item2;
+        }
+
+        if($coupon) {
+            $item3 = new Item();
+            $item3->setName($coupon['title'])
+                  ->setCurrency('GBP')
+                  ->setQuantity(1)
+                  ->setSku($coupon['id'])
+                  ->setPrice(-$coupon['price']);
+
+            $items[] = $item3;
+        }
 
         $itemList = new ItemList();
-        $itemList->setItems([$item1, $item2]);
+        $itemList->setItems($items);
 
         $amount = new Amount();
         $amount->setCurrency("GBP")
-               ->setTotal(21);
+               ->setTotal($total);
 
         $transaction = new Transaction();
         $transaction->setAmount($amount)
                     ->setItemList($itemList)
-                    ->setDescription("Text Payment")
+                    ->setDescription("Payment for Skip Hire")
                     ->setInvoiceNumber(uniqid());
 
 

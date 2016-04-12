@@ -217,6 +217,73 @@ class ad_skip_hire
 
     public function build_confirmation_form( $args = [] )
     {
+
+        # Skips
+        $skips = new WP_Query([
+            'post_type'             => 'ash_skips',
+            'posts_per_page'        => 1,
+            'post_id'               => $_SESSION['ash_skip_id']
+        ]);
+        if ( $skips->have_posts() ): while ( $skips->have_posts() ): $skips->the_post();
+            $skip['title'] = get_the_title();
+            $skip['id'] =  get_the_ID();
+            $skip['price'] = get_post_meta( get_the_ID(), 'ash_skips_price', true );
+        endwhile; endif;
+
+        # Permits
+        $permits = new WP_Query([
+            'post_type'             => 'ash_permits',
+            'posts_per_page'        => 1,
+            'post_id'               => $_POST['ash_permit_id']
+        ]);
+        if ( $permits->have_posts() ): while ( $permits->have_posts() ): $permits->the_post();
+            $permit['title'] = get_the_title();
+            $permit['id'] =  get_the_ID();
+            $permit['price'] = get_post_meta( get_the_ID(), 'ash_permits_price', true );
+        endwhile; else:
+            $permit['title'] = '';
+            $permit['price'] = 0.00;
+        endif;
+
+        $subTotal = $permit['price'] + $skip['price'];
+
+        # Coupon
+        if( isset($_POST['ash_coupon_code'] ) ) {
+            $coupons = new WP_Query([
+                'post_type'             => 'ash_coupons',
+                's'                     => $_POST['ash_coupon_code'],
+                'posts_per_page'        => 1,
+            ]);
+            if ( $coupons->have_posts() ): while ( $coupons->have_posts() ): $coupons->the_post();
+                $couponType = get_post_meta(get_the_ID(), 'ash_coupons_type', true);
+                $couponAmount = get_post_meta(get_the_ID(), 'ash_coupons_amount', true);
+
+                $coupon['title'] = get_the_title();
+                $coupon['id'] =  get_the_ID();
+
+                if( $couponType == 'flat' ) {
+                    $coupon['price'] = $couponAmount;
+                } elseif ( $couponType == 'percent' ) {
+                    $coupon['price'] = $subTotal * ($couponAmount / 100);
+                }
+            endwhile; else:
+                $coupon['price'] = 0.00;
+            endif; 
+        } else {
+            $coupon['price'] = 0.00;
+        }
+
+        $total = $subTotal - $coupon['price'];
+
+        # paypal link
+        $paymentLink = $this->paypal->generate_payment_link($_POST, $skip, $permit, $coupon, $total);
+        
+        # Include Template
+        include_once plugin_dir_path( __FILE__ ) . '../views/confirmationForm.php';
+    }
+
+    public function create_order_from_form () 
+    {
         # create the post
         $createPost = [
             'post_title' => wp_strip_all_tags( $_POST['ash_forename'] . ' ' . $_POST['ash_surname'] ),
@@ -306,10 +373,6 @@ class ad_skip_hire
         add_post_meta( $postID, 'ash_orders_total', $total);
 
         # generate PayPal payee link
-        $paymentLink = $this->paypal->generate_payment_link($_POST);
-
-        # Include Template
-        include_once plugin_dir_path( __FILE__ ) . '../views/confirmationForm.php';
     }
 
     public function booking_form_process ( $args = [] )
