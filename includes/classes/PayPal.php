@@ -25,6 +25,15 @@ class ad_paypal_interface
         );
     }
 
+    /**
+     * generate the payment links from given data
+     * @param  array $postdata  data from form
+     * @param  array $skip      set up in the controller
+     * @param  array $permit    set up in the controller
+     * @param  array $coupon    if exists, set up in the controller
+     * @param  string $total    final price to charge the user
+     * @return string           returns the generated url with token
+     */
     public function generate_payment_link($postdata, $skip, $permit = null, $coupon = null, $total)
     {
         $payer = new Payer();
@@ -99,6 +108,9 @@ class ad_paypal_interface
         return $approvalUrl;
     }
 
+    /**
+     * authorises the payment, adds the requirements to the database
+     */
     public function authorised_payment_check () 
     {
         if (isset($_GET['success']) && $_GET['success'] == 'true') {

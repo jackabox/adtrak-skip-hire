@@ -23,6 +23,9 @@ class ad_skip_hire_coupons
 
     }
 
+    /**
+     * create the custom post type and set args
+     */
     public function coupon_post_type() 
     {
         $labels = [
