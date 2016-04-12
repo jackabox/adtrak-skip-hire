@@ -25,24 +25,22 @@ class ad_paypal_interface
         );
     }
 
-    public function generate_payment_link($postdata = null)
+    public function generate_payment_link($postdata, $skip, $permit = null, $coupon = null, $total)
     {
         $payer = new Payer();
         $payer->setPaymentMethod("paypal");
         $items = [];
 
-        if($skip) {
-            $item1 = new Item();
-            $item1->setName($skip['title'])
-                  ->setCurrency('GBP')
-                  ->setQuantity(1)
-                  ->setSku($skip['id'])
-                  ->setPrice($skip['price']);
+        $item1 = new Item();
+        $item1->setName($skip['title'])
+              ->setCurrency('GBP')
+              ->setQuantity(1)
+              ->setSku($skip['id'])
+              ->setPrice($skip['price']);
 
-            $items[] = $item1;
-        }
+        $items[] = $item1;
 
-        if($permit) {
+        if($permit['title'] != null) {
             $item2 = new Item();
             $item2->setName($permit['title'])
                   ->setCurrency('GBP')
@@ -53,7 +51,7 @@ class ad_paypal_interface
             $items[] = $item2;
         }
 
-        if($coupon) {
+        if($coupon['title'] != null) {
             $item3 = new Item();
             $item3->setName($coupon['title'])
                   ->setCurrency('GBP')
@@ -114,7 +112,7 @@ class ad_paypal_interface
             $amount = new Amount(); 
 
             $amount->setCurrency('GBP')
-                   ->setTotal(21);
+                   ->setTotal($_SESSION['ash_order_total']);
 
             $transaction->setAmount($amount);
             $execution->addTransaction($transaction);
@@ -132,7 +130,7 @@ class ad_paypal_interface
                 exit(1);
             }
 
-            return $payment;
+            return $result;
         } else {
             // user canceled payment;
             exit;
