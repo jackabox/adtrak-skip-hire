@@ -141,7 +141,7 @@ class ad_skip_hire_orders
                 </div>
                 <div class="cmb-td">
                     <p><?php echo get_the_title(get_post_meta(get_the_ID(), $this->cpt_prefix . '_skip_id', true)); ?></p>
-                    <p><?php echo get_the_title(get_post_meta(get_the_ID(), $this->cpt_prefix . '_permit_id', true)); ?></p>
+                    <p><?php if(get_post_meta(get_the_ID(), $this->cpt_prefix . '_permit_id', true)) { echo get_the_title(get_post_meta(get_the_ID(), $this->cpt_prefix . '_permit_id', true)); } else { echo "---"; } ?></p>
                     <p><?php $waste = get_post_meta(get_the_ID(), $this->cpt_prefix . '_waste', true); foreach($waste as $w): echo $w . ', '; endforeach; ?></p>
                     <p>£<?php echo get_post_meta(get_the_ID(), $this->cpt_prefix . '_total', true); ?></p>
                     <p>---</p>
