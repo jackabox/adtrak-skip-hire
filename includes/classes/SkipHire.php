@@ -352,7 +352,7 @@ class ad_skip_hire
     {
         $this->paypal->authorised_payment_check();
 
-        add_post_meta( $_SESSION['ash_order_id'], 'ash_orders_paypal_id', $_GET['paymentid']);
+        add_post_meta( $_SESSION['ash_order_id'], 'ash_orders_paypal_id', $_GET['paymentId']);
         add_post_meta( $_SESSION['ash_order_id'], 'ash_orders_paypal_payer_id', $_GET['PayerID']);
     }
 }
