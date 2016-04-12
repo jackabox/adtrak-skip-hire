@@ -17,7 +17,7 @@ class ad_skip_hire
     {
         $this->plugin_name = 'ad_skip_hire';
         $this->version = '1.0.0';
-        $this->prefix = 'adsh_';
+        $this->prefix = 'ash_';
 
         # dependanices
         $this->load_dependencies();
@@ -321,7 +321,7 @@ class ad_skip_hire
             'postcode' => strtoupper($_SESSION['ash_postcode']),
         ];
 
-        if(isset($_POST['ash_billing_address_1']) && ($_POST['ash_billing_address_1'] != null)) {
+        /*if(isset($_POST['ash_billing_address_1']) && ($_POST['ash_billing_address_1'] != null)) {
             $billingAddress = [
                 'address_1' => $_POST['ash_billing_address_1'],
                 'address_2' => $_POST['ash_billing_address_2'],
@@ -331,12 +331,12 @@ class ad_skip_hire
             ];
         } else {
             $billingAddress = $deliveryAddress;
-        }
+        }*/
 
         # posted data - meta
         add_post_meta( $postID, 'ash_orders_email', $_POST['ash_email'] );
         add_post_meta( $postID, 'ash_orders_phone', $_POST['ash_phone'] );
-        add_post_meta( $postID, 'ash_orders_billing_address', $billingAddress );
+        // add_post_meta( $postID, 'ash_orders_billing_address', $billingAddress );
         add_post_meta( $postID, 'ash_orders_delivery_address', $deliveryAddress );
         add_post_meta( $postID, 'ash_orders_delivery_date', $_POST['ash_delivery_date']);
         add_post_meta( $postID, 'ash_orders_delivery_time', $_POST['ash_delivery_time'][0]);

@@ -56,9 +56,10 @@
             <input type="text" name="ash_postcode" id="ash_postcode" value="<?php echo $_SESSION["ash_postcode"]; ?>" disabled>
         </div>
 
-        <p class="ash__show-billing"><a href="javascript:void(0);">Is your billing address different?</a></p>
+        <!--<p class="ash__show-billing"><a href="javascript:void(0);">Is your billing address different?</a></p>-->
     </fieldset>
 
+<?php /*
     <fieldset class="ash__fieldset ash__fieldset-billing" style="display: none;">
         <legend class="ash__legend ash__legend-billing">Billing Address</legend>
         
@@ -87,6 +88,7 @@
             <input type="text" name="ash_billing_postcode" id="ash_billing_postcode" value="<?php if(isset($_POST['ash_billing_postcode'])) echo $_POST['ash_billing_postcode']; ?>">
         </div>
     </fieldset>
+*/?>
 
     <fieldset class="ash__fieldset ash__fieldset-date">
         <legend class="ash__legend ash__legend-date">Delivery Date/Time</legend>
@@ -152,7 +154,7 @@
             <label for="ash_coupon">Coupon Code</label>
             <input type="text" name="ash_coupon" id="ash_coupon" value="<?php if(isset($_POST['ash_coupon'])) echo $_POST['ash_coupon']; ?>">
         </div>
-        
+
     </fieldset>
 
     <!-- proceed to confirmation -->
