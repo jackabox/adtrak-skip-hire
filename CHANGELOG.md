@@ -2,8 +2,10 @@
 
 ## Version 0.4
 
-- [Bug] Fixing catch for if no waste was selected on the form.
-- [Feature] Implementing mailer class to send out emails on order confirmation.
+- [Bug] Fixed break in form when no waste was selected.
+- [Bug] Fixed an error where the form was not sending waste details to the database.
+- [Feature] Implementing mailer class to send out emails on order confirmation to the admin.
+- [Feature] Allowing for user to control admin email in options page.
 - [Improvement] Reconstructing user flow and stopping addition of duplicate data.
 
 ## Version 0.3

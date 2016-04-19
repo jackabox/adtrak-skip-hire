@@ -197,6 +197,13 @@ class ad_skip_hire
             'page'       => 'payment_page'
         ];
 
+        $sections[$this->prefix . '_email'] = [
+            'id'         => $this->prefix . '_email',
+            'title'      => 'Email',
+            'callback'   => [$this, 'render_section'],
+            'page'       => 'email_page'
+        ];
+
         return $sections;
     }
 
@@ -264,6 +271,18 @@ class ad_skip_hire
             'page'           => 'payment_page',
             'section'        => $this->prefix . '_payment',
             'desc'           => 'Provide the number to call if users want to pay by phone.',
+            'type'           => 'text',
+            'default_value'  => '',
+            'class'          => ''
+        ];
+
+        $fields[] = [
+            'id'             => $this->prefix . '_email_address',
+            'title'          => 'Email Address',
+            'callback'       => [$this, 'render_field'],
+            'page'           => 'email_page',
+            'section'        => $this->prefix . '_email',
+            'desc'           => 'Provide the email address to send the notification emails to.',
             'type'           => 'text',
             'default_value'  => '',
             'class'          => ''
@@ -594,6 +613,7 @@ class ad_skip_hire
     {
         if( isset( $_REQUEST['ash_place_order_phone'] ) || isset ( $_REQUEST['ash_place_order_paypal'] ) ) {
             $postID = $this->create_order_from_form();
+            $mailer = $this->mail->send_mail( $postID, $_SESSION['ash_order_details'] );
 
             $options = get_option('payment_page'); 
             

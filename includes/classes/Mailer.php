@@ -6,23 +6,24 @@ class ad_skip_hire_mailer
 
     public function __construct()
     {
-        $this->mail = new PHPMailer;
+        $options = get_option('email_page');
 
-        $this->mail->setFrom( 'test@emailme.com' , '' );
-        $this->mail->addAddress( 'jack.whiting@adtrak.co.uk' );
-        
+        $this->mail = new PHPMailer;        
+        $this->mail->addAddress( $options['ash_email_address'] );
         $this->mail->isHTML(true);
     }
 
-    public function send_mail() 
+    public function send_mail($postID, $data) 
     {
-        $this->mail->Subject = 'Skip Hire Order #ID';
-        $this->mail->Body = 'this is a sample message';  
+        $home = home_url();
 
-        if(!$mail->send()) {
-            echo 'Mailer Error: ' . $mail->ErrorInfo;
-        } else {
-            echo 'Message has been sent';
+        $this->mail->setFrom( $data['ash_email'] , $data['ash_forename'] . ' ' . $data['ash_surname'] );
+
+        $this->mail->Subject = 'Skip Order #' . $postID;
+        $this->mail->Body = "An order has been placed on your website with the ID of {$postID} by {$data['ash_forename']} {$data['ash_surname']}. Please review this order on your website at {$home}.";
+
+        if(!$this->mail->send()) {
+            echo 'Mailer Error: ' . $this->mail->ErrorInfo;
         }
     }
 }
