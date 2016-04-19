@@ -14,13 +14,16 @@ use PayPal\Api\PaymentExecution;
 class ad_paypal_interface 
 {
     protected $apiContext;
+    protected $options;
 
     function __construct()
     {
+        $this->options = get_option('payment_page');
+
         $this->apiContext = new \PayPal\Rest\ApiContext(
             new \PayPal\Auth\OAuthTokenCredential(
-                'AdT05BjwM_57eFwc56eor6xA7VRG1JQLJz2h4iXPGzqxnLC3nGwZXiywg2pk5unhgRozEAW0rLX0rNLH',     // ClientID
-                'EJRYipfzxEhoZJcewGK-n0x1_7kjOwfVY5dV3XeLk0VEhXWq35IYKNX47pdlD7qizyN2LyiUew1qu3QT'      // ClientSecret
+                $this->options['ash_paypal_client_id'], //'AdT05BjwM_57eFwc56eor6xA7VRG1JQLJz2h4iXPGzqxnLC3nGwZXiywg2pk5unhgRozEAW0rLX0rNLH',     // ClientID
+                $this->options['ash_paypal_client_secret'] //'EJRYipfzxEhoZJcewGK-n0x1_7kjOwfVY5dV3XeLk0VEhXWq35IYKNX47pdlD7qizyN2LyiUew1qu3QT'      // ClientSecret
             )
         );
     }
@@ -81,7 +84,7 @@ class ad_paypal_interface
         $transaction = new Transaction();
         $transaction->setAmount($amount)
                     ->setItemList($itemList)
-                    ->setDescription("Payment for Skip Hire")
+                    ->setDescription($this->options['ash_payment_description'])
                     ->setInvoiceNumber(uniqid());
 
 

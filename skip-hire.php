@@ -50,7 +50,7 @@ class ad_skip_hire
     {
         $this->plugin_name = 'ad_skip_hire';
         $this->version = '0.1';
-        $this->prefix = 'ash_';
+        $this->prefix = 'ash';
         $this->settings_slug = "ad_skip_hire_options";
         $this->sections = $this->get_sections();
 
@@ -76,7 +76,6 @@ class ad_skip_hire
         add_action( 'wp_enqueue_scripts', [$this, 'load_javascript'] );
         add_filter( 'cmb2_meta_box_url', [$this, 'update_cmb2_meta_box_url'] );
     }
-
 
     public function activate() 
     {
@@ -290,8 +289,6 @@ class ad_skip_hire
             case 'checkbox':
                 $html .= '<input type="checkbox" id="' . $id . '" name="' . $page . '[' . $id . ']" value="1" ' . checked (1, isset ($options[$id]) ? $options[$id] : 0, false) . '/>';
                 $html .= '<label for="' . $id . '">&nbsp;'  . $desc . '</label>';
-                break;
-            case 'button':
                 break;
             default:
                 break;
