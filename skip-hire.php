@@ -528,7 +528,7 @@ class ad_skip_hire
             $paymentLink = $this->paypal->generate_payment_link($_POST, $skip, $permit, $coupon, $total);
 
             # create the form.
-            $this->create_order_from_form();
+            $postID = $this->create_order_from_form();
 
             # get the options
             $options = get_option('payment_page');
@@ -557,7 +557,6 @@ class ad_skip_hire
         $postID = wp_insert_post( $createPost );
         $_SESSION['ash_order_id'] = $postID;
 
-
         # session
         $_SESSION['ash_user'] = [
             'id'    => $postID,
@@ -584,6 +583,8 @@ class ad_skip_hire
         add_post_meta( $postID, 'ash_orders_notes', $_POST['ash_notes']);
         add_post_meta( $postID, 'ash_orders_status', 'pending');
         add_post_meta( $postID, 'ash_orders_total', $_SESSION['ash_order_total']);
+
+        return $postID;
     }
 
     /**
