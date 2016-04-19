@@ -28,33 +28,33 @@ class ad_skip_hire_locations
     public function location_post_type() 
     {
         $labels = [
-            'name' => _x( 'Delivery Locations', $this->cpt_prefix),
-            'singular_name' => _x( 'Delivery Location', $this->cpt_prefix),
-            'add_new' => _x( 'Add New', $this->cpt_prefix),
-            'add_new_item' => _x( 'Add New Delivery Location', $this->cpt_prefix),
-            'edit_item' => _x( 'Edit Delivery Location', $this->cpt_prefix ),
-            'new_item' => _x( 'New Delivery Location', $this->cpt_prefix),
-            'view_item' => _x( 'View Delivery Location', $this->cpt_prefix),
-            'search_items' => _x( 'Search Delivery Location', $this->cpt_prefix ),
-            'not_found' => _x( 'No Delivery Locations found', $this->cpt_prefix ),
-            'not_found_in_trash' => _x( 'No Delivery Locations found in Trash', $this->cpt_prefix ),
-            'menu_name' => _x( 'Delivery Locations', $this->cpt_prefix ),
+            'name'                  => _x( 'Delivery Locations', $this->cpt_prefix),
+            'singular_name'         => _x( 'Delivery Location', $this->cpt_prefix),
+            'add_new'               => _x( 'Add New', $this->cpt_prefix),
+            'add_new_item'          => _x( 'Add New Delivery Location', $this->cpt_prefix),
+            'edit_item'             => _x( 'Edit Delivery Location', $this->cpt_prefix ),
+            'new_item'              => _x( 'New Delivery Location', $this->cpt_prefix),
+            'view_item'             => _x( 'View Delivery Location', $this->cpt_prefix),
+            'search_items'          => _x( 'Search Delivery Location', $this->cpt_prefix ),
+            'not_found'             => _x( 'No Delivery Locations found', $this->cpt_prefix ),
+            'not_found_in_trash'    => _x( 'No Delivery Locations found in Trash', $this->cpt_prefix ),
+            'menu_name'             => _x( 'Delivery Locations', $this->cpt_prefix ),
         ];
      
         $args = [
-            'labels' => $labels,
-            'hierarchical' => true,
-            'description' => 'Delivery locations for the skips',
-            'supports' => array( 'title'),
-            'public' => false,
-            'show_ui' => true,
-            'show_in_menu' => $this->menu_parent,
-            'publicly_queryable' => true,
-            'exclude_from_search' => true,
-            'query_var' => true,
-            'can_export' => true,
-            'rewrite' => true,
-            'capability_type' => 'post'
+            'labels'                => $labels,
+            'hierarchical'          => true,
+            'description'           => __('Delivery locations for the skips', 'ash'),
+            'supports'              => ['title'],
+            'public'                => false,
+            'show_ui'               => true,
+            'show_in_menu'          => $this->menu_parent,
+            'publicly_queryable'    => true,
+            'exclude_from_search'   => true,
+            'query_var'             => true,
+            'can_export'            => true,
+            'rewrite'               => true,
+            'capability_type'       => 'post'
         ];
 
         register_post_type($this->cpt_prefix, $args);
@@ -81,13 +81,6 @@ class ad_skip_hire_locations
             'type'          => 'pw_map',
             'split_values'  => true,
         ]);
-
-        // $location_fields->add_field([
-        //     'name'          => __('Within Radius', 'ash'),
-        //     'desc'          => 'Enter a distance you will deliver from the defined location',
-        //     'id'            => $this->cpt_prefix . '_radius',
-        //     'type'          => 'text_small',
-        // ]);
     }
 
     /**
@@ -101,7 +94,6 @@ class ad_skip_hire_locations
         unset($defaults['date']);
 
         # add in new column arrays
-        // $defaults['radius'] = "Radius";
         $defaults['latitude'] = "Latitude";
         $defaults['longitude'] = "Longitude";
 
@@ -122,8 +114,5 @@ class ad_skip_hire_locations
 
         if( $column_name == 'longitude' )
             echo get_post_meta( $post_id, $this->cpt_prefix . '_location_longitude', true );
-
-        // if( $column_name == 'radius' )
-        //     echo get_post_meta( $post_id, $this->cpt_prefix . '_radius', true ) . ' km';
     }
 }

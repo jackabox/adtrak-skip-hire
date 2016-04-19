@@ -7,7 +7,5 @@
         <input type="text" name="ash_postcode" id="ash_postcode">
     </p>
 
-    <p>
-        <button type="submit" id="ash_postcode_submit">Check Available Skips</button>
-    </p>
+    <p><button type="submit" id="ash_postcode_submit">Check Available Skips</button></p>
 </form>

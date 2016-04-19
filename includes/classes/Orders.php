@@ -84,9 +84,9 @@ class ad_skip_hire_orders
             'name'          => __( 'Order Status', 'ash' ),
             'type'          => 'select',
             'options'       => [
-                'pending'    => __('Pending Payment', 'ash'),
-                'paid'       => __('Paid', 'ash'),
-                'complete'   => __('Complete', 'ash'),
+                'pending'   => __('Pending Payment', 'ash'),
+                'paid'      => __('Paid', 'ash'),
+                'complete'  => __('Complete', 'ash'),
             ],
         ]);
 
@@ -102,8 +102,8 @@ class ad_skip_hire_orders
             'name'          => __( 'Delivery Slot', 'ash' ),
             'type'          => 'select',
             'options'       => [
-                'AM'    => __('Morning', 'ash'),
-                'PM'    => __('Afternoon', 'ash'),
+                'AM'        => __('Morning', 'ash'),
+                'PM'        => __('Afternoon', 'ash'),
             ],
         ]);
     }
@@ -159,7 +159,12 @@ class ad_skip_hire_orders
                     <p><b>Delivery Notes</b></p>
                 </div>
                 <div class="cmb-td">
-                    <p><?php $delivery = get_post_meta(get_the_ID(), $this->cpt_prefix . '_delivery_address', true); foreach($delivery as $d): echo $d . '<br>'; endforeach; ?></p>
+                    <p>
+                        <?php $delivery = get_post_meta(get_the_ID(), $this->cpt_prefix . '_delivery_address', true); 
+                        foreach($delivery as $d): 
+                            echo $d . '<br>'; 
+                        endforeach; ?>
+                    </p>
                     <p><?php echo get_post_meta(get_the_ID(), $this->cpt_prefix . '_notes', true); ?></p>
                 </div>
             </div>

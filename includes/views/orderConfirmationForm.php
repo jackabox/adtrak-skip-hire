@@ -1,7 +1,9 @@
 <h3>Confirmation of Your Order</h3>
+
 <p>Please review your information, then proceed to payment. If anything seems wrong, <a href="javascript:history.back()">go back</a> and edit the fields.</p>
 
 <h4>Order Overiew</h4>
+
 <table>
     <thead>
         <tr>
@@ -40,6 +42,7 @@
 </table>
 
 <h4>Your Details</h4>
+
 <table>
     <tbody>
         <tr>

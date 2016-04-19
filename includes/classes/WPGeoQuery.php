@@ -1,33 +1,34 @@
 <?php
-if( !class_exists( 'ASH_WP_Query_GEO' ) ) {
+
+if( !class_exists( 'ASH_WP_Query_Geo' ) ) {
     class ASH_WP_Query_Geo extends WP_Query 
     {
         private $lat = NULL;
         private $lng = NULL;
         private $dist = NULL;
 
-        function __construct($args = []) {
-            if(!empty( $args['lat'])) {
+        function __construct($args = []) 
+        {
+            if( !empty( $args['lat'] ) )
                 $this->lat = $args['lat'];
-            }
           
-            if(!empty($args['lng'])) {
+            if( !empty( $args['lng'] ) )
                 $this->lng = $args['lng'];
-            }
 
-            if(!empty($args['distance'])) {
+            if( !empty( $args['distance'] ) )
                 $this->dist = $args['distance'];
+
+            if( !empty( $args['lat'] ) ) {
+                add_filter( 'posts_fields', [$this, 'posts_fields'], 10, 2 );
+                add_filter( 'posts_join', [$this, 'posts_join'], 10, 2 );
+                add_filter( 'posts_where', [$this, 'posts_where'], 10, 2 );
+                add_filter( 'posts_orderby', [$this, 'posts_orderby'], 10, 2 );
             }
 
-            if(!empty($args['lat'])) {
-                add_filter('posts_fields', [$this, 'posts_fields'], 10, 2);
-                add_filter('posts_join', [$this, 'posts_join'], 10, 2);
-                add_filter('posts_where', [$this, 'posts_where'], 10, 2);
-                add_filter('posts_orderby', [$this, 'posts_orderby'], 10, 2);
-            }
-
-            unset($args['lat'], $args['lng'], $args['distance']);
+            unset( $args['lat'], $args['lng'], $args['distance'] );
             parent::query($args);
+
+            # remove the filters again at the end (Resets for normal wp queries)
             $this->remove_filters();
         }
 
@@ -39,12 +40,12 @@ if( !class_exists( 'ASH_WP_Query_GEO' ) ) {
             global $wpdb;
         
             $fields .= sprintf(", ( 3959 * acos( 
-                  cos( radians(%s) ) * 
-                cos( radians( lat.meta_value ) ) * 
-                cos( radians( lng.meta_value ) - radians(%s) ) + 
-                sin( radians(%s) ) * 
-                sin( radians( lat.meta_value ) ) 
-                ) ) AS distance ", $this->lat, $this->lng, $this->lat); 
+                                cos( radians( %s ) ) * 
+                                cos( radians( lat.meta_value ) ) * 
+                                cos( radians( lng.meta_value ) - radians( %s ) ) + 
+                                sin( radians( %s ) ) * 
+                                sin( radians( lat.meta_value ) ) 
+                                ) ) AS distance ", $this->lat, $this->lng, $this->lat); 
         
             $fields .= ", lat.meta_value AS latitude ";
             $fields .= ", lng.meta_value AS longitude ";
@@ -58,6 +59,7 @@ if( !class_exists( 'ASH_WP_Query_GEO' ) ) {
         public function posts_join($join, $query)
         {
             global $wpdb;
+
             $join .= " INNER JOIN {$wpdb->postmeta} AS lat ON {$wpdb->posts}.ID = lat.post_id ";
             $join .= " INNER JOIN {$wpdb->postmeta} AS lng ON {$wpdb->posts}.ID = lng.post_id ";
         
@@ -71,22 +73,33 @@ if( !class_exists( 'ASH_WP_Query_GEO' ) ) {
         {
             $where .= ' AND lat.meta_key="ash_locations_location_latitude" ';
             $where .= ' AND lng.meta_key="ash_locations_location_longitude" ';
-            $where .= " HAVING distance < {$this->dist}";        
+            $where .= " HAVING distance < {$this->dist}";      
+
             return $where;
         } // END public function posts_where($where)
       
+        /**
+         * order posts by distance, then any other term
+         * @param  string $orderby
+         * @return string 
+         */
         public function posts_orderby($orderby)
         {
-            $orderby = " distance ASC, " . $orderby;      
+            $orderby = " distance ASC, " . $orderby;  
+
             return $orderby;
         } // END public function posts_orderby($orderby)
 
+        /**
+         * remove the filters from the query (this ensures we can keep our other queries clean)
+         * @return null
+         */
         public function remove_filters()
         {
-            remove_filter('posts_fields', [$this, 'posts_fields'], 10, 2);
-            remove_filter('posts_join', [$this, 'posts_join'], 10, 2);
-            remove_filter('posts_where', [$this, 'posts_where'], 10, 2);
-            remove_filter('posts_orderby', [$this, 'posts_orderby'], 10, 2);
+            remove_filter( 'posts_fields', [$this, 'posts_fields'], 10, 2 );
+            remove_filter( 'posts_join', [$this, 'posts_join'], 10, 2 );
+            remove_filter( 'posts_where', [$this, 'posts_where'], 10, 2 );
+            remove_filter( 'posts_orderby', [$this, 'posts_orderby'], 10, 2 );
         }
     } 
 }

@@ -27,33 +27,33 @@ class ad_skip_hire_permits
     public function permit_post_type() 
     {
         $labels = [
-            'name' => _x( 'Permits', $this->cpt_prefix),
-            'singular_name' => _x( 'Permit', $this->cpt_prefix),
-            'add_new' => _x( 'Add New', $this->cpt_prefix),
-            'add_new_item' => _x( 'Add New Permit', $this->cpt_prefix),
-            'edit_item' => _x( 'Edit Permit', $this->cpt_prefix ),
-            'new_item' => _x( 'New Permit', $this->cpt_prefix),
-            'view_item' => _x( 'View Permit', $this->cpt_prefix),
-            'search_items' => _x( 'Search Permit', $this->cpt_prefix ),
-            'not_found' => _x( 'No Permits found', $this->cpt_prefix ),
-            'not_found_in_trash' => _x( 'No Permits found in Trash', $this->cpt_prefix ),
-            'menu_name' => _x( 'Permits', $this->cpt_prefix ),
+            'name'                  => _x( 'Permits', $this->cpt_prefix),
+            'singular_name'         => _x( 'Permit', $this->cpt_prefix),
+            'add_new'               => _x( 'Add New', $this->cpt_prefix),
+            'add_new_item'          => _x( 'Add New Permit', $this->cpt_prefix),
+            'edit_item'             => _x( 'Edit Permit', $this->cpt_prefix ),
+            'new_item'              => _x( 'New Permit', $this->cpt_prefix),
+            'view_item'             => _x( 'View Permit', $this->cpt_prefix),
+            'search_items'          => _x( 'Search Permit', $this->cpt_prefix ),
+            'not_found'             => _x( 'No Permits found', $this->cpt_prefix ),
+            'not_found_in_trash'    => _x( 'No Permits found in Trash', $this->cpt_prefix ),
+            'menu_name'             => _x( 'Permits', $this->cpt_prefix ),
         ];
      
         $args = [
-            'labels' => $labels,
-            'hierarchical' => true,
-            'description' => 'Orders made for skips',
-            'supports' => array( 'title'),
-            'public' => false,
-            'show_ui' => true,
-            'show_in_menu' => $this->menu_parent,
-            'publicly_queryable' => true,
-            'exclude_from_search' => true,
-            'query_var' => true,
-            'can_export' => true,
-            'rewrite' => true,
-            'capability_type' => 'post',
+            'labels'                => $labels,
+            'hierarchical'          => true,
+            'description'           => __( 'Orders made for skips', 'ash' ),
+            'supports'              => [ 'title' ],
+            'public'                => false,
+            'show_ui'               => true,
+            'show_in_menu'          => $this->menu_parent,
+            'publicly_queryable'    => true,
+            'exclude_from_search'   => true,
+            'query_var'             => true,
+            'can_export'            => true,
+            'rewrite'               => true,
+            'capability_type'       => 'post',
         ];
 
         register_post_type($this->cpt_prefix, $args);
@@ -137,6 +137,5 @@ class ad_skip_hire_permits
 
         if( $column_name == 'price' )
             echo '£' . get_post_meta( $post_id, $this->cpt_prefix . '_price', true );
-
     }
 }

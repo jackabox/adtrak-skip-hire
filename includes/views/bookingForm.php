@@ -59,37 +59,7 @@
         <!--<p class="ash__show-billing"><a href="javascript:void(0);">Is your billing address different?</a></p>-->
     </fieldset>
 
-<?php /*
-    <fieldset class="ash__fieldset ash__fieldset-billing" style="display: none;">
-        <legend class="ash__legend ash__legend-billing">Billing Address</legend>
-        
-        <div class="ash__input ash__input--address">
-            <label for="ash_billing_address_1">Address Line 1</label>
-            <input type="text" name="ash_billing_address_1" id="ash_billing_address_1" value="<?php if(isset($_POST['ash_billing_address_1'])) echo $_POST['ash_billing_address_1']; ?>">
-        </div>
-
-        <div class="ash__input ash__input--address">
-            <label for="ash_billing_address_2">Address Line 2</label>
-            <input type="text" name="ash_billing_address_2" id="ash_billing_address_2" value="<?php if(isset($_POST['ash_billing_address_2'])) echo $_POST['ash_billing_address_2']; ?>">
-        </div>
-
-        <div class="ash__input ash__input--city">
-            <label for="ash_billing_city">City</label>
-            <input type="text" name="ash_billing_city" id="ash_billing_city" value="<?php if(isset($_POST['ash_billing_city'])) echo $_POST['ash_delivery_county']; ?>">
-        </div>
-
-        <div class="ash__input ash__input--county">
-            <label for="ash_billing_county">County</label>
-            <input type="text" name="ash_billing_county" id="ash_billing_county" value="<?php if(isset($_POST['ash_billing_county'])) echo $_POST['ash_billing_county']; ?>">
-        </div>
-
-        <div class="ash__input ash__input--postcode">
-            <label for="ash_billing_postcode">Post Code</label>
-            <input type="text" name="ash_billing_postcode" id="ash_billing_postcode" value="<?php if(isset($_POST['ash_billing_postcode'])) echo $_POST['ash_billing_postcode']; ?>">
-        </div>
-    </fieldset>
-*/?>
-
+    <!-- delivert time -->
     <fieldset class="ash__fieldset ash__fieldset-date">
         <legend class="ash__legend ash__legend-date">Delivery Date/Time</legend>
 

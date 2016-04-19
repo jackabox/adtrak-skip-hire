@@ -2,7 +2,6 @@
 
 class ad_skip_hire_coupons
 {
-    # protected variables
     protected $cpt_prefix;
     protected $menu_parent;
 
@@ -20,7 +19,6 @@ class ad_skip_hire_coupons
         add_filter( 'cmb2_meta_boxes', [$this, 'register_meta_fields'] );
         add_filter( 'manage_' . $this->cpt_prefix . '_posts_columns', [$this, 'modify_post_columns'] );
         add_action( 'manage_' . $this->cpt_prefix . '_posts_custom_column', [$this, 'modify_table_content'], 10, 2 );
-
     }
 
     /**
@@ -29,36 +27,36 @@ class ad_skip_hire_coupons
     public function coupon_post_type() 
     {
         $labels = [
-            'name' => _x( 'Coupons', $this->cpt_prefix),
-            'singular_name' => _x( 'Coupon', $this->cpt_prefix),
-            'add_new' => _x( 'Add New', $this->cpt_prefix),
-            'add_new_item' => _x( 'Add New Coupon', $this->cpt_prefix),
-            'edit_item' => _x( 'Edit Coupon', $this->cpt_prefix ),
-            'new_item' => _x( 'New Coupon', $this->cpt_prefix),
-            'view_item' => _x( 'View Coupon', $this->cpt_prefix),
-            'search_items' => _x( 'Search Coupon', $this->cpt_prefix ),
-            'not_found' => _x( 'No coupons found', $this->cpt_prefix ),
-            'not_found_in_trash' => _x( 'No coupons found in Trash', $this->cpt_prefix ),
-            'menu_name' => _x( 'Coupons', $this->cpt_prefix ),
+            'name'                  => _x( 'Coupons', $this->cpt_prefix),
+            'singular_name'         => _x( 'Coupon', $this->cpt_prefix),
+            'add_new'               => _x( 'Add New', $this->cpt_prefix),
+            'add_new_item'          => _x( 'Add New Coupon', $this->cpt_prefix),
+            'edit_item'             => _x( 'Edit Coupon', $this->cpt_prefix ),
+            'new_item'              => _x( 'New Coupon', $this->cpt_prefix),
+            'view_item'             => _x( 'View Coupon', $this->cpt_prefix),
+            'search_items'          => _x( 'Search Coupon', $this->cpt_prefix ),
+            'not_found'             => _x( 'No coupons found', $this->cpt_prefix ),
+            'not_found_in_trash'    => _x( 'No coupons found in Trash', $this->cpt_prefix ),
+            'menu_name'             => _x( 'Coupons', $this->cpt_prefix ),
         ];
      
         $args = [
-            'labels' => $labels,
-            'hierarchical' => true,
-            'description' => 'Coupon codes for Skip hire discount',
-            'supports' => array( 'title'),
-            'public' => false,
-            'show_ui' => true,
-            'show_in_menu' => $this->menu_parent,
-            'publicly_queryable' => true,
-            'exclude_from_search' => true,
-            'query_var' => true,
-            'can_export' => true,
-            'rewrite' => true,
-            'capability_type' => 'post'
+            'labels'                => $labels,
+            'hierarchical'          => true,
+            'description'           => __('Coupon codes for Skip hire discount', 'ash'), 
+            'supports'              => ['title'],
+            'public'                => false,
+            'show_ui'               => true,
+            'show_in_menu'          => $this->menu_parent,
+            'publicly_queryable'    => true,
+            'exclude_from_search'   => true,
+            'query_var'             => true,
+            'can_export'            => true,
+            'rewrite'               => true,
+            'capability_type'       => 'post'
         ];
 
-        register_post_type($this->cpt_prefix, $args);
+        register_post_type( $this->cpt_prefix, $args );
     }
     
     /**
@@ -80,8 +78,8 @@ class ad_skip_hire_coupons
             'name'          => __( 'Type', 'ash' ),
             'type'          => 'select',
             'options'       => [
-                'flat'    => __('Flat Discount', 'ash'),
-                'percent' => __('Percentage Discount', 'ash'),
+                'flat'      => __('Flat Discount', 'ash'),
+                'percent'   => __('Percentage Discount', 'ash'),
             ],
         ]);
 
@@ -90,8 +88,8 @@ class ad_skip_hire_coupons
             'name'          => __( 'Amount', 'ash' ),
             'type'          => 'text_small',
             'attributes'    => [
-                    'type'      => 'number',
-                    'pattern'   => '\d*',
+                'type'      => 'number',
+                'pattern'   => '\d*',
             ],
         ]);
 

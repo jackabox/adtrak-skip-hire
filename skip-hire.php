@@ -13,8 +13,7 @@
 require plugin_dir_path( __FILE__ )  . '/vendor/autoload.php';
 
 # If this file is called directly, abort.
-if ( ! defined( 'WPINC' ) )
-    die;
+if ( ! defined( 'WPINC' ) ) die;
 
 # require cmb2  
 if ( file_exists( plugin_dir_path( __FILE__ ) . 'vendor/cmb2/init.php' ) ) 
@@ -23,7 +22,6 @@ if ( file_exists( plugin_dir_path( __FILE__ ) . 'vendor/cmb2/init.php' ) )
 # include google maps field, if not already declared
 if(!class_exists( 'PW_CMB2_Field_Google_Maps' ) && file_exists( plugin_dir_path( __FILE__ ) . 'vendor/cmb_field_map/cmb-field-map.php' ) ) 
     require_once plugin_dir_path( __FILE__ ) . 'vendor/cmb_field_map/cmb-field-map.php';
-
 
 if ( file_exists( plugin_dir_path( __FILE__ ) . 'includes/classes/SkipHire.php' ) ) 
     require plugin_dir_path( __FILE__ ) . 'includes/classes/SkipHire.php';
@@ -85,8 +83,10 @@ class ad_skip_hire
         ];
 
         $page_exists = get_page_by_title( $booking_form['post_title'] );
+
         if ( $page_exists == null ) {
             $post_id = wp_insert_post( $booking_form );
+        
             wp_insert_post([
                 'post_title'    => 'Confirmation',
                 'post_content'  => '[ash_booking_confirmation]',
@@ -124,17 +124,17 @@ class ad_skip_hire
      */
     public function update_cmb2_meta_box_url()
     {
-        $url = plugins_url('vendor/cmb2', __FILE__);
+        $url = plugins_url( 'vendor/cmb2', __FILE__ );
         return $url;
     }
 
     /**
      * Inject session_start before the headers are called.
      */
-    function session_start() {
-        if(!session_id()) {
+    function session_start() 
+    {
+        if( ! session_id() ) 
             session_start();
-        }
     }
 
     /**
@@ -142,13 +142,9 @@ class ad_skip_hire
      */
     public function load_javascript()
     {
-        wp_register_script( 'jquery', plugins_url( 'js/jquery-2.2.3.min.js', __FILE__ ), '', '2.2.3');
-        wp_register_script( 'google_maps_api', 'https://maps.googleapis.com/maps/api/js', '', '', true );
-        wp_register_script( 'ash_custom', plugins_url( 'js/custom.min.js', __FILE__ ), ['jquery'], '1.0.0', true);
-        
-        wp_enqueue_script('jquery');
-        wp_enqueue_script('google_maps_api');
-        wp_enqueue_script('ash_custom');
+        wp_enqueue_script( 'jquery', plugins_url( 'js/jquery-2.2.3.min.js', __FILE__ ), '', '2.2.3');
+        wp_enqueue_script( 'google_maps_api', 'https://maps.googleapis.com/maps/api/js', '', '', true );
+        wp_enqueue_script( 'ash_custom', plugins_url( 'js/custom.min.js', __FILE__ ), ['jquery', 'google_maps_api'], '1.0.0', true);
     }
 
     /**
@@ -174,14 +170,6 @@ class ad_skip_hire
             $this->plugin_name . '_options',
             [$this, 'skip_create_settings_page']
         );
-    }
-
-    /**
-     * create the admin dashboard for the skip plugin
-     */
-    public function skip_create_admin_page( )
-    {
-        // include_once plugin_dir_path(__FILE__) . 'includes/views/admin/skips.php';
     }
 
     /**
@@ -213,21 +201,19 @@ class ad_skip_hire
         if ( $skip == null && $lat != null ) {
             # run the geo query
             $locations = new ASH_WP_Query_Geo([
-                'post_status' => 'publish',
-                'post_type' => 'ash_locations',
-                'posts_per_page' => -1,
-                'lat' => $lat,
-                'lng' =>  $lng,
-                'distance' => 10
+                'post_status'       => 'publish',
+                'post_type'         => 'ash_locations',
+                'posts_per_page'    => -1,
+                'lat'               => $lat,
+                'lng'               =>  $lng,
+                'distance'          => 10
             ]);
 
             if( $locations->found_posts > 0 ) {
-                // $locations->reset_postdata();
                 $this->build_skip_form( $postcode );
             } else {
                 echo "<p>We don't deliver skips to your location sorry.</p>";
             }
-
         } elseif ( $skip != null ) {
             if( isset( $_POST['ash_submit'] ) ) {
                 foreach( $_POST as $key => $entry ) {
@@ -300,27 +286,33 @@ class ad_skip_hire
         if(!isset($_GET['success'])) {
             # Skips
             $skips = new WP_Query([
-                'post_type'             => 'ash_skips',
-                'posts_per_page'        => 1,
-                'post_id'               => $_SESSION['ash_skip_id']
+                'post_type'         => 'ash_skips',
+                'posts_per_page'    => 1,
+                'post_id'           => $_SESSION['ash_skip_id']
             ]);
-            if ( $skips->have_posts() ): while ( $skips->have_posts() ): $skips->the_post();
-                $skip['title'] = get_the_title();
-                $skip['id'] =  get_the_ID();
-                $skip['price'] = get_post_meta( get_the_ID(), 'ash_skips_price', true );
-            endwhile; endif;
+
+            if ( $skips->have_posts() ): 
+                while ( $skips->have_posts() ): $skips->the_post();
+                    $skip['title'] = get_the_title();
+                    $skip['id'] =  get_the_ID();
+                    $skip['price'] = get_post_meta( get_the_ID(), 'ash_skips_price', true );
+                endwhile; 
+            endif;
 
             # Permits
             $permits = new WP_Query([
-                'post_type'             => 'ash_permits',
-                'posts_per_page'        => 1,
-                'post_id'               => $_POST['ash_permit_id']
+                'post_type'         => 'ash_permits',
+                'posts_per_page'    => 1,
+                'post_id'           => $_POST['ash_permit_id']
             ]);
-            if ( $permits->have_posts() ): while ( $permits->have_posts() ): $permits->the_post();
-                $permit['title'] = get_the_title();
-                $permit['id'] =  get_the_ID();
-                $permit['price'] = get_post_meta( get_the_ID(), 'ash_permits_price', true );
-            endwhile; else:
+
+            if ( $permits->have_posts() ): 
+                while ( $permits->have_posts() ): $permits->the_post();
+                    $permit['title'] = get_the_title();
+                    $permit['id'] =  get_the_ID();
+                    $permit['price'] = get_post_meta( get_the_ID(), 'ash_permits_price', true );
+                endwhile; 
+            else:
                 $permit['title'] = '';
                 $permit['price'] = 0.00;
             endif;
@@ -329,27 +321,32 @@ class ad_skip_hire
 
             # Coupon
             if( isset($_POST['ash_coupon'] ) ) {
+
                 $coupons = new WP_Query([
-                    'post_type'             => 'ash_coupons',
-                    's'                     => $_POST['ash_coupon'],
-                    'posts_per_page'        => 1,
+                    'post_type'         => 'ash_coupons',
+                    's'                 => $_POST['ash_coupon'],
+                    'posts_per_page'    => 1,
                 ]);
-                if ( $coupons->have_posts() ): while ( $coupons->have_posts() ): $coupons->the_post();
-                    $couponType = get_post_meta(get_the_ID(), 'ash_coupons_type', true);
-                    $couponAmount = get_post_meta(get_the_ID(), 'ash_coupons_amount', true);
 
-                    $coupon['title'] = get_the_title();
-                    $coupon['id'] =  get_the_ID();
+                if ( $coupons->have_posts() ):
+                    while ( $coupons->have_posts() ): $coupons->the_post();
+                        $couponType = get_post_meta(get_the_ID(), 'ash_coupons_type', true);
+                        $couponAmount = get_post_meta(get_the_ID(), 'ash_coupons_amount', true);
 
-                    if( $couponType == 'flat' ) {
-                        $coupon['price'] = $couponAmount;
-                    } elseif ( $couponType == 'percent' ) {
-                        $coupon['price'] = $subTotal * ($couponAmount / 100);
-                    }
-                endwhile; else:
+                        $coupon['title'] = get_the_title();
+                        $coupon['id'] =  get_the_ID();
+
+                        if( $couponType == 'flat' ) {
+                            $coupon['price'] = $couponAmount;
+                        } elseif ( $couponType == 'percent' ) {
+                            $coupon['price'] = $subTotal * ($couponAmount / 100);
+                        }
+                    endwhile; 
+                else:
                     $coupon['title'] = '';
                     $coupon['price'] = 0.00;
                 endif; 
+
             } else {
                 $coupon['title'] = '';
                 $coupon['price'] = 0.00;
@@ -367,7 +364,6 @@ class ad_skip_hire
             # Include Template
             include_once plugin_dir_path( __FILE__ ) . 'includes/views/orderConfirmationForm.php';
         } else {
-            # include success/error
             include_once plugin_dir_path( __FILE__ ) . 'includes/views/orderConfirmation.php';
         }
     }
@@ -379,10 +375,10 @@ class ad_skip_hire
     {
         # create the post
         $createPost = [
-            'post_title' => wp_strip_all_tags( $_POST['ash_forename'] . ' ' . $_POST['ash_surname'] ),
-            'post_content' => '',
-            'post_status' => 'publish',
-            'post_type' => 'ash_orders',
+            'post_title'    => wp_strip_all_tags( $_POST['ash_forename'] . ' ' . $_POST['ash_surname'] ),
+            'post_content'  => '',
+            'post_status'   => 'publish',
+            'post_type'     => 'ash_orders',
         ];
 
         # get the post id
@@ -392,34 +388,21 @@ class ad_skip_hire
 
         # session
         $_SESSION['ash_user'] = [
-            'id' => $postID,
-            'name' => $_POST['ash_forename'] . ' ' . $_POST['ash_surname'],
+            'id'    => $postID,
+            'name'  => $_POST['ash_forename'] . ' ' . $_POST['ash_surname'],
         ];
 
         $deliveryAddress = [
             'address_1' => $_POST['ash_delivery_address_1'],
             'address_2' => $_POST['ash_delivery_address_2'],
-            'city' => $_POST['ash_delivery_city'],
-            'county' => $_POST['ash_delivery_county'],
-            'postcode' => strtoupper($_SESSION['ash_postcode']),
+            'city'      => $_POST['ash_delivery_city'],
+            'county'    => $_POST['ash_delivery_county'],
+            'postcode'  => strtoupper($_SESSION['ash_postcode']),
         ];
-
-        /*if(isset($_POST['ash_billing_address_1']) && ($_POST['ash_billing_address_1'] != null)) {
-            $billingAddress = [
-                'address_1' => $_POST['ash_billing_address_1'],
-                'address_2' => $_POST['ash_billing_address_2'],
-                'city' => $_POST['ash_billing_city'],
-                'county' => $_POST['ash_billing_county'],
-                'postcode' => strtoupper($_POST['ash_billing_postcode']),
-            ];
-        } else {
-            $billingAddress = $deliveryAddress;
-        }*/
 
         # posted data - meta
         add_post_meta( $postID, 'ash_orders_email', $_POST['ash_email'] );
         add_post_meta( $postID, 'ash_orders_phone', $_POST['ash_phone'] );
-        // add_post_meta( $postID, 'ash_orders_billing_address', $billingAddress );
         add_post_meta( $postID, 'ash_orders_delivery_address', $deliveryAddress );
         add_post_meta( $postID, 'ash_orders_delivery_date', $_POST['ash_delivery_date']);
         add_post_meta( $postID, 'ash_orders_delivery_time', $_POST['ash_delivery_time'][0]);
