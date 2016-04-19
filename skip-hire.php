@@ -33,12 +33,14 @@ class ad_skip_hire
     protected $plugin_name;
     protected $version;
     protected $prefix;
+    protected $settings;
+    protected $settings_slug;
+
     protected $coupons;
     protected $locations;
     protected $permits;
     protected $orders;
     protected $skips;
-    protected $templates;
     protected $paypal;
 
     /**
@@ -49,6 +51,8 @@ class ad_skip_hire
         $this->plugin_name = 'ad_skip_hire';
         $this->version = '0.1';
         $this->prefix = 'ash_';
+        $this->settings_slug = "ad_skip_hire_options";
+        $this->sections = $this->get_sections();
 
         # activation
         register_activation_hook( __FILE__ , [$this, 'activate'] );
@@ -61,6 +65,7 @@ class ad_skip_hire
 
         # menu pages
         add_action( 'admin_menu', [$this, 'skip_admin_pages'] );
+        add_action( 'admin_init', [ $this, 'register_settings' ] );
 
         # shortcodes
         add_shortcode( 'ash_postcode_form', [$this, 'build_postcode_form'] );
@@ -170,6 +175,159 @@ class ad_skip_hire
             $this->plugin_name . '_options',
             [$this, 'skip_create_settings_page']
         );
+    }
+
+    public function get_sections() 
+    {
+        $sections = [];
+
+        $sections[$this->prefix . '_delivery'] = [
+            'id'         => $this->prefix . '_delivery',
+            'title'      => 'Delivery',
+            'callback'   => [$this, 'render_section'],
+            'page'       => 'delivery_page'
+        ];
+
+        $sections[$this->prefix . '_payment'] = [
+            'id'         => $this->prefix . '_payment',
+            'title'      => 'Payment',
+            'callback'   => [$this, 'render_section'],
+            'page'       => 'payment_page'
+        ];
+
+        return $sections;
+    }
+
+    public function render_section($desc)
+    {
+        echo "<p></p>";
+    }
+
+    public function get_fields() 
+    {
+        $fields = [];
+
+        $fields[] = [
+            'id'             => $this->prefix . '_delivery_radius',
+            'title'          => 'Delivery Radius',
+            'callback'       => [$this, 'render_field'],
+            'page'           => 'delivery_page',
+            'section'        => $this->prefix . '_delivery',
+            'desc'           => 'Specify a radius from locations to deliver to.',
+            'type'           => 'text',
+            'default_value'  => '10',
+            'class'          => ''
+        ];
+        
+        $fields[] = [
+            'id'             => $this->prefix . '_paypal_client_id',
+            'title'          => 'PayPal Client ID',
+            'callback'       => [$this, 'render_field'],
+            'page'           => 'payment_page',
+            'section'        => $this->prefix . '_payment',
+            'desc'           => 'Provide the PayPal Client ID.',
+            'type'           => 'text',
+            'default_value'  => '',
+            'class'          => ''
+        ];
+
+        $fields[] = [
+            'id'             => $this->prefix . '_paypal_client_secret',
+            'title'          => 'PayPal Client Secret',
+            'callback'       => [$this, 'render_field'],
+            'page'           => 'payment_page',
+            'section'        => $this->prefix . '_payment',
+            'desc'           => 'Provide the PayPal Client Secret.',
+            'type'           => 'text',
+            'default_value'  => '',
+            'class'          => ''
+        ];
+
+        $fields[] = [
+            'id'             => $this->prefix . '_payment_description',
+            'title'          => 'Payment Description',
+            'callback'       => [$this, 'render_field'],
+            'page'           => 'payment_page',
+            'section'        => $this->prefix . '_payment',
+            'desc'           => 'Provide the payment description (will appear on invoices).',
+            'type'           => 'text',
+            'default_value'  => '',
+            'class'          => ''
+        ];
+
+        return $fields;
+    }
+
+    public function create_field($field)
+    {
+        extract ($field);
+
+        $field_args = [
+            'id' => $id,
+            'page' => $page,
+            'type' => $type,
+            'desc' => $desc,
+            'default_value' => $default_value,
+            'class' => $class
+        ];
+
+        add_settings_field($id, $title, [$this, 'render_field'], $page, $section, $field_args);
+    }
+
+    public function render_field ($field_args = [])
+    {        
+        extract ($field_args);
+        $options = get_option($page);
+
+        $html = '<div class="' . $class . '">';
+
+        switch ($type) {
+            case 'text':
+                $value = isset($options[$id]) ? $options[$id] : '';
+                $html .= '<input type="text" id="' . $id . '" name="' . $page . '[' . $id . ']" value="' . $value . '" />';
+                $html .= '<br/><span class="field-desc">' . $desc . '</span>';
+                break;
+            case 'checkbox':
+                $html .= '<input type="checkbox" id="' . $id . '" name="' . $page . '[' . $id . ']" value="1" ' . checked (1, isset ($options[$id]) ? $options[$id] : 0, false) . '/>';
+                $html .= '<label for="' . $id . '">&nbsp;'  . $desc . '</label>';
+                break;
+            case 'button':
+                break;
+            default:
+                break;
+        }
+
+        $html .= '</div>';
+        echo $html;
+    }
+
+    public function register_settings()
+    {
+        foreach($this->sections as $section) {
+            add_settings_section($section['id'], $section['title'], $section['callback'], $section['page']);
+        }
+
+        $fields = $this->get_fields();
+
+        foreach($fields as $field) {
+            $this->create_field($field);
+        }
+
+        foreach($this->sections as $section) {
+            register_setting($section['page'], $section['page'], [$this, 'validate_options']);
+        }
+    }
+
+    public function validate_options($input)
+    {
+        $output = [];
+
+        foreach ($input as $key => $value) {
+            if ( isset( $input[$key] ) )
+                $output[$key] = strip_tags(stripslashes($input[$key]));
+        }
+        
+        return apply_filters('validate_options', $output, $input);
     }
 
     /**
@@ -423,5 +581,29 @@ class ad_skip_hire
 
         add_post_meta( $_SESSION['ash_order_id'], 'ash_orders_paypal_id', $_GET['paymentId']);
         add_post_meta( $_SESSION['ash_order_id'], 'ash_orders_paypal_payer_id', $_GET['PayerID']);
+    }
+
+    /**
+     * validate a string/text field
+     */
+    public function validateString ($val) 
+    {
+        return sanitize_text_field($val);
+    }
+
+    /**
+     * validate a url that's passed
+     */
+    public function validateUrl ($url) 
+    {
+        return esc_url($url);
+    }
+
+    /**
+     * validate a number that's passed
+     */
+    public function validateNumber ($val) 
+    {
+        return intval($val);
     }
 }
