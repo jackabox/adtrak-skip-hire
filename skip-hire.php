@@ -593,8 +593,8 @@ class ad_skip_hire
     public function booking_form_process ()
     {
         if( isset( $_REQUEST['ash_place_order_phone'] ) || isset ( $_REQUEST['ash_place_order_paypal'] ) ) {
-            // $postID = $this->create_order_from_form();
-            $postID = '12';
+            $postID = $this->create_order_from_form();
+
             $options = get_option('payment_page'); 
             
             if( isset ( $_REQUEST['ash_place_order_paypal'] ) ) {
@@ -608,16 +608,13 @@ class ad_skip_hire
 
             if( isset ( $_REQUEST['ash_place_order_phone'] ) ) {
                 include_once plugin_dir_path( __FILE__ ) . 'includes/views/orderConfirmationTelephone.php';
-
             }
-        } else {
-            if( isset( $_REQUEST['success'] ) ) {
-                $this->paypal->authorised_payment_check();
+        } elseif( isset( $_REQUEST['success'] ) ) {
+            $this->paypal->authorised_payment_check();
 
-                add_post_meta( $_SESSION['ash_order_id'], 'ash_orders_status', 'complete');
-                add_post_meta( $_SESSION['ash_order_id'], 'ash_orders_paypal_id', $_REQUEST['paymentId']);
-                add_post_meta( $_SESSION['ash_order_id'], 'ash_orders_paypal_payer_id', $_REQUEST['PayerID']);
-            }
+            add_post_meta( $_SESSION['ash_order_id'], 'ash_orders_status', 'complete');
+            add_post_meta( $_SESSION['ash_order_id'], 'ash_orders_paypal_id', $_REQUEST['paymentId']);
+            add_post_meta( $_SESSION['ash_order_id'], 'ash_orders_paypal_payer_id', $_REQUEST['PayerID']);
         }
     }
 
