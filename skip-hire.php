@@ -144,7 +144,7 @@ class ad_skip_hire
     {
         wp_enqueue_script( 'jquery', plugins_url( 'js/jquery-2.2.3.min.js', __FILE__ ), '', '2.2.3');
         wp_enqueue_script( 'google_maps_api', 'https://maps.googleapis.com/maps/api/js', '', '', true );
-        wp_enqueue_script( 'ash_custom', plugins_url( 'js/custom.min.js', __FILE__ ), ['jquery', 'google_maps_api'], '1.0.0', true);
+        wp_enqueue_script( 'ash_custom', plugins_url( 'js/custom.min.js', __FILE__ ), ['jquery', 'google_maps_api'], '1.0.1', true);
     }
 
     /**

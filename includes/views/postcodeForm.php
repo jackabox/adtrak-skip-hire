@@ -6,6 +6,7 @@
         <label for="ash_postcode">Enter a Postcode</label>
         <input type="text" name="ash_postcode" id="ash_postcode">
     </p>
+    <p class="ash_postcode_error"></p>
 
     <p><button type="submit" id="ash_postcode_submit">Check Available Skips</button></p>
 </form>

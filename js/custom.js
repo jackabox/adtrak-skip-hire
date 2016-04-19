@@ -3,6 +3,8 @@
 
     $(function() {
 
+
+
         function getLatLng() {
             var address = $('#ash_postcode').val();
 
@@ -25,21 +27,35 @@
             });
         }
 
+        function handle_postcode_submit() {
+            if( ! valid_postcode( $('#ash_postcode').val() ) ) {
+                $('.ash_postcode_error').html("Please enter a valid postcode.");
+                return false;
+            } else {
+                getLatLng();
+            }
+        }
+
         // get the lat/lng on submit form click
-        $('#ash_postcode_submit').click(function() {
+        $('#ash_postcode_submit').click(function(event) {
             event.preventDefault();
-            getLatLng();
+            handle_postcode_submit();
         });
 
         // Highjack the enter function to get the lat/lng, then submit
         $('#ash_postcode_form').keydown(function(event) {
             if(event.keyCode == 13) {
                 event.preventDefault();
-                getLatLng();
+                handle_postcode_submit();
             }
         });
-
     });
 
 }(jQuery));
 
+// Helpers
+function valid_postcode(postcode) {
+    postcode = postcode.replace(/\s/g, "");
+    var regex = /^[A-Z]{1,2}[0-9]{1,2} ?[0-9][A-Z]{2}$/i;
+    return regex.test(postcode);
+}
