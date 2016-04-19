@@ -4,6 +4,7 @@
 
 - [Bug] Integrated a regex check for the post code submit to force a post code and stop the form breaking later on.
 - [Improvement] Adding a settings panel to allow the user to manage settings.
+- [Improvement] Cleaning up menu names to make them more readable.
 
 ## Version 0.2
 - [Improvement] Restructuring filebase for easier use, declarations in classes as required.

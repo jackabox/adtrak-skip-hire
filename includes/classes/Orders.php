@@ -43,7 +43,7 @@ class ad_skip_hire_orders
             'search_items'          => __( 'Search Order' , 'ash' ),
             'not_found'             => __( 'No Orders found', 'ash' ),
             'not_found_in_trash'    => __( 'No Orders found in Trash', 'ash' ),
-            'menu_name'             => __( 'Manage Orders', 'ash' ),
+            'menu_name'             => __( 'Orders', 'ash' ),
         ];
      
         $args = [
