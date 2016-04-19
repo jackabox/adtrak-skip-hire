@@ -3,6 +3,7 @@
 ## Version 0.4
 
 - [Bug] Fixing catch for if no waste was selected on the form.
+- [Feature] Implementing mailer class to send out emails on order confirmation.
 
 ## Version 0.3
 - [Bug] Integrated a regex check for the post code submit to force a post code and stop the form breaking later on.
