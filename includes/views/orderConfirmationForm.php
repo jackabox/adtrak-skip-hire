@@ -87,6 +87,6 @@
 </table>
 
 <p class="ash__payee-links">
-    <a class="ash__payee-links--phone" href="tel:1231231231">Pay Via Phone</a> or 
+    <a class="ash__payee-links--phone" href="tel:<?= $options['ash_payment_telephone']; ?>">Pay Via Phone</a> or 
     <a class="ash__payee-links--paypal" href="<?php echo $paymentLink ?>" data-paypal-button="true"><img src="//www.paypalobjects.com/en_US/i/btn/btn_xpressCheckout.gif" alt="Check out with PayPal" /></a>
 </p>

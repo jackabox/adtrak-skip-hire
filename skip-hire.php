@@ -254,6 +254,18 @@ class ad_skip_hire
             'class'          => ''
         ];
 
+        $fields[] = [
+            'id'             => $this->prefix . '_payment_telephone',
+            'title'          => 'Payment Telephone Number',
+            'callback'       => [$this, 'render_field'],
+            'page'           => 'payment_page',
+            'section'        => $this->prefix . '_payment',
+            'desc'           => 'Provide the number to call if users want to pay by phone.',
+            'type'           => 'text',
+            'default_value'  => '',
+            'class'          => ''
+        ];
+
         return $fields;
     }
 
@@ -356,7 +368,7 @@ class ad_skip_hire
         if ( $skip == null && $lat != null ) {
             # run the geo query
             $options = get_option('delivery_page');
-            
+
             $locations = new ASH_WP_Query_Geo([
                 'post_status'       => 'publish',
                 'post_type'         => 'ash_locations',
@@ -517,6 +529,9 @@ class ad_skip_hire
 
             # create the form.
             $this->create_order_from_form();
+
+            # get the options
+            $options = get_option('payment_page');
 
             # Include Template
             include_once plugin_dir_path( __FILE__ ) . 'includes/views/orderConfirmationForm.php';
