@@ -90,7 +90,7 @@
     </tbody>
 </table>
 
-<form action="<?php echo home_url('/booking/confirmation'); ?>" method="POST">
+<form action="<?php echo home_url('/booking/confirmation'); ?>" method="GET">
     <p><input type="submit" name="ash_place_order_phone" id="ash_place_order_phone" value="Pay via Telephone"> or <input type="submit" name="ash_place_order_paypal"  id="ash_place_order_paypal" value="Pay via PayPal"></p>
 </form>
 

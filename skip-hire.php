@@ -42,6 +42,7 @@ class ad_skip_hire
     protected $orders;
     protected $skips;
     protected $paypal;
+    protected $mail;
 
     /**
      * contruct
@@ -114,6 +115,7 @@ class ad_skip_hire
         require_once plugin_dir_path( __FILE__ ) . 'includes/classes/Orders.php';
         require_once plugin_dir_path( __FILE__ ) . 'includes/classes/WpGeoQuery.php';
         require_once plugin_dir_path( __FILE__ ) . 'includes/classes/PayPal.php';
+        require_once plugin_dir_path( __FILE__ ) . 'includes/classes/Mailer.php';
 
         $this->locations = new ad_skip_hire_locations();
         $this->permits = new ad_skip_hire_permits();
@@ -121,6 +123,7 @@ class ad_skip_hire
         $this->skips = new ad_skip_hire_skips();
         $this->orders = new ad_skip_hire_orders();
         $this->paypal = new ad_paypal_interface();
+        $this->mail = new ad_skip_hire_mailer();
     }
 
     /**
@@ -451,93 +454,85 @@ class ad_skip_hire
      * build the confirmation form, which links off to payment method or displays success with payment.
      */
     public function build_confirmation_form( $args = [] )
-    {
-        if(!isset($_GET['success'])) {
-            # Skips
-            $skips = new WP_Query([
-                'post_type'         => 'ash_skips',
+    {        
+        # Skips
+        $skips = new WP_Query([
+            'post_type'         => 'ash_skips',
+            'posts_per_page'    => 1,
+            'post_id'           => $_SESSION['ash_skip_id']
+        ]);
+
+        if ( $skips->have_posts() ): 
+            while ( $skips->have_posts() ): $skips->the_post();
+                $skip['title'] = get_the_title();
+                $skip['id'] =  get_the_ID();
+                $skip['price'] = get_post_meta( get_the_ID(), 'ash_skips_price', true );
+            endwhile; 
+        endif;
+
+        # Permits
+        $permits = new WP_Query([
+            'post_type'         => 'ash_permits',
+            'posts_per_page'    => 1,
+            'post_id'           => $_POST['ash_permit_id']
+        ]);
+
+        if ( $permits->have_posts() ): 
+            while ( $permits->have_posts() ): $permits->the_post();
+                $permit['title'] = get_the_title();
+                $permit['id'] =  get_the_ID();
+                $permit['price'] = get_post_meta( get_the_ID(), 'ash_permits_price', true );
+            endwhile; 
+        else:
+            $permit['title'] = '';
+            $permit['price'] = 0.00;
+        endif;
+
+        $subTotal = $permit['price'] + $skip['price'];
+
+        # Coupon
+        if( isset( $_POST['ash_coupon'] ) && $_POST['ash_coupon'] != null ) {
+
+            $coupons = new WP_Query([
+                'post_type'         => 'ash_coupons',
+                's'                 => $_POST['ash_coupon'],
                 'posts_per_page'    => 1,
-                'post_id'           => $_SESSION['ash_skip_id']
             ]);
 
-            if ( $skips->have_posts() ): 
-                while ( $skips->have_posts() ): $skips->the_post();
-                    $skip['title'] = get_the_title();
-                    $skip['id'] =  get_the_ID();
-                    $skip['price'] = get_post_meta( get_the_ID(), 'ash_skips_price', true );
-                endwhile; 
-            endif;
+            if ( $coupons->have_posts() ):
+                while ( $coupons->have_posts() ): $coupons->the_post();
+                    $couponType = get_post_meta(get_the_ID(), 'ash_coupons_type', true);
+                    $couponAmount = get_post_meta(get_the_ID(), 'ash_coupons_amount', true);
 
-            # Permits
-            $permits = new WP_Query([
-                'post_type'         => 'ash_permits',
-                'posts_per_page'    => 1,
-                'post_id'           => $_POST['ash_permit_id']
-            ]);
+                    $coupon['title'] = get_the_title();
+                    $coupon['id'] =  get_the_ID();
 
-            if ( $permits->have_posts() ): 
-                while ( $permits->have_posts() ): $permits->the_post();
-                    $permit['title'] = get_the_title();
-                    $permit['id'] =  get_the_ID();
-                    $permit['price'] = get_post_meta( get_the_ID(), 'ash_permits_price', true );
+                    if( $couponType == 'flat' ) {
+                        $coupon['price'] = $couponAmount;
+                    } elseif ( $couponType == 'percent' ) {
+                        $coupon['price'] = $subTotal * ($couponAmount / 100);
+                    }
                 endwhile; 
             else:
-                $permit['title'] = '';
-                $permit['price'] = 0.00;
-            endif;
-
-            $subTotal = $permit['price'] + $skip['price'];
-
-            # Coupon
-            if( isset( $_POST['ash_coupon'] ) && $_POST['ash_coupon'] != null ) {
-
-                $coupons = new WP_Query([
-                    'post_type'         => 'ash_coupons',
-                    's'                 => $_POST['ash_coupon'],
-                    'posts_per_page'    => 1,
-                ]);
-
-                if ( $coupons->have_posts() ):
-                    while ( $coupons->have_posts() ): $coupons->the_post();
-                        $couponType = get_post_meta(get_the_ID(), 'ash_coupons_type', true);
-                        $couponAmount = get_post_meta(get_the_ID(), 'ash_coupons_amount', true);
-
-                        $coupon['title'] = get_the_title();
-                        $coupon['id'] =  get_the_ID();
-
-                        if( $couponType == 'flat' ) {
-                            $coupon['price'] = $couponAmount;
-                        } elseif ( $couponType == 'percent' ) {
-                            $coupon['price'] = $subTotal * ($couponAmount / 100);
-                        }
-                    endwhile; 
-                else:
-                    $coupon['title'] = '';
-                    $coupon['price'] = 0.00;
-                endif; 
-
-            } else {
                 $coupon['title'] = '';
                 $coupon['price'] = 0.00;
-            }
+            endif; 
 
-            $total = $subTotal - $coupon['price'];
-            $_SESSION['ash_order_total'] = $total;
-
-            # paypal link
-            $paymentLink = $this->paypal->generate_payment_link($_POST, $skip, $permit, $coupon, $total);
-
-            # create the form.
-            $postID = $this->create_order_from_form();
-
-            # get the options
-            $options = get_option('payment_page');
-
-            # Include Template
-            include_once plugin_dir_path( __FILE__ ) . 'includes/views/orderConfirmationForm.php';
         } else {
-            include_once plugin_dir_path( __FILE__ ) . 'includes/views/orderConfirmation.php';
+            $coupon['title'] = '';
+            $coupon['price'] = 0.00;
         }
+
+        $total = $subTotal - $coupon['price'];
+
+        $_SESSION['ash_order_skip'] = $skip;
+        $_SESSION['ash_order_permit'] = $permit;
+        $_SESSION['ash_order_coupon'] = $coupon;
+        $_SESSION['ash_order_total'] = $total;
+        $_SESSION['ash_order_details'] = $_POST;
+
+        # Include Template
+        include_once plugin_dir_path( __FILE__ ) . 'includes/views/orderConfirmationForm.php';
     }
 
     /**
@@ -545,9 +540,11 @@ class ad_skip_hire
      */
     public function create_order_from_form () 
     {
+        $data = $_SESSION['ash_order_details'];
+
         # create the post
         $createPost = [
-            'post_title'    => wp_strip_all_tags( $_POST['ash_forename'] . ' ' . $_POST['ash_surname'] ),
+            'post_title'    => wp_strip_all_tags( $data['ash_forename'] . ' ' . $data['ash_surname'] ),
             'post_content'  => '',
             'post_status'   => 'publish',
             'post_type'     => 'ash_orders',
@@ -560,27 +557,30 @@ class ad_skip_hire
         # session
         $_SESSION['ash_user'] = [
             'id'    => $postID,
-            'name'  => $_POST['ash_forename'] . ' ' . $_POST['ash_surname'],
+            'name'  => $data['ash_forename'] . ' ' . $data['ash_surname'],
         ];
 
         $deliveryAddress = [
-            'address_1' => $_POST['ash_delivery_address_1'],
-            'address_2' => $_POST['ash_delivery_address_2'],
-            'city'      => $_POST['ash_delivery_city'],
-            'county'    => $_POST['ash_delivery_county'],
+            'address_1' => $data['ash_delivery_address_1'],
+            'address_2' => $data['ash_delivery_address_2'],
+            'city'      => $data['ash_delivery_city'],
+            'county'    => $data['ash_delivery_county'],
             'postcode'  => strtoupper($_SESSION['ash_postcode']),
         ];
 
         # posted data - meta
-        add_post_meta( $postID, 'ash_orders_email', $_POST['ash_email'] );
-        add_post_meta( $postID, 'ash_orders_phone', $_POST['ash_phone'] );
+        add_post_meta( $postID, 'ash_orders_email', $data['ash_email'] );
+        add_post_meta( $postID, 'ash_orders_phone', $data['ash_phone'] );
         add_post_meta( $postID, 'ash_orders_delivery_address', $deliveryAddress );
-        add_post_meta( $postID, 'ash_orders_delivery_date', $_POST['ash_delivery_date']);
-        add_post_meta( $postID, 'ash_orders_delivery_time', $_POST['ash_delivery_time'][0]);
+        add_post_meta( $postID, 'ash_orders_delivery_date', $data['ash_delivery_date']);
+        add_post_meta( $postID, 'ash_orders_delivery_time', $data['ash_delivery_time'][0]);
         add_post_meta( $postID, 'ash_orders_skip_id', $_SESSION['ash_skip_id']);
-        add_post_meta( $postID, 'ash_orders_permit_id', $_POST['ash_permit_id']);
-        add_post_meta( $postID, 'ash_orders_waste', $_POST['ash_waste']);
-        add_post_meta( $postID, 'ash_orders_notes', $_POST['ash_notes']);
+        add_post_meta( $postID, 'ash_orders_permit_id', $data['ash_permit_id']);
+
+        if( isset( $data['ash_waste'] ) )
+            add_post_meta( $postID, 'ash_orders_waste', $data['ash_waste']);
+        
+        add_post_meta( $postID, 'ash_orders_notes', $data['ash_notes']);
         add_post_meta( $postID, 'ash_orders_status', 'pending');
         add_post_meta( $postID, 'ash_orders_total', $_SESSION['ash_order_total']);
 
@@ -592,11 +592,33 @@ class ad_skip_hire
      */
     public function booking_form_process ()
     {
-        $this->paypal->authorised_payment_check();
+        if( isset( $_REQUEST['ash_place_order_phone'] ) || isset ( $_REQUEST['ash_place_order_paypal'] ) ) {
+            // $postID = $this->create_order_from_form();
+            $postID = '12';
+            $options = get_option('payment_page'); 
+            
+            if( isset ( $_REQUEST['ash_place_order_paypal'] ) ) {
 
-        add_post_meta( $postID, 'ash_orders_status', 'complete');
-        add_post_meta( $_SESSION['ash_order_id'], 'ash_orders_paypal_id', $_GET['paymentId']);
-        add_post_meta( $_SESSION['ash_order_id'], 'ash_orders_paypal_payer_id', $_GET['PayerID']);
+                $paymentLink = $this->paypal->generate_payment_link($_SESSION['ash_order_skip'], $_SESSION['ash_order_permit'], $_SESSION['ash_order_coupon'], $_SESSION['ash_order_total']);
+
+                echo "Redirecting to PayPal payment now...";
+                echo '<meta http-equiv="refresh" content="0; url=' . $paymentLink . '" />';
+                die();
+            }
+
+            if( isset ( $_REQUEST['ash_place_order_phone'] ) ) {
+                include_once plugin_dir_path( __FILE__ ) . 'includes/views/orderConfirmationTelephone.php';
+
+            }
+        } else {
+            if( isset( $_REQUEST['success'] ) ) {
+                $this->paypal->authorised_payment_check();
+
+                add_post_meta( $_SESSION['ash_order_id'], 'ash_orders_status', 'complete');
+                add_post_meta( $_SESSION['ash_order_id'], 'ash_orders_paypal_id', $_REQUEST['paymentId']);
+                add_post_meta( $_SESSION['ash_order_id'], 'ash_orders_paypal_payer_id', $_REQUEST['PayerID']);
+            }
+        }
     }
 
     /**
