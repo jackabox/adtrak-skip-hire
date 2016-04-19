@@ -1,4 +1,4 @@
-<h3>Order #<?= $postID; ?></h3>
+<h3>Order Overview</h3>
 
 <p>Please review your information, then proceed to payment. If anything seems wrong, <a href="javascript:history.back()">go back</a> and edit the fields.</p>
 
@@ -75,10 +75,14 @@
             <td>Delivery Slot</td>
             <td><?php echo $_POST['ash_delivery_time'][0] ?></td>
         </tr>
+        <?php 
+            $waste = (isset( $_POST['ash_waste'] )) ? $_POST['ash_waste'] : null; 
+            if($waste): ?>
         <tr>
             <td>Waste Options</td>
-            <td><?php $waste = $_POST['ash_waste']; $i = 1; foreach( $waste as $w ) { echo $w; echo ($i < count($waste)) ? ', ' : ''; $i++; } ?></td>
+            <td><?php $i = 1; foreach( $waste as $w ) { echo $w; echo ($i < count($waste)) ? ', ' : ''; $i++; } ?></td>
         </tr>
+        <?php endif; ?>
         <tr>
             <td>Additional Notes</td>
             <td><?php echo $_POST['ash_notes']; ?></td>
@@ -86,8 +90,7 @@
     </tbody>
 </table>
 
-<p class="ash__payee-links">
-    Pay Via Phone on <a class="ash__payee-links--phone" href="tel:<?= $options['ash_payment_telephone']; ?>"><?= $options['ash_payment_telephone']; ?></a> by quoting your order number to the phone handler or checkout via PayPal with the button below.</p>
-<p>
-<a class="ash__payee-links--paypal" href="<?php echo $paymentLink ?>" data-paypal-button="true"><img src="//www.paypalobjects.com/en_US/i/btn/btn_xpressCheckout.gif" alt="Check out with PayPal" /></a>
-</p>
+<form action="<?php echo home_url('/booking/confirmation'); ?>" method="POST">
+    <p><input type="submit" name="ash_place_order_phone" id="ash_place_order_phone" value="Pay via Telephone"> or <input type="submit" name="ash_place_order_paypal"  id="ash_place_order_paypal" value="Pay via PayPal"></p>
+</form>
+
