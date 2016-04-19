@@ -3,8 +3,6 @@
 
     $(function() {
 
-
-
         function getLatLng() {
             var address = $('#ash_postcode').val();
 
