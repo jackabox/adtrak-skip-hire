@@ -30,14 +30,13 @@ class ad_paypal_interface
 
     /**
      * generate the payment links from given data
-     * @param  array $postdata  data from form
      * @param  array $skip      set up in the controller
      * @param  array $permit    set up in the controller
      * @param  array $coupon    if exists, set up in the controller
      * @param  string $total    final price to charge the user
      * @return string           returns the generated url with token
      */
-    public function generate_payment_link($postdata, $skip, $permit = null, $coupon = null, $total)
+    public function generate_payment_link($skip, $permit = null, $coupon = null, $total)
     {
         $payer = new Payer();
         $payer->setPaymentMethod("paypal");
