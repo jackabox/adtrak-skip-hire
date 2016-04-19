@@ -355,13 +355,15 @@ class ad_skip_hire
         # load forms       
         if ( $skip == null && $lat != null ) {
             # run the geo query
+            $options = get_option('delivery_page');
+            
             $locations = new ASH_WP_Query_Geo([
                 'post_status'       => 'publish',
                 'post_type'         => 'ash_locations',
                 'posts_per_page'    => -1,
                 'lat'               => $lat,
-                'lng'               =>  $lng,
-                'distance'          => 10
+                'lng'               => $lng,
+                'distance'          => $options['ash_delivery_radius'],
             ]);
 
             if( $locations->found_posts > 0 ) {
