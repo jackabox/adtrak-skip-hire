@@ -3,30 +3,30 @@
  * Plugin Name:       Skip Hire
  * Plugin URI:        http://plugins.adtrakdev.com/skiphire
  * Description:       Adding the ability to hire skips and process payments within areas.
- * Version:           0.3
+ * Version:           1.0.0
  * Author:            Adtrak
  * Author URI:        http://adtrak.co.uk/
- * GitLab Theme URI:  https://gitlab.com/adtrak/skip-hire.git
  */
 
-# composer
-require plugin_dir_path( __FILE__ )  . '/vendor/autoload.php';
-
-# If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) die;
 
-# require cmb2  
-if ( file_exists( plugin_dir_path( __FILE__ ) . 'vendor/cmb2/init.php' ) ) 
-    require_once plugin_dir_path( __FILE__ ) . 'vendor/cmb2/init.php';
+# plugin updater
+require plugin_dir_path( __FILE__ ) . 'plugin-update-checker/plugin-update-checker.php';
+require plugin_dir_path( __FILE__ )  . 'vendor/autoload.php';
+require_once plugin_dir_path( __FILE__ ) . 'vendor/cmb2/init.php';
 
-# include google maps field, if not already declared
-if(!class_exists( 'PW_CMB2_Field_Google_Maps' ) && file_exists( plugin_dir_path( __FILE__ ) . 'vendor/cmb_field_map/cmb-field-map.php' ) ) 
+if( ! class_exists( 'PW_CMB2_Field_Google_Maps' ) && file_exists( plugin_dir_path( __FILE__ ) . 'vendor/cmb_field_map/cmb-field-map.php' ) )
     require_once plugin_dir_path( __FILE__ ) . 'vendor/cmb_field_map/cmb-field-map.php';
 
-if ( file_exists( plugin_dir_path( __FILE__ ) . 'includes/classes/SkipHire.php' ) ) 
-    require plugin_dir_path( __FILE__ ) . 'includes/classes/SkipHire.php';
-
+$className = PucFactory::getLatestClassVersion('PucGitHubChecker');
+$myUpdateChecker = new $className(
+ 'https://github.com/adtrak/adtrak-skip-hire/',
+ __FILE__,
+ 'master'
+);
+$myUpdateChecker->setAccessToken('71497a59fa8a4e89f855f2bca08271dc7c5108fd');
 $plugin = new ad_skip_hire( );
+
 
 class ad_skip_hire
 {
@@ -35,7 +35,6 @@ class ad_skip_hire
     protected $prefix;
     protected $settings;
     protected $settings_slug;
-
     protected $coupons;
     protected $locations;
     protected $permits;
@@ -74,11 +73,12 @@ class ad_skip_hire
         add_shortcode( 'ash_booking_confirmation', [$this, 'booking_form_process'] );
 
         # javascript
-        add_action( 'wp_enqueue_scripts', [$this, 'load_javascript'] );
+        add_action( 'wp_enqueue_scripts', [$this, 'load_public_assets'] );
+        add_action( 'admin_enqueue_scripts', [$this, 'load_admin_assets'] );
         add_filter( 'cmb2_meta_box_url', [$this, 'update_cmb2_meta_box_url'] );
     }
 
-    public function activate() 
+    public function activate()
     {
         $booking_form = [
             'post_title'    => 'Booking',
@@ -91,7 +91,7 @@ class ad_skip_hire
 
         if ( $page_exists == null ) {
             $post_id = wp_insert_post( $booking_form );
-        
+
             wp_insert_post([
                 'post_title'    => 'Confirmation',
                 'post_content'  => '[ash_booking_confirmation]',
@@ -108,14 +108,14 @@ class ad_skip_hire
     public function load_dependencies()
     {
         // the class responsible for managing the orders
-        require_once plugin_dir_path( __FILE__ ) . 'includes/classes/Locations.php';
-        require_once plugin_dir_path( __FILE__ ) . 'includes/classes/Permits.php';
-        require_once plugin_dir_path( __FILE__ ) . 'includes/classes/Coupons.php';
-        require_once plugin_dir_path( __FILE__ ) . 'includes/classes/Skips.php';
-        require_once plugin_dir_path( __FILE__ ) . 'includes/classes/Orders.php';
-        require_once plugin_dir_path( __FILE__ ) . 'includes/classes/WpGeoQuery.php';
-        require_once plugin_dir_path( __FILE__ ) . 'includes/classes/PayPal.php';
-        require_once plugin_dir_path( __FILE__ ) . 'includes/classes/Mailer.php';
+        require_once plugin_dir_path( __FILE__ ) . 'classes/Locations.php';
+        require_once plugin_dir_path( __FILE__ ) . 'classes/Permits.php';
+        require_once plugin_dir_path( __FILE__ ) . 'classes/Coupons.php';
+        require_once plugin_dir_path( __FILE__ ) . 'classes/Skips.php';
+        require_once plugin_dir_path( __FILE__ ) . 'classes/Orders.php';
+        require_once plugin_dir_path( __FILE__ ) . 'classes/WPGeoQuery.php';
+        require_once plugin_dir_path( __FILE__ ) . 'classes/PayPal.php';
+        require_once plugin_dir_path( __FILE__ ) . 'classes/Mailer.php';
 
         $this->locations = new ad_skip_hire_locations();
         $this->permits = new ad_skip_hire_permits();
@@ -131,55 +131,64 @@ class ad_skip_hire
      */
     public function update_cmb2_meta_box_url()
     {
-        $url = plugins_url( 'vendor/cmb2', __FILE__ );
+        $url = plugins_url( __FILE__ ) . 'vendor/cmb2';
         return $url;
     }
 
     /**
      * Inject session_start before the headers are called.
      */
-    function session_start() 
+    public function session_start()
     {
-        if( ! session_id() ) 
+        if( ! session_id() )
             session_start();
     }
 
     /**
      * load the javascript
      */
-    public function load_javascript()
+    public function load_public_assets()
     {
-        wp_enqueue_script( 'jquery', plugins_url( 'js/jquery-2.2.3.min.js', __FILE__ ), '', '2.2.3');
         wp_enqueue_script( 'google_maps_api', 'https://maps.googleapis.com/maps/api/js', '', '', true );
-        wp_enqueue_script( 'ash_custom', plugins_url( 'js/custom.min.js', __FILE__ ), ['jquery', 'google_maps_api'], '1.0.1', true);
+        wp_enqueue_script( 'ash_custom', plugins_url( 'assets/js/custom.min.js', __FILE__ ), ['jquery'], $this->version, true);
+    }
+
+    /**
+     * load the javascript
+     */
+    public function load_admin_assets()
+    {
+        if ( is_admin() ) {
+            wp_enqueue_style( 'ash-admin-style', plugins_url( 'assets/css/skip-hire-admin.css', __FILE__), null, $this->version );
+        }
     }
 
     /**
      * create the required menu pages in the admin
      */
-    public function skip_admin_pages() 
+    public function skip_admin_pages()
     {
-        add_menu_page( 
-            'Skip Hire Options', 
-            'Skip Hire', 
-            'read', 
+        add_menu_page(
+            'Skip Hire Options',
+            'Skip Hire',
+            'read',
             $this->plugin_name,
-            [$this, 'skip_create_admin_page'], 
-            '', 
+            [$this, 'skip_create_admin_page'],
+            '',
             20
         );
 
-        add_submenu_page( 
+        add_submenu_page(
             $this->plugin_name,
-            'Skip Hire Settings', 
-            'Settings', 
-            'manage_options', 
+            'Skip Hire Settings',
+            'Settings',
+            'manage_options',
             $this->plugin_name . '_options',
             [$this, 'skip_create_settings_page']
         );
     }
 
-    public function get_sections() 
+    public function get_sections()
     {
         $sections = [];
 
@@ -212,7 +221,7 @@ class ad_skip_hire
         echo "<p></p>";
     }
 
-    public function get_fields() 
+    public function get_fields()
     {
         $fields = [];
 
@@ -227,7 +236,7 @@ class ad_skip_hire
             'default_value'  => '10',
             'class'          => ''
         ];
-        
+
         $fields[] = [
             'id'             => $this->prefix . '_paypal_client_id',
             'title'          => 'PayPal Client ID',
@@ -308,7 +317,7 @@ class ad_skip_hire
     }
 
     public function render_field ($field_args = [])
-    {        
+    {
         extract ($field_args);
         $options = get_option($page);
 
@@ -357,7 +366,7 @@ class ad_skip_hire
             if ( isset( $input[$key] ) )
                 $output[$key] = strip_tags(stripslashes($input[$key]));
         }
-        
+
         return apply_filters('validate_options', $output, $input);
     }
 
@@ -366,27 +375,27 @@ class ad_skip_hire
      */
     public function skip_create_settings_page( )
     {
-        include_once plugin_dir_path(__FILE__) . 'includes/views/admin/skips.php';
+        include_once plugin_dir_path(__FILE__) . 'views/admin/skips.php';
     }
 
     /**
      * send the right forms onto the page, process and transfer details
      */
-    public function booking_form_director ( $args = [] )
+    public function booking_form_director ( )
     {
-        $postcode = (isset($_REQUEST['ash_postcode'])) ? $_REQUEST['ash_postcode'] : NULL; 
-        $lat = (isset($_REQUEST['ash_lat'])) ? $_REQUEST['ash_lat'] : NULL; 
-        $lng = (isset($_REQUEST['ash_lng'])) ? $_REQUEST['ash_lng'] : NULL; 
-        $skip = (isset($_REQUEST['ash_skip_id'])) ? $_REQUEST['ash_skip_id'] : NULL; 
+        $postcode = (isset($_REQUEST['ash_postcode'])) ? $_REQUEST['ash_postcode'] : NULL;
+        $lat = (isset($_REQUEST['ash_lat'])) ? $_REQUEST['ash_lat'] : NULL;
+        $lng = (isset($_REQUEST['ash_lng'])) ? $_REQUEST['ash_lng'] : NULL;
+        $skip = (isset($_REQUEST['ash_skip_id'])) ? $_REQUEST['ash_skip_id'] : NULL;
 
         # set sessions
         if($skip != null)
             $_SESSION['ash_skip_id'] = $skip;
-        
+
         if($postcode != null)
             $_SESSION['ash_postcode'] = $postcode;
 
-        # load forms       
+        # load forms
         if ( $skip == null && $lat != null ) {
             # run the geo query
             $options = get_option('delivery_page');
@@ -427,7 +436,7 @@ class ad_skip_hire
                             $pass = false;
                             break;
                         endif;
-                    } else { 
+                    } else {
                         $pass = true;
                     }
                 }
@@ -449,8 +458,8 @@ class ad_skip_hire
      * the shortcode contents for the postcode form (looking up lat and lang)
      */
     public function build_postcode_form( )
-    { 
-        include_once plugin_dir_path( __FILE__ ) . 'includes/views/postcodeForm.php';
+    {
+        include_once plugin_dir_path( __FILE__ ) . 'views/postcodeForm.php';
     }
 
     /**
@@ -458,22 +467,22 @@ class ad_skip_hire
      */
     public function build_skip_form( $postcode = null )
     {
-        include_once plugin_dir_path( __FILE__ ) . 'includes/views/skipChoiceForm.php';
+        include_once plugin_dir_path( __FILE__ ) . 'views/skipChoiceForm.php';
     }
 
     /**
      * build the booking form so that we can fill out user details
      */
     public function build_booking_form( $skip = NULL, $postcode = NULL )
-    { 
-        include_once plugin_dir_path( __FILE__ ) . 'includes/views/bookingForm.php';
+    {
+        include_once plugin_dir_path( __FILE__ ) . 'views/bookingForm.php';
     }
 
     /**
      * build the confirmation form, which links off to payment method or displays success with payment.
      */
-    public function build_confirmation_form( $args = [] )
-    {        
+    public function build_confirmation_form( )
+    {
         # Skips
         $skips = new WP_Query([
             'post_type'         => 'ash_skips',
@@ -481,12 +490,12 @@ class ad_skip_hire
             'post_id'           => $_SESSION['ash_skip_id']
         ]);
 
-        if ( $skips->have_posts() ): 
+        if ( $skips->have_posts() ):
             while ( $skips->have_posts() ): $skips->the_post();
                 $skip['title'] = get_the_title();
                 $skip['id'] =  get_the_ID();
                 $skip['price'] = get_post_meta( get_the_ID(), 'ash_skips_price', true );
-            endwhile; 
+            endwhile;
         endif;
 
         # Permits
@@ -496,12 +505,12 @@ class ad_skip_hire
             'post_id'           => $_POST['ash_permit_id']
         ]);
 
-        if ( $permits->have_posts() ): 
+        if ( $permits->have_posts() ):
             while ( $permits->have_posts() ): $permits->the_post();
                 $permit['title'] = get_the_title();
                 $permit['id'] =  get_the_ID();
                 $permit['price'] = get_post_meta( get_the_ID(), 'ash_permits_price', true );
-            endwhile; 
+            endwhile;
         else:
             $permit['title'] = '';
             $permit['price'] = 0.00;
@@ -531,11 +540,11 @@ class ad_skip_hire
                     } elseif ( $couponType == 'percent' ) {
                         $coupon['price'] = $subTotal * ($couponAmount / 100);
                     }
-                endwhile; 
+                endwhile;
             else:
                 $coupon['title'] = '';
                 $coupon['price'] = 0.00;
-            endif; 
+            endif;
 
         } else {
             $coupon['title'] = '';
@@ -551,13 +560,13 @@ class ad_skip_hire
         $_SESSION['ash_order_details'] = $_POST;
 
         # Include Template
-        include_once plugin_dir_path( __FILE__ ) . 'includes/views/orderConfirmationForm.php';
+        include_once plugin_dir_path( __FILE__ ) . 'views/orderConfirmationForm.php';
     }
 
     /**
      * create the order and add it to the database
      */
-    public function create_order_from_form () 
+    public function create_order_from_form ()
     {
         $data = $_SESSION['ash_order_details'];
 
@@ -598,7 +607,7 @@ class ad_skip_hire
 
         if( isset( $data['ash_waste'] ) )
             add_post_meta( $postID, 'ash_orders_waste', $data['ash_waste']);
-        
+
         add_post_meta( $postID, 'ash_orders_notes', $data['ash_notes']);
         add_post_meta( $postID, 'ash_orders_status', 'pending');
         add_post_meta( $postID, 'ash_orders_total', $_SESSION['ash_order_total']);
@@ -615,8 +624,8 @@ class ad_skip_hire
             $postID = $this->create_order_from_form();
             $mailer = $this->mail->send_mail( $postID, $_SESSION['ash_order_details'] );
 
-            $options = get_option('payment_page'); 
-            
+            $options = get_option('payment_page');
+
             if( isset ( $_REQUEST['ash_place_order_paypal'] ) ) {
 
                 $paymentLink = $this->paypal->generate_payment_link($_SESSION['ash_order_skip'], $_SESSION['ash_order_permit'], $_SESSION['ash_order_coupon'], $_SESSION['ash_order_total']);
@@ -627,7 +636,7 @@ class ad_skip_hire
             }
 
             if( isset ( $_REQUEST['ash_place_order_phone'] ) ) {
-                include_once plugin_dir_path( __FILE__ ) . 'includes/views/orderConfirmationTelephone.php';
+                include_once plugin_dir_path( __FILE__ ) . 'views/orderConfirmationTelephone.php';
             }
         } elseif( isset( $_REQUEST['success'] ) ) {
             $this->paypal->authorised_payment_check();
@@ -641,7 +650,7 @@ class ad_skip_hire
     /**
      * validate a string/text field
      */
-    public function validateString ($val) 
+    public function validateString ($val)
     {
         return sanitize_text_field($val);
     }
@@ -649,7 +658,7 @@ class ad_skip_hire
     /**
      * validate a url that's passed
      */
-    public function validateUrl ($url) 
+    public function validateUrl ($url)
     {
         return esc_url($url);
     }
@@ -657,7 +666,7 @@ class ad_skip_hire
     /**
      * validate a number that's passed
      */
-    public function validateNumber ($val) 
+    public function validateNumber ($val)
     {
         return intval($val);
     }

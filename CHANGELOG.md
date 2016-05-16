@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 1.0
+
+- [Improvement] Implementing github updater, moving repository to GitHub.
+- [Improvement] Integrating Adtrak theme for the admin settings.
+
 ## Version 0.4
 
 - [Bug] Fixed break in form when no waste was selected.

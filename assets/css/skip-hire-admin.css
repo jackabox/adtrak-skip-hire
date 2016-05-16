@@ -1,0 +1,98 @@
+#ad_skip_hire_options h1 {
+    margin-bottom: 20px !important;
+}
+
+#ad_skip_hire_options h1:after {
+    clear: both;
+    display: table;
+}
+
+#ad_skip_hire_options .nav-tab-wrapper {
+    margin: 0 0 0 0 !important;
+    padding: 0 !important;
+    background-color: #2E2626 !important;
+    box-sizing: border-box;
+}
+
+#ad_skip_hire_options .nav-tab-wrapper a, #ad_skip_hire_options .nav-tab-wrapper a:visited {
+    color: white;
+    font-weight: 400 !important;
+    transition: all 0.3s ease-in-out;
+    padding: 15px 20px 15px 20px !important;
+}
+
+#ad_skip_hire_options .nav-tab-active {
+    background: white !important;
+    color: #F15F48 !important;
+}
+
+#ad_skip_hire_options .nav-tab-wrapper a:hover {
+    color: #F15F48 !important;
+}
+
+#ad_skip_hire_options .nav-tab-content {
+    padding: 20px !important;
+    border: 1px solid white !important;
+    background-color: #fff;
+}
+
+#ad_skip_hire_options input[type="text"] {
+    width: 100% !important;
+    padding: 10px;
+}
+
+#ad_skip_hire_options .form-table .field-desc {
+    font-size: 12px;
+    font-style: oblique;
+    opacity: 0.5;
+    margin-left: 5px;
+}
+
+#ad_skip_hire_options .feed-enabled {
+    position: relative;
+}
+
+#ad_skip_hire_options .feed-enabled::after {
+    content: '';
+    border: solid;
+    border-color: #7ad03a transparent;
+    width: 0px;
+    position: absolute;
+    border-width: 0px 6px 6px 6px;
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
+    top: -1px;
+    right: -5px;
+}
+
+#ad_skip_hire_options .form-table.maintenance td {
+    padding: 0;
+}
+
+#ad_skip_hire_options .form-table.maintenance th {
+    padding-top: 25px;
+}
+
+#adso-options {
+    width: 800px;
+}
+
+#adso-options .sa-section {
+    margin-bottom: 30px;
+}
+
+#adso-options .spinner {
+    float: none;
+    margin-top: 5px;
+}
+
+#adso-options .message {
+    margin-top: 16px;
+}
+
+#adso-options .message .social-feed-error {
+    color: red;
+}
