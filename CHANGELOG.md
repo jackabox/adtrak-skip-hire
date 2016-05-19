@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 1.0.2
+
+- [Bug] Fixing typo in code
+
 ## Version 1.0.1
 
 - [Bug] Fixing issue with call of CMB2 style

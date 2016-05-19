@@ -30,7 +30,7 @@
     <!-- addresses -->
     <fieldset class="ash__fieldset ash__fieldset-delivery">
         <legend class="ash__legend ash__legend-delivery">Delivery Address</legend>
-        
+
         <div class="ash__input ash__input--address">
             <label for="ash_delivery_address_1">Address Line 1</label>
             <input type="text" name="ash_delivery_address_1" id="ash_delivery_address_1" value="<?php if(isset($_POST['ash_delivery_address_1'])) echo $_POST['ash_delivery_address_1']; ?>">
@@ -70,7 +70,7 @@
 
         <div class="ash__input ash__input--time">
             <span class="ash__fake-label">Pick a Time Slot</span>
-            
+
             <input type="radio" class="ash__input--radio" id="ash_delivery_am" name="ash_delivery_time[]" value="AM" <?php if(isset($_POST['ash_delivery_time']) && $_POST['ash_delivery_time'][0] == 'AM') echo "checked" ?>> <label for="ash_delivery_am">AM</label>
             <input type="radio" class="ash__input--radio" id="ash_delivery_pm" name="ash_delivery_time[]" value="PM" <?php if(isset($_POST['ash_delivery_time']) && $_POST['ash_delivery_time'][0] == 'PM') echo "checked" ?>> <label for="ash_delivery_pm">PM</label>
         </div>
@@ -119,8 +119,8 @@
             <label for="ash_notes">Additional Notes</label>
             <textarea name="ash_notes" id="ash_notes"><?php if(isset($_POST['ash_notes'])) echo $_POST['ash_notes']; ?></textarea>
         </div>
-        
-        <div calss="ash__input ash__input--coupon">
+
+        <div class="ash__input ash__input--coupon">
             <label for="ash_coupon">Coupon Code</label>
             <input type="text" name="ash_coupon" id="ash_coupon" value="<?php if(isset($_POST['ash_coupon'])) echo $_POST['ash_coupon']; ?>">
         </div>
