@@ -1,5 +1,11 @@
 # Changelog
 
+## Version 1.0.3
+
+- [Improvement] Added classes to overview table
+- [Improvement] Added a div wrapper around all of the form content
+- [Improvement] Changed the order of the skips
+
 ## Version 1.0.2
 
 - [Bug] Fixing typo in code
