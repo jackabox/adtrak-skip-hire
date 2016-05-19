@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 class ad_skip_hire_skips
 {
@@ -10,8 +10,8 @@ class ad_skip_hire_skips
      */
     public function __construct()
     {
-        $this->cpt_prefix = 'ash_skips'; 
-        $this->menu_parent = 'ad_skip_hire'; 
+        $this->cpt_prefix = 'ash_skips';
+        $this->menu_parent = 'ad_skip_hire';
 
         # register post type
         add_action('init', [$this, 'skip_post_type']);
@@ -23,7 +23,7 @@ class ad_skip_hire_skips
     /**
      * register the skip post type
      */
-    public function skip_post_type() 
+    public function skip_post_type()
     {
         $labels = [
             'name'                  => _x( 'Skips', $this->cpt_prefix),
@@ -38,7 +38,7 @@ class ad_skip_hire_skips
             'not_found_in_trash'    => _x( 'No Skips found in Trash', $this->cpt_prefix ),
             'menu_name'             => _x( 'Skips', $this->cpt_prefix ),
         ];
-     
+
         $args = [
             'labels'                => $labels,
             'hierarchical'          => true,
@@ -59,9 +59,9 @@ class ad_skip_hire_skips
     }
 
     /**
-     * registers the meta fields using the CMB2 library. 
+     * registers the meta fields using the CMB2 library.
      */
-    public function register_meta_fields() 
+    public function register_meta_fields()
     {
         $skip_fields = new_cmb2_box([
             'id'            => $this->cpt_prefix . '_metabox',
@@ -77,11 +77,6 @@ class ad_skip_hire_skips
             'name'          => __( 'Width', 'ash' ),
             'type'          => 'text_small',
             'after_field'   => ' m',
-            'attributes'    => [
-                'placeholder' => __( '5', 'ash' ),
-                'type'        => 'number',
-                'pattern'     => '\d*',
-            ],
         ]);
 
         $skip_fields->add_field([
@@ -89,11 +84,6 @@ class ad_skip_hire_skips
             'name'          => __( 'Height', 'ash' ),
             'type'          => 'text_small',
             'after_field'   => ' m',
-            'attributes'    => [
-                'placeholder' => __( '5', 'ash' ),
-                'type'        => 'number',
-                'pattern'     => '\d*',
-            ],
         ]);
 
         $skip_fields->add_field([
@@ -101,11 +91,6 @@ class ad_skip_hire_skips
             'name'          => __( 'Length', 'ash' ),
             'type'          => 'text_small',
             'after_field'   => ' m',
-            'attributes'    => [
-                'placeholder' => __( '5', 'ash' ),
-                'type'        => 'number',
-                'pattern'     => '\d*',
-            ],
         ]);
 
         $skip_fields->add_field([
@@ -120,11 +105,6 @@ class ad_skip_hire_skips
             'name'          => __( 'Capacity', 'ash' ),
             'type'          => 'text_small',
             'after_field'   => ' mt',
-            'attributes'    => [
-                'placeholder' => __( '5', 'ash' ),
-                'type'        => 'number',
-                'pattern'     => '\d*',
-            ],
         ]);
 
         $skip_fields->add_field([

@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 1.0.1
+
+- [Bug] Fixing issue with call of CMB2 style
+- [Bug] Fixed not being able to add decimals to skips.
+
 ## Version 1.0
 
 - [Improvement] Implementing github updater, moving repository to GitHub.
