@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 1.0.4
+
+- [Improvement] Hides fields on skips which aren't filled out
+
 ## Version 1.0.3
 
 - [Improvement] Added classes to overview table

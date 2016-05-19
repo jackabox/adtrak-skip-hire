@@ -24,10 +24,21 @@
 
             <div class="ash-skip-form__meta">
 
-                <span class="ash-skip__meta meta--width">Width: <?php echo get_post_meta( get_the_ID(), 'ash_skips_width', true ); ?></span>
-                <span class="ash-skip__meta meta--height">Height: <?php echo get_post_meta( get_the_ID(), 'ash_skips_height', true ); ?></span>
-                <span class="ash-skip__meta meta--length">Length: <?php echo get_post_meta( get_the_ID(), 'ash_skips_length', true ); ?></span>
-                <span class="ash-skip__meta meta--capacity">Capacity: <?php echo get_post_meta( get_the_ID(), 'ash_skips_capacity', true ); ?></span>
+                <?php if(get_post_meta( get_the_ID(), 'ash_skips_width', true ) != '') { ?>
+                    <span class="ash-skip__meta meta--width">Width: <?php echo get_post_meta( get_the_ID(), 'ash_skips_width', true ); ?> m</span>
+                <?php  } ?>
+
+                <?php if(get_post_meta( get_the_ID(), 'ash_skips_height', true ) != '') { ?>
+                    <span class="ash-skip__meta meta--height">Height: <?php echo get_post_meta( get_the_ID(), 'ash_skips_height', true ); ?> m</span
+                <?php } ?>
+
+                <?php if(get_post_meta( get_the_ID(), 'ash_skips_length', true ) != '') { ?>
+                    <span class="ash-skip__meta meta--length">Length: <?php echo get_post_meta( get_the_ID(), 'ash_skips_length', true ); ?> m</span>
+                <?php } ?>
+
+                <?php if(get_post_meta( get_the_ID(), 'ash_skips_capacity', true ) != '') { ?>
+                    <span class="ash-skip__meta meta--capacity">Capacity: <?php echo get_post_meta( get_the_ID(), 'ash_skips_capacity', true ); ?> mt</span>
+                <?php } ?>
 
             </div>
 
