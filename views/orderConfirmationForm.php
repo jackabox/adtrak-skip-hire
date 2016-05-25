@@ -95,6 +95,12 @@
     </table>
 
     <form action="<?php echo home_url('/booking/confirmation'); ?>" method="GET">
+        <?php if( !empty($options['ash_enable_tc'] )) : ?>
+        <p>
+            <input type="checkbox" name="ash_read_tc" id="ash_read_tc" value="true" required>
+            <label for="ash_read_tc">Do you agree to the <a href="<?php echo (!empty($options['ash_tc_link'] )) ? $options['ash_tc_link'] : ''; ?>">terms and conditions</a>?</label>
+        </p>
+        <?php endif; ?>
         <p><input type="submit" name="ash_place_order_phone" id="ash_place_order_phone" value="Pay via Telephone"> <input type="submit" name="ash_place_order_paypal"  id="ash_place_order_paypal" value="Pay via PayPal"></p>
     </form>
 </div>

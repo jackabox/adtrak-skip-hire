@@ -267,6 +267,18 @@ class ad_skip_hire
         ];
 
         $fields[] = [
+            'callback'       => [$this, 'render_field'],
+            'page'           => $this->prefix . '_general_page',
+            'section'        => $this->prefix . '_general',
+            'id'             => $this->prefix . '_tc_link',
+            'title'          => 'Tems & Conditions Link',
+            'desc'           => 'Where is your T&Cs page located?.',
+            'type'           => 'text',
+            'default_value'  => '',
+            'class'          => ''
+        ];
+
+        $fields[] = [
             'id'             => $this->prefix . '_paypal_client_id',
             'title'          => 'PayPal Client ID',
             'callback'       => [$this, 'render_field'],

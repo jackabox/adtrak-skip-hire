@@ -4,7 +4,10 @@
 
 - [Bug] Fixes issue with incorrect skip passing to final form
 - [Bug] Fixes issue with incorrect permit passing to final form
+- [Bug] Prefixed admin pages to stop them conflicting with other plugins.
 - [Feature] Allowing the user to select whether they want to display the AM/PM time picker.
+- [Feature] Allows for showing of terms & conditions on the order-confirmation page.
+- [Improvement] Defines certain fields on forms as required using HTML5 attributes
 
 ## Version 1.0.4
 
