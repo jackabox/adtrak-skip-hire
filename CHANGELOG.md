@@ -7,7 +7,8 @@
 - [Bug] Prefixed admin pages to stop them conflicting with other plugins.
 - [Feature] Allowing the user to select whether they want to display the AM/PM time picker.
 - [Feature] Allows for showing of terms & conditions on the order-confirmation page.
-- [Improvement] Defines certain fields on forms as required using HTML5 attributes
+- [Improvement] Defines certain fields on forms as required using HTML5 attributes.
+- [Improvement] Tweaked the admin theme style to play nice with most interfaces.
 
 ## Version 1.0.4
 

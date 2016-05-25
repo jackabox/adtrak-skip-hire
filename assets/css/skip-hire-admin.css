@@ -12,6 +12,7 @@
     padding: 0 !important;
     background-color: #2E2626 !important;
     box-sizing: border-box;
+    border: 0;
 }
 
 #ad_skip_hire_options .nav-tab-wrapper a, #ad_skip_hire_options .nav-tab-wrapper a:visited {
@@ -19,6 +20,11 @@
     font-weight: 400 !important;
     transition: all 0.3s ease-in-out;
     padding: 15px 20px 15px 20px !important;
+}
+
+#ad_skip_hire_options .nav-tab {
+    background-color: #2E2626 !important;
+    border: 0;
 }
 
 #ad_skip_hire_options .nav-tab-active {
@@ -76,23 +82,23 @@
     padding-top: 25px;
 }
 
-#adso-options {
+#ash-options {
     width: 800px;
 }
 
-#adso-options .sa-section {
+#ash-options .sa-section {
     margin-bottom: 30px;
 }
 
-#adso-options .spinner {
+#ash-options .spinner {
     float: none;
     margin-top: 5px;
 }
 
-#adso-options .message {
+#ash-options .message {
     margin-top: 16px;
 }
 
-#adso-options .message .social-feed-error {
+#ash-options .message .social-feed-error {
     color: red;
 }
