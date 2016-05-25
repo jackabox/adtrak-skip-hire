@@ -487,7 +487,7 @@ class ad_skip_hire
         $skips = new WP_Query([
             'post_type'         => 'ash_skips',
             'posts_per_page'    => 1,
-            'post_id'           => $_SESSION['ash_skip_id']
+            'p'                 => $_SESSION['ash_skip_id']
         ]);
 
         if ( $skips->have_posts() ):
@@ -502,7 +502,7 @@ class ad_skip_hire
         $permits = new WP_Query([
             'post_type'         => 'ash_permits',
             'posts_per_page'    => 1,
-            'post_id'           => $_POST['ash_permit_id']
+            'p'           => $_POST['ash_permit_id']
         ]);
 
         if ( $permits->have_posts() ):

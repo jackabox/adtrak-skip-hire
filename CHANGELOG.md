@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 1.1
+
+- [Bug] Fixes issue with incorrect skip passing to final form
+- [Bug] Fixes issue with incorrect permit passing to final form
+
 ## Version 1.0.4
 
 - [Improvement] Hides fields on skips which aren't filled out
