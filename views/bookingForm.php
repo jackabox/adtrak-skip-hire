@@ -9,22 +9,22 @@
 
             <div class="ash__input ash__input--forename">
                 <label for="ash_forename">Forename</label>
-                <input type="text" name="ash_forename" id="ash_forename" value="<?php if(isset($_POST['ash_forename'])) echo $_POST['ash_forename']; ?>">
+                <input type="text" name="ash_forename" id="ash_forename" required value="<?php if(isset($_POST['ash_forename'])) echo $_POST['ash_forename']; ?>">
             </div>
 
             <div class="ash__input ash__input--surname">
                 <label for="ash_surname">Surname</label>
-                <input type="text" name="ash_surname" id="ash_surname" value="<?php if(isset($_POST['ash_surname'])) echo $_POST['ash_surname']; ?>">
+                <input type="text" name="ash_surname" id="ash_surname" required value="<?php if(isset($_POST['ash_surname'])) echo $_POST['ash_surname']; ?>">
             </div>
 
             <div class="ash__input ash__input--email">
                 <label for="ash_email">Email Address</label>
-                <input type="email" name="ash_email" id="ash_email" value="<?php if(isset($_POST['ash_email'])) echo $_POST['ash_email']; ?>">
+                <input type="email" name="ash_email" id="ash_email" required value="<?php if(isset($_POST['ash_email'])) echo $_POST['ash_email']; ?>">
             </div>
 
             <div class="ash__input ash__input--phone">
                 <label for="ash_phone">Phone Number</label>
-                <input type="tel" name="ash_phone" id="ash_phone" value="<?php if(isset($_POST['ash_phone'])) echo $_POST['ash_phone']; ?>">
+                <input type="tel" name="ash_phone" id="ash_phone" required value="<?php if(isset($_POST['ash_phone'])) echo $_POST['ash_phone']; ?>">
             </div>
         </fieldset>
 
@@ -34,7 +34,7 @@
 
             <div class="ash__input ash__input--address">
                 <label for="ash_delivery_address_1">Address Line 1</label>
-                <input type="text" name="ash_delivery_address_1" id="ash_delivery_address_1" value="<?php if(isset($_POST['ash_delivery_address_1'])) echo $_POST['ash_delivery_address_1']; ?>">
+                <input type="text" name="ash_delivery_address_1" id="ash_delivery_address_1" required value="<?php if(isset($_POST['ash_delivery_address_1'])) echo $_POST['ash_delivery_address_1']; ?>">
             </div>
 
             <div class="ash__input ash__input--address">
@@ -44,12 +44,12 @@
 
             <div class="ash__input ash__input--city">
                 <label for="ash_delivery_city">City</label>
-                <input type="text" name="ash_delivery_city" id="ash_delivery_city" value="<?php if(isset($_POST['ash_delivery_city'])) echo $_POST['ash_delivery_city']; ?>">
+                <input type="text" name="ash_delivery_city" id="ash_delivery_city" required value="<?php if(isset($_POST['ash_delivery_city'])) echo $_POST['ash_delivery_city']; ?>">
             </div>
 
             <div class="ash__input ash__input--county">
                 <label for="ash_delivery_county">County</label>
-                <input type="text" name="ash_delivery_county" id="ash_delivery_county" value="<?php if(isset($_POST['ash_delivery_county'])) echo $_POST['ash_delivery_county']; ?>">
+                <input type="text" name="ash_delivery_county" id="ash_delivery_county" required value="<?php if(isset($_POST['ash_delivery_county'])) echo $_POST['ash_delivery_county']; ?>">
             </div>
 
             <div class="ash__input ash__input--postcode">
@@ -66,15 +66,18 @@
 
             <div class="ash__input ash__input--date">
                 <label for="ash_delivery_date">Pick a Delivery Date</label>
-                <input type="date" name="ash_delivery_date" id="ash_delivery_date" placeholder="dd/mm/yyyy" <?php if(isset($_POST['ash_delivery_date'])) echo $_POST['ash_delivery_date']; ?>>
+                <input type="date" name="ash_delivery_date" id="ash_delivery_date" placeholder="dd/mm/yyyy" required <?php if(isset($_POST['ash_delivery_date'])) echo $_POST['ash_delivery_date']; ?>>
             </div>
 
+            <?php $options = get_option( 'ash_general_page' );
+            if( !empty($options['ash_enable_am_pm'] )) : ?>
             <div class="ash__input ash__input--time">
                 <span class="ash__fake-label">Pick a Time Slot</span>
 
                 <input type="radio" class="ash__input--radio" id="ash_delivery_am" name="ash_delivery_time[]" value="AM" <?php if(isset($_POST['ash_delivery_time']) && $_POST['ash_delivery_time'][0] == 'AM') echo "checked" ?>> <label for="ash_delivery_am">AM</label>
                 <input type="radio" class="ash__input--radio" id="ash_delivery_pm" name="ash_delivery_time[]" value="PM" <?php if(isset($_POST['ash_delivery_time']) && $_POST['ash_delivery_time'][0] == 'PM') echo "checked" ?>> <label for="ash_delivery_pm">PM</label>
             </div>
+            <?php endif; ?>
         </fieldset>
 
         <!-- permit, waste, notes -->

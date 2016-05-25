@@ -72,10 +72,13 @@
                 <td>Delivery Date</td>
                 <td><?php echo date('d/m/Y', strtotime($_POST['ash_delivery_date'])); ?></td>
             </tr>
+            <?php $options = get_option( 'ash_general_page' );
+            if( !empty($options['ash_enable_am_pm'] )) : ?>
             <tr>
                 <td>Delivery Slot</td>
-                <td><?php echo $_POST['ash_delivery_time'][0] ?></td>
+                <td><?php echo (isset( $_POST['ash_delivery_time'][0] )) ? $_POST['ash_delivery_time'][0] : 'Not Specified'; ?></td>
             </tr>
+            <?php endif; ?>
             <?php
                 $waste = (isset( $_POST['ash_waste'] )) ? $_POST['ash_waste'] : null;
                 if($waste): ?>

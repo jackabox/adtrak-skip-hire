@@ -4,6 +4,7 @@
 
 - [Bug] Fixes issue with incorrect skip passing to final form
 - [Bug] Fixes issue with incorrect permit passing to final form
+- [Feature] Allowing the user to select whether they want to display the AM/PM time picker.
 
 ## Version 1.0.4
 

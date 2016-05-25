@@ -193,24 +193,17 @@ class ad_skip_hire
         $sections = [];
 
         $sections[$this->prefix . '_delivery'] = [
-            'id'         => $this->prefix . '_delivery',
-            'title'      => 'Delivery',
+            'id'         => $this->prefix . '_general',
+            'title'      => 'General Settings',
             'callback'   => [$this, 'render_section'],
-            'page'       => 'delivery_page'
+            'page'       => $this->prefix . '_general_page'
         ];
 
         $sections[$this->prefix . '_payment'] = [
             'id'         => $this->prefix . '_payment',
             'title'      => 'Payment',
             'callback'   => [$this, 'render_section'],
-            'page'       => 'payment_page'
-        ];
-
-        $sections[$this->prefix . '_email'] = [
-            'id'         => $this->prefix . '_email',
-            'title'      => 'Email',
-            'callback'   => [$this, 'render_section'],
-            'page'       => 'email_page'
+            'page'       => $this->prefix . '_payment_page'
         ];
 
         return $sections;
@@ -229,8 +222,8 @@ class ad_skip_hire
             'id'             => $this->prefix . '_delivery_radius',
             'title'          => 'Delivery Radius',
             'callback'       => [$this, 'render_field'],
-            'page'           => 'delivery_page',
-            'section'        => $this->prefix . '_delivery',
+            'page'           => $this->prefix . '_general_page',
+            'section'        => $this->prefix . '_general',
             'desc'           => 'Specify a radius from locations to deliver to.',
             'type'           => 'text',
             'default_value'  => '10',
@@ -238,10 +231,46 @@ class ad_skip_hire
         ];
 
         $fields[] = [
+            'id'             => $this->prefix . '_email_address',
+            'title'          => 'Email Address',
+            'callback'       => [$this, 'render_field'],
+            'page'           => $this->prefix . '_general_page',
+            'section'        => $this->prefix . '_general',
+            'desc'           => 'Provide the email address to send the notification emails to.',
+            'type'           => 'text',
+            'default_value'  => '',
+            'class'          => ''
+        ];
+
+        $fields[] = [
+            'id'             => $this->prefix . '_enable_am_pm',
+            'title'          => 'Enable AM/PM Selector',
+            'callback'       => [$this, 'render_field'],
+            'page'           => $this->prefix . '_general_page',
+            'section'        => $this->prefix . '_general',
+            'desc'           => 'Do you want to allow the user to pick AM/PM delivery slots?.',
+            'type'           => 'checkbox',
+            'default_value'  => '',
+            'class'          => ''
+        ];
+
+        $fields[] = [
+            'id'             => $this->prefix . '_enable_tc',
+            'title'          => 'Enable T&Cs',
+            'callback'       => [$this, 'render_field'],
+            'page'           => $this->prefix . '_general_page',
+            'section'        => $this->prefix . '_general',
+            'desc'           => 'Do you want to link to the T&Cs on the confirmation page?.',
+            'type'           => 'checkbox',
+            'default_value'  => '',
+            'class'          => ''
+        ];
+
+        $fields[] = [
             'id'             => $this->prefix . '_paypal_client_id',
             'title'          => 'PayPal Client ID',
             'callback'       => [$this, 'render_field'],
-            'page'           => 'payment_page',
+            'page'           => $this->prefix . '_payment_page',
             'section'        => $this->prefix . '_payment',
             'desc'           => 'Provide the PayPal Client ID.',
             'type'           => 'text',
@@ -253,7 +282,7 @@ class ad_skip_hire
             'id'             => $this->prefix . '_paypal_client_secret',
             'title'          => 'PayPal Client Secret',
             'callback'       => [$this, 'render_field'],
-            'page'           => 'payment_page',
+            'page'           => $this->prefix . '_payment_page',
             'section'        => $this->prefix . '_payment',
             'desc'           => 'Provide the PayPal Client Secret.',
             'type'           => 'text',
@@ -265,7 +294,7 @@ class ad_skip_hire
             'id'             => $this->prefix . '_payment_description',
             'title'          => 'Payment Description',
             'callback'       => [$this, 'render_field'],
-            'page'           => 'payment_page',
+            'page'           => $this->prefix . '_payment_page',
             'section'        => $this->prefix . '_payment',
             'desc'           => 'Provide the payment description (will appear on invoices).',
             'type'           => 'text',
@@ -277,21 +306,9 @@ class ad_skip_hire
             'id'             => $this->prefix . '_payment_telephone',
             'title'          => 'Payment Telephone Number',
             'callback'       => [$this, 'render_field'],
-            'page'           => 'payment_page',
+            'page'           => $this->prefix . '_payment_page',
             'section'        => $this->prefix . '_payment',
             'desc'           => 'Provide the number to call if users want to pay by phone.',
-            'type'           => 'text',
-            'default_value'  => '',
-            'class'          => ''
-        ];
-
-        $fields[] = [
-            'id'             => $this->prefix . '_email_address',
-            'title'          => 'Email Address',
-            'callback'       => [$this, 'render_field'],
-            'page'           => 'email_page',
-            'section'        => $this->prefix . '_email',
-            'desc'           => 'Provide the email address to send the notification emails to.',
             'type'           => 'text',
             'default_value'  => '',
             'class'          => ''
@@ -375,7 +392,7 @@ class ad_skip_hire
      */
     public function skip_create_settings_page( )
     {
-        include_once plugin_dir_path(__FILE__) . 'views/admin/skips.php';
+        include_once plugin_dir_path(__FILE__) . 'views/admin/settings.php';
     }
 
     /**
@@ -398,7 +415,7 @@ class ad_skip_hire
         # load forms
         if ( $skip == null && $lat != null ) {
             # run the geo query
-            $options = get_option('delivery_page');
+            $options = get_option('ash_general_page');
 
             $locations = new ASH_WP_Query_Geo([
                 'post_status'       => 'publish',
@@ -427,7 +444,6 @@ class ad_skip_hire
                         $key == 'ash_delivery_county' ||
                         $key == 'ash_delivery_postcode' ||
                         $key == 'ash_delivery_date' ||
-                        $key == 'ash_delivery_time' ||
                         $key == 'ash_skip_id'
                     ) {
                         if( ( $entry == NULL ) || empty( $entry ) ):
@@ -601,9 +617,11 @@ class ad_skip_hire
         add_post_meta( $postID, 'ash_orders_phone', $data['ash_phone'] );
         add_post_meta( $postID, 'ash_orders_delivery_address', $deliveryAddress );
         add_post_meta( $postID, 'ash_orders_delivery_date', $data['ash_delivery_date']);
-        add_post_meta( $postID, 'ash_orders_delivery_time', $data['ash_delivery_time'][0]);
         add_post_meta( $postID, 'ash_orders_skip_id', $_SESSION['ash_skip_id']);
         add_post_meta( $postID, 'ash_orders_permit_id', $data['ash_permit_id']);
+
+        if( isset( $data['ash_delivery_time'] ) )
+            add_post_meta( $postID, 'ash_orders_delivery_time', $data['ash_delivery_time'][0]);
 
         if( isset( $data['ash_waste'] ) )
             add_post_meta( $postID, 'ash_orders_waste', $data['ash_waste']);
@@ -624,7 +642,7 @@ class ad_skip_hire
             $postID = $this->create_order_from_form();
             $mailer = $this->mail->send_mail( $postID, $_SESSION['ash_order_details'] );
 
-            $options = get_option('payment_page');
+            $options = get_option('ash_payment_page');
 
             if( isset ( $_REQUEST['ash_place_order_paypal'] ) ) {
 

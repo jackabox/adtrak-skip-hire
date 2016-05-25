@@ -3,7 +3,7 @@
 
     <?php settings_errors(); ?>
 
-    <?php $active_tab = isset($_GET['tab']) ? $_GET['tab'] : 'delivery_page'; ?>
+    <?php $active_tab = isset($_GET['tab']) ? $_GET['tab'] : 'ash_general_page'; ?>
 
     <h2 class="nav-tab-wrapper">
         <?php

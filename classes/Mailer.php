@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 class ad_skip_hire_mailer
 {
@@ -6,14 +6,14 @@ class ad_skip_hire_mailer
 
     public function __construct()
     {
-        $options = get_option('email_page');
+        $options = get_option('ash_general_page');
 
-        $this->mail = new PHPMailer;        
+        $this->mail = new PHPMailer;
         $this->mail->addAddress( $options['ash_email_address'] );
         $this->mail->isHTML(true);
     }
 
-    public function send_mail($postID, $data) 
+    public function send_mail($postID, $data)
     {
         $home = home_url();
 
