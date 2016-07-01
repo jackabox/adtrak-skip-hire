@@ -2,8 +2,8 @@
 
 Contributers: jackabox  
 Tags: skip, booking, crm  
-Tested up to: 4.5  
-Stable Tag: 1.1.0     
+Tested up to: 4.6  
+Stable Tag: 1.2.0     
 Requires at least: 4.0  
 
 A plugin used to set radius for skip hire, process booking, and take payments.

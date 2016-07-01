@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 1.2
+- [Improvement] Updating the admin to be inline with that of other Adtrak Plugins
+- [Improvement] Adds a helper to the settings page which informs the user of the shortcodes/contact email
+- [Bug] Fixes minor issue with 4.6 beta 1
+
 ## Version 1.1
 
 - [Bug] Fixes issue with incorrect skip passing to final form
