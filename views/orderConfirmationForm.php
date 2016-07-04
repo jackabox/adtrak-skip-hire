@@ -22,11 +22,11 @@
 
             <tr>
                 <td>Permit</td>
-                <td><?php echo $permit['title']; ?></td>
-                <td>£<?php echo $permit['price']; ?></td>
+                <td><?php echo ($permit['title']) ? $permit['title'] : '-'; ?></td>
+                <td>£<?php echo number_format( (float)$permit['price'], 2, '.', ''); ?></td>
             </tr>
 
-            <?php if( $coupon['price'] != 0 ) { ?>
+            <?php if( $coupon['price'] != 0.00 ) { ?>
                 <tr>
                     <td>Coupon</td>
                     <td><?php echo $coupon['title']?></td>

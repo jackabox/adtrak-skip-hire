@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 1.2.1
+
+- [Bug] Fixes an issue with Google Maps API not having a key and access to functions.
+- [Bug] Fixes an issue with the Permit defaulting to an unselected type.
+
 ## Version 1.2
 - [Improvement] Updating the admin to be inline with that of other Adtrak Plugins
 - [Improvement] Adds a helper to the settings page which informs the user of the shortcodes/contact email

@@ -149,7 +149,7 @@ class ad_skip_hire
      */
     public function load_public_assets()
     {
-        wp_enqueue_script( 'google_maps_api', 'https://maps.googleapis.com/maps/api/js', '', '', true );
+        wp_enqueue_script( 'google_maps_api', 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDPbLw4JNglnt4Dq8DgGVEgKBgXp3oX9zc', '', '', true );
         wp_enqueue_script( 'ash_custom', plugins_url( 'assets/js/custom.min.js', __FILE__ ), ['jquery'], $this->version, true);
     }
 
@@ -529,7 +529,7 @@ class ad_skip_hire
         $permits = new WP_Query([
             'post_type'         => 'ash_permits',
             'posts_per_page'    => 1,
-            'p'           => $_POST['ash_permit_id']
+            'post__in'          => [$_POST['ash_permit_id']]
         ]);
 
         if ( $permits->have_posts() ):
