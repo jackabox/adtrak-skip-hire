@@ -1,4 +1,5 @@
 <div id="ash">
+<?php var_dump($_POST) ?>
     <h3>Order Overview</h3>
 
     <p>Please review your information, then proceed to payment. If anything seems wrong, <a href="javascript:history.back()">go back</a> and edit the fields.</p>
@@ -70,7 +71,7 @@
             </tr>
             <tr>
                 <td>Delivery Date</td>
-                <td><?php echo date('d/m/Y', strtotime($_POST['ash_delivery_date'])); ?></td>
+                <td><?php echo $_POST['ash_delivery_date']; ?></td>
             </tr>
             <?php $options = get_option( 'ash_general_page' );
             if( !empty($options['ash_enable_am_pm'] )) : ?>

@@ -3,7 +3,7 @@
  * Plugin Name:       Skip Hire
  * Plugin URI:        http://plugins.adtrakdev.com/skiphire
  * Description:       Adding the ability to hire skips and process payments within areas.
- * Version:           1.2.1
+ * Version:           1.2.2
  * Author:            Adtrak
  * Author URI:        http://adtrak.co.uk/
  */
@@ -15,8 +15,9 @@ require plugin_dir_path( __FILE__ ) . 'plugin-update-checker/plugin-update-check
 require plugin_dir_path( __FILE__ )  . 'vendor/autoload.php';
 require_once plugin_dir_path( __FILE__ ) . 'vendor/cmb2/init.php';
 
-if( ! class_exists( 'PW_CMB2_Field_Google_Maps' ) && file_exists( plugin_dir_path( __FILE__ ) . 'vendor/cmb_field_map/cmb-field-map.php' ) )
-    require_once plugin_dir_path( __FILE__ ) . 'vendor/cmb_field_map/cmb-field-map.php';
+if( ! class_exists( 'PW_CMB2_Field_Google_Maps' ) && file_exists( plugin_dir_path( __FILE__ ) . 'vendor/cmb_field_map/cmb-field-map.php' ) ) {
+    require_once plugin_dir_path( __FILE__ ) . 'vendor/cmb_field_fmap/cmb-field-map.php';
+}
 
 $className = PucFactory::getLatestClassVersion('PucGitHubChecker');
 $myUpdateChecker = new $className(
@@ -627,7 +628,7 @@ class ad_skip_hire
         add_post_meta( $postID, 'ash_orders_email', $data['ash_email'] );
         add_post_meta( $postID, 'ash_orders_phone', $data['ash_phone'] );
         add_post_meta( $postID, 'ash_orders_delivery_address', $deliveryAddress );
-        add_post_meta( $postID, 'ash_orders_delivery_date', $data['ash_delivery_date']);
+        add_post_meta( $postID, 'ash_orders_delivery_date', $data['ash_delivery_date'] );
         add_post_meta( $postID, 'ash_orders_skip_id', $_SESSION['ash_skip_id']);
         add_post_meta( $postID, 'ash_orders_permit_id', $data['ash_permit_id']);
 

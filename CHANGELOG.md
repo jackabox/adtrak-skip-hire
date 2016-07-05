@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 1.2.2
+
+- Changing the date field to text so that jquery can hook into it.
+- Changed format of date on the output code.
+
 ## Version 1.2.1
 
 - [Bug] Fixes an issue with Google Maps API not having a key and access to functions.

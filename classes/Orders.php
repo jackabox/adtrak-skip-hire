@@ -93,8 +93,7 @@ class ad_skip_hire_orders
         $order_fields->add_field([
             'id'            => $this->cpt_prefix . '_delivery_date',
             'name'          => __( 'Delivery Date', 'ash' ),
-            'type'          => 'text_date',
-            'date_format'   => __( 'd/m/Y'),
+            'type'          => 'text',
         ]);
 
         $order_fields->add_field([
@@ -146,7 +145,8 @@ class ad_skip_hire_orders
                 <div class="cmb-td">
                     <p><?php echo get_the_title(get_post_meta(get_the_ID(), $this->cpt_prefix . '_skip_id', true)); ?></p>
                     <p><?php if(get_post_meta(get_the_ID(), $this->cpt_prefix . '_permit_id', true)) { echo get_the_title(get_post_meta(get_the_ID(), $this->cpt_prefix . '_permit_id', true)); } else { echo "---"; } ?></p>
-                    <p><?php $waste = get_post_meta(get_the_ID(), $this->cpt_prefix . '_waste', true); foreach($waste as $w): echo $w . ', '; endforeach; ?></p>
+                    <p><?php $waste = get_post_meta(get_the_ID(), $this->cpt_prefix . '_waste', true); if($waste) {
+                        foreach($waste as $w): echo $w . ', '; endforeach; } else { echo "---"; }?></p>
                     <p>£<?php echo get_post_meta(get_the_ID(), $this->cpt_prefix . '_total', true); ?></p>
                     <p>---</p>
                 </div>

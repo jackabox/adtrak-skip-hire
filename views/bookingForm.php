@@ -66,7 +66,7 @@
 
             <div class="ash__input ash__input--date">
                 <label for="ash_delivery_date">Pick a Delivery Date</label>
-                <input type="date" name="ash_delivery_date" id="ash_delivery_date" placeholder="dd/mm/yyyy" required <?php if(isset($_POST['ash_delivery_date'])) echo $_POST['ash_delivery_date']; ?>>
+                <input type="text" name="ash_delivery_date" id="ash_delivery_date" placeholder="dd/mm/yyyy" required <?php if(isset($_POST['ash_delivery_date'])) echo $_POST['ash_delivery_date']; ?>>
             </div>
 
             <?php $options = get_option( 'ash_general_page' );
