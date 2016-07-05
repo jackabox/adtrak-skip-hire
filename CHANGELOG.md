@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 1.2.3
+
+- [Bug] Caught bug with typo
+
 ## Version 1.2.2
 
 - Changing the date field to text so that jquery can hook into it.

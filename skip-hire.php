@@ -3,7 +3,7 @@
  * Plugin Name:       Skip Hire
  * Plugin URI:        http://plugins.adtrakdev.com/skiphire
  * Description:       Adding the ability to hire skips and process payments within areas.
- * Version:           1.2.2
+ * Version:           1.2.3
  * Author:            Adtrak
  * Author URI:        http://adtrak.co.uk/
  */
@@ -16,7 +16,7 @@ require plugin_dir_path( __FILE__ )  . 'vendor/autoload.php';
 require_once plugin_dir_path( __FILE__ ) . 'vendor/cmb2/init.php';
 
 if( ! class_exists( 'PW_CMB2_Field_Google_Maps' ) && file_exists( plugin_dir_path( __FILE__ ) . 'vendor/cmb_field_map/cmb-field-map.php' ) ) {
-    require_once plugin_dir_path( __FILE__ ) . 'vendor/cmb_field_fmap/cmb-field-map.php';
+    require_once plugin_dir_path( __FILE__ ) . 'vendor/cmb_field_map/cmb-field-map.php';
 }
 
 $className = PucFactory::getLatestClassVersion('PucGitHubChecker');
