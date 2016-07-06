@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 1.3.1
+- [Bug] Fixed an issue with not passing through options data
+
 ## Version 1.3.0
 - [Improvement] Added the option to set the amount of days to deliver
 - [Improvement] Added the option to set the days in the future before being able to pick delivery.
