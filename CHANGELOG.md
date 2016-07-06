@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 1.3.3
+- [Bug] Fixing an issue with the data being dumped on the page.
+
 ## Version 1.3.2
 - [Bug] Fixed an issue with not passing through options data
 

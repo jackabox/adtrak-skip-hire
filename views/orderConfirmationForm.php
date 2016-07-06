@@ -1,5 +1,4 @@
 <div id="ash">
-<?php var_dump($_POST) ?>
     <h3>Order Overview</h3>
 
     <p>Please review your information, then proceed to payment. If anything seems wrong, <a href="javascript:history.back()">go back</a> and edit the fields.</p>
