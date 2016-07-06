@@ -1,3 +1,5 @@
+<?php $options = get_option( 'ash_general_page' ); ?>
+
 <div id="ash">
     <h3>Complete Your Order</h3>
     <p>Fill out your details and pick a delivery time to proceed.</p>
@@ -66,10 +68,10 @@
 
             <div class="ash__input ash__input--date">
                 <label for="ash_delivery_date">Pick a Delivery Date</label>
-                <input type="text" name="ash_delivery_date" id="ash_delivery_date" placeholder="dd/mm/yyyy" required <?php if(isset($_POST['ash_delivery_date'])) echo $_POST['ash_delivery_date']; ?>>
+                <input type="text" name="ash_delivery_date" id="ash_delivery_date" placeholder="dd/mm/yyyy" required <?php if(isset($_POST['ash_delivery_date'])) echo $_POST['ash_delivery_date']; ?> data-days="<?php if(isset($options['ash_delivery_days'])) echo $options['ash_delivery_days']; ?>" data-delivery-from="<?php if(isset($options['ash_delivery_future'])) echo $options['ash_delivery_future']; ?>">
             </div>
 
-            <?php $options = get_option( 'ash_general_page' );
+            <?php 
             if( !empty($options['ash_enable_am_pm'] )) : ?>
             <div class="ash__input ash__input--time">
                 <span class="ash__fake-label">Pick a Time Slot</span>

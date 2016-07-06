@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 1.3.0
+- [Improvement] Added the option to set the amount of days to deliver
+- [Improvement] Added the option to set the days in the future before being able to pick delivery.
+
 ## Version 1.2.3
 
 - [Bug] Caught bug with typo

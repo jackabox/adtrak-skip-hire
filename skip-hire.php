@@ -3,7 +3,7 @@
  * Plugin Name:       Skip Hire
  * Plugin URI:        http://plugins.adtrakdev.com/skiphire
  * Description:       Adding the ability to hire skips and process payments within areas.
- * Version:           1.2.3
+ * Version:           1.3.0
  * Author:            Adtrak
  * Author URI:        http://adtrak.co.uk/
  */
@@ -151,7 +151,8 @@ class ad_skip_hire
     public function load_public_assets()
     {
         wp_enqueue_script( 'google_maps_api', 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDPbLw4JNglnt4Dq8DgGVEgKBgXp3oX9zc', '', '', true );
-        wp_enqueue_script( 'ash_custom', plugins_url( 'assets/js/custom.min.js', __FILE__ ), ['jquery'], $this->version, true);
+        wp_enqueue_script( 'ash_custom', plugins_url( 'assets/js/custom.min.js', __FILE__ ), ['jquery', 'jquery-ui-datepicker'], $this->version, true);
+        wp_enqueue_style( 'skip-hire-frontend', plugins_url( 'assets/css/skip-hire-frontend.css', __FILE__) , null);
     }
 
     /**
@@ -217,6 +218,46 @@ class ad_skip_hire
     public function get_fields()
     {
         $fields = [];
+
+        $fields[] = [
+            'id'             => $this->prefix . '_delivery_radius',
+            'title'          => 'Delivery Radius',
+            'callback'       => [$this, 'render_field'],
+            'page'           => $this->prefix . '_general_page',
+            'section'        => $this->prefix . '_general',
+            'desc'           => 'Specify a radius from locations to deliver to.',
+            'type'           => 'text',
+            'default_value'  => '10',
+            'class'          => ''
+        ];
+
+        $fields[] = [
+            'id'             => $this->prefix . '_delivery_days',
+            'title'          => 'Delivery Days',
+            'callback'       => [$this, 'render_field'],
+            'page'           => $this->prefix . '_general_page',
+            'section'        => $this->prefix . '_general',
+            'desc'           => 'How many days a week will you deliver? 5 = Weekdays, 6 = Weekdays + Sat, 7 = All Week.',
+            'type'           => 'number',
+            'min'            => 5,
+            'max'            => 7,
+            'default_value'  => 5,
+            'class'          => ''
+        ];
+
+        $fields[] = [
+            'id'             => $this->prefix . '_delivery_future',
+            'title'          => 'Future Delivery by Days',
+            'callback'       => [$this, 'render_field'],
+            'page'           => $this->prefix . '_general_page',
+            'section'        => $this->prefix . '_general',
+            'desc'           => 'How many days in the future would you like to schedule deliveries for?.',
+            'type'           => 'number',
+            'min'            => 0,
+            'max'            => '',
+            'default_value'  => 0,
+            'class'          => ''
+        ];
 
         $fields[] = [
             'id'             => $this->prefix . '_delivery_radius',
@@ -339,7 +380,9 @@ class ad_skip_hire
             'type' => $type,
             'desc' => $desc,
             'default_value' => $default_value,
-            'class' => $class
+            'class' => $class,
+            'min'   => $min,
+            'max'   => $max
         ];
 
         add_settings_field($id, $title, [$this, 'render_field'], $page, $section, $field_args);
@@ -361,6 +404,11 @@ class ad_skip_hire
             case 'checkbox':
                 $html .= '<input type="checkbox" id="' . $id . '" name="' . $page . '[' . $id . ']" value="1" ' . checked (1, isset ($options[$id]) ? $options[$id] : 0, false) . '/>';
                 $html .= '<label for="' . $id . '">&nbsp;'  . $desc . '</label>';
+                break;
+            case 'number':
+                $value = isset($options[$id]) ? $options[$id] : $default_value;
+                $html .= '<input type="number" min="' . $min  . '" max="' . $max  . '" id="' . $id . '" name="' . $page . '[' . $id . ']" value="' . $value . '" />';
+                $html .= '<br/><span class="field-desc">' . $desc . '</span>';
                 break;
             default:
                 break;
