@@ -1,6 +1,6 @@
 # Changelog
 
-## Version 1.3.1
+## Version 1.3.2
 - [Bug] Fixed an issue with not passing through options data
 
 ## Version 1.3.0

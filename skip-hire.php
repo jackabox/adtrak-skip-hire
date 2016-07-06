@@ -3,7 +3,7 @@
  * Plugin Name:       Skip Hire
  * Plugin URI:        http://plugins.adtrakdev.com/skiphire
  * Description:       Adding the ability to hire skips and process payments within areas.
- * Version:           1.3.1
+ * Version:           1.3.2
  * Author:            Adtrak
  * Author URI:        http://adtrak.co.uk/
  */
@@ -383,7 +383,7 @@ class ad_skip_hire
             'class' => $class,
         ]; 
 
-        if($min && $max) {
+        if(isset($min) && isset($max)) {
             $minmax = [
                 'min'   => $min,
                 'max'   => $max
