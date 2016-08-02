@@ -14,22 +14,4 @@ This plugin will make it easy for a skip hire form to be added to a site. It wil
 
 ## Documentation
 
-Coming soon. WIP
-
-### Shortcodes
-
-so there are shortcodes in, but the plugin will automatically create them, however you can add them manually just in case something goes wrong.
-
-#### Post Code Form
-
-we can use the postcode form anywhere on the site as it will allow us to display a short form, leading into the larger form. (Pulls lat/lng)
-
-> [ash_postcode_form]
-
-#### Booking Form
-
-these are automatically added and will generate all the necessary code on their pages. in case anything happens you can add them to ensure proper results
-
-> [ash_booking_form]
-
-> [ash_booking_confirmation]
+All documentation can be found at http://adtrak.github.io/adtrak-skip-hire/
