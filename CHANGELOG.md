@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 1.3.4
+- [Bug] Sidepatch to fix the issue with CMB2 map not passing through a key.
+
 ## Version 1.3.3
 - [Bug] Fixing an issue with the data being dumped on the page.
 
