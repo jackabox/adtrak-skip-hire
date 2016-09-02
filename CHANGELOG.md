@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 1.3.6
+- [Bug] Fixes slight issue with sessions and processing orders
+
 ## Version 1.3.5
 - [Improvement] Adding images for card types
 

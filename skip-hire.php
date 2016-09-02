@@ -3,7 +3,7 @@
  * Plugin Name:       Skip Hire
  * Plugin URI:        http://plugins.adtrakdev.com/skiphire
  * Description:       Adding the ability to hire skips and process payments within areas.
- * Version:           1.3.5
+ * Version:           1.3.6
  * Author:            Adtrak
  * Author URI:        http://adtrak.co.uk/
  */
@@ -638,8 +638,19 @@ class ad_skip_hire
         $total = $subTotal - $coupon['price'];
 
         $_SESSION['ash_order_skip'] = $skip;
-        $_SESSION['ash_order_permit'] = $permit;
-        $_SESSION['ash_order_coupon'] = $coupon;
+
+        if($permit) {
+            $_SESSION['ash_order_permit'] = $permit;
+        } else {
+            $_SESSION['ash_order_permit'] = '';
+        }
+
+        if($coupon) {
+            $_SESSION['ash_order_coupon'] = $coupon;
+        } else {
+            $_SESSION['ash_order_coupon'] = '';
+        }
+
         $_SESSION['ash_order_total'] = $total;
         $_SESSION['ash_order_details'] = $_POST;
 
