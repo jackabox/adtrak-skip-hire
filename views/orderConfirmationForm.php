@@ -101,6 +101,10 @@
             <label for="ash_read_tc">Do you agree to the <a href="<?php echo (!empty($options['ash_tc_link'] )) ? $options['ash_tc_link'] : ''; ?>">terms and conditions</a>?</label>
         </p>
         <?php endif; ?>
-        <p><input type="submit" name="ash_place_order_phone" id="ash_place_order_phone" value="Pay via Telephone"> <input type="submit" name="ash_place_order_paypal"  id="ash_place_order_paypal" value="Pay via PayPal"></p>
+        <p>
+            <span><input type="submit" name="ash_place_order_phone" id="ash_place_order_phone" value="Pay via Telephone"></span> 
+            <span><input type="submit" name="ash_place_order_paypal"  id="ash_place_order_paypal" value="Pay via PayPal"> <i><img src="<?= plugins_url( '../assets/img/mastercard.svg', __FILE__); ?>" width="28" alt="Mastercard"></i> <i><img src="<?= plugins_url( '../assets/img/visa.svg', __FILE__); ?>" width="28" alt="Visa Card"></i> <i><img src="<?= plugins_url( '../assets/img/jcb.svg', __FILE__); ?>" width="28" alt="JCB Card"></i> <i><img src="<?= plugins_url( '../assets/img/amex.svg', __FILE__); ?>" width="28" alt="Amex Card"></i>
+            </span>
+        </p>
     </form>
 </div>

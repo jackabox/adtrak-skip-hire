@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 1.3.5
+- [Improvement] Adding images for card types
+
 ## Version 1.3.4
 - [Bug] Sidepatch to fix the issue with CMB2 map not passing through a key.
 

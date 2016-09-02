@@ -3,7 +3,7 @@
  * Plugin Name:       Skip Hire
  * Plugin URI:        http://plugins.adtrakdev.com/skiphire
  * Description:       Adding the ability to hire skips and process payments within areas.
- * Version:           1.3.4
+ * Version:           1.3.5
  * Author:            Adtrak
  * Author URI:        http://adtrak.co.uk/
  */
