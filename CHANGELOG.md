@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 1.4.2
+- [Bug] Fixes issue with date, adds new formatting
+
 ## Version 1.4.1
 - [Feature] Added in GA events.
 - [Bug] Fixes small issue with order date formatting.

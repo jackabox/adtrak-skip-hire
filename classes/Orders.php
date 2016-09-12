@@ -222,8 +222,15 @@ class ad_skip_hire_orders
             }
         }
 
-        if( $column_name == 'delivery' )
-            echo get_post_meta( $post_id, $this->cpt_prefix . '_delivery_time', true ) . ' on ' . date('d/m/Y', strtotime(( $post_id, $this->cpt_prefix . '_delivery_date', true )));
+        if( $column_name == 'delivery' ) {
+            $date = '';
+            $date .= date('d/m/Y', strtotime(get_post_meta( $post_id, $this->cpt_prefix . '_delivery_date', true )));
+
+            if($time = get_post_meta( $post_id, $this->cpt_prefix . '_delivery_time', true ))
+                $date .= ' (' . $time . ')';
+
+            echo $date;
+        }
     }
 
     /**
