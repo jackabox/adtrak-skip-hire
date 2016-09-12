@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 1.4.3
+- [Bug] Catching issues with data formatting of orders.
+
 ## Version 1.4.2
 - [Bug] Fixes issue with date, adds new formatting
 

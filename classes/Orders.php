@@ -128,8 +128,8 @@ class ad_skip_hire_orders
                 <div class="cmb-td">
                     <p><?php echo get_the_ID(); ?></p>
                     <p><?php echo get_the_title(); ?></p>
-                    <p><a href="mailto:<?php echo get_post_meta(get_the_ID(), $this->cpt_prefix . '_email', true); ?>"><?php echo get_post_meta(get_the_ID(), $this->cpt_prefix . '_email', true); ?></a></p>
-                    <p><?php echo get_post_meta(get_the_ID(), $this->cpt_prefix . '_phone', true); ?></p>
+                    <p><a href="mailto:<?php echo get_post_meta(get_the_ID(), 'ash_orders_email', true); ?>"><?php echo get_post_meta(get_the_ID(), 'ash_orders_email', true); ?></a></p>
+                    <p><?php echo get_post_meta(get_the_ID(), 'ash_orders_phone', true); ?></p>
 
                 </div>
             </div>
@@ -143,12 +143,12 @@ class ad_skip_hire_orders
                     <p><b>PayPal ID</b></p>
                 </div>
                 <div class="cmb-td">
-                    <p><?php echo get_the_title(get_post_meta(get_the_ID(), $this->cpt_prefix . '_skip_id', true)); ?></p>
-                    <p><?php if(get_post_meta(get_the_ID(), $this->cpt_prefix . '_permit_id', true)) { echo get_the_title(get_post_meta(get_the_ID(), $this->cpt_prefix . '_permit_id', true)); } else { echo "---"; } ?></p>
-                    <p><?php $waste = get_post_meta(get_the_ID(), $this->cpt_prefix . '_waste', true); if($waste) {
+                    <p><?php echo get_the_title(get_post_meta(get_the_ID(), 'ash_orders_skip_id', true)); ?></p>
+                    <p><?php if(get_post_meta(get_the_ID(), 'ash_orders_permit_id', true)) { echo get_the_title(get_post_meta(get_the_ID(), $this->cpt_prefix . '_permit_id', true)); } else { echo "---"; } ?></p>
+                    <p><?php $waste = get_post_meta(get_the_ID(), 'ash_orders_waste', true); if($waste) {
                         foreach($waste as $w): echo $w . ', '; endforeach; } else { echo "---"; }?></p>
                     <p>£<?php echo get_post_meta(get_the_ID(), $this->cpt_prefix . '_total', true); ?></p>
-                    <p>---</p>
+                    <p><?= get_post_meta(get_the_ID(), 'ash_orders_paypal_id', true); ?> </p>
                 </div>
             </div>
 
@@ -160,12 +160,12 @@ class ad_skip_hire_orders
                 </div>
                 <div class="cmb-td">
                     <p>
-                        <?php $delivery = get_post_meta(get_the_ID(), $this->cpt_prefix . '_delivery_address', true); 
+                        <?php $delivery = get_post_meta(get_the_ID(), 'ash_orders_delivery_address', true); 
                         foreach($delivery as $d): 
                             echo $d . '<br>'; 
                         endforeach; ?>
                     </p>
-                    <p><?php echo get_post_meta(get_the_ID(), $this->cpt_prefix . '_notes', true); ?></p>
+                    <p><?php echo get_post_meta(get_the_ID(), 'ash_orders_notes', true); ?></p>
                 </div>
             </div>
 
@@ -208,25 +208,25 @@ class ad_skip_hire_orders
             echo get_the_ID();
 
         if( $column_name == 'price' )
-            echo '£' . get_post_meta( $post_id, $this->cpt_prefix . '_total', true );
+            echo '£' . get_post_meta( $post_id, 'ash_orders_total', true );
 
         if( $column_name == 'status' ) {
-            $status = get_post_meta( $post_id, $this->cpt_prefix . '_status', true );
+            $status = get_post_meta( $post_id, 'ash_orders_status', true );
 
-            if($status = 'pending') {
+            if($status == 'pending') {
                 echo "Pending Payment";
-            } elseif($status = 'paid') {
+            } elseif($status == 'paid') {
                 echo "Paid";
-            } elseif($status = 'complete') {
+            } elseif($status == 'complete') {
                 echo "Complete";
             }
         }
 
         if( $column_name == 'delivery' ) {
             $date = '';
-            $date .= date('d/m/Y', strtotime(get_post_meta( $post_id, $this->cpt_prefix . '_delivery_date', true )));
+            $date .= get_post_meta($post_id, 'ash_orders_delivery_date', true);
 
-            if($time = get_post_meta( $post_id, $this->cpt_prefix . '_delivery_time', true ))
+            if($time = get_post_meta( $post_id, 'ash_orders_delivery_time', true ))
                 $date .= ' (' . $time . ')';
 
             echo $date;
