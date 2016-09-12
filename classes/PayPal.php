@@ -18,12 +18,12 @@ class ad_paypal_interface
 
     function __construct()
     {
-        $this->options = get_option('payment_page');
+        $this->options = get_option('ash_payment_page');
 
         $this->apiContext = new \PayPal\Rest\ApiContext(
             new \PayPal\Auth\OAuthTokenCredential(
-                $this->options['ash_paypal_client_id'], //'AdT05BjwM_57eFwc56eor6xA7VRG1JQLJz2h4iXPGzqxnLC3nGwZXiywg2pk5unhgRozEAW0rLX0rNLH',     // ClientID
-                $this->options['ash_paypal_client_secret'] //'EJRYipfzxEhoZJcewGK-n0x1_7kjOwfVY5dV3XeLk0VEhXWq35IYKNX47pdlD7qizyN2LyiUew1qu3QT'      // ClientSecret
+                $this->options['ash_paypal_client_id'], 
+                $this->options['ash_paypal_client_secret']
             )
         );
     }
@@ -36,7 +36,7 @@ class ad_paypal_interface
      * @param  string $total    final price to charge the user
      * @return string           returns the generated url with token
      */
-    public function generate_payment_link($skip, $permit = null, $coupon = null, $total)
+    public function generate_payment_link($skip, $total, $permit, $coupon)
     {
         $payer = new Payer();
         $payer->setPaymentMethod("paypal");
@@ -47,28 +47,28 @@ class ad_paypal_interface
               ->setCurrency('GBP')
               ->setQuantity(1)
               ->setSku($skip['id'])
-              ->setPrice($skip['price']);
+              ->setPrice(floatval($skip['price']));
 
         $items[] = $item1;
 
-        if($permit['title'] != null) {
+        if($permit['title'] != '') {
             $item2 = new Item();
             $item2->setName($permit['title'])
                   ->setCurrency('GBP')
                   ->setQuantity(1)
                   ->setSku($permit['id'])
-                  ->setPrice($permit['price']);
+                  ->setPrice(floatval($permit['price']));
 
             $items[] = $item2;
         }
 
-        if($coupon['title'] != null) {
+        if($coupon['title'] != '') {
             $item3 = new Item();
             $item3->setName($coupon['title'])
                   ->setCurrency('GBP')
                   ->setQuantity(1)
                   ->setSku($coupon['id'])
-                  ->setPrice(-$coupon['price']);
+                  ->setPrice(floatval($coupon['price'] * -1));
 
             $items[] = $item3;
         }
@@ -78,7 +78,7 @@ class ad_paypal_interface
 
         $amount = new Amount();
         $amount->setCurrency("GBP")
-               ->setTotal($total);
+               ->setTotal(floatval($total));
 
         $transaction = new Transaction();
         $transaction->setAmount($amount)
@@ -107,6 +107,7 @@ class ad_paypal_interface
             exit(1);
         }
         $approvalUrl = $payment->getApprovalLink();
+
         return $approvalUrl;
     }
 

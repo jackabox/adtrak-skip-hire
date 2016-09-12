@@ -3,7 +3,7 @@
  * Plugin Name:       Skip Hire
  * Plugin URI:        http://plugins.adtrakdev.com/skiphire
  * Description:       Adding the ability to hire skips and process payments within areas.
- * Version:           1.3.6
+ * Version:           1.4.0
  * Author:            Adtrak
  * Author URI:        http://adtrak.co.uk/
  */
@@ -351,6 +351,18 @@ class ad_skip_hire
             'page'           => $this->prefix . '_payment_page',
             'section'        => $this->prefix . '_payment',
             'desc'           => 'Provide the payment description (will appear on invoices).',
+            'type'           => 'text',
+            'default_value'  => '',
+            'class'          => ''
+        ];
+
+        $fields[] = [
+            'id'             => $this->prefix . '_paypal_thanks',
+            'title'          => 'Payment Description',
+            'callback'       => [$this, 'render_field'],
+            'page'           => $this->prefix . '_payment_page',
+            'section'        => $this->prefix . '_payment',
+            'desc'           => 'Provide the thank you message for when receiving PayPal payments.',
             'type'           => 'text',
             'default_value'  => '',
             'class'          => ''
@@ -724,8 +736,8 @@ class ad_skip_hire
             $options = get_option('ash_payment_page');
 
             if( isset ( $_REQUEST['ash_place_order_paypal'] ) ) {
-
-                $paymentLink = $this->paypal->generate_payment_link($_SESSION['ash_order_skip'], $_SESSION['ash_order_permit'], $_SESSION['ash_order_coupon'], $_SESSION['ash_order_total']);
+ 
+                $paymentLink = $this->paypal->generate_payment_link($_SESSION['ash_order_skip'], $_SESSION['ash_order_total'], $_SESSION['ash_order_permit'], $_SESSION['ash_order_coupon'] );
 
                 echo "Redirecting to PayPal payment now...";
                 echo '<meta http-equiv="refresh" content="0; url=' . $paymentLink . '" />';
@@ -741,6 +753,9 @@ class ad_skip_hire
             add_post_meta( $_SESSION['ash_order_id'], 'ash_orders_status', 'complete');
             add_post_meta( $_SESSION['ash_order_id'], 'ash_orders_paypal_id', $_REQUEST['paymentId']);
             add_post_meta( $_SESSION['ash_order_id'], 'ash_orders_paypal_payer_id', $_REQUEST['PayerID']);
+
+            echo '<h2>Thank you for your order.</h2>';
+            echo '<p>' . $options['ash_paypal_thanks'] . '</p>';
         }
     }
 

@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 1.4.0
+- [Bug] Fixes an issue with the payment processing on new sites
+- [Improvement] Adds a thank you page for PayPal. Option to customise this text is now in the settings.
+
 ## Version 1.3.6
 - [Bug] Fixes slight issue with sessions and processing orders
 
