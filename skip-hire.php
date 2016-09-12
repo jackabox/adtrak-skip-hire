@@ -3,7 +3,7 @@
  * Plugin Name:       Skip Hire
  * Plugin URI:        http://plugins.adtrakdev.com/skiphire
  * Description:       Adding the ability to hire skips and process payments within areas.
- * Version:           1.4.0
+ * Version:           1.4.1
  * Author:            Adtrak
  * Author URI:        http://adtrak.co.uk/
  */
@@ -358,7 +358,7 @@ class ad_skip_hire
 
         $fields[] = [
             'id'             => $this->prefix . '_paypal_thanks',
-            'title'          => 'Payment Description',
+            'title'          => 'Payment Confirm Message',
             'callback'       => [$this, 'render_field'],
             'page'           => $this->prefix . '_payment_page',
             'section'        => $this->prefix . '_payment',
@@ -745,7 +745,21 @@ class ad_skip_hire
             }
 
             if( isset ( $_REQUEST['ash_place_order_phone'] ) ) {
-                include_once plugin_dir_path( __FILE__ ) . 'views/orderConfirmationTelephone.php';
+                include_once plugin_dir_path( __FILE__ ) . 'views/orderConfirmationTelephone.php'; ?>
+
+                <script>
+                    ga('send', 'event', 'Skip Order', 'Submit', 'Telephone Success', {
+                        nonInteraction: true
+                    });
+
+                    ga('send', {
+                        'hitType' : 'pageview',
+                        'page' : '/telephone-success'
+                    });
+    
+                    console.log('sent');
+                </script>
+            <?php
             }
         } elseif( isset( $_REQUEST['success'] ) ) {
             $this->paypal->authorised_payment_check();
@@ -756,6 +770,21 @@ class ad_skip_hire
 
             echo '<h2>Thank you for your order.</h2>';
             echo '<p>' . $options['ash_paypal_thanks'] . '</p>';
+
+            ?>
+                <script>
+                    ga('send', 'event', 'Skip Order', 'Submit', 'PayPal Success', {
+                        nonInteraction: true
+                    });
+
+                    ga('send', {
+                        'hitType' : 'pageview',
+                        'page' : '/paypal-success'
+                    });
+    
+                    console.log('sent');
+                </script>
+            <?php
         }
     }
 

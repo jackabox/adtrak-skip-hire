@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 1.4.1
+- [Feature] Added in GA events.
+- [Bug] Fixes small issue with order date formatting.
+- [Bug] Fixes typo in options settings.
+
 ## Version 1.4.0
 - [Bug] Fixes an issue with the payment processing on new sites
 - [Improvement] Adds a thank you page for PayPal. Option to customise this text is now in the settings.
