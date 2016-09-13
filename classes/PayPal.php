@@ -26,6 +26,14 @@ class ad_paypal_interface
                 $this->options['ash_paypal_client_secret']
             )
         );
+
+        if(isset($this->options['ash_paypal_live']) && $this->options['ash_paypal_live'] == true) {
+        	$this->apiContext->setConfig(
+      			array(
+        			'mode' => 'live',
+      			)
+			);
+		}
     }
 
     /**
@@ -51,7 +59,7 @@ class ad_paypal_interface
 
         $items[] = $item1;
 
-        if($permit['title'] != '') {
+        if(isset($permit) && $permit['title'] != '') {
             $item2 = new Item();
             $item2->setName($permit['title'])
                   ->setCurrency('GBP')
@@ -62,7 +70,7 @@ class ad_paypal_interface
             $items[] = $item2;
         }
 
-        if($coupon['title'] != '') {
+        if(isset($coupon) && $coupon['title'] != '') {
             $item3 = new Item();
             $item3->setName($coupon['title'])
                   ->setCurrency('GBP')
@@ -104,10 +112,11 @@ class ad_paypal_interface
             $payment->create($this->apiContext);
         } catch (Exception $ex) {
             // error
+            echo $ex->getData();
             exit(1);
         }
-        $approvalUrl = $payment->getApprovalLink();
 
+        $approvalUrl = $payment->getApprovalLink();
         return $approvalUrl;
     }
 

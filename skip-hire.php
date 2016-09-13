@@ -3,7 +3,7 @@
  * Plugin Name:       Skip Hire
  * Plugin URI:        http://plugins.adtrakdev.com/skiphire
  * Description:       Adding the ability to hire skips and process payments within areas.
- * Version:           1.4.3
+ * Version:           1.5.0
  * Author:            Adtrak
  * Author URI:        http://adtrak.co.uk/
  */
@@ -358,12 +358,24 @@ class ad_skip_hire
 
         $fields[] = [
             'id'             => $this->prefix . '_paypal_thanks',
-            'title'          => 'Payment Confirm Message',
             'callback'       => [$this, 'render_field'],
             'page'           => $this->prefix . '_payment_page',
             'section'        => $this->prefix . '_payment',
+            'title'          => 'Payment Confirm Message',
             'desc'           => 'Provide the thank you message for when receiving PayPal payments.',
             'type'           => 'text',
+            'default_value'  => '',
+            'class'          => ''
+        ];
+
+        $fields[] = [
+            'id'             => $this->prefix . '_paypal_live',
+            'callback'       => [$this, 'render_field'],
+            'page'           => $this->prefix . '_payment_page',
+            'section'        => $this->prefix . '_payment',
+            'title'          => 'Turn on PayPal live payments?',
+            'desc'           => 'Only do this when you have tested with sandbox credentials.',
+            'type'           => 'checkbox',
             'default_value'  => '',
             'class'          => ''
         ];

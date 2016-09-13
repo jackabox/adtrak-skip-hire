@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 1.5.0
+- [Feature] Adds ability for live payments to be taken now.
+
 ## Version 1.4.3
 - [Bug] Catching issues with data formatting of orders.
 
