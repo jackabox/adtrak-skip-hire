@@ -102,9 +102,12 @@
         </p>
         <?php endif; ?>
         <p>
-            <span><input type="submit" name="ash_place_order_phone" id="ash_place_order_phone" value="Pay via Telephone"></span> 
-            <span><input type="submit" name="ash_place_order_paypal"  id="ash_place_order_paypal" value="Pay via PayPal"> <i><img src="<?= plugins_url( '../assets/img/mastercard.svg', __FILE__); ?>" width="28" alt="Mastercard"></i> <i><img src="<?= plugins_url( '../assets/img/visa.svg', __FILE__); ?>" width="28" alt="Visa Card"></i> <i><img src="<?= plugins_url( '../assets/img/jcb.svg', __FILE__); ?>" width="28" alt="JCB Card"></i> <i><img src="<?= plugins_url( '../assets/img/amex.svg', __FILE__); ?>" width="28" alt="Amex Card"></i>
-            </span>
+            <span><input type="submit" name="ash_place_order_phone" id="ash_place_order_phone" value="Pay Over Telephone"></span> 
+            <span><input type="submit" name="ash_place_order_paypal"  id="ash_place_order_paypal" value="Pay Online"></span>
+        </p>
+        <p>
+            <small>We accept online payments using PayPal and accept the following cards:</small> <br> <img src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_37x23.jpg" border="0" alt="PayPal Acceptance Mark" width="28">
+            <i><img src="<?= plugins_url( '../assets/img/mastercard.svg', __FILE__); ?>" width="28" alt="Mastercard"></i> <i><img src="<?= plugins_url( '../assets/img/visa.svg', __FILE__); ?>" width="28" alt="Visa Card"></i> <i><img src="<?= plugins_url( '../assets/img/jcb.svg', __FILE__); ?>" width="28" alt="JCB Card"></i> <i><img src="<?= plugins_url( '../assets/img/amex.svg', __FILE__); ?>" width="28" alt="Amex Card"></i>
         </p>
     </form>
 </div>

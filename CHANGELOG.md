@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 1.5.1
+- [Improvement] Revising wording on payment buttons, adding paypal logo.
+
 ## Version 1.5.0
 - [Feature] Adds ability for live payments to be taken now.
 
