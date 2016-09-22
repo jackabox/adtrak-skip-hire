@@ -81,6 +81,16 @@ class ad_skip_hire_locations
             'type'          => 'pw_map',
             'split_values'  => true,
         ]);
+
+        $location_fields->add_field([
+            'name'          => __('Delivery Radius', 'ash'),
+            'id'            => $this->cpt_prefix . '_radius',
+            'type'          => 'text_small',
+            'after_field'   => ' miles',
+            'attributes'    => [
+                'placeholder' => __( '5', 'ash' ),
+            ],
+        ]);
     }
 
     /**
@@ -96,6 +106,7 @@ class ad_skip_hire_locations
         # add in new column arrays
         $defaults['latitude'] = "Latitude";
         $defaults['longitude'] = "Longitude";
+        $defaults['radius'] = "Radius";
 
         # return
         return $defaults;
@@ -114,5 +125,8 @@ class ad_skip_hire_locations
 
         if( $column_name == 'longitude' )
             echo get_post_meta( $post_id, $this->cpt_prefix . '_location_longitude', true );
+
+        if( $column_name == 'radius' )
+            echo get_post_meta( $post_id, $this->cpt_prefix . '_radius', true );
     }
 }

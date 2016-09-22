@@ -221,18 +221,6 @@ class ad_skip_hire
         $fields = [];
 
         $fields[] = [
-            'id'             => $this->prefix . '_delivery_radius',
-            'title'          => 'Delivery Radius',
-            'callback'       => [$this, 'render_field'],
-            'page'           => $this->prefix . '_general_page',
-            'section'        => $this->prefix . '_general',
-            'desc'           => 'Specify a radius from locations to deliver to.',
-            'type'           => 'text',
-            'default_value'  => '10',
-            'class'          => ''
-        ];
-
-        $fields[] = [
             'id'             => $this->prefix . '_delivery_days',
             'title'          => 'Delivery Days',
             'callback'       => [$this, 'render_field'],
@@ -257,18 +245,6 @@ class ad_skip_hire
             'min'            => 0,
             'max'            => '',
             'default_value'  => 0,
-            'class'          => ''
-        ];
-
-        $fields[] = [
-            'id'             => $this->prefix . '_delivery_radius',
-            'title'          => 'Delivery Radius',
-            'callback'       => [$this, 'render_field'],
-            'page'           => $this->prefix . '_general_page',
-            'section'        => $this->prefix . '_general',
-            'desc'           => 'Specify a radius from locations to deliver to.',
-            'type'           => 'text',
-            'default_value'  => '10',
             'class'          => ''
         ];
 
@@ -508,20 +484,32 @@ class ad_skip_hire
         if ( $skip == null && $lat != null ) {
             # run the geo query
             $options = get_option('ash_general_page');
+            $available = false;
 
-            $locations = new ASH_WP_Query_Geo([
+            $locations = new WP_Query([
                 'post_status'       => 'publish',
                 'post_type'         => 'ash_locations',
                 'posts_per_page'    => -1,
-                'lat'               => $lat,
-                'lng'               => $lng,
-                'distance'          => $options['ash_delivery_radius'],
             ]);
 
-            if( $locations->found_posts > 0 ) {
+            if($locations->have_posts()): while($locations->have_posts()): $locations->the_post();
+                $lat2 = get_post_meta(get_the_ID(), 'ash_locations_location_latitude', true);
+                $lng2 = get_post_meta(get_the_ID(), 'ash_locations_location_longitude', true);
+                $radius = get_post_meta(get_the_ID(), 'ash_locations_radius', true);
+
+                $distance = $this->distanceCalc($lat, $lng, $lat2, $lng2);
+
+                if(($radius != '') && ($distance <= $radius)) {
+                    $available = true;
+                }     
+            endwhile; endif;
+
+            wp_reset_query();
+  
+            if( $available == true ) {
                 $this->build_skip_form( $postcode );
             } else {
-                echo "<p>We don't deliver skips to your location sorry.</p>";
+                echo "<p>Sorry, We don't deliver skips to your location.</p>";
             }
         } elseif ( $skip != null ) {
             if( isset( $_POST['ash_submit'] ) ) {
@@ -822,5 +810,16 @@ class ad_skip_hire
     public function validateNumber ($val)
     {
         return intval($val);
+    }
+
+    public function distanceCalc($lat1, $lon1, $lat2, $lon2)
+    {
+        $theta = $lon1 - $lon2;
+        $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
+        $dist = acos($dist);
+        $dist = rad2deg($dist);
+        $miles = $dist * 60 * 1.1515;
+
+        return $miles;
     }
 }
