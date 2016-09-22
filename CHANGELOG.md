@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 1.6
+- [Feature] each location can now have a radius applied to it, this should improve search results.
+
 ## Version 1.5.1
 - [Improvement] Revising wording on payment buttons, adding paypal logo.
 
