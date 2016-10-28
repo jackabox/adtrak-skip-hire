@@ -58,3 +58,16 @@
 
     wp_reset_postdata(); ?>
 </div>
+
+<script>
+    ga('send', 'event', 'Skip Order', 'Submit', 'Pick a Skip', {
+        nonInteraction: true
+    });
+
+    ga('send', {
+        'hitType' : 'pageview',
+        'page' : '/skips'
+    });
+
+    console.log('sent skip ga');
+</script>

@@ -102,8 +102,8 @@
         </p>
         <?php endif; ?>
         <p>
-            <span><input type="submit" name="ash_place_order_phone" id="ash_place_order_phone" value="Pay Over Telephone"></span> 
             <span><input type="submit" name="ash_place_order_paypal"  id="ash_place_order_paypal" value="Pay Online"></span>
+            <span><input type="submit" name="ash_place_order_phone" id="ash_place_order_phone" value="Pay Over Telephone"></span>             
         </p>
         <p>
             <small>We accept online payments using PayPal and accept the following cards:</small> <br> <img src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_37x23.jpg" border="0" alt="PayPal Acceptance Mark" width="28">
@@ -111,3 +111,17 @@
         </p>
     </form>
 </div>
+
+
+ <script>
+    ga('send', 'event', 'Skip Order', 'Submit', 'Confirmation Page', {
+        nonInteraction: true
+    });
+
+    ga('send', {
+        'hitType' : 'pageview',
+        'page' : '/confirmation'
+    });
+
+    console.log('sent');
+</script>

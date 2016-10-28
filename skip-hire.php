@@ -3,7 +3,7 @@
  * Plugin Name:       Skip Hire
  * Plugin URI:        http://plugins.adtrakdev.com/skiphire
  * Description:       Adding the ability to hire skips and process payments within areas.
- * Version:           1.6.0  
+ * Version:           1.6.1  
  * Author:            Adtrak
  * Author URI:        http://adtrak.co.uk/
  */
@@ -509,7 +509,20 @@ class ad_skip_hire
             if( $available == true ) {
                 $this->build_skip_form( $postcode );
             } else {
-                echo "<p>Sorry, We don't deliver skips to your location.</p>";
+                echo "<p>Sorry, We don't deliver skips to your location.</p>"; ?>
+                <script>
+                    ga('send', 'event', 'Skip Order', 'Submit', 'Postcode Out Of Area', {
+                        nonInteraction: true
+                    });
+
+                    ga('send', {
+                        'hitType' : 'pageview',
+                        'page' : '/out-of-bounds'
+                    });
+
+                    console.log('sent postcode fail ga');
+                </script>
+                <?php
             }
         } elseif ( $skip != null ) {
             if( isset( $_POST['ash_submit'] ) ) {

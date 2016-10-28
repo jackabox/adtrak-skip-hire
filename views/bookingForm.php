@@ -138,3 +138,16 @@
         <input type="submit" name="ash_submit" id="ash_submit" class="ash__submit" value="Confirm Order">
     </form>
 </div>
+
+<script>
+    ga('send', 'event', 'Skip Order', 'Submit', 'Checkout', {
+        nonInteraction: true
+    });
+
+    ga('send', {
+        'hitType' : 'pageview',
+        'page' : '/checkout'
+    });
+
+    console.log('sent checkout ga');
+</script>

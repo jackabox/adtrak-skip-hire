@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 1.6.1
+- [Improvement] Added fake page events for GA
+
 ## Version 1.6
 - [Feature] each location can now have a radius applied to it, this should improve search results.
 
