@@ -1,3 +1,4 @@
 *.codekit
+*.codekit3
 *.sublime-workspace
 .codekit-cache
