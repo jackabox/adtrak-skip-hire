@@ -13,3 +13,16 @@
         <p><button type="submit" class="ash__submit" id="ash_postcode_submit">Check Available Skips</button></p>
     </form>
 </div>
+
+<script>
+    ga('send', 'event', 'Skip Order', 'Submit', 'Postcode Enter Form', {
+        nonInteraction: true
+    });
+
+    ga('send', {
+        'hitType' : 'pageview',
+        'page' : '/booking'
+    });
+
+    console.log('sent postcode ga');
+</script>

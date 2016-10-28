@@ -1,6 +1,6 @@
 # Changelog
 
-## Version 1.6.1
+## Version 1.6.2
 - [Improvement] Added fake page events for GA
 
 ## Version 1.6
