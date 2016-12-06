@@ -1,5 +1,8 @@
-<?php 
+<?php namespace Adtrak\Windscreens;
 
-namespace Adtrak\Windscreens;
+$admin = Controllers\AdminController::instance();
 
-/** @var \Billy\Framework\Loader $loader */
+$loader->action([
+	'method' 	=> 'admin_menu',
+	'uses' 		=> [$admin, 'menu']
+]);

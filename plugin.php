@@ -25,3 +25,6 @@ if (!defined('JB_PLUGIN_URL') ) {
 
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/vendor/getbilly/framework/bootstrap/autoload.php';
+
+
+$MyMenuSetterUpper = Adtrak\Windscreens\Controllers\AdminController::instance();

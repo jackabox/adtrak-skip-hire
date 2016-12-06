@@ -4,8 +4,6 @@
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Adtrak\Windscreens\Helper;
 
-
-
 if (get_option('adtrak_windscreens_version', false) === false) {
 	Capsule::schema()->create('aw_locations', function($table)
 	{
