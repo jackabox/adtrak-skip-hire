@@ -12,7 +12,7 @@ class AdminController
 	{
  		null === self::$instance and self::$instance = new self;
         return self::$instance;
-	} 
+	}
 
 	public function menu() 
 	{
@@ -22,7 +22,7 @@ class AdminController
 			'manage_options',
 			'adwind',
 			'',
-			'',
+			'none',
 			100
 		);
 
@@ -49,7 +49,7 @@ class AdminController
 
 	public function menu_render() 
 	{
-		$title = 'Hello From The Other Side';
+		$title = 'Locations';
 
 		$lat = '52.9539591';
 		$lng = '-1.1565018';
