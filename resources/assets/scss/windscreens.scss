@@ -5,6 +5,36 @@
 	display: none;
 }
 
+.wrap--aw .container {
+	position: relative;
+	display: flex;
+	flex: 1 1 wrap;
+
+	* {
+		box-sizing: border-box;
+	}
+
+	.content {
+		width: 100%;
+
+		> div {
+			background: #fff;
+			padding: 20px;
+			
+		}
+	}
+
+	.sidebar {
+		width: 300px;
+		margin-left: 40px;
+
+		> div {
+			background: #fff;
+			padding: 20px;
+		}
+	}
+}
+
 .wrap--aw h1 {
 	margin-bottom: 20px;
 }

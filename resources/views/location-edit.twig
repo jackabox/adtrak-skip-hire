@@ -1,14 +1,22 @@
 <div class="wrap wrap--aw">
-	<h1>{{ location.name }}</h1>
+	<h1>Edit: {{ location.name }}</h1>
 
-	<div>
-		<p><a href="#">{{ location.id }}</a></p>
-		<p>{{ location.lat }}</p>
-		<p>{{ location.lng }}</p>
-		<p>{{ location.radius }}</p>
-		<p>
-			<a href="#" class="icon-holder"><i class="edit icon"></i></a>
-			<a href="#" class="icon-holder"><i class="trash icon"></i></a>
-		</p>
+	<div class="container">
+		<div class="content">
+			<div>
+				<p><a href="#">{{ location.id }}</a></p>
+				<p>{{ location.lat }}</p>
+				<p>{{ location.lng }}</p>
+				<p>{{ location.radius }}</p>
+				
+			</div>
+		</div>
+
+		<div class="sidebar">
+			<div>
+				<p><a href="#" class="icon-holder"><i class="trash icon"></i></a></p>
+				<button type="submit" class="button">Save</button>
+			</div>
+		</div>
 	</div>
 </div>
