@@ -135,6 +135,10 @@
   font-size: 14px;
 }
 
+.wrap--aw form textarea {
+  min-height: 140px;
+}
+
 /* TABLES */
 .aw--table {
   width: 100%;
