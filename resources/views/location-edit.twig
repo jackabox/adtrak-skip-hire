@@ -1,22 +1,54 @@
 <div class="wrap wrap--aw">
-	<h1>Edit: {{ location.name }}</h1>
+	<h1>Edit: {{ location.name }} (#{{ location.id }})</h1>
 
-	<div class="container">
+	<form class="container" method="POST">
 		<div class="content">
 			<div>
-				<p><a href="#">{{ location.id }}</a></p>
-				<p>{{ location.lat }}</p>
-				<p>{{ location.lng }}</p>
-				<p>{{ location.radius }}</p>
-				
+				<div class="section-header">
+					<h4>Update</h4>
+				</div>
+
+				<p>
+					<label for="title">Name</label>
+					<input type="text" name="title" placeholder="Enter a Name for the Location" value="{{ location.name }}">
+				</p>
+				<p>
+					<label for="description">Description</label>
+					<textarea name="description" placeholder="Enter a Description">{{ location.description }}</textarea>
+				</p>
+				<p>
+					<label for="phone">Telephone</label>
+					<input type="tel" name="phone" placeholder="Enter a Telephone Number" value="{{ location.telephone }}">
+				</p>
+				<p>
+					<label for="location">Location</label>
+					<input type="text" name="location" placeholder="Enter a Post Code" value="{{ location.address }}" data-lat="{{ location.lat }}" data-lng="{{ location.lng }}">
+				</p>
+				<p>
+					<label for="radius">Radius</label>
+					<input type="number" name="radius" placeholder="Enter a Delivery Radius" value="{{ location.radius }}">
+				</p>
 			</div>
 		</div>
 
-		<div class="sidebar">
+		<aside class="sidebar">
 			<div>
-				<p><a href="#" class="icon-holder"><i class="trash icon"></i></a></p>
-				<button type="submit" class="button">Save</button>
+				<div class="section-header">
+					<h4>Update</h4>
+				</div>
+
+				<p>Want to save your changes?</p>
+				<p><button type="submit" class="button">Save</button></p>
 			</div>
-		</div>
-	</div>
+
+			<div>
+				<div class="section-header">
+					<h4>Delete</h4>
+				</div>
+
+				<p>Want to delete this location?</p>
+				<p><button type="button" class="button">Delete</button></p>
+			</div>
+		</aside>
+	</form>
 </div>
