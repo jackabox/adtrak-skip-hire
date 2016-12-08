@@ -1,0 +1,112 @@
+.icon-holder {
+  position: relative;
+  display: inline-block;
+  width: 24px;
+  height: 16px;
+}
+
+.icon-holder + .icon-holder {
+  margin-left: 20px;
+}
+
+.edit.icon {
+  color: #000;
+  position: absolute;
+  margin-left: 4px;
+  margin-top: 7px;
+  width: 14px;
+  height: 2px;
+  border-radius: 1px;
+  border: solid 1px currentColor;
+  -webkit-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+.edit.icon:before {
+  content: '';
+  position: absolute;
+  left: -12px;
+  top: -1px;
+  width: 0px;
+  height: 0px;
+  border-left: solid 5px transparent;
+  border-right: solid 5px currentColor;
+  border-top: solid 2px transparent;
+  border-bottom: solid 2px transparent;
+}
+
+.trash.icon {
+  color: #000;
+  position: absolute;
+  margin-left: 5px;
+  margin-top: 7px;
+  width: 9px;
+  height: 10px;
+  border-left: solid 1px currentColor;
+  border-right: solid 1px currentColor;
+  border-bottom: solid 1px currentColor;
+  border-radius: 0 0 2px 2px;
+}
+
+.trash.icon:before {
+  content: '';
+  position: absolute;
+  left: -4px;
+  top: -2px;
+  width: 17px;
+  height: 1px;
+  background-color: currentColor;
+}
+
+.trash.icon:after {
+  content: '';
+  position: absolute;
+  left: 0px;
+  top: -5px;
+  width: 7px;
+  height: 2px;
+  border-left: solid 1px currentColor;
+  border-right: solid 1px currentColor;
+  border-top: solid 1px currentColor;
+  border-radius: 4px 4px 0 0;
+}
+
+#toplevel_page_adwind ul.wp-submenu li:nth-child(3) {
+  display: none;
+}
+
+.wrap--aw h1 {
+  margin-bottom: 20px;
+}
+
+/* TABLES */
+.aw--table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.aw--table th {
+  text-align: left;
+}
+
+.aw--table th, .aw--table td {
+  padding: 20px 15px;
+}
+
+.aw--table td {
+  background-color: white;
+  border: 0;
+}
+
+.aw--table tbody tr {
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.15);
+}
+
+.aw--table tr {
+  border-bottom: 2px solid #f2f2f2;
+}
+
+.aw--table.aw--table__locations .manage {
+  width: 80px;
+}
