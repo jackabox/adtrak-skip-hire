@@ -1,12 +1,31 @@
-<h2>{{ title }}</h2>
+<div class="wrap wrap--aw">
+	<h1>{{ title }}</h1>
 
-{% for loc in locations %}
-	<div>
-		<h4>{{ loc.name }}</h4>
-		<p>
-			<b>Lat:</b> {{ loc.lat }} <br>
-			<b>Lng:</b> {{ loc.lng }} <br>
-			<b>Distance:</b> {{ loc.distance }} <br>
-		</p>
-	</div>
-{% endfor %}
+	<table class="aw--table aw--table__locations">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Name</th>
+				<th>Lat</th>
+				<th>Lng</th>
+				<th>Radius</th>
+				<th class="manage">Manage</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for loc in locations %}
+			<tr>
+				<td><a href="{{ link.edit }}{{ loc.id }}">{{ loc.id }}</a></td>
+				<td><a href="{{ link.edit }}{{ loc.id }}">{{ loc.name }}</a></td>
+				<td>{{ loc.lat }}</td>
+				<td>{{ loc.lng }}</td>
+				<td>{{ loc.radius }}</td>
+				<td>
+					<a href="{{ link.edit }}{{ loc.id }}" class="icon-holder"><i class="edit icon"></i></a>
+					<a href="{{ link.delete }}{{ loc.id }}"class="icon-holder"><i class="trash icon"></i></a>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
