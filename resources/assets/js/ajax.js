@@ -9,7 +9,8 @@ jQuery(document).ready(function ($)
 			desc = $('#aw_description').val(),
 			phone = $('#aw_phone').val(),
 			location = $('#aw_location').val(),
-			radius = $('#aw_radius').val();
+			radius = $('#aw_radius').val(),
+			notification = $('.aw-notification');
 
 		$.ajax({
 			type: 'post',
@@ -25,7 +26,17 @@ jQuery(document).ready(function ($)
 				radius: radius
 			},
 			success: function (result) {
-				console.log(result);
+				if (result === "error") {
+					notification.removeClass('success')
+								.addClass('error')
+								.html("Sorry, an error occured with saving the location. Please try again.")
+								.show(500);
+				} else if (result === "success") {
+					notification.removeClass('error')
+								.addClass('success')
+								.html("Location '" + name + "' has been updated successfully.")
+								.show(500);
+				}
 			}
 		});
 		return false;

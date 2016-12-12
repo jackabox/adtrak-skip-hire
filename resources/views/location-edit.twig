@@ -1,4 +1,6 @@
 <div class="wrap wrap--aw">
+	<div class="aw-notification"></div>
+
 	<h1>Edit: {{ location.name }} (#{{ location.id }})</h1>
 
 	<form class="container" id="windscreens" action="" method="POST">
@@ -38,16 +40,7 @@
 				</div>
 
 				<p>Want to save your changes?</p>
-				<p>{{ button.save | raw }}</p>
-			</div>
-
-			<div>
-				<div class="section-header">
-					<h4>Delete</h4>
-				</div>
-
-				<p>Want to delete this location?</p>
-				<p>{{ button.delete | raw }}</p>
+				<p>{{ button.save | raw }} or {{ button.delete | raw }}</p>
 			</div>
 		</aside>
 	</form>

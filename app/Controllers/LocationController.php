@@ -65,7 +65,7 @@ class LocationController
 
  		if (current_user_can('delete_posts')) {
 			$nonce = wp_create_nonce('windscreen_delete_location_nonce');
-			$button['delete'] = ' <a href="' . admin_url( 'admin-ajax.php?action=windscreen_delete_location&id=' . $_GET['loc-id'] . '&nonce=' . $nonce ) . '" data-id="' . $_GET['loc-id'] . '" data-nonce="' . $nonce . '" data-redirect="' . admin_url('admin.php?page=adwind') . '" class="button adwi-delete-location">Delete</a>';
+			$button['delete'] = ' <a href="' . admin_url( 'admin-ajax.php?action=windscreen_delete_location&id=' . $_GET['loc-id'] . '&nonce=' . $nonce ) . '" data-id="' . $_GET['loc-id'] . '" data-nonce="' . $nonce . '" data-redirect="' . admin_url('admin.php?page=adwind') . '" class="adwi-delete-location">Delete</a>';
 		} else {
 			$button['delete'] = '';
 		}

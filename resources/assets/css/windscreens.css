@@ -76,14 +76,41 @@
   display: none;
 }
 
+.aw-notification {
+  width: calc(100% - 120px);
+  padding: 10px 20px;
+  position: absolute;
+  background: #212121;
+  color: #fff;
+  top: -25px;
+  left: 40px;
+  display: none;
+}
+
+.aw-notification.success {
+  background: green;
+}
+
+.aw-notification.error {
+  background: red;
+}
+
+.aw-notification.warning {
+  background: orange;
+}
+
+.wrap--aw {
+  position: relative;
+}
+
 .wrap--aw .container {
   position: relative;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-flex: 1 1 wrap;
-  -ms-flex: 1 1 wrap;
-  flex: 1 1 wrap;
+  -webkit-flex-flow: row;
+  -ms-flex-flow: row;
+  flex-flow: row;
 }
 
 .wrap--aw .container * {

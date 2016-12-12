@@ -5,10 +5,37 @@
 	display: none;
 }
 
+.aw-notification {
+	width: calc(100% - 120px);
+	padding: 10px 20px;
+	position: absolute;
+	background: #212121;
+	color: #fff;
+	top: -25px;
+	left: 40px;
+	display: none;
+
+	&.success {
+		background: green;
+	}
+
+	&.error {
+		background: red;
+	}
+
+	&.warning {
+		background: orange;
+	}
+}
+
+.wrap--aw {
+	position: relative;
+}
+
 .wrap--aw .container {
 	position: relative;
 	display: flex;
-	flex: 1 1 wrap;
+	flex-flow: row;
 
 	* {
 		box-sizing: border-box;
