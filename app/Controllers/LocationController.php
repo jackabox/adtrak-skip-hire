@@ -1,15 +1,4 @@
-<?php /* 
-		$lat = '52.9539591';
-		$lng = '-1.1565018';
-		$radius = 4;
-
-		$locations = DB::table('aw_locations')
-						->select(DB::raw('id, name, lat, lng, radius, ( 3959 * acos( cos( radians(' . $lat . ') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(' . $lng . ') ) + sin( radians(' . $lat . ') ) * sin( radians( lat ) ) ) ) AS distance '))
-						->having('distance', '<', $radius)
-						->orderBy('distance')
-						->get();
-						*/ 
-
+<?php 
 namespace Adtrak\Windscreens\Controllers;
 
 use Adtrak\Windscreens\View;
@@ -43,7 +32,7 @@ class LocationController
 			'Locations - Edit',
 			'manage_options',
 			'adwind-loc-edit',
-			[$this, 'updateLocation'],
+			[$this, 'showLocation'],
 			''
 		);
 	}
@@ -65,12 +54,56 @@ class LocationController
 		]);
 	}
 
+	public function showLocation()
+	{
+		if (current_user_can('edit_posts')) {
+            $nonce = wp_create_nonce('windscreen_edit_location_nonce');
+            $button = '<a href="' . admin_url( 'admin-ajax.php?action=windscreen_edit_location&id=' . $_GET['loc-id'] . '&nonce=' . $nonce ) . '" data-id="' . $_GET['loc-id'] . '" data-nonce="' . $nonce . '" class="button adwi-edit-location">Save</a>';
+        } else {
+			$button = '';
+		}
+
+		$location = Location::find($_GET['loc-id']);
+
+		View::render('location-edit.twig', [
+			'location' 	=> $location,
+			'save'		=> $button
+		]);
+	}
+
 	public function updateLocation()
 	{
-		$id = $_GET['loc-id'];
-		$location = Location::find($id);
-		View::render('location-edit.twig', [
-			'location' 	=> $location
-		]);
+		$permission = check_ajax_referer('windscreen_edit_location_nonce', 'nonce', false);
+	
+        if ($permission == false) {
+            echo 'error';
+        } else {
+			$loc = Location::findOrFail($_REQUEST['id']);
+			$loc->name = $_REQUEST['name'];
+			$loc->description = $_REQUEST['desc'];
+			$loc->number = $_REQUEST['phone'];
+			$loc->address = $_REQUEST['location'];
+			$loc->radius = $_REQUEST['radius'];
+			$loc->save();
+
+			echo $loc;
+        }
+
+        die();
+	}
+
+	public function frontGetLocation()
+	{
+		/* 
+		$lat = '52.9539591';
+		$lng = '-1.1565018';
+		$radius = 4;
+
+		$locations = DB::table('aw_locations')
+						->select(DB::raw('id, name, lat, lng, radius, ( 3959 * acos( cos( radians(' . $lat . ') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(' . $lng . ') ) + sin( radians(' . $lat . ') ) * sin( radians( lat ) ) ) ) AS distance '))
+						->having('distance', '<', $radius)
+						->orderBy('distance')
+						->get();
+						*/ 
 	}
 }

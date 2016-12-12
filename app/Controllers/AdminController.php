@@ -2,9 +2,8 @@
 
 use Adtrak\Windscreens\View;
 use Adtrak\Windscreens\Models\Location;
-
 use Adtrak\Windscreens\Controllers\LocationController;
-
+use Adtrak\Windscreens\Helper;
 
 class AdminController
 {
@@ -40,5 +39,14 @@ class AdminController
 			[$this, 'menu_render'],
 			''
 		);
+	}
+
+	public function scripts()
+	{
+		if (is_admin()) {
+            wp_enqueue_style('adtrak-windscreens', Helper::assetUrl('css/windscreens.css'), null);
+            wp_enqueue_script('adtrak-windscreens-ajax', Helper::assetUrl('js/ajax.js'), ['jquery'], '', true);
+            wp_localize_script('adtrak-windscreens-ajax', 'WSAjax', ['ajaxurl' => admin_url('admin-ajax.php')]);
+        }
 	}
 }
