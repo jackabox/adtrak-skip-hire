@@ -29,6 +29,16 @@ class LocationController
 		add_submenu_page(
 			'adwind',			
 			__( 'Locations', 'adwind' ),
+			'Locations - Add',
+			'manage_options',
+			'adwind-loc-add',
+			[$this, 'addLocation'],
+			''
+		);
+
+		add_submenu_page(
+			'adwind',			
+			__( 'Locations', 'adwind' ),
 			'Locations - Edit',
 			'manage_options',
 			'adwind-loc-edit',
@@ -44,7 +54,7 @@ class LocationController
 
 		$link = [
 			'edit' => admin_url('admin.php?page=adwind-loc-edit&loc-id='),
-			'delete' => admin_url('admin.php?page=adwind-loc-delete&loc-id=')
+			'add' => admin_url('admin.php?page=adwind-loc-add')
 		];
 
 		View::render('locations.twig', [
@@ -86,6 +96,48 @@ class LocationController
             echo 'error';
         } else {
 			$loc 				= Location::findOrFail($_REQUEST['id']);
+			$loc->name 			= $_REQUEST['name'];
+			$loc->description 	= $_REQUEST['desc'];
+			$loc->number 		= $_REQUEST['phone'];
+			$loc->address 		= $_REQUEST['location'];
+			$loc->lat 			= $_REQUEST['lat'];
+			$loc->lng 			= $_REQUEST['lng'];
+			$loc->radius 		= $_REQUEST['radius'];
+			$loc->save();
+
+			echo 'success';
+        }
+
+        die();
+	}
+
+	public function addLocation() 
+	{
+		if (current_user_can('edit_posts')) {
+            $nonce = wp_create_nonce('windscreen_add_location_nonce');
+            $button['save'] = '<a href="' . admin_url('admin-ajax.php?action=windscreen_add_location&nonce=' . $nonce) . '" data-nonce="' . $nonce . '" class="button adwi-add-location">Save</a>';
+        } else {
+			$button['save'] = '';
+		}
+
+		View::render('location-add.twig', [
+			'button'	=> $button
+		]);
+	}
+
+	public function storeLocation()
+	{
+		$permission = check_ajax_referer('windscreen_add_location_nonce', 'nonce', false);
+
+        if ($permission == false) {
+            echo 'error';
+        } else {
+			if (empty($_REQUEST['name']) || empty($_REQUEST['lat']) || empty($_REQUEST['lng']) || empty($_REQUEST['radius'])) {
+				echo 'error';
+				die();
+			}
+
+			$loc 				= new Location;
 			$loc->name 			= $_REQUEST['name'];
 			$loc->description 	= $_REQUEST['desc'];
 			$loc->number 		= $_REQUEST['phone'];

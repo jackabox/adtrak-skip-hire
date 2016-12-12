@@ -1,6 +1,9 @@
 @import "icons";
-#toplevel_page_adwind ul.wp-submenu li:nth-child(3) {
-    display: none;
+#toplevel_page_adwind ul.wp-submenu {
+	li:nth-child(3),
+	li:nth-child(4) {
+    	display: none;
+	}
 }
 
 .aw-notification {

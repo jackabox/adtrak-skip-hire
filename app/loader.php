@@ -14,6 +14,11 @@ $loader->action([
 ]);
 
 $loader->action([
+	 'method' 	=> 'wp_ajax_windscreen_add_location', 
+	 'uses' 	=> [$locations, 'storeLocation'] 
+]);
+
+$loader->action([
 	 'method' 	=> 'wp_ajax_windscreen_edit_location', 
 	 'uses' 	=> [$locations, 'updateLocation'] 
 ]);

@@ -29,16 +29,6 @@ class AdminController
 
 		$locs = LocationController::instance();
 		$locs->menu();
-
-		add_submenu_page(
-			'adwind',			
-			__( 'Settings', 'adwind' ),
-			'Settings',
-			'manage_options',
-			'adwind-settings',
-			[$this, 'menu_render'],
-			''
-		);
 	}
 
 	public function scripts()

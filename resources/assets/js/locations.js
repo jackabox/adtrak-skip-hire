@@ -1,5 +1,48 @@
 jQuery(document).ready(function ($) {
 
+	$('.adwi-add-location').click(function () {
+		var nonce = $(this).data('nonce'),
+			btn = $(this),
+			name = $('#aw_name').val(),
+			desc = $('#aw_description').val(),
+			phone = $('#aw_number').val(),
+			location = $('#aw_location').val(),
+			lat = $('#aw_lat').val(),
+			lng = $('#aw_lng').val(),
+			radius = $('#aw_radius').val(),
+			notification = $('.aw-notification');
+
+		$.ajax({
+			type: 'post',
+			url: WSAjax.ajaxurl,
+			data: {
+				action: 'windscreen_add_location',
+				nonce: nonce,
+				name: name,
+				desc: desc,
+				phone: phone,
+				location: location,
+				lat: lat,
+				lng: lng,
+				radius: radius
+			},
+			success: function (result) {
+				if (result === "error") {
+					notification.removeClass('success')
+						.addClass('error')
+						.html("Sorry, an error occured with saving the location. Please try again.")
+						.show(500);
+				} else if (result === "success") {
+					notification.removeClass('error')
+						.addClass('success')
+						.html("Location '" + name + "' has been updated successfully.")
+						.show(500);
+				}
+			}
+		});
+		return false;
+	});
+
 
 	$('.adwi-edit-location').click(function () {
 		var id = $(this).data('id'),
