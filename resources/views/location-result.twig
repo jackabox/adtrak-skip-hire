@@ -1,0 +1,3 @@
+<h1>Location Result</h1>
+
+<p>Your nearest branch is <b>{{ location.name }}</b> at <b>{{ location.address }}</b> which is <b>{{ location.distance | round(2, 'floor') }} miles</b> away. To arrange for a callout please ring us on <a href="tel:{{ location.number }}">{{ location.number }}</a></p>

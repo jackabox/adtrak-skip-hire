@@ -3,10 +3,15 @@ namespace Adtrak\Windscreens\Controllers;
 
 use Adtrak\Windscreens\View;
 use Adtrak\Windscreens\Models\Location;
+use Billy\Framework\Facades\DB;
 
 class LocationController
 {
 	private static $instance = null;
+
+	public function __construct() {
+		 add_shortcode('adtrak_windscreens', [$this, 'showLocationForm']);
+	}
 
 	public static function instance()
 	{
@@ -168,18 +173,33 @@ class LocationController
         die();
 	}
 
+	public function showLocationForm()
+	{	
+		if ($_POST) {
+			 $this->frontGetLocation();
+		} else {
+			View::render('location-lookup.twig', []);		
+		}
+	}
+
 	public function frontGetLocation()
 	{
-		/* 
+		// $lat = $_POST['lat'];
+		// $lng = $_POST['lng'];
+
 		$lat = '52.9539591';
 		$lng = '-1.1565018';
-		$radius = 4;
+		$radius = 50;
 
-		$locations = DB::table('aw_locations')
-						->select(DB::raw('id, name, lat, lng, radius, ( 3959 * acos( cos( radians(' . $lat . ') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(' . $lng . ') ) + sin( radians(' . $lat . ') ) * sin( radians( lat ) ) ) ) AS distance '))
-						->having('distance', '<', $radius)
+		$location = DB::table('aw_locations')
+						->select(DB::raw('id, name, lat, lng, radius, address, number, ( 3959 * acos( cos( radians(' . $lat . ') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(' . $lng . ') ) + sin( radians(' . $lat . ') ) * sin( radians( lat ) ) ) ) AS distance '))
+						->having('distance', '<', 50)
 						->orderBy('distance')
-						->get();
-						*/ 
+						->first();
+
+		View::render('location-result.twig', [
+			'location' => $location
+		]);		
+						
 	}
 }
