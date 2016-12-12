@@ -60,8 +60,14 @@ jQuery(document).ready(function ($)
 					id: id
 				},
 				success: function (result) {
-					console.log(result);
-					window.location.replace(redirect);
+					if (result === "error") {
+					notification.removeClass('success')
+								.addClass('error')
+								.html("Sorry, an error occured with deleting the location. Please try again.")
+								.show(500);
+					} else if (result === "success") {
+						window.location.replace(redirect);
+					}
 				}
 			});
 		}
