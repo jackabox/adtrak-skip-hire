@@ -25,7 +25,7 @@ jQuery(document).ready(function ($) {
 				desc: desc,
 				phone: phone,
 				location: location,
-				lat: lat, 
+				lat: lat,
 				lng: lng,
 				radius: radius
 			},
@@ -79,24 +79,71 @@ jQuery(document).ready(function ($) {
 	});
 
 	$(function () {
-		var pac_input = document.getElementById('aw_location');
+		var $lat = 52.9539559,
+			$lng = -1.1543077999999696;
+		
+		if($('#aw_lat').val() !== '') {
+			$lat = Number($('#aw_lat').val());
+		} 
 
-		var options = {
-			componentRestrictions: {
-				country: "uk"
-			}
-		};
+		if($('#aw_lng').val() !== '') {
+			$lng = Number($('#aw_lng').val());
+		} 
 
-		// create the autocomplete
-		var autocomplete = new google.maps.places.Autocomplete(pac_input, options);
+		if ($('#aw_location').length) {
+			var pac_input = document.getElementById('aw_location');
 
-		// create an event listener on the autocomplete
-		google.maps.event.addListener(autocomplete, 'place_changed', function () {
-			var place = autocomplete.getPlace();
+			var map = new google.maps.Map(document.getElementById('map'), {
+				center: { lat: $lat, lng:  $lng },
+				zoom: 13
+			});
 
-			// set the lat / lng of the button dependant on if lat / lng exist
-			document.getElementById('aw_lat').value = place.geometry.location.lat();
-			document.getElementById('aw_lng').value = place.geometry.location.lng();
-		});
+			var options = {
+				componentRestrictions: {
+					country: "uk"
+				}
+			};
+
+			// create the autocomplete
+			var autocomplete = new google.maps.places.Autocomplete(pac_input, options);
+			var infowindow = new google.maps.InfoWindow();
+			var marker = new google.maps.Marker({
+				map: map,
+				position: { lat: $lat, lng:  $lng },
+				anchorPoint: new google.maps.Point(0, -29)
+			});
+			marker.setVisible(true);
+
+			// create an event listener on the autocomplete
+			autocomplete.addListener('place_changed', function () {
+				var place = autocomplete.getPlace();
+
+				// If the place has a geometry, then present it on a map.
+				if (place.geometry.viewport) {
+					map.fitBounds(place.geometry.viewport);
+				} else {
+					map.setCenter(place.geometry.location);
+					map.setZoom(17);  // Why 17? Because it looks good.
+				}
+				marker.setPosition(place.geometry.location);
+				marker.setVisible(true);
+
+				var address = '';
+				if (place.address_components) {
+					address = [
+						(place.address_components[0] && place.address_components[0].short_name || ''),
+						(place.address_components[1] && place.address_components[1].short_name || ''),
+						(place.address_components[2] && place.address_components[2].short_name || '')
+					].join(' ');
+				}
+
+				infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
+				infowindow.open(map, marker);
+
+				// set the lat / lng of the button dependant on if lat / lng exist
+				document.getElementById('aw_lat').value = place.geometry.location.lat();
+				document.getElementById('aw_lng').value = place.geometry.location.lng();
+			});
+		}
 	});
 });

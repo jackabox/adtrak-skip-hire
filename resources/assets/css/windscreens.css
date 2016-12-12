@@ -123,26 +123,39 @@
   margin-left: 40px;
 }
 
-.wrap--aw .container .sidebar > div, .wrap--aw .container .content > div {
+.wrap--aw .container .sidebar > div,
+.wrap--aw .container .content > div {
   background: #fff;
   padding: 20px;
   margin-bottom: 20px;
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.15);
 }
 
-.wrap--aw .container .sidebar > div .section-header, .wrap--aw .container .content > div .section-header {
+.wrap--aw .container .sidebar > div .section-header,
+.wrap--aw .container .content > div .section-header {
   margin: -20px -20px 30px -20px;
   padding: 10px 20px;
   background: #222222;
   color: #fff;
 }
 
-.wrap--aw .container .sidebar > div .section-header *, .wrap--aw .container .content > div .section-header * {
+.wrap--aw .container .sidebar > div .section-header *,
+.wrap--aw .container .content > div .section-header * {
   margin: 0;
 }
 
 .wrap--aw h1 {
   margin-bottom: 20px;
+}
+
+.wrap--aw #map {
+  height: 350px;
+  margin-top: -15px;
+  margin-left: 1px;
+  margin-right: -1px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.07);
 }
 
 .wrap--aw form label,
@@ -154,7 +167,9 @@
   font-size: 15px;
 }
 
-.wrap--aw form input, .wrap--aw form select, .wrap--aw form textarea,
+.wrap--aw form input,
+.wrap--aw form select,
+.wrap--aw form textarea,
 .wrap--aw .form input,
 .wrap--aw .form select,
 .wrap--aw .form textarea {
@@ -178,7 +193,8 @@
   text-align: left;
 }
 
-.aw--table th, .aw--table td {
+.aw--table th,
+.aw--table td {
   padding: 20px 15px;
 }
 
