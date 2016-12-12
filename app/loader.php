@@ -17,3 +17,8 @@ $loader->action([
 	 'method' 	=> 'wp_ajax_windscreen_edit_location', 
 	 'uses' 	=> [$locations, 'updateLocation'] 
 ]);
+
+$loader->action([
+	 'method' 	=> 'wp_ajax_windscreen_delete_location', 
+	 'uses' 	=> [$locations, 'deleteLocation'] 
+]);

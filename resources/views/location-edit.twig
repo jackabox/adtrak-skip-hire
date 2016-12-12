@@ -38,7 +38,7 @@
 				</div>
 
 				<p>Want to save your changes?</p>
-				{{ save | raw }}
+				<p>{{ button.save | raw }}</p>
 			</div>
 
 			<div>
@@ -47,7 +47,7 @@
 				</div>
 
 				<p>Want to delete this location?</p>
-				<p><button type="button" class="button">Delete</button></p>
+				<p>{{ button.delete | raw }}</p>
 			</div>
 		</aside>
 	</form>

@@ -30,4 +30,31 @@ jQuery(document).ready(function ($)
 		});
 		return false;
 	});
+
+	$('.adwi-delete-location').click(function () 
+	{
+		var truly = confirm('Are you sure you want to delete this location?'),
+			id = $(this).data('id'),
+			nonce = $(this).data('nonce'),
+			redirect = $(this).data('redirect'),
+			btn = $(this);
+
+		if (truly === true) {
+			$.ajax({
+				type: 'post',
+				url: WSAjax.ajaxurl,
+				data: {
+					action: 'windscreen_delete_location',
+					nonce: nonce,
+					id: id
+				},
+				success: function (result) {
+					console.log(result);
+					window.location.replace(redirect);
+				}
+			});
+		}
+
+		return false;
+	});	
 });

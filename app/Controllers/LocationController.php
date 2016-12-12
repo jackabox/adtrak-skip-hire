@@ -58,16 +58,23 @@ class LocationController
 	{
 		if (current_user_can('edit_posts')) {
             $nonce = wp_create_nonce('windscreen_edit_location_nonce');
-            $button = '<a href="' . admin_url( 'admin-ajax.php?action=windscreen_edit_location&id=' . $_GET['loc-id'] . '&nonce=' . $nonce ) . '" data-id="' . $_GET['loc-id'] . '" data-nonce="' . $nonce . '" class="button adwi-edit-location">Save</a>';
+            $button['save'] = '<a href="' . admin_url( 'admin-ajax.php?action=windscreen_edit_location&id=' . $_GET['loc-id'] . '&nonce=' . $nonce ) . '" data-id="' . $_GET['loc-id'] . '" data-nonce="' . $nonce . '" class="button adwi-edit-location">Save</a>';
         } else {
-			$button = '';
+			$button['save'] = '';
+		}
+
+ 		if (current_user_can('delete_posts')) {
+			$nonce = wp_create_nonce('windscreen_delete_location_nonce');
+			$button['delete'] = ' <a href="' . admin_url( 'admin-ajax.php?action=windscreen_delete_location&id=' . $_GET['loc-id'] . '&nonce=' . $nonce ) . '" data-id="' . $_GET['loc-id'] . '" data-nonce="' . $nonce . '" data-redirect="' . admin_url('admin.php?page=adwind') . '" class="button adwi-delete-location">Delete</a>';
+		} else {
+			$button['delete'] = '';
 		}
 
 		$location = Location::find($_GET['loc-id']);
 
 		View::render('location-edit.twig', [
 			'location' 	=> $location,
-			'save'		=> $button
+			'button'	=> $button
 		]);
 	}
 
@@ -86,8 +93,23 @@ class LocationController
 			$loc->radius = $_REQUEST['radius'];
 			$loc->save();
 
-			echo $loc;
+			echo 'success';
         }
+
+        die();
+	}
+
+	public function deleteLocation()
+	{
+		$permission = check_ajax_referer('windscreen_delete_location_nonce', 'nonce', false);
+
+        if ($permission == false) {
+            echo 'error';
+        } else {
+			$loc = Location::findOrFail($_REQUEST['id']);
+			$loc->delete();
+			echo 'success';
+		}
 
         die();
 	}
