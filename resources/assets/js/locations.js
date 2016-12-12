@@ -1,16 +1,18 @@
-jQuery(document).ready(function ($) 
+jQuery(document).ready(function ($)
 {
+	var name = $('#aw_name').val(),
+		desc = $('#aw_description').val(),
+		phone = $('#aw_phone').val(),
+		location = $('#aw_location').val(),
+		radius = $('#aw_radius').val(),
+		notification = $('.aw-notification'),
+		editButton = $('.adwi-edit-location');
+
 	$('.adwi-edit-location').click(function () 
 	{
 		var id = $(this).data('id'),
 			nonce = $(this).data('nonce'),
-			btn = $(this),
-			name = $('#aw_name').val(),
-			desc = $('#aw_description').val(),
-			phone = $('#aw_phone').val(),
-			location = $('#aw_location').val(),
-			radius = $('#aw_radius').val(),
-			notification = $('.aw-notification');
+			btn = $(this);
 
 		$.ajax({
 			type: 'post',

@@ -6,13 +6,14 @@
 }
 
 .aw-notification {
-	width: calc(100% - 120px);
+	// width: calc(100% - 120px);
 	padding: 10px 20px;
-	position: absolute;
+	// position: absolute;
+	margin-bottom: 10px;
 	background: #212121;
 	color: #fff;
-	top: -25px;
-	left: 40px;
+	// top: -25px;
+	// left: 40px;
 	display: none;
 
 	&.success {

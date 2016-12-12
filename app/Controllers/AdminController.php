@@ -45,7 +45,7 @@ class AdminController
 	{
 		if (is_admin()) {
             wp_enqueue_style('adtrak-windscreens', Helper::assetUrl('css/windscreens.css'), null);
-            wp_enqueue_script('adtrak-windscreens-ajax', Helper::assetUrl('js/ajax.js'), ['jquery'], '', true);
+            wp_enqueue_script('adtrak-windscreens-ajax', Helper::assetUrl('js/locations.js'), ['jquery'], '', true);
             wp_localize_script('adtrak-windscreens-ajax', 'WSAjax', ['ajaxurl' => admin_url('admin-ajax.php')]);
         }
 	}
