@@ -47,6 +47,8 @@ class AdminController
             wp_enqueue_style('adtrak-windscreens', Helper::assetUrl('css/windscreens.css'), null);
             wp_enqueue_script('adtrak-windscreens-ajax', Helper::assetUrl('js/locations.js'), ['jquery'], '', true);
             wp_localize_script('adtrak-windscreens-ajax', 'WSAjax', ['ajaxurl' => admin_url('admin-ajax.php')]);
+			// bind this to the page?
+			wp_enqueue_script('maps-api', '//maps.googleapis.com/maps/api/js?key=AIzaSyANv3jfCkGseTDZTsguGAxn2vP0aOF7Hlw&libraries=places');
         }
 	}
 }

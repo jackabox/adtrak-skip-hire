@@ -145,7 +145,8 @@
   margin-bottom: 20px;
 }
 
-.wrap--aw form label {
+.wrap--aw form label,
+.wrap--aw .form label {
   display: block;
   width: 100%;
   font-weight: bold;
@@ -153,13 +154,17 @@
   font-size: 15px;
 }
 
-.wrap--aw form input, .wrap--aw form select, .wrap--aw form textarea {
+.wrap--aw form input, .wrap--aw form select, .wrap--aw form textarea,
+.wrap--aw .form input,
+.wrap--aw .form select,
+.wrap--aw .form textarea {
   width: 100%;
   padding: 10px;
   font-size: 14px;
 }
 
-.wrap--aw form textarea {
+.wrap--aw form textarea,
+.wrap--aw .form textarea {
   min-height: 140px;
 }
 

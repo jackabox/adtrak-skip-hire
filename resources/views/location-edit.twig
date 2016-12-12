@@ -3,9 +3,9 @@
 
 	<h1>Edit: {{ location.name }} (#{{ location.id }})</h1>
 
-	<form class="container" id="windscreens" action="" method="POST">
+	<div class="container" id="windscreens">
 		<div class="content">
-			<div>
+			<div class="form">
 				<div class="section-header">
 					<h4>Location Information</h4>
 				</div>
@@ -20,11 +20,13 @@
 				</p>
 				<p>
 					<label for="phone">Telephone</label>
-					<input type="tel" name="phone" id="aw_phone" placeholder="Enter a Telephone Number" value="{{ location.number }}">
+					<input type="tel" name="phone" id="aw_number" placeholder="Enter a Telephone Number" value="{{ location.number }}">
 				</p>
 				<p>
 					<label for="location">Location</label>
-					<input type="text" name="location" id="aw_location" placeholder="Enter a Post Code" value="{{ location.address }}" data-lat="{{ location.lat }}" data-lng="{{ location.lng }}">
+					<input type="text" name="location" id="aw_location" placeholder="Enter a Post Code" value="{{ location.address }}">
+					<input type="hidden" name="aw_lat" id="aw_lat" value="{{ location.lat }}">
+					<input type="hidden" name="aw_lng" id="aw_lng" value="{{ location.lng }}">
 				</p>
 				<p>
 					<label for="radius">Radius</label>
@@ -42,5 +44,5 @@
 				<p>{{ button.save | raw }} or {{ button.delete | raw }}</p>
 			</div>
 		</aside>
-	</form>
+	</div>
 </div>

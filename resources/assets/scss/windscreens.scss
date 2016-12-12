@@ -6,14 +6,10 @@
 }
 
 .aw-notification {
-	// width: calc(100% - 120px);
 	padding: 10px 20px;
-	// position: absolute;
 	margin-bottom: 10px;
 	background: #212121;
 	color: #fff;
-	// top: -25px;
-	// left: 40px;
 	display: none;
 
 	&.success {
@@ -75,7 +71,8 @@
 	margin-bottom: 20px;
 }
 
-.wrap--aw form {
+.wrap--aw form,
+.wrap--aw .form {
 	label {
 		display: block;
 		width: 100%;

@@ -12,6 +12,9 @@ class Location extends Model
 		 'lat', 
 		 'lng', 
 		 'radius', 
-		 'name'
+		 'name',
+		 'description',
+		 'number',
+		 'address'
 	 ];
 }

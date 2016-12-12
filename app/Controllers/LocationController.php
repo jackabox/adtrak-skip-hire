@@ -85,12 +85,14 @@ class LocationController
         if ($permission == false) {
             echo 'error';
         } else {
-			$loc = Location::findOrFail($_REQUEST['id']);
-			$loc->name = $_REQUEST['name'];
-			$loc->description = $_REQUEST['desc'];
-			$loc->number = $_REQUEST['phone'];
-			$loc->address = $_REQUEST['location'];
-			$loc->radius = $_REQUEST['radius'];
+			$loc 				= Location::findOrFail($_REQUEST['id']);
+			$loc->name 			= $_REQUEST['name'];
+			$loc->description 	= $_REQUEST['desc'];
+			$loc->number 		= $_REQUEST['phone'];
+			$loc->address 		= $_REQUEST['location'];
+			$loc->lat 			= $_REQUEST['lat'];
+			$loc->lng 			= $_REQUEST['lng'];
+			$loc->radius 		= $_REQUEST['radius'];
 			$loc->save();
 
 			echo 'success';
