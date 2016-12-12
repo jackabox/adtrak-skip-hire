@@ -23,7 +23,7 @@ class AdminController
 			'manage_options',
 			'adwind',
 			'',
-			'none',
+			'', //none',
 			100
 		);
 
