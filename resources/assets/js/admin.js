@@ -27,15 +27,15 @@ jQuery(document).ready(function ($) {
 				radius: radius
 			},
 			success: function (result) {
-				if (result === "error") {
-					notification.removeClass('success')
-						.addClass('error')
-						.html("Sorry, an error occured with saving the location. Please try again.")
-						.show(500);
-				} else if (result === "success") {
+				if (result === "success") {
 					notification.removeClass('error')
 						.addClass('success')
 						.html("Location '" + name + "' has been updated successfully.")
+						.show(500);
+				} else {
+					notification.removeClass('success')
+						.addClass('error')
+						.html(result)
 						.show(500);
 				}
 			}

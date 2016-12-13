@@ -71,26 +71,31 @@ class LocationController
 
 	public function showLocation()
 	{
+		$button = [
+			'save' => '',
+			'delete' => ''
+		];
+
 		if (current_user_can('edit_posts')) {
             $nonce = wp_create_nonce('windscreen_edit_location_nonce');
             $button['save'] = '<a href="' . admin_url( 'admin-ajax.php?action=windscreen_edit_location&id=' . $_GET['loc-id'] . '&nonce=' . $nonce ) . '" data-id="' . $_GET['loc-id'] . '" data-nonce="' . $nonce . '" class="button adwi-edit-location">Save</a>';
-        } else {
-			$button['save'] = '';
-		}
+        }
 
  		if (current_user_can('delete_posts')) {
 			$nonce = wp_create_nonce('windscreen_delete_location_nonce');
-			$button['delete'] = ' <a href="' . admin_url( 'admin-ajax.php?action=windscreen_delete_location&id=' . $_GET['loc-id'] . '&nonce=' . $nonce ) . '" data-id="' . $_GET['loc-id'] . '" data-nonce="' . $nonce . '" data-redirect="' . admin_url('admin.php?page=adwind') . '" class="adwi-delete-location">Delete</a>';
-		} else {
-			$button['delete'] = '';
+			$button['delete'] = 'or <a href="' . admin_url( 'admin-ajax.php?action=windscreen_delete_location&id=' . $_GET['loc-id'] . '&nonce=' . $nonce ) . '" data-id="' . $_GET['loc-id'] . '" data-nonce="' . $nonce . '" data-redirect="' . admin_url('admin.php?page=adwind') . '" class="adwi-delete-location">Delete</a>';
 		}
 
 		$location = Location::find($_GET['loc-id']);
 
-		View::render('location-edit.twig', [
-			'location' 	=> $location,
-			'button'	=> $button
-		]);
+		if ($location) {
+			View::render('location-edit.twig', [
+				'location' 	=> $location,
+				'button'	=> $button
+			]);
+		} else {
+			echo "Sorry, the location you're looking for does not exist.";
+		}
 	}
 
 	public function updateLocation()
@@ -135,24 +140,28 @@ class LocationController
 		$permission = check_ajax_referer('windscreen_add_location_nonce', 'nonce', false);
 
         if ($permission == false) {
-            echo 'error';
+            echo 'Permission Denied';
         } else {
 			if (empty($_REQUEST['name']) || empty($_REQUEST['lat']) || empty($_REQUEST['lng']) || empty($_REQUEST['radius'])) {
-				echo 'error';
+				echo 'Please enter a name, location and radius.';
 				die();
 			}
 
-			$loc 				= new Location;
-			$loc->name 			= $_REQUEST['name'];
-			$loc->description 	= $_REQUEST['desc'];
-			$loc->number 		= $_REQUEST['phone'];
-			$loc->address 		= $_REQUEST['location'];
-			$loc->lat 			= $_REQUEST['lat'];
-			$loc->lng 			= $_REQUEST['lng'];
-			$loc->radius 		= $_REQUEST['radius'];
-			$loc->save();
+			try {
+				$loc 				= new Location;
+				$loc->name 			= $_REQUEST['name'];
+				$loc->description 	= $_REQUEST['desc'];
+				$loc->number 		= $_REQUEST['phone'];
+				$loc->address 		= $_REQUEST['location'];
+				$loc->lat 			= $_REQUEST['lat'];
+				$loc->lng 			= $_REQUEST['lng'];
+				$loc->radius 		= $_REQUEST['radius'];
+				$loc->save();
 
-			echo 'success';
+				echo 'success';
+			} catch (Exception $e) {
+				 echo 'Caught exception: ',  $e->getMessage(), "\n";
+			}
         }
 
         die();
@@ -163,7 +172,7 @@ class LocationController
 		$permission = check_ajax_referer('windscreen_delete_location_nonce', 'nonce', false);
 
         if ($permission == false) {
-            echo 'error';
+            echo 'Permission Denied';
         } else {
 			$loc = Location::findOrFail($_REQUEST['id']);
 			$loc->delete();
@@ -188,18 +197,22 @@ class LocationController
 		$lng = $_POST['lng'];
 		$radius = 50;
 
-		$location = DB::table('aw_locations')
+		try {
+			$location = DB::table('aw_locations')
 						->select(DB::raw('id, name, lat, lng, radius, address, number, ( 3959 * acos( cos( radians(' . $lat . ') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(' . $lng . ') ) + sin( radians(' . $lat . ') ) * sin( radians( lat ) ) ) ) AS distance '))
 						->having('distance', '<', 50)
 						->orderBy('distance')
 						->first();
 
-		if ($location && ($location->distance <= $location->radius)) {
-			View::render('location-result.twig', [
-				'location' => $location
-			]);
-		} else {
-			echo "Sorry, we couldn't find any services in your location.";
-		}			
+			if ($location && ($location->distance <= $location->radius)) {
+				View::render('location-result.twig', [
+					'location' => $location
+				]);
+			} else {
+				echo "Sorry, we couldn't find any services in your location.";
+			}		
+		} catch (Exception $e) {
+			echo "Sorry, something went wrong. Please try again.";
+		}
 	}
 }

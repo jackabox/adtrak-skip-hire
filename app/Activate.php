@@ -10,10 +10,10 @@ if ($version === false) {
 	Capsule::schema()->create('aw_locations', function($table)
 	{
     	$table->increments('id');
-    	$table->string('lat', 100);
-    	$table->string('lng', 100);
-    	$table->decimal('radius', 4, 2);
-		$table->string('name');
+    	$table->string('lat', 100)->nullable(false);
+    	$table->string('lng', 100)->nullable(false);
+    	$table->decimal('radius', 4, 2)->nullable(false);
+		$table->string('name')->nullable(false);
 		$table->text('description');
 		$table->string('number', 25);
 		$table->string('address', 255);
