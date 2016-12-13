@@ -194,7 +194,7 @@ class LocationController
 						->orderBy('distance')
 						->first();
 
-		if ($location->distance <= $location->radius) {
+		if ($location && ($location->distance <= $location->radius)) {
 			View::render('location-result.twig', [
 				'location' => $location
 			]);
