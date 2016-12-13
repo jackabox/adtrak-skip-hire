@@ -199,7 +199,7 @@ class LocationController
 
 		try {
 			$location = DB::table('aw_locations')
-						->select(DB::raw('id, name, lat, lng, radius, address, number, ( 3959 * acos( cos( radians(' . $lat . ') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(' . $lng . ') ) + sin( radians(' . $lat . ') ) * sin( radians( lat ) ) ) ) AS distance '))
+						->select(DB::raw('id, name, lat, lng, radius, address, description, number, ( 3959 * acos( cos( radians(' . $lat . ') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(' . $lng . ') ) + sin( radians(' . $lat . ') ) * sin( radians( lat ) ) ) ) AS distance '))
 						->having('distance', '<', 50)
 						->orderBy('distance')
 						->first();

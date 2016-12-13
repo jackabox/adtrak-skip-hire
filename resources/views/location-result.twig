@@ -8,4 +8,10 @@
 	{% endif %}		
 </p>
 
+{% if location.description %}
+	<h4>Description</h4>
+	<p>{{ location.description }}</p>
+{% endif %}
+
+<h4>Location</h4>
 <div id="aw_map" style="height: 300px; background: #f7f7f7;" data-lat="{{ location.lat }}" data-lng="{{ location.lng }}"></div>
