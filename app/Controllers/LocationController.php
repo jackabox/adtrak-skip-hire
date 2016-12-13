@@ -184,11 +184,8 @@ class LocationController
 
 	public function frontGetLocation()
 	{
-		// $lat = $_POST['lat'];
-		// $lng = $_POST['lng'];
-
-		$lat = '52.9539591';
-		$lng = '-1.1565018';
+		$lat = $_POST['lat'];
+		$lng = $_POST['lng'];
 		$radius = 50;
 
 		$location = DB::table('aw_locations')
@@ -197,9 +194,12 @@ class LocationController
 						->orderBy('distance')
 						->first();
 
-		View::render('location-result.twig', [
-			'location' => $location
-		]);		
-						
+		if ($location->distance <= $location->radius) {
+			View::render('location-result.twig', [
+				'location' => $location
+			]);
+		} else {
+			echo "Sorry, we couldn't find any services in your location.";
+		}			
 	}
 }

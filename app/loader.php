@@ -27,3 +27,13 @@ $loader->action([
 	 'method' 	=> 'wp_ajax_windscreen_delete_location', 
 	 'uses' 	=> [$locations, 'deleteLocation'] 
 ]);
+
+/**
+ * FRONT SCRIPTS/ACTIONS
+ */
+$front = Controllers\FrontController::instance();
+ 
+$loader->action([
+	'method' 	=> 'wp_enqueue_scripts',
+	'uses' 		=> [$front, 'scripts']
+]);
