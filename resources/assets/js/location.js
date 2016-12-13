@@ -67,4 +67,22 @@
 			});
 		});
 	}
+
+	if($('#aw_map').length) {
+		$(function () {
+			var $lat = $('#aw_map').data('lat'),
+				$lng = $('#aw_map').data('lng');
+
+			var map = new google.maps.Map(document.getElementById('aw_map'), {
+				center: { lat: $lat, lng:  $lng },
+				zoom: 13
+			});
+
+			var marker = new google.maps.Marker({
+          		position: { lat: $lat, lng:  $lng },
+          		map: map
+        	});
+
+		});
+	}	
 } (jQuery));

@@ -1,3 +1,5 @@
 <h1>Location Result</h1>
 
 <p>Your nearest branch is <b>{{ location.name }}</b> at <b>{{ location.address }}</b> which is <b>{{ location.distance | round(2, 'floor') }} miles</b> away. To arrange for a callout please ring us on <a href="tel:{{ location.number }}">{{ location.number }}</a></p>
+
+<div id="aw_map" style="height: 300px; background: #f7f7f7;" data-lat="{{ location.lat }}" data-lng="{{ location.lng }}"></div>
