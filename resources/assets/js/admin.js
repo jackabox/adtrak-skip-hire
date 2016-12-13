@@ -30,7 +30,7 @@ jQuery(document).ready(function ($) {
 				if (result === "success") {
 					notification.removeClass('error')
 						.addClass('success')
-						.html("Location '" + name + "' has been updated successfully.")
+						.html("Location '" + name + "' has been added successfully.")
 						.show(500);
 				} else {
 					notification.removeClass('success')
