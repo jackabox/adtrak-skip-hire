@@ -1,6 +1,6 @@
-<?php namespace Adtrak\Windscreens\Controllers;
+<?php namespace Adtrak\Skips\Controllers;
 
-use Adtrak\Windscreens\Helper;
+use Adtrak\Skips\Helper;
 
 class FrontController
 {
@@ -14,7 +14,7 @@ class FrontController
 
 	public function scripts()
 	{
-		wp_enqueue_script('adtrak-windscreens', Helper::assetUrl('js/location.js'), ['jquery'], '', true);
-		wp_enqueue_script('maps-api', '//maps.googleapis.com/maps/api/js?key=AIzaSyANv3jfCkGseTDZTsguGAxn2vP0aOF7Hlw&libraries=places');
+		wp_enqueue_script('adtrak-skips', Helper::assetUrl('js/location.js'), ['jquery'], '', true);
+		wp_enqueue_script('maps-api', '//maps.googleapis.com/maps/api/js?key=AIzaSyDSIzp9xC7lMLnHSGj7WbSFYUDgNvkO02g&libraries=places');
 	}
 }

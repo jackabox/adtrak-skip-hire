@@ -1,12 +1,13 @@
 @import "icons";
-#toplevel_page_adwind ul.wp-submenu {
+
+#toplevel_page_adskip ul.wp-submenu {
 	li:nth-child(3),
 	li:nth-child(4) {
     	display: none;
 	}
 }
 
-.aw-notification {
+.as-notification {
     padding: 10px 20px;
     margin-bottom: 10px;
     background: #212121;
@@ -23,11 +24,11 @@
     }
 }
 
-.wrap--aw {
+.wrap--as {
     position: relative;
 }
 
-.wrap--aw .container {
+.wrap--as .container {
     position: relative;
     display: flex;
     flex-flow: row;
@@ -61,7 +62,7 @@
     }
 }
 
-.wrap--aw {
+.wrap--as {
     h1 {
         margin-bottom: 20px;
     }
@@ -76,8 +77,8 @@
     }
 }
 
-.wrap--aw form,
-.wrap--aw .form {
+.wrap--as form,
+.wrap--as .form {
     label {
         display: block;
         width: 100%;
@@ -99,8 +100,7 @@
 
 
 /* TABLES */
-
-.aw--table {
+.as--table {
     width: 100%;
     border-collapse: collapse;
     th {
@@ -122,7 +122,7 @@
     }
 }
 
-.aw--table.aw--table__locations {
+.as--table.as--table__locations {
     .manage {
         width: 80px;
     }

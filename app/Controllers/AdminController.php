@@ -1,9 +1,9 @@
-<?php namespace Adtrak\Windscreens\Controllers;
+<?php namespace Adtrak\Skips\Controllers;
 
-use Adtrak\Windscreens\View;
-use Adtrak\Windscreens\Models\Location;
-use Adtrak\Windscreens\Controllers\LocationController;
-use Adtrak\Windscreens\Helper;
+use Adtrak\Skips\View;
+use Adtrak\Skips\Models\Location;
+use Adtrak\Skips\Controllers\LocationController;
+use Adtrak\Skips\Helper;
 
 class AdminController
 {
@@ -18,10 +18,10 @@ class AdminController
 	public function menu() 
 	{
 		add_menu_page(
-			__( 'Windscreens', 'adwind' ),
-			'Windscreens',
+			__( 'Skips', 'adskip' ),
+			'Skips',
 			'manage_options',
-			'adwind',
+			'adskip',
 			'',
 			'', //none',
 			100
@@ -34,11 +34,10 @@ class AdminController
 	public function scripts()
 	{
 		if (is_admin()) {
-            wp_enqueue_style('adtrak-windscreens', Helper::assetUrl('css/windscreens.css'), null);
-            wp_enqueue_script('adtrak-windscreens-ajax', Helper::assetUrl('js/admin.js'), ['jquery'], '', true);
-            wp_localize_script('adtrak-windscreens-ajax', 'WSAjax', ['ajaxurl' => admin_url('admin-ajax.php')]);
-			// bind this to the page?
-			wp_enqueue_script('maps-api', '//maps.googleapis.com/maps/api/js?key=AIzaSyANv3jfCkGseTDZTsguGAxn2vP0aOF7Hlw&libraries=places');
+            wp_enqueue_style('adtrak-skips', Helper::assetUrl('css/skips.css'), null);
+            wp_enqueue_script('adtrak-skips-ajax', Helper::assetUrl('js/admin.js'), ['jquery'], '', true);
+            wp_localize_script('adtrak-skips-ajax', 'SHajax', ['ajaxurl' => admin_url('admin-ajax.php')]);
+			wp_enqueue_script('maps-api', '//maps.googleapis.com/maps/api/js?key=AIzaSyDSIzp9xC7lMLnHSGj7WbSFYUDgNvkO02g&libraries=places');
         }
 	}
 }

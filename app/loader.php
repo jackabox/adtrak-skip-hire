@@ -1,4 +1,4 @@
-<?php namespace Adtrak\Windscreens;
+<?php namespace Adtrak\Skips;
 
 $admin = Controllers\AdminController::instance();
 $locations = Controllers\LocationController::instance();
@@ -14,17 +14,17 @@ $loader->action([
 ]);
 
 $loader->action([
-	 'method' 	=> 'wp_ajax_windscreen_add_location', 
+	 'method' 	=> 'wp_ajax_skip_add_location', 
 	 'uses' 	=> [$locations, 'storeLocation'] 
 ]);
 
 $loader->action([
-	 'method' 	=> 'wp_ajax_windscreen_edit_location', 
+	 'method' 	=> 'wp_ajax_skip_edit_location', 
 	 'uses' 	=> [$locations, 'updateLocation'] 
 ]);
 
 $loader->action([
-	 'method' 	=> 'wp_ajax_windscreen_delete_location', 
+	 'method' 	=> 'wp_ajax_skip_delete_location', 
 	 'uses' 	=> [$locations, 'deleteLocation'] 
 ]);
 

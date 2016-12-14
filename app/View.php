@@ -1,6 +1,6 @@
 <?php 
 
-namespace Adtrak\Windscreens;
+namespace Adtrak\Skips;
 
 use Twig_Loader_Filesystem;
 use Twig_Environment;

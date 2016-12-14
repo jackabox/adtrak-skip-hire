@@ -1,22 +1,22 @@
 jQuery(document).ready(function ($) {
 
-	$('.adwi-add-location').click(function () {
+	$('.adskip-add-location').click(function () {
 		var nonce = $(this).data('nonce'),
 			btn = $(this),
-			name = $('#aw_name').val(),
-			desc = $('#aw_description').val(),
-			phone = $('#aw_number').val(),
-			location = $('#aw_location').val(),
-			lat = $('#aw_lat').val(),
-			lng = $('#aw_lng').val(),
-			radius = $('#aw_radius').val(),
-			notification = $('.aw-notification');
+			name = $('#as_name').val(),
+			desc = $('#as_description').val(),
+			phone = $('#as_number').val(),
+			location = $('#as_location').val(),
+			lat = $('#as_lat').val(),
+			lng = $('#as_lng').val(),
+			radius = $('#as_radius').val(),
+			notification = $('.as-notification');
 
 		$.ajax({
 			type: 'post',
-			url: WSAjax.ajaxurl,
+			url: SHajax.ajaxurl,
 			data: {
-				action: 'windscreen_add_location',
+				action: 'skip_add_location',
 				nonce: nonce,
 				name: name,
 				desc: desc,
@@ -44,24 +44,24 @@ jQuery(document).ready(function ($) {
 	});
 
 
-	$('.adwi-edit-location').click(function () {
+	$('.adskip-edit-location').click(function () {
 		var id = $(this).data('id'),
 			nonce = $(this).data('nonce'),
 			btn = $(this),
-			name = $('#aw_name').val(),
-			desc = $('#aw_description').val(),
-			phone = $('#aw_number').val(),
-			location = $('#aw_location').val(),
-			lat = $('#aw_lat').val(),
-			lng = $('#aw_lng').val(),
-			radius = $('#aw_radius').val(),
-			notification = $('.aw-notification');
+			name = $('#as_name').val(),
+			desc = $('#as_description').val(),
+			phone = $('#as_number').val(),
+			location = $('#as_location').val(),
+			lat = $('#as_lat').val(),
+			lng = $('#as_lng').val(),
+			radius = $('#as_radius').val(),
+			notification = $('.as-notification');
 
 		$.ajax({
 			type: 'post',
-			url: WSAjax.ajaxurl,
+			url: SHajax.ajaxurl,
 			data: {
-				action: 'windscreen_edit_location',
+				action: 'skip_edit_location',
 				nonce: nonce,
 				id: id,
 				name: name,
@@ -89,7 +89,7 @@ jQuery(document).ready(function ($) {
 		return false;
 	});
 
-	$('.adwi-delete-location').click(function () {
+	$('.adskip-delete-location').click(function () {
 		var truly = confirm('Are you sure you want to delete this location?'),
 			id = $(this).data('id'),
 			nonce = $(this).data('nonce'),
@@ -99,9 +99,9 @@ jQuery(document).ready(function ($) {
 		if (truly === true) {
 			$.ajax({
 				type: 'post',
-				url: WSAjax.ajaxurl,
+				url: SHajax.ajaxurl,
 				data: {
-					action: 'windscreen_delete_location',
+					action: 'skip_delete_location',
 					nonce: nonce,
 					id: id
 				},
@@ -125,16 +125,16 @@ jQuery(document).ready(function ($) {
 		var $lat = 52.9539559,
 			$lng = -1.1543077999999696;
 		
-		if($('#aw_lat').val() !== '') {
-			$lat = Number($('#aw_lat').val());
+		if($('#as_lat').val() !== '') {
+			$lat = Number($('#as_lat').val());
 		} 
 
-		if($('#aw_lng').val() !== '') {
-			$lng = Number($('#aw_lng').val());
+		if($('#as_lng').val() !== '') {
+			$lng = Number($('#as_lng').val());
 		} 
 
-		if ($('#aw_location').length) {
-			var pac_input = document.getElementById('aw_location');
+		if ($('#as_location').length) {
+			var pac_input = document.getElementById('as_location');
 
 			var map = new google.maps.Map(document.getElementById('map'), {
 				center: { lat: $lat, lng:  $lng },
@@ -184,8 +184,8 @@ jQuery(document).ready(function ($) {
 				infowindow.open(map, marker);
 
 				// set the lat / lng of the button dependant on if lat / lng exist
-				document.getElementById('aw_lat').value = place.geometry.location.lat();
-				document.getElementById('aw_lng').value = place.geometry.location.lng();
+				document.getElementById('as_lat').value = place.geometry.location.lat();
+				document.getElementById('as_lng').value = place.geometry.location.lng();
 			});
 		}
 	});

@@ -1,5 +1,5 @@
 <?php 
-namespace Adtrak\Windscreens;
+namespace Adtrak\Skips;
 
 /** @var \Billy\Framework\Enqueue $enqueue */
 

@@ -1,6 +1,6 @@
 <?php 
 
-namespace Adtrak\Windscreens;
+namespace Adtrak\Skips;
 
 class Helper 
 {

@@ -1,9 +1,9 @@
-<div class="wrap wrap--aw">
-	<div class="aw-notification"></div>
+<div class="wrap wrap--as">
+	<div class="as-notification"></div>
 
 	<h1>Edit: {{ location.name }} (#{{ location.id }})</h1>
 
-	<div class="container" id="windscreens">
+	<div class="container" id="skips">
 		<div class="content">
 			<div class="form">
 				<div class="section-header">
@@ -12,26 +12,26 @@
 
 				<p>
 					<label for="title">Name</label>
-					<input type="text" name="title" id="aw_name" placeholder="Enter a Name for the Location" value="{{ location.name }}">
+					<input type="text" name="title" id="as_name" placeholder="Enter a Name for the Location" value="{{ location.name }}">
 				</p>
 				<p>
 					<label for="description">Description</label>
-					<textarea name="description" id="aw_description" placeholder="Enter a Description">{{ location.description }}</textarea>
+					<textarea name="description" id="as_description" placeholder="Enter a Description">{{ location.description }}</textarea>
 				</p>
 				<p>
 					<label for="phone">Telephone</label>
-					<input type="tel" name="phone" id="aw_number" placeholder="Enter a Telephone Number" value="{{ location.number }}">
+					<input type="tel" name="phone" id="as_number" placeholder="Enter a Telephone Number" value="{{ location.number }}">
 				</p>
 				<p>
 					<label for="location">Location</label>
-					<input type="text" name="location" id="aw_location" placeholder="Enter a Post Code" value="{{ location.address }}">
+					<input type="text" name="location" id="as_location" placeholder="Enter a Post Code" value="{{ location.address }}">
 					<div id="map"></div>
-					<input type="hidden" name="aw_lat" id="aw_lat" value="{{ location.lat }}">
-					<input type="hidden" name="aw_lng" id="aw_lng" value="{{ location.lng }}">
+					<input type="hidden" name="as_lat" id="as_lat" value="{{ location.lat }}">
+					<input type="hidden" name="as_lng" id="as_lng" value="{{ location.lng }}">
 				</p>
 				<p>
 					<label for="radius">Radius</label>
-					<input type="number" name="radius" id="aw_radius" placeholder="Enter a Delivery Radius" value="{{ location.radius }}">
+					<input type="number" name="radius" id="as_radius" placeholder="Enter a Delivery Radius" value="{{ location.radius }}">
 				</p>
 			</div>
 		</div>

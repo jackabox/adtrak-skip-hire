@@ -30,8 +30,8 @@
         }
     }	
 
-    if ($('#aw_autocomplete').length) {
-        var pac_input = document.getElementById('aw_autocomplete');
+    if ($('#as_autocomplete').length) {
+        var pac_input = document.getElementById('as_autocomplete');
 
         var options = {
             componentRestrictions: {
@@ -45,16 +45,16 @@
         // create an event listener on the autocomplete
         autocomplete.addListener('place_changed', function() {
             var place = autocomplete.getPlace();
-            document.getElementById('aw_lat').value = place.geometry.location.lat();
-            document.getElementById('aw_lng').value = place.geometry.location.lng();
-	        $('#aw_submit').removeAttr('disabled');
+            document.getElementById('as_lat').value = place.geometry.location.lat();
+            document.getElementById('as_lng').value = place.geometry.location.lng();
+	        $('#as_submit').removeAttr('disabled');
         });
 
         pacSelectFirst(pac_input);
 
         // on focusin, trigger the select first
         $(function() {
-            $('#aw_autocomplete').focusin(function() {
+            $('#as_autocomplete').focusin(function() {
                 $(window).keydown(function(event) {
                     if (event.keyCode == 13 || event.keyCode == 9) {
                         event.preventDefault();
@@ -62,20 +62,20 @@
                     }
 
                     if (event.keyCode == 13) {
-						$('#aw_submit').removeAttr('disabled');
-                        $('#aw_lookup').submit();
+						$('#as_submit').removeAttr('disabled');
+                        $('#as_lookup').submit();
                     }
                 });
             });
         });
     }
 
-    if ($('#aw_map').length) {
+    if ($('#as_map').length) {
         $(function() {
-            var $lat = $('#aw_map').data('lat'),
-                $lng = $('#aw_map').data('lng');
+            var $lat = $('#as_map').data('lat'),
+                $lng = $('#as_map').data('lng');
 
-            var map = new google.maps.Map(document.getElementById('aw_map'), {
+            var map = new google.maps.Map(document.getElementById('as_map'), {
                 center: { lat: $lat, lng: $lng },
                 zoom: 13
             });

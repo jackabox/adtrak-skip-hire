@@ -1,8 +1,8 @@
 <?php 
-namespace Adtrak\Windscreens\Controllers;
+namespace Adtrak\Skips\Controllers;
 
-use Adtrak\Windscreens\View;
-use Adtrak\Windscreens\Models\Location;
+use Adtrak\Skips\View;
+use Adtrak\Skips\Models\Location;
 use Billy\Framework\Facades\DB;
 
 class LocationController
@@ -10,7 +10,7 @@ class LocationController
 	private static $instance = null;
 
 	public function __construct() {
-		 add_shortcode('adtrak_windscreens', [$this, 'showLocationForm']);
+		 add_shortcode('adtrak_skips', [$this, 'showLocationForm']);
 	}
 
 	public static function instance()
@@ -22,31 +22,31 @@ class LocationController
 	public function menu() 
 	{
 		add_submenu_page(
-			'adwind',			
-			__( 'Locations', 'adwind' ),
+			'adskip',			
+			__( 'Locations', 'adskip' ),
 			'Locations',
 			'manage_options',
-			'adwind',
+			'adskip',
 			[$this, 'index'],
 			''
 		);
 
 		add_submenu_page(
-			'adwind',			
-			__( 'Locations', 'adwind' ),
+			'adskip',			
+			__( 'Locations', 'adskip' ),
 			'Locations - Add',
 			'manage_options',
-			'adwind-loc-add',
+			'adskip-loc-add',
 			[$this, 'addLocation'],
 			''
 		);
 
 		add_submenu_page(
-			'adwind',			
-			__( 'Locations', 'adwind' ),
+			'adskip',			
+			__( 'Locations', 'adskip' ),
 			'Locations - Edit',
 			'manage_options',
-			'adwind-loc-edit',
+			'adskip-loc-edit',
 			[$this, 'showLocation'],
 			''
 		);
@@ -58,8 +58,8 @@ class LocationController
 		$locations = Location::all();
 
 		$link = [
-			'edit' => admin_url('admin.php?page=adwind-loc-edit&loc-id='),
-			'add' => admin_url('admin.php?page=adwind-loc-add')
+			'edit' => admin_url('admin.php?page=adskip-loc-edit&loc-id='),
+			'add' => admin_url('admin.php?page=adskip-loc-add')
 		];
 
 		View::render('locations.twig', [
@@ -77,13 +77,13 @@ class LocationController
 		];
 
 		if (current_user_can('edit_posts')) {
-            $nonce = wp_create_nonce('windscreen_edit_location_nonce');
-            $button['save'] = '<a href="' . admin_url( 'admin-ajax.php?action=windscreen_edit_location&id=' . $_GET['loc-id'] . '&nonce=' . $nonce ) . '" data-id="' . $_GET['loc-id'] . '" data-nonce="' . $nonce . '" class="button adwi-edit-location">Save</a>';
+            $nonce = wp_create_nonce('skip_edit_location_nonce');
+            $button['save'] = '<a href="' . admin_url( 'admin-ajax.php?action=skip_edit_location&id=' . $_GET['loc-id'] . '&nonce=' . $nonce ) . '" data-id="' . $_GET['loc-id'] . '" data-nonce="' . $nonce . '" class="button adskip-edit-location">Save</a>';
         }
 
  		if (current_user_can('delete_posts')) {
-			$nonce = wp_create_nonce('windscreen_delete_location_nonce');
-			$button['delete'] = 'or <a href="' . admin_url( 'admin-ajax.php?action=windscreen_delete_location&id=' . $_GET['loc-id'] . '&nonce=' . $nonce ) . '" data-id="' . $_GET['loc-id'] . '" data-nonce="' . $nonce . '" data-redirect="' . admin_url('admin.php?page=adwind') . '" class="adwi-delete-location">Delete</a>';
+			$nonce = wp_create_nonce('skip_delete_location_nonce');
+			$button['delete'] = 'or <a href="' . admin_url( 'admin-ajax.php?action=skip_delete_location&id=' . $_GET['loc-id'] . '&nonce=' . $nonce ) . '" data-id="' . $_GET['loc-id'] . '" data-nonce="' . $nonce . '" data-redirect="' . admin_url('admin.php?page=adwind') . '" class="adskip-delete-location">Delete</a>';
 		}
 
 		$location = Location::find($_GET['loc-id']);
@@ -100,7 +100,7 @@ class LocationController
 
 	public function updateLocation()
 	{
-		$permission = check_ajax_referer('windscreen_edit_location_nonce', 'nonce', false);
+		$permission = check_ajax_referer('skip_edit_location_nonce', 'nonce', false);
 	
         if ($permission == false) {
             echo 'error';
@@ -124,8 +124,8 @@ class LocationController
 	public function addLocation() 
 	{
 		if (current_user_can('edit_posts')) {
-            $nonce = wp_create_nonce('windscreen_add_location_nonce');
-            $button['save'] = '<a href="' . admin_url('admin-ajax.php?action=windscreen_add_location&nonce=' . $nonce) . '" data-nonce="' . $nonce . '" class="button adwi-add-location">Save</a>';
+            $nonce = wp_create_nonce('skip_add_location_nonce');
+            $button['save'] = '<a href="' . admin_url('admin-ajax.php?action=skip_add_location&nonce=' . $nonce) . '" data-nonce="' . $nonce . '" class="button adskip-add-location">Save</a>';
         } else {
 			$button['save'] = '';
 		}
@@ -137,7 +137,7 @@ class LocationController
 
 	public function storeLocation()
 	{
-		$permission = check_ajax_referer('windscreen_add_location_nonce', 'nonce', false);
+		$permission = check_ajax_referer('skip_add_location_nonce', 'nonce', false);
 
         if ($permission == false) {
             echo 'Permission Denied';
@@ -169,7 +169,7 @@ class LocationController
 
 	public function deleteLocation()
 	{
-		$permission = check_ajax_referer('windscreen_delete_location_nonce', 'nonce', false);
+		$permission = check_ajax_referer('skip_delete_location_nonce', 'nonce', false);
 
         if ($permission == false) {
             echo 'Permission Denied';
@@ -198,7 +198,7 @@ class LocationController
 		$radius = 50;
 
 		try {
-			$location = DB::table('aw_locations')
+			$location = DB::table('as_locations')
 						->select(DB::raw('id, name, lat, lng, radius, address, description, number, ( 3959 * acos( cos( radians(' . $lat . ') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(' . $lng . ') ) + sin( radians(' . $lat . ') ) * sin( radians( lat ) ) ) ) AS distance '))
 						->having('distance', '<', 50)
 						->orderBy('distance')

@@ -1,12 +1,12 @@
 <?php
 
-namespace Adtrak\Windscreens\Models;
+namespace Adtrak\Skips\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Location extends Model
 {
-	 protected $table = 'aw_locations';
+	 protected $table = 'as_locations';
 
 	 protected $fillable = [
 		 'lat', 
@@ -14,7 +14,6 @@ class Location extends Model
 		 'radius', 
 		 'name',
 		 'description',
-		 'number',
 		 'address'
 	 ];
 }
