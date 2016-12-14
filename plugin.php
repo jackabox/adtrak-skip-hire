@@ -26,5 +26,5 @@ if (!defined('JB_PLUGIN_URL') ) {
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/vendor/getbilly/framework/bootstrap/autoload.php';
 
-$client = new Raven_Client('https://48af578b73734de6b3d74016d9b7234a:5bc5e3b507b34e229dca126f369fc9a0@sentry.io/121823');
+$client = new Raven_Client('https://b8752607c9f74cfcbc12681e3b50dedc:2ba1e8b0f0264760947658a89cfb0f33@sentry.io/122240');
 $client->install();
