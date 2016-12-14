@@ -62,7 +62,7 @@ class LocationController
 			'add' => admin_url('admin.php?page=adskip-loc-add')
 		];
 
-		View::render('locations.twig', [
+		View::render('admin/locations.twig', [
 			'title' 		=> $title,
 			'locations' 	=> $locations,
 			'link'			=> $link
@@ -89,7 +89,7 @@ class LocationController
 		$location = Location::find($_GET['loc-id']);
 
 		if ($location) {
-			View::render('location-edit.twig', [
+			View::render('admin/location-edit.twig', [
 				'location' 	=> $location,
 				'button'	=> $button
 			]);
@@ -130,7 +130,7 @@ class LocationController
 			$button['save'] = '';
 		}
 
-		View::render('location-add.twig', [
+		View::render('admin/location-add.twig', [
 			'button'	=> $button
 		]);
 	}
@@ -187,7 +187,7 @@ class LocationController
 		if ($_POST) {
 			 $this->frontGetLocation();
 		} else {
-			View::render('location-lookup.twig', []);		
+			View::render('front/location-lookup.twig', []);		
 		}
 	}
 
@@ -205,7 +205,7 @@ class LocationController
 						->first();
 
 			if ($location && ($location->distance <= $location->radius)) {
-				View::render('location-result.twig', [
+				View::render('front/location-result.twig', [
 					'location' => $location
 				]);
 			} else {
