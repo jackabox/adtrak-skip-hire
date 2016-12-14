@@ -26,7 +26,7 @@ class LocationController
 			__( 'Locations', 'adskip' ),
 			'Locations',
 			'manage_options',
-			'adskip',
+			'adskip-loc',
 			[$this, 'index'],
 			''
 		);

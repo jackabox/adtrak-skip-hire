@@ -3,6 +3,7 @@
 use Adtrak\Skips\View;
 use Adtrak\Skips\Models\Location;
 use Adtrak\Skips\Controllers\LocationController;
+use Adtrak\Skips\Controllers\SkipController;
 use Adtrak\Skips\Helper;
 
 class AdminController
@@ -27,8 +28,10 @@ class AdminController
 			100
 		);
 
-		$locs = LocationController::instance();
-		$locs->menu();
+		$skips = SkipController::instance()->menu();
+		$locs = LocationController::instance()->menu();
+
+		
 	}
 
 	public function scripts()
