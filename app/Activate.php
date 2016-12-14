@@ -19,10 +19,6 @@ if ($version === false) {
     	$table->timestamps();
 	});
 	
-	add_option('adtrak_skips_version', Helper::get('version'));
-}
-
-if ($version <= 0.1) {
 	Capsule::schema()->create('as_skips', function($table)
 	{
 		$table->increments('id');
@@ -64,7 +60,6 @@ if ($version <= 0.1) {
 		$table->string('number', 20)->nullable(false);
 		$table->string('address1', 200)->nullable(false);
 		$table->string('address2', 200);
-		$table->string('city', 200)->nullable(false);
 		$table->string('county', 200);
 		$table->string('country', 200)->nullable(false);
 		$table->string('city', 200)->nullable(false);
@@ -74,13 +69,14 @@ if ($version <= 0.1) {
 		$table->text('notes');
 		$table->decimal('subtotal', 6, 2)->nullable(false);	
 		$table->decimal('total', 6, 2)->nullable(false);	
-		$table->integer('permit_id');	
-		$table->integer('coupon_id');	
-		$table->integer('skip_id');	
-    	$table->timestamps();		
-		
+		$table->integer('permit_id')->unsigned();	
 		$table->foreign('permit_id')->references('id')->on('as_permits');
+		$table->integer('coupon_id')->unsigned();
 		$table->foreign('coupon_id')->references('id')->on('as_coupons');
+		$table->integer('skip_id')->unsigned();
 		$table->foreign('skip_id')->references('id')->on('as_skips');
+    	$table->timestamps();
 	});
+
+	add_option('adtrak_skips_version', Helper::get('version'));	
 }
