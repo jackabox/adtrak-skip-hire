@@ -85,6 +85,38 @@ jQuery(document).ready(function ($) {
 		return false;
 	});
 
+	$('.adskip-delete').click(function () {
+		var truly = confirm('Are you sure you want to delete this skip?'),
+			id = $(this).data('id'),
+			nonce = $(this).data('nonce'),
+			redirect = $(this).data('redirect'),
+			btn = $(this);
+
+		if (truly === true) {
+			$.ajax({
+				type: 'post',
+				url: SHajax.ajaxurl,
+				data: {
+					action: 'skip_delete',
+					nonce: nonce,
+					id: id
+				},
+				success: function (result) {
+					if (result === "error") {
+						notification.removeClass('success')
+							.addClass('error')
+							.html("Sorry, an error occured with deleting the skip. Please try again.")
+							.show(500);
+					} else if (result === "success") {
+						window.location.replace(redirect);
+					}
+				}
+			});
+		}
+
+		return false;
+	});
+
 	$('.adskip-delete-location').click(function () {
 		var truly = confirm('Are you sure you want to delete this location?'),
 			id = $(this).data('id'),

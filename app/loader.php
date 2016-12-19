@@ -2,6 +2,7 @@
 
 $admin = Controllers\AdminController::instance();
 $locations = Controllers\LocationController::instance();
+$skips = Controllers\SkipController::instance();
 
 $loader->action([
 	'method' 	=> 'admin_menu',
@@ -26,6 +27,11 @@ $loader->action([
 $loader->action([
 	 'method' 	=> 'wp_ajax_skip_delete_location', 
 	 'uses' 	=> [$locations, 'deleteLocation'] 
+]);
+
+$loader->action([
+	 'method' 	=> 'wp_ajax_skip_delete', 
+	 'uses' 	=> [$skips, 'deleteSkip'] 
 ]);
 
 /**

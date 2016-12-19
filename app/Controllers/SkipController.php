@@ -190,4 +190,19 @@ class SkipController
 			}
         }
 	}
+
+	public function deleteSkip()
+	{
+		$permission = check_ajax_referer('skip_delete_nonce', 'nonce', false);
+
+        if ($permission === false) {
+            echo 'Permission Denied';
+        } else {
+			$skip = Skip::findOrFail($_REQUEST['id']);
+			$skip->delete();
+			echo 'success';
+		}
+
+        die();
+	}
 }
