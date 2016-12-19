@@ -12,7 +12,7 @@ if ($version === false) {
     	$table->increments('id');
     	$table->string('lat', 100)->nullable(false);
     	$table->string('lng', 100)->nullable(false);
-    	$table->decimal('radius', 4, 2)->nullable(false);
+    	$table->decimal('radius', 5, 2)->nullable(false);
 		$table->string('name')->nullable(false);
 		$table->text('description');
 		$table->string('address', 255);
@@ -28,7 +28,7 @@ if ($version === false) {
 		$table->string('height', 20);
 		$table->string('capacity', 20);
 		$table->text('description');
-		$table->decimal('price', 4, 2)->nullable(false);
+		$table->decimal('price', 10, 2)->nullable(false);
     	$table->timestamps();		
 	});
 
@@ -37,7 +37,7 @@ if ($version === false) {
 		$table->increments('id');
 		$table->string('code', 200)->nullable(false);
 		$table->string('type', 20)->nullable(false);
-		$table->decimal('amount', 6, 2)->nullable(false);	
+		$table->decimal('amount', 10, 2)->nullable(false);	
 		$table->dateTime('starts');	
 		$table->dateTime('expires');
     	$table->timestamps();		
@@ -47,7 +47,7 @@ if ($version === false) {
 	{
 		$table->increments('id');
 		$table->string('name', 200)->nullable(false);
-		$table->decimal('price', 6, 2)->nullable(false);	
+		$table->decimal('price', 10, 2)->nullable(false);	
     	$table->timestamps();		
 	});
 
@@ -67,8 +67,8 @@ if ($version === false) {
 		$table->string('delivery_slot', 20);
 		$table->text('waste');
 		$table->text('notes');
-		$table->decimal('subtotal', 6, 2)->nullable(false);	
-		$table->decimal('total', 6, 2)->nullable(false);	
+		$table->decimal('subtotal', 10, 2)->nullable(false);	
+		$table->decimal('total', 10, 2)->nullable(false);	
 		$table->integer('permit_id')->unsigned();	
 		$table->foreign('permit_id')->references('id')->on('as_permits');
 		$table->integer('coupon_id')->unsigned();
