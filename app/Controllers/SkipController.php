@@ -63,7 +63,64 @@ class SkipController
 
 	public function addSkip() 
 	{
+		if (isset($_REQUEST['action']) && $_REQUEST['action'] === 'skip_add') {
+			$this->storeSkip();
+		}
 
+		if (current_user_can('edit_posts')) {
+            $nonce = wp_create_nonce('skip_add_nonce');
+            $button['save'] = '<a href="' . admin_url('admin.php?page=adskip-add&action=skip_add&nonce=' . $nonce) . '" class="button adskip-add">Save</a>';
+        } else {
+			$button['save'] = '';
+		}
+
+		View::render('admin/skip-add.twig', [
+			'button'	=> $button
+		]);
+	}
+
+	public function storeSkip()
+	{
+		// $permission = wp_verify_nonce($_GET['nonce'], 'skip_add_nonce');
+		$permission = true;
+		$errors 	= [];
+
+		if (empty($_REQUEST['title'])) {
+			$errors[] = 'Please enter a name.';
+		}
+
+		if (empty($_REQUEST['price'])) {
+			$errors[] = 'Please enter a price.';
+		}
+
+        if ($permission === false) {
+            echo 'Permission Denied';
+        } else if (!empty($errors)) {
+			echo '<ul>';
+			foreach($errors as $error) {
+				echo '<li>' . $error . '</li>';
+			}
+			echo '</ul>';
+		} else {	
+			try {
+				$skip 				= new Skip;
+				$skip->name 		= $_REQUEST['title'];
+				$skip->width 		= $_REQUEST['width'];
+				$skip->height 		= $_REQUEST['height'];
+				$skip->length 		= $_REQUEST['length'];
+				$skip->capacity 	= $_REQUEST['capacity'];
+				$skip->price 		= $_REQUEST['price'];
+				$skip->description 	= $_REQUEST['description'];
+				$skip->save();
+
+				$url = admin_url('admin.php?page=adskip-edit&id=' . $skip->id);
+				echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $url . '">';
+				echo '<script>window.location.href=' . $url . ';</script>';
+				die();
+			} catch (Exception $e) {
+				 echo 'Caught exception: ',  $e->getMessage(), "\n";
+			}
+        }
 	}
 
 	public function showSkip() 
