@@ -125,5 +125,69 @@ class SkipController
 
 	public function showSkip() 
 	{
+		if (isset($_REQUEST['action']) && $_REQUEST['action'] === 'skip_update') {
+			$this->updateSkip();
+		}
+
+		$button = [
+			'delete' => ''
+		];
+
+ 		if (current_user_can('delete_posts')) {
+			$nonce = wp_create_nonce('skip_delete_nonce');
+			$button['delete'] = 'or <a href="' . admin_url( 'admin-ajax.php?action=skip_delete&id=' . $_GET['id'] . '&nonce=' . $nonce ) . '" data-id="' . $_GET['id'] . '" data-nonce="' . $nonce . '" data-redirect="' . admin_url('admin.php?page=adskip') . '" class="adskip-delete">Delete</a>';
+		}
+
+		$skip = Skip::find($_GET['id']);
+
+		if ($skip) {
+			View::render('admin/skip-edit.twig', [
+				'skip' 		=> $skip,
+				'button'	=> $button
+			]);
+		} else {
+			echo "Sorry, the skip you're looking for does not exist.";
+		}
+	}
+
+	public function updateSkip()
+	{
+		// $permission = wp_verify_nonce($_GET['nonce'], 'skip_add_nonce');
+		$permission = true;
+		$errors 	= [];
+
+		if (empty($_REQUEST['title'])) {
+			$errors[] = 'Please enter a name.';
+		}
+
+		if (empty($_REQUEST['price'])) {
+			$errors[] = 'Please enter a price.';
+		}
+
+        if ($permission === false) {
+            echo 'Permission Denied';
+        } else if (!empty($errors)) {
+			echo '<ul>';
+			foreach($errors as $error) {
+				echo '<li>' . $error . '</li>';
+			}
+			echo '</ul>';
+		} else {	
+			try {
+				$skip 				= Skip::findOrFail($_REQUEST['id']);
+				$skip->name 		= $_REQUEST['title'];
+				$skip->width 		= $_REQUEST['width'];
+				$skip->height 		= $_REQUEST['height'];
+				$skip->length 		= $_REQUEST['length'];
+				$skip->capacity 	= $_REQUEST['capacity'];
+				$skip->price 		= $_REQUEST['price'];
+				$skip->description 	= $_REQUEST['description'];
+				$skip->save();
+
+				echo "Skip has been updated";
+			} catch (Exception $e) {
+				 echo 'Caught exception: ',  $e->getMessage(), "\n";
+			}
+        }
 	}
 }

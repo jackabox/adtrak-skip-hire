@@ -1,0 +1,55 @@
+<div class="wrap wrap--as">
+	<div class="as-notification"></div>
+
+	<h1>Edit: {{ skip.name }} (#{{ skip.id }})</h1>
+
+	<form class="container" id="skips" action="" method="POST">
+		<div class="content">
+			<div class="section-header">
+				<h4>Skip Information</h4>
+			</div>
+
+			<p>
+				<label for="title">Name</label>
+				<input type="text" name="title" placeholder="Enter a Name" value="{{ skip.name }}">
+			</p>
+			<p>
+				<label for="width">Width</label>
+				<input type="text" name="width" placeholder="Enter a Width" value="{{ skip.width }}">
+			</p>
+			<p>
+				<label for="height">Height</label>
+				<input type="text" name="height" placeholder="Enter a Height" value="{{ skip.height }}">
+			</p>
+			<p>
+				<label for="length">Length</label>
+				<input type="text" name="length" placeholder="Enter a Length" value="{{ skip.length }}">
+			</p>
+			<p>
+				<label for="capacity">Capacity</label>
+				<input type="text" name="capacity" placeholder="Enter a Capacity" value="{{ skip.capacity }}">
+			</p>
+			<p>
+				<label for="price">Price</label>
+				<input type="text" name="price" placeholder="Enter a price" value="{{ skip.price }}">
+			</p>
+			<p>
+				<label for="description">Description</label>
+				<textarea name="description" placeholder="Enter a Description">{{ skip.description }}</textarea>
+			</p>
+
+			<input type="hidden" name="action" value="skip_update">
+			<input type="hidden" name="id" value="{{ skip.id }}">
+		</div>	
+
+		<aside class="sidebar">
+			<div class="sidebar__item">
+				<div class="section-header">
+					<h4>Update</h4>
+				</div>
+
+				<p><button type="submit" class="button">Save</button> {{ button.delete | raw }}</p>
+			</div>
+		</aside>
+	</form>
+</div>
