@@ -2,27 +2,25 @@
 	<h1>{{ title }}</h1>
 	<a href="{{ link.add }}" class="button">Add New Location</a>
 
-	<table class="as--table as--table__locations">
+	<table class="as-table as-table__locations">
 		<thead>
 			<tr>
-				<th>ID</th>
 				<th>Name</th>
 				<th>Lat</th>
 				<th>Lng</th>
 				<th>Radius</th>
-				<th class="manage">Manage</th>
+				<th class="manage"></th>
 			</tr>
 		</thead>
 		<tbody>
 			{% for loc in locations %}
 			<tr>
-				<td><a href="{{ link.edit }}{{ loc.id }}">{{ loc.id }}</a></td>
 				<td><a href="{{ link.edit }}{{ loc.id }}">{{ loc.name }}</a></td>
 				<td>{{ loc.lat }}</td>
 				<td>{{ loc.lng }}</td>
 				<td>{{ loc.radius }}</td>
 				<td>
-					<a href="{{ link.edit }}{{ loc.id }}" class="button">Manage</a>
+					<a href="{{ link.edit }}{{ loc.id }}">Manage</a>
 				</td>
 			</tr>
 			{% endfor %}
