@@ -1,6 +1,8 @@
 <div class="wrap wrap--as">
-	<h1>Skips</h1>
-	<a href="{{ link.add }}" class="button">Add New Skip</a>
+	<header>
+		<h1>Skips</h1>
+		<a href="{{ link.add }}" class="button action">Add New Skip</a>
+	</header>
 
 	{% if skips %}
 	<table class="as-table as-table__skips">
@@ -16,8 +18,13 @@
 			{% for skip in skips %}
 			<tr>
 				<td><a href="{{ link.edit }}{{ skip.id }}">{{ skip.name }}</a></td>
-				<td></td>
-				<td></td>
+				<td class="details">
+					<span><b>Width:</b> {{ skip.width }}m</span>
+					<span><b>Height:</b> {{ skip.height }}m</span>
+					<span><b>Length:</b> {{ skip.length }}m</span>
+					<span><b>Capacity:</b> {{ skip.capacity }}mt</span>
+				</td>
+				<td>£{{ skip.price }}</td>
 				<td>
 					<a href="{{ link.edit }}{{ skip.id }}">Manage</a>
 				</td>

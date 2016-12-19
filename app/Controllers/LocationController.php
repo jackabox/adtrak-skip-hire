@@ -54,7 +54,6 @@ class LocationController
 
 	public function index() 
 	{
-		$title = 'Locations';
 		$locations = Location::all();
 
 		$link = [
@@ -62,8 +61,7 @@ class LocationController
 			'add' => admin_url('admin.php?page=adskip-loc-add')
 		];
 
-		View::render('admin/locations.twig', [
-			'title' 		=> $title,
+		View::render('admin/locations/index.twig', [
 			'locations' 	=> $locations,
 			'link'			=> $link
 		]);
@@ -89,7 +87,7 @@ class LocationController
 		$location = Location::find($_GET['loc-id']);
 
 		if ($location) {
-			View::render('admin/location-edit.twig', [
+			View::render('admin/locations/edit.twig', [
 				'location' 	=> $location,
 				'button'	=> $button
 			]);
@@ -130,7 +128,7 @@ class LocationController
 			$button['save'] = '';
 		}
 
-		View::render('admin/location-add.twig', [
+		View::render('admin/locations/add.twig', [
 			'button'	=> $button
 		]);
 	}

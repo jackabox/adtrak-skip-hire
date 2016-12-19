@@ -55,7 +55,7 @@ class SkipController
 			'add' => admin_url('admin.php?page=adskip-add')
 		];
 
-		View::render('admin/skips.twig', [
+		View::render('admin/skips/index.twig', [
 			'skips' 		=> $skips,
 			'link'			=> $link
 		]);
@@ -74,7 +74,7 @@ class SkipController
 			$button['save'] = '';
 		}
 
-		View::render('admin/skip-add.twig', [
+		View::render('admin/skips/add.twig', [
 			'button'	=> $button
 		]);
 	}
@@ -128,20 +128,18 @@ class SkipController
 		if (isset($_REQUEST['action']) && $_REQUEST['action'] === 'skip_update') {
 			$this->updateSkip();
 		}
-
-		$button = [
-			'delete' => ''
-		];
-
+		
  		if (current_user_can('delete_posts')) {
 			$nonce = wp_create_nonce('skip_delete_nonce');
 			$button['delete'] = 'or <a href="' . admin_url( 'admin-ajax.php?action=skip_delete&id=' . $_GET['id'] . '&nonce=' . $nonce ) . '" data-id="' . $_GET['id'] . '" data-nonce="' . $nonce . '" data-redirect="' . admin_url('admin.php?page=adskip') . '" class="adskip-delete">Delete</a>';
+		} else {
+			$button['delete'] = '';
 		}
 
 		$skip = Skip::find($_GET['id']);
 
 		if ($skip) {
-			View::render('admin/skip-edit.twig', [
+			View::render('admin/skips/edit.twig', [
 				'skip' 		=> $skip,
 				'button'	=> $button
 			]);
