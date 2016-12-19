@@ -2,14 +2,14 @@
 /**
  * @wordpress-plugin
  * Plugin Name: 	Adtrak: Skip Hire
- * Plugin URI: 		https://github.com/adtrak/skips
+ * Plugin URI: 		https://github.com/adtrak/adtrak-skip-hire
  * Description: 	Boilerplate for rapid plugin development. Built initially for Adtrak.
  * Version: 		0.1.0
  * Author: 			Adtrak
  * Author URI: 		https://adtrak.co.uk
  * License: 		GPL-2.0+
  * License URI:     http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:     aloc
+ * Text Domain:     adskip
  */
 
 # if this file is called directly, abort
