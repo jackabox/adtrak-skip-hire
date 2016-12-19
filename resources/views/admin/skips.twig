@@ -1,0 +1,31 @@
+<div class="wrap wrap--as">
+	<h1>Skips</h1>
+	<a href="{{ link.add }}" class="button">Add New Skip</a>
+
+	{% if skips %}
+	<table class="as-table as-table__skips">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Details</th>
+				<th>Price</th>
+				<th class="manage"></th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for skip in skips %}
+			<tr>
+				<td><a href="{{ link.edit }}{{ skip.id }}">{{ skip.name }}</a></td>
+				<td></td>
+				<td></td>
+				<td>
+					<a href="{{ link.edit }}{{ skip.id }}">Manage</a>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	{% else %}
+	<p>No skips added</p>
+	{% endif %}
+</div>

@@ -1,5 +1,9 @@
 <?php namespace Adtrak\Skips\Controllers;
 
+use Adtrak\Skips\View;
+use Adtrak\Skips\Models\Skip;
+use Billy\Framework\Facades\DB;
+
 class SkipController 
 {
 	private static $instance = null;
@@ -45,10 +49,21 @@ class SkipController
 
 	public function index() 
 	{
+		$skips = Skip::all();
+		$link = [
+			'edit' => admin_url('admin.php?page=adskip-edit&id='),
+			'add' => admin_url('admin.php?page=adskip-add')
+		];
+
+		View::render('admin/skips.twig', [
+			'skips' 		=> $skips,
+			'link'			=> $link
+		]);
 	}
 
 	public function addSkip() 
 	{
+
 	}
 
 	public function showSkip() 
