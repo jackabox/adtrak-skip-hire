@@ -29,8 +29,37 @@ $box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
     }
 }
 
+.as-pagination {
+    text-align: center;
+    margin-top: 20px;
+
+    span, a {
+        display: inline-block;
+        padding: 5px;
+    }
+}
+
 .wrap--as {
     position: relative;
+
+    header {
+        padding: 20px 0;
+        position: relative;
+        margin-bottom: 20px;
+
+        &:after {
+            clear: both; display: table; content: '';
+        }
+
+        h1 {
+            float: left;
+        }
+        
+        .action {
+            margin-top: 7px;
+            float: right;
+        }
+    }
 }
 
 .wrap--as .container {
@@ -85,7 +114,7 @@ $box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
 .wrap--as form,
 .wrap--as .form {
     width: 100%;
-    
+
     label {
         display: block;
         width: 100%;
