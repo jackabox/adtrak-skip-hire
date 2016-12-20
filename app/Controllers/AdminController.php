@@ -29,9 +29,10 @@ class AdminController
 			100
 		);
 
-		$skips = SkipController::instance()->menu();
-		$locs = LocationController::instance()->menu();
-		PermitController::instance()->menu();
+		\Adtrak\Skips\Controllers\SkipController::instance()->menu();
+		\Adtrak\Skips\Controllers\LocationController::instance()->menu();
+		\Adtrak\Skips\Controllers\PermitController::instance()->menu();
+		\Adtrak\Skips\Controllers\CouponController::instance()->menu();
 	}
 
 	public function scripts()

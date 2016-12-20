@@ -1,0 +1,43 @@
+<div class="wrap wrap--as">
+	<header>
+		<h1>Coupons</h1>
+		<a href="{{ link.add }}" class="button action">Add New Coupon</a>
+	</header>
+
+	{% if coupons %}
+	<table class="as-table as-table__coupons">
+		<thead>
+			<tr>
+				<th>Code</th>
+				<th>Type</th>
+				<th>Amount</th>
+				<th>Starts</th>
+				<th>Expires</th>
+				<th class="manage"></th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for coupon in coupons %}
+			<tr>
+				<td><a href="{{ link.edit }}{{ coupon.id }}">{{ coupon.code }}</a></td>
+				<td>
+					{% if coupon.type == 'flat' %}
+						Flat Rate
+					{% elseif coupon.type == 'percentage' %}
+						Percentage
+					{% endif %}
+				</td>
+				<td>{{ coupon.amount }}</td>
+				<td>{{ coupon.starts|date('d/m/Y') }}</td>
+				<td>{{ coupon.expires|date('d/m/Y') }}</td>
+				<td>
+					<a href="{{ link.edit }}{{ coupon.id }}">Manage</a>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	{% else %}
+	<p>No coupons added</p>
+	{% endif %}
+</div>

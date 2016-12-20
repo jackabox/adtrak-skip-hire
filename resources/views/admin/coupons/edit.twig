@@ -1,0 +1,52 @@
+<div class="wrap wrap--as">
+	<div class="as-notification"></div>
+
+	<header>
+		<h1>Edit: {{ coupon.name }} (#{{ coupon.id }})</h1>
+	</header>
+
+	<form class="container" id="coupons" action="" method="POST">
+		<div class="content">
+			<div class="section-header">
+				<h4>Coupon Information</h4>
+			</div>
+			<p>
+				<label for="code">Code</label>
+				<input type="text" name="code" placeholder="Enter a Code Name" value="{{ coupon.code }}">
+			</p>
+			<p>
+				<label for="amount">Amount</label>
+				<input type="number" name="amount" placeholder="Enter an Amount" value="{{ coupon.amount }}">
+			</p>
+			<p>
+				<label for="type">Type</label>
+				<select name="type">
+					<option value="">Pick a Type</option>
+					<option value="percentage" {% if coupon.type == 'percentage' %}selected{% endif %}>Percentage</option>
+					<option value="flat" {% if coupon.type == 'flat' %}selected{% endif %}>Flat Rate</option>
+				</select>
+			</p>
+			<p>
+				<label for="starts">Start Date</label>
+				<input type="date" name="starts" placeholder="dd/mm/yyyy" value="{{ coupon.starts }}">
+			</p>
+			<p>
+				<label for="expires">Expiry Date</label>
+				<input type="date" name="expires" placeholder="dd/mm/yyyy" value="{{ coupon.expires }}">
+			</p>
+
+			<input type="hidden" name="action" value="coupon_update">
+			<input type="hidden" name="id" value="{{ coupon.id }}">
+		</div>	
+
+		<aside class="sidebar">
+			<div class="sidebar__item">
+				<div class="section-header">
+					<h4>Update</h4>
+				</div>
+
+				<p><button type="submit" class="button">Save</button> {{ button.delete | raw }}</p>
+			</div>
+		</aside>
+	</form>
+</div>
