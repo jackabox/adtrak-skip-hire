@@ -10,7 +10,7 @@ class LocationController
 	private static $instance = null;
 
 	public function __construct() {
-		 add_shortcode('adtrak_skips', [$this, 'showLocationForm']);
+		 add_shortcode('ash_location_lookup', [$this, 'showLocationForm']);
 	}
 
 	public static function instance()
@@ -197,7 +197,7 @@ class LocationController
 
 		try {
 			$location = DB::table('as_locations')
-						->select(DB::raw('id, name, lat, lng, radius, address, description, number, ( 3959 * acos( cos( radians(' . $lat . ') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(' . $lng . ') ) + sin( radians(' . $lat . ') ) * sin( radians( lat ) ) ) ) AS distance '))
+						->select(DB::raw('id, name, lat, lng, radius, address, description, ( 3959 * acos( cos( radians(' . $lat . ') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(' . $lng . ') ) + sin( radians(' . $lat . ') ) * sin( radians( lat ) ) ) ) AS distance '))
 						->having('distance', '<', 50)
 						->orderBy('distance')
 						->first();
