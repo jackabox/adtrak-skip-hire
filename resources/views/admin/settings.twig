@@ -1,0 +1,31 @@
+<div class="wrap wrap--as">
+	<header>
+		<h1>Settings</h1>
+	</header>
+
+	<form class="container" id="settings" action="" method="POST">
+		<div class="content">
+			<div class="section-header">
+				<h4>Settings</h4>
+			</div>
+
+			<p>
+				<label for="gmaps_api">Google Maps API Key</label>
+				<input type="text" name="gmaps_api" value="{{ options.gmaps_api }}">
+			</p>
+		
+			<input type="hidden" name="action" value="settings_save">
+		</div>	
+
+		<aside class="sidebar">
+			<div class="sidebar__item">
+				<div class="section-header">
+					<h4>Update</h4>
+				</div>
+
+				<p><button type="submit" class="button">Save</button></p>
+			</div>
+		</aside>
+	</form>
+
+</div>
