@@ -1,0 +1,34 @@
+<div class="wrap wrap--as">
+	<div class="as-notification"></div>
+	
+	<header>
+		<h1>Add New Permit</h1>
+	</header>
+
+	<form class="container" id="permits" action="" method="POST">
+		<div class="content">
+			<div class="section-header">
+				<h4>Permit Information</h4>
+			</div>
+			<p>
+				<label for="title">Name</label>
+				<input type="text" name="title" placeholder="Enter a Name" value="">
+			</p>
+			<p>
+				<label for="price">Price</label>
+				<input type="text" name="price" placeholder="Enter a price" value="">
+			</p>
+			<input type="hidden" name="action" value="permit_add">
+		</div>	
+
+		<aside class="sidebar">
+			<div class="sidebar__item">
+				<div class="section-header">
+					<h4>Save?</h4>
+				</div>
+
+				<p><button type="submit" class="button">Save</button></p>
+			</div>
+		</aside>
+	</form>
+</div>

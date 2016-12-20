@@ -4,6 +4,7 @@ use Adtrak\Skips\View;
 use Adtrak\Skips\Models\Location;
 use Adtrak\Skips\Controllers\LocationController;
 use Adtrak\Skips\Controllers\SkipController;
+use Adtrak\Skips\Controllers\PermitController;
 use Adtrak\Skips\Helper;
 
 class AdminController
@@ -30,8 +31,7 @@ class AdminController
 
 		$skips = SkipController::instance()->menu();
 		$locs = LocationController::instance()->menu();
-
-		
+		PermitController::instance()->menu();
 	}
 
 	public function scripts()

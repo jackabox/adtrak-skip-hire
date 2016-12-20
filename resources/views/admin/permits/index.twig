@@ -1,0 +1,31 @@
+<div class="wrap wrap--as">
+	<header>
+		<h1>Permits</h1>
+		<a href="{{ link.add }}" class="button action">Add New Permit</a>
+	</header>
+
+	{% if permits %}
+	<table class="as-table as-table__permits">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Price</th>
+				<th class="manage"></th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for permit in permits %}
+			<tr>
+				<td><a href="{{ link.edit }}{{ permit.id }}">{{ permit.name }}</a></td>
+				<td>£{{ permit.price }}</td>
+				<td>
+					<a href="{{ link.edit }}{{ permit.id }}">Manage</a>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	{% else %}
+	<p>No permits added</p>
+	{% endif %}
+</div>
