@@ -21,7 +21,7 @@ class SkipController
 			__( 'Skips', 'adskip' ),
 			'Skips',
 			'manage_options',
-			'adskip',
+			'ash-skips',
 			[$this, 'index'],
 			''
 		);
@@ -31,7 +31,7 @@ class SkipController
 			__( 'Skips', 'adskip' ),
 			'Skips - Add',
 			'manage_options',
-			'adskip-add',
+			'ash-skips-add',
 			[$this, 'addSkip'],
 			''
 		);
@@ -41,7 +41,7 @@ class SkipController
 			__( 'Skips', 'adskip' ),
 			'Skips - Edit',
 			'manage_options',
-			'adskip-edit',
+			'ash-skips-edit',
 			[$this, 'showSkip'],
 			''
 		);
@@ -51,8 +51,8 @@ class SkipController
 	{
 		$skips = Skip::all();
 		$link = [
-			'edit' => admin_url('admin.php?page=adskip-edit&id='),
-			'add' => admin_url('admin.php?page=adskip-add')
+			'edit' => admin_url('admin.php?page=ash-skips-edit&id='),
+			'add' => admin_url('admin.php?page=ash-skips-add')
 		];
 
 		View::render('admin/skips/index.twig', [
@@ -69,7 +69,7 @@ class SkipController
 
 		if (current_user_can('edit_posts')) {
             $nonce = wp_create_nonce('skip_add_nonce');
-            $button['save'] = '<a href="' . admin_url('admin.php?page=adskip-add&action=skip_add&nonce=' . $nonce) . '" class="button adskip-add">Save</a>';
+            $button['save'] = '<a href="' . admin_url('admin.php?page=ash-skips-add&action=skip_add&nonce=' . $nonce) . '" class="button adskip-add">Save</a>';
         } else {
 			$button['save'] = '';
 		}
@@ -113,7 +113,7 @@ class SkipController
 				$skip->description 	= $_REQUEST['description'];
 				$skip->save();
 
-				$url = admin_url('admin.php?page=adskip-edit&id=' . $skip->id);
+				$url = admin_url('admin.php?page=ash-skips-edit&id=' . $skip->id);
 				echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $url . '">';
 				echo '<script>window.location.href=' . $url . ';</script>';
 				die();
@@ -131,7 +131,7 @@ class SkipController
 		
  		if (current_user_can('delete_posts')) {
 			$nonce = wp_create_nonce('skip_delete_nonce');
-			$button['delete'] = 'or <a href="' . admin_url( 'admin-ajax.php?action=skip_delete&id=' . $_GET['id'] . '&nonce=' . $nonce ) . '" data-id="' . $_GET['id'] . '" data-nonce="' . $nonce . '" data-redirect="' . admin_url('admin.php?page=adskip') . '" class="adskip-delete">Delete</a>';
+			$button['delete'] = 'or <a href="' . admin_url( 'admin-ajax.php?action=skip_delete&id=' . $_GET['id'] . '&nonce=' . $nonce ) . '" data-id="' . $_GET['id'] . '" data-nonce="' . $nonce . '" data-redirect="' . admin_url('admin.php?page=ash-skips') . '" class="adskip-delete">Delete</a>';
 		} else {
 			$button['delete'] = '';
 		}
