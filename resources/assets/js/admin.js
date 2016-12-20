@@ -1,90 +1,5 @@
 jQuery(document).ready(function ($) {
 
-	$('.adskip-add-location').click(function () {
-		var nonce = $(this).data('nonce'),
-			btn = $(this),
-			name = $('#as_name').val(),
-			desc = $('#as_description').val(),
-			location = $('#as_location').val(),
-			lat = $('#as_lat').val(),
-			lng = $('#as_lng').val(),
-			radius = $('#as_radius').val(),
-			notification = $('.as-notification');
-
-		$.ajax({
-			type: 'post',
-			url: SHajax.ajaxurl,
-			data: {
-				action: 'skip_add_location',
-				nonce: nonce,
-				name: name,
-				desc: desc,
-				location: location,
-				lat: lat,
-				lng: lng,
-				radius: radius
-			},
-			success: function (result) {
-				if (result === "success") {
-					notification.removeClass('error')
-						.addClass('success')
-						.html("Location '" + name + "' has been added successfully.")
-						.show(500);
-				} else {
-					notification.removeClass('success')
-						.addClass('error')
-						.html(result)
-						.show(500);
-				}
-			}
-		});
-		return false;
-	});
-
-
-	$('.adskip-edit-location').click(function () {
-		var id = $(this).data('id'),
-			nonce = $(this).data('nonce'),
-			btn = $(this),
-			name = $('#as_name').val(),
-			desc = $('#as_description').val(),
-			location = $('#as_location').val(),
-			lat = $('#as_lat').val(),
-			lng = $('#as_lng').val(),
-			radius = $('#as_radius').val(),
-			notification = $('.as-notification');
-
-		$.ajax({
-			type: 'post',
-			url: SHajax.ajaxurl,
-			data: {
-				action: 'skip_edit_location',
-				nonce: nonce,
-				id: id,
-				name: name,
-				desc: desc,
-				location: location,
-				lat: lat,
-				lng: lng,
-				radius: radius
-			},
-			success: function (result) {
-				if (result === "error") {
-					notification.removeClass('success')
-						.addClass('error')
-						.html("Sorry, an error occured with saving the location. Please try again.")
-						.show(500);
-				} else if (result === "success") {
-					notification.removeClass('error')
-						.addClass('success')
-						.html("Location '" + name + "' has been updated successfully.")
-						.show(500);
-				}
-			}
-		});
-		return false;
-	});
-
 	$('.adskip-delete').click(function () {
 		var truly = confirm('Are you sure you want to delete this skip?'),
 			id = $(this).data('id'),
@@ -181,7 +96,7 @@ jQuery(document).ready(function ($) {
 		return false;
 	});
 
-	$('.adskip-delete-location').click(function () {
+	$('.ash-location-delete').click(function () {
 		var truly = confirm('Are you sure you want to delete this location?'),
 			id = $(this).data('id'),
 			nonce = $(this).data('nonce'),
@@ -193,7 +108,7 @@ jQuery(document).ready(function ($) {
 				type: 'post',
 				url: SHajax.ajaxurl,
 				data: {
-					action: 'skip_delete_location',
+					action: 'ash_location_delete',
 					nonce: nonce,
 					id: id
 				},

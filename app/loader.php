@@ -17,17 +17,7 @@ $loader->action([
 ]);
 
 $loader->action([
-	 'method' 	=> 'wp_ajax_skip_add_location', 
-	 'uses' 	=> [$locations, 'storeLocation'] 
-]);
-
-$loader->action([
-	 'method' 	=> 'wp_ajax_skip_edit_location', 
-	 'uses' 	=> [$locations, 'updateLocation'] 
-]);
-
-$loader->action([
-	 'method' 	=> 'wp_ajax_skip_delete_location', 
+	 'method' 	=> 'wp_ajax_ash_location_delete', 
 	 'uses' 	=> [$locations, 'deleteLocation'] 
 ]);
 

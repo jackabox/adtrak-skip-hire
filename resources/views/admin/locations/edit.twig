@@ -5,43 +5,43 @@
 		<h1>Edit: {{ location.name }} (#{{ location.id }})</h1>
 	</header>
 
-	<div class="container" id="skips">
+	<form class="container" id="locations" action="" method="POST">
 		<div class="content">
-			<div class="form">
-				<div class="section-header">
-					<h4>Location Information</h4>
-				</div>
-
-				<p>
-					<label for="title">Name</label>
-					<input type="text" name="title" id="as_name" placeholder="Enter a Name for the Location" value="{{ location.name }}">
-				</p>
-				<p>
-					<label for="description">Description</label>
-					<textarea name="description" id="as_description" placeholder="Enter a Description">{{ location.description }}</textarea>
-				</p>
-				<p>
-					<label for="location">Location</label>
-					<input type="text" name="location" id="as_location" placeholder="Enter a Post Code" value="{{ location.address }}">
-					<div id="map"></div>
-					<input type="hidden" name="as_lat" id="as_lat" value="{{ location.lat }}">
-					<input type="hidden" name="as_lng" id="as_lng" value="{{ location.lng }}">
-				</p>
-				<p>
-					<label for="radius">Radius</label>
-					<input type="number" name="radius" id="as_radius" placeholder="Enter a Delivery Radius" value="{{ location.radius }}">
-				</p>
+			<div class="section-header">
+				<h4>Location Information</h4>
 			</div>
+
+			<p>
+				<label for="title">Name</label>
+				<input type="text" name="title" placeholder="Enter a Name for the Location" value="{{ location.name }}">
+			</p>
+			<p>
+				<label for="description">Description</label>
+				<textarea name="description" placeholder="Enter a Description">{{ location.description }}</textarea>
+			</p>
+			<p>
+				<label for="location">Location</label>
+				<input type="text" name="location" id="as_location" placeholder="Enter a Post Code" value="{{ location.address }}">
+				<div id="map"></div>
+				<input type="hidden" name="as_lat" id="as_lat" value="{{ location.lat }}">
+				<input type="hidden" name="as_lng" id="as_lng" value="{{ location.lng }}">
+			</p>
+			<p>
+				<label for="radius">Radius</label>
+				<input type="number" name="radius" placeholder="Enter a Delivery Radius" value="{{ location.radius }}">
+			</p>
+			<input type="hidden" name="action" value="location_update">
+			<input type="hidden" name="id" value="{{ location.id }}">
 		</div>
 
 		<aside class="sidebar">
-			<div>
+			<div class="sidebar__item">
 				<div class="section-header">
 					<h4>Update</h4>
 				</div>
 
-				<p>{{ button.save | raw }} {{ button.delete | raw }}</p>
+				<p><button type="submit" class="button">Save</button> {{ button.delete | raw }}</p>
 			</div>
 		</aside>
-	</div>
+	</form>
 </div>

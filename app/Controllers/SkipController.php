@@ -67,16 +67,7 @@ class SkipController
 			$this->storeSkip();
 		}
 
-		if (current_user_can('edit_posts')) {
-            $nonce = wp_create_nonce('skip_add_nonce');
-            $button['save'] = '<a href="' . admin_url('admin.php?page=ash-skips-add&action=skip_add&nonce=' . $nonce) . '" class="button adskip-add">Save</a>';
-        } else {
-			$button['save'] = '';
-		}
-
-		View::render('admin/skips/add.twig', [
-			'button'	=> $button
-		]);
+		View::render('admin/skips/add.twig', []);
 	}
 
 	public function storeSkip()
