@@ -117,6 +117,70 @@ jQuery(document).ready(function ($) {
 		return false;
 	});
 
+	$('.ash-permit-delete').click(function () {
+		var truly = confirm('Are you sure you want to delete this permit?'),
+			id = $(this).data('id'),
+			nonce = $(this).data('nonce'),
+			redirect = $(this).data('redirect'),
+			btn = $(this);
+
+		if (truly === true) {
+			$.ajax({
+				type: 'post',
+				url: SHajax.ajaxurl,
+				data: {
+					action: 'permit_delete',
+					nonce: nonce,
+					id: id
+				},
+				success: function (result) {
+					if (result === "error") {
+						notification.removeClass('success')
+							.addClass('error')
+							.html("Sorry, an error occured with deleting the permit. Please try again.")
+							.show(500);
+					} else if (result === "success") {
+						window.location.replace(redirect);
+					}
+				}
+			});
+		}
+
+		return false;
+	});
+
+	$('.ash-coupon-delete').click(function () {
+		var truly = confirm('Are you sure you want to delete this coupon?'),
+			id = $(this).data('id'),
+			nonce = $(this).data('nonce'),
+			redirect = $(this).data('redirect'),
+			btn = $(this);
+
+		if (truly === true) {
+			$.ajax({
+				type: 'post',
+				url: SHajax.ajaxurl,
+				data: {
+					action: 'coupon_delete',
+					nonce: nonce,
+					id: id
+				},
+				success: function (result) {
+					if (result === "error") {
+						notification.removeClass('success')
+							.addClass('error')
+							.html("Sorry, an error occured with deleting the coupon. Please try again.")
+							.show(500);
+					} else if (result === "success") {
+						window.location.replace(redirect);
+					}
+				}
+			});
+		}
+
+		return false;
+	});
+
 	$('.adskip-delete-location').click(function () {
 		var truly = confirm('Are you sure you want to delete this location?'),
 			id = $(this).data('id'),
@@ -152,20 +216,20 @@ jQuery(document).ready(function ($) {
 	$(function () {
 		var $lat = 52.9539559,
 			$lng = -1.1543077999999696;
-		
-		if($('#as_lat').val() !== '') {
-			$lat = Number($('#as_lat').val());
-		} 
 
-		if($('#as_lng').val() !== '') {
+		if ($('#as_lat').val() !== '') {
+			$lat = Number($('#as_lat').val());
+		}
+
+		if ($('#as_lng').val() !== '') {
 			$lng = Number($('#as_lng').val());
-		} 
+		}
 
 		if ($('#as_location').length) {
 			var pac_input = document.getElementById('as_location');
 
 			var map = new google.maps.Map(document.getElementById('map'), {
-				center: { lat: $lat, lng:  $lng },
+				center: { lat: $lat, lng: $lng },
 				zoom: 13
 			});
 
@@ -180,7 +244,7 @@ jQuery(document).ready(function ($) {
 			var infowindow = new google.maps.InfoWindow();
 			var marker = new google.maps.Marker({
 				map: map,
-				position: { lat: $lat, lng:  $lng },
+				position: { lat: $lat, lng: $lng },
 				anchorPoint: new google.maps.Point(0, -29)
 			});
 			marker.setVisible(true);

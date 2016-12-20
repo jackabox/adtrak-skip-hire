@@ -3,6 +3,8 @@
 $admin = Controllers\AdminController::instance();
 $locations = Controllers\LocationController::instance();
 $skips = Controllers\SkipController::instance();
+$permits = Controllers\PermitController::instance();
+$coupons = Controllers\CouponController::instance();
 
 $loader->action([
 	'method' 	=> 'admin_menu',
@@ -32,6 +34,16 @@ $loader->action([
 $loader->action([
 	 'method' 	=> 'wp_ajax_skip_delete', 
 	 'uses' 	=> [$skips, 'deleteSkip'] 
+]);
+
+$loader->action([
+	 'method' 	=> 'wp_ajax_permit_delete', 
+	 'uses' 	=> [$permits, 'deletePermit'] 
+]);
+
+$loader->action([
+	 'method' 	=> 'wp_ajax_coupon_delete', 
+	 'uses' 	=> [$coupons, 'deleteCoupon'] 
 ]);
 
 /**
