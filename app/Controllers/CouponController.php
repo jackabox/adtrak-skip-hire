@@ -2,7 +2,6 @@
 
 use Adtrak\Skips\View;
 use Adtrak\Skips\Models\Coupon;
-use Billy\Framework\Facades\DB;
 
 class CouponController 
 {
