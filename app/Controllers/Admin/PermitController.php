@@ -87,7 +87,7 @@ class PermitController extends Admin
 		
  		if (current_user_can('delete_posts')) {
 			$nonce = wp_create_nonce('permit_delete_nonce');
-			$button['delete'] = 'or <a href="' . admin_url( 'admin-ajax.php?action=permit_delete&id=' . $_GET['id'] . '&nonce=' . $nonce ) . '" data-id="' . $_GET['id'] . '" data-nonce="' . $nonce . '" data-redirect="' . admin_url('admin.php?page=ash-permit') . '" class="ash-permit-delete">Delete</a>';
+			$button['delete'] = 'or <a href="' . admin_url('admin-ajax.php?action=ash_permit_delete&id=' . $_GET['id'] . '&nonce=' . $nonce) . '" data-id="' . $_GET['id'] . '" data-nonce="' . $nonce . '" data-redirect="' . admin_url('admin.php?page=ash-permit') . '" class="ash-permit-delete">Delete</a>';
 		} else {
 			$button['delete'] = '';
 		}
