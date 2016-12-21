@@ -27,8 +27,8 @@ $loader->action([
 ]);
 
 $loader->action([
-	 'method' 	=> 'wp_ajax_permit_delete', 
-	 'uses' 	=> [$permits, 'deletePermit'] 
+	 'method' 	=> 'wp_ajax_ash_permit_delete', 
+	 'uses' 	=> [$permits, 'delete'] 
 ]);
 
 $loader->action([

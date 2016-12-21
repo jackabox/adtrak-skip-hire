@@ -44,7 +44,7 @@ jQuery(document).ready(function ($) {
 				type: 'post',
 				url: SHajax.ajaxurl,
 				data: {
-					action: 'permit_delete',
+					action: 'ash_permit_delete',
 					nonce: nonce,
 					id: id
 				},
