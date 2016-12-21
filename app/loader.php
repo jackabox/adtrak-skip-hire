@@ -3,7 +3,7 @@
 $admin = Controllers\AdminController::instance();
 $locations = Controllers\LocationController::instance();
 $skips = Controllers\SkipController::instance();
-$permits = Controllers\PermitController::instance();
+$permits = Controllers\Admin\PermitController::instance();
 $coupons = Controllers\CouponController::instance();
 
 $loader->action([
