@@ -58,7 +58,7 @@ class AdminController
 		wp_enqueue_style('adtrak-skips', Helper::assetUrl('css/skips.css'), null);
 		wp_enqueue_script('adtrak-skips-ajax', Helper::assetUrl('js/admin.js'), ['jquery'], '', true);
 		wp_localize_script('adtrak-skips-ajax', 'SHajax', ['ajaxurl' => admin_url('admin-ajax.php')]);
-		wp_enqueue_script('maps-api', '//m		aps.googleapis.com/maps/api/js?key='. get_option('ash_google_maps_api', '') .'&libraries=places');
+		wp_enqueue_script('maps-api', '//maps.googleapis.com/maps/api/js?key='. get_option('ash_google_maps_api', '') .'&libraries=places');
 	}
 
 	public function showSettings()
