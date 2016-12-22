@@ -1,6 +1,6 @@
 <?php namespace Adtrak\Skips;
 
-$admin = Controllers\AdminController::instance();
+$admin = new Controllers\AdminController;
 $locations = new Controllers\Admin\LocationController;
 $skips =  new Controllers\Admin\SkipController;
 $permits = new Controllers\Admin\PermitController;

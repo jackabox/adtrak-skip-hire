@@ -5,6 +5,7 @@ use Adtrak\Skips\Controllers\Admin\LocationController;
 use Adtrak\Skips\Controllers\Admin\SkipController;
 use Adtrak\Skips\Controllers\Admin\PermitController;
 use Adtrak\Skips\Controllers\Admin\CouponController;
+use Adtrak\Skips\Controllers\Admin\OrderController;
 use Adtrak\Skips\Helper;
 
 class AdminController
@@ -21,6 +22,7 @@ class AdminController
 		$this->coupon = new CouponController;
 		$this->location = new LocationController;
 		$this->skip = new SkipController;
+		$this->order = new OrderController;
 	}
 	
 	public static function instance()
@@ -35,21 +37,20 @@ class AdminController
 			__( 'Skips', 'adskip' ),
 			'Skips',
 			'manage_options',
-			'adskip',
+			'ash',
 			'',
 			'', //none',
 			100
 		);
 
-		\Adtrak\Skips\Controllers\OrderController::instance()->menu();
-
+		$this->order->menu();
 		$this->skip->menu();
 		$this->location->menu();
 		$this->permit->menu();
 		$this->coupon->menu();
 
 		add_submenu_page(
-			'adskip',			
+			'ash',			
 			__( 'Settings', 'adskip' ),
 			'Settings',
 			'manage_options',
@@ -61,8 +62,6 @@ class AdminController
 
 	public function scripts()
 	{
-		wp_enqueue_style('adtrak-skips', Helper::assetUrl('css/skips.css'), null);
-		wp_enqueue_script('adtrak-skips-ajax', Helper::assetUrl('js/admin.js'), ['jquery'], '', true);
 		wp_localize_script('adtrak-skips-ajax', 'SHajax', ['ajaxurl' => admin_url('admin-ajax.php')]);
 		wp_enqueue_script('google_maps_api', '//maps.googleapis.com/maps/api/js?key='. get_option('ash_google_maps_api', '') .'&libraries=places');
 	}
