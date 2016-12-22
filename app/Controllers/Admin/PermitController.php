@@ -14,9 +14,9 @@ class PermitController extends Admin
 
 	public function menu() 
 	{
-		$this->addMenu('Permits', 'ash-permit', 'manage_options', [$this, 'index'], 'adskip');
-		$this->addMenu('Permits - Add', 'ash-permit-add', 'manage_options', [$this, 'create'], 'adskip');
-		$this->addMenu('Permits - Edit', 'ash-permit-edit', 'manage_options', [$this, 'edit'], 'adskip');
+		$this->addMenu('Permits', 'ash-permits', 'manage_options', [$this, 'index'], 'ash');
+		$this->addMenu('Permits - Add', 'ash-permits-add', 'manage_options', [$this, 'create'], 'ash');
+		$this->addMenu('Permits - Edit', 'ash-permits-edit', 'manage_options', [$this, 'edit'], 'ash');
 		$this->createMenu();
 	}
 
@@ -25,8 +25,8 @@ class PermitController extends Admin
 		$permits = Permit::all();
 		
 		$link = [
-			'edit' => admin_url('admin.php?page=ash-permit-edit&id='),
-			'add' => admin_url('admin.php?page=ash-permit-add')
+			'edit' => admin_url('admin.php?page=ash-permits-edit&id='),
+			'add' => admin_url('admin.php?page=ash-permits-add')
 		];
 
 		View::render('admin/permits/index.twig', [
@@ -69,7 +69,7 @@ class PermitController extends Admin
 				$permit->price 		= $_REQUEST['price'];
 				$permit->save();
 
-				$url = admin_url('admin.php?page=ash-permit-edit&id=' . $permit->id);
+				$url = admin_url('admin.php?page=ash-permits-edit&id=' . $permit->id);
 				echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $url . '">';
 				echo '<script>window.location.href=' . $url . ';</script>';
 				die();
