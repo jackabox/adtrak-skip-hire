@@ -5,7 +5,8 @@ use Adtrak\Skips\Facades\Admin;
 
 class OrderController extends Admin
 {
-	public function __construct() {
+	public function __construct() 
+	{
 		self::instance();
 	}
 
