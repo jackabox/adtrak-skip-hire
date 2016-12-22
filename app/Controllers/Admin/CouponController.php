@@ -13,9 +13,9 @@ class CouponController extends Admin
 
 	public function menu() 
 	{
-		$this->addMenu('Coupons', 'ash-coupon', 'manage_options', [$this, 'index'], 'adskip');
-		$this->addMenu('Coupons - Add', 'ash-coupon-add', 'manage_options', [$this, 'create'], 'adskip');
-		$this->addMenu('Coupons - Edit', 'ash-coupon-edit', 'manage_options', [$this, 'edit'], 'adskip');
+		$this->addMenu('Coupons', 'ash-coupons', 'manage_options', [$this, 'index'], 'ash');
+		$this->addMenu('Coupons - Add', 'ash-coupons-add', 'manage_options', [$this, 'create'], 'ash');
+		$this->addMenu('Coupons - Edit', 'ash-coupons-edit', 'manage_options', [$this, 'edit'], 'ash');
 		$this->createMenu();
 	}
 
@@ -24,8 +24,8 @@ class CouponController extends Admin
 		$coupons = Coupon::all();
 		
 		$link = [
-			'edit' => admin_url('admin.php?page=ash-coupon-edit&id='),
-			'add'  => admin_url('admin.php?page=ash-coupon-add')
+			'edit' => admin_url('admin.php?page=ash-coupons-edit&id='),
+			'add'  => admin_url('admin.php?page=ash-coupons-add')
 		];
 
 		View::render('admin/coupons/index.twig', [
@@ -71,7 +71,7 @@ class CouponController extends Admin
 				$coupon->expires 	= $_REQUEST['expires'];
 				$coupon->save();
 
-				$url = admin_url('admin.php?page=ash-coupon-edit&id=' . $coupon->id);
+				$url = admin_url('admin.php?page=ash-coupons-edit&id=' . $coupon->id);
 				echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $url . '">';
 				echo '<script>window.location.href=' . $url . ';</script>';
 				die();
@@ -89,7 +89,7 @@ class CouponController extends Admin
 		
  		if (current_user_can('delete_posts')) {
 			$nonce = wp_create_nonce('ash_coupon_delete_nonce');
-			$button['delete'] = 'or <a href="' . admin_url( 'admin-ajax.php?action=ash_coupon_delete&id=' . $_GET['id'] . '&nonce=' . $nonce ) . '" data-id="' . $_GET['id'] . '" data-nonce="' . $nonce . '" data-redirect="' . admin_url('admin.php?page=ash-coupon') . '" class="ash-coupon-delete">Delete</a>';
+			$button['delete'] = 'or <a href="' . admin_url( 'admin-ajax.php?action=ash_coupon_delete&id=' . $_GET['id'] . '&nonce=' . $nonce ) . '" data-id="' . $_GET['id'] . '" data-nonce="' . $nonce . '" data-redirect="' . admin_url('admin.php?page=ash-coupons') . '" class="ash-coupon-delete">Delete</a>';
 		} else {
 			$button['delete'] = '';
 		}
