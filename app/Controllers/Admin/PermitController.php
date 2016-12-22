@@ -15,8 +15,8 @@ class PermitController extends Admin
 	public function menu() 
 	{
 		$this->addMenu('Permits', 'ash-permit', 'manage_options', [$this, 'index'], 'adskip');
-		$this->addMenu('Permits - Add', 'ash-permit-add', 'manage_options', [$this, 'add'], 'adskip');
-		$this->addMenu('Permits - Edit', 'ash-permit-edit', 'manage_options', [$this, 'show'], 'adskip');
+		$this->addMenu('Permits - Add', 'ash-permit-add', 'manage_options', [$this, 'create'], 'adskip');
+		$this->addMenu('Permits - Edit', 'ash-permit-edit', 'manage_options', [$this, 'edit'], 'adskip');
 		$this->createMenu();
 	}
 
@@ -35,16 +35,16 @@ class PermitController extends Admin
 		]);
 	}
 
-	public function add() 
+	public function create() 
 	{
 		if (isset($_REQUEST['action']) && $_REQUEST['action'] === 'permit_add') {
-			$this->create();
+			$this->store();
 		}
 
 		View::render('admin/permits/add.twig', []);
 	}
 
-	public function create()
+	public function store()
 	{
 		// $permission = wp_verify_nonce($_GET['nonce'], 'permit_add_nonce');
 		$permission = true;
@@ -79,7 +79,7 @@ class PermitController extends Admin
         }
 	}
 
-	public function show()
+	public function edit()
 	{
 		if (isset($_REQUEST['action']) && $_REQUEST['action'] === 'permit_update') {
 			$this->update();
@@ -136,7 +136,7 @@ class PermitController extends Admin
         }
 	}
 
-	public function delete()
+	public function destroy()
 	{
 		$permission = check_ajax_referer('permit_delete_nonce', 'nonce', false);
 

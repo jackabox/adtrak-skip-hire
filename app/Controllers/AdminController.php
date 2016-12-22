@@ -4,16 +4,19 @@ use Adtrak\Skips\View;
 use Adtrak\Skips\Controllers\LocationController;
 use Adtrak\Skips\Controllers\SkipController;
 use Adtrak\Skips\Controllers\Admin\PermitController;
+use Adtrak\Skips\Controllers\Admin\CouponController;
 use Adtrak\Skips\Helper;
 
 class AdminController
 {
 	protected static $instance = null;
 	protected $permit;
+	protected $coupon;
 	
 	public function __construct()
 	{
 		$this->permit = new PermitController;
+		$this->coupon = new CouponController;
 	}
 	
 	public static function instance()
@@ -25,22 +28,21 @@ class AdminController
 	public function menu() 
 	{
 		add_menu_page(
-					__( 'Skips', 'adskip' ),
-					'Skips',
-					'manage_options',
-					'adskip',
-					'',
-					'', //n		one',
+			__( 'Skips', 'adskip' ),
+			'Skips',
+			'manage_options',
+			'adskip',
+			'',
+			'', //n	one',
 			100
 		);
 
 		\Adtrak\Skips\Controllers\OrderController::instance()->menu();
 		\Adtrak\Skips\Controllers\SkipController::instance()->menu();
 		\Adtrak\Skips\Controllers\LocationController::instance()->menu();
-		$this->permit->Menu();
-
-		$coupon = \Adtrak\Skips\Controllers\CouponController::instance();
-		$coupon->menu();
+		
+		$this->permit->menu();
+		$this->coupon->menu();
 
 		add_submenu_page(
 			'adskip',			

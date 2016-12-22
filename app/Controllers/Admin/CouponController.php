@@ -1,49 +1,22 @@
-<?php namespace Adtrak\Skips\Controllers;
+<?php namespace Adtrak\Skips\Controllers\Admin;
 
-use Adtrak\Skips\View;
+use Adtrak\Skips\Facades\Admin;
 use Adtrak\Skips\Models\Coupon;
+use Adtrak\Skips\View;
 
-class CouponController 
+class CouponController extends Admin
 {
-	private static $instance = null;
-
-	public static function instance()
+	public function __construct()
 	{
- 		null === self::$instance and self::$instance = new self;
-        return self::$instance;
+		self::instance();
 	}
 
 	public function menu() 
 	{
-		add_submenu_page(
-			'adskip',			
-			__( 'Coupons', 'adskip' ),
-			'Coupons',
-			'manage_options',
-			'ash-coupon',
-			[$this, 'index'],
-			''
-		);
-
-		add_submenu_page(
-			'adskip',			
-			__( 'Coupons', 'adskip' ),
-			'Coupons - Add',
-			'manage_options',
-			'ash-coupon-add',
-			[$this, 'addCoupon'],
-			''
-		);
-
-		add_submenu_page(
-			'adskip',			
-			__( 'Coupons', 'adskip' ),
-			'Coupons - Edit',
-			'manage_options',
-			'ash-coupon-edit',
-			[$this, 'showCoupon'],
-			''
-		);
+		$this->addMenu('Coupons', 'ash-coupon', 'manage_options', [$this, 'index'], 'adskip');
+		$this->addMenu('Permits - Add', 'ash-coupon-add', 'manage_options', [$this, 'create'], 'adskip');
+		$this->addMenu('Permits - Edit', 'ash-coupon-edit', 'manage_options', [$this, 'edit'], 'adskip');
+		$this->createMenu();
 	}
 
 	public function index() 
@@ -52,7 +25,7 @@ class CouponController
 		
 		$link = [
 			'edit' => admin_url('admin.php?page=ash-coupon-edit&id='),
-			'add' => admin_url('admin.php?page=ash-coupon-add')
+			'add'  => admin_url('admin.php?page=ash-coupon-add')
 		];
 
 		View::render('admin/coupons/index.twig', [
@@ -61,16 +34,16 @@ class CouponController
 		]);
 	}
 
-	public function addCoupon() 
+	public function create() 
 	{
 		if (isset($_REQUEST['action']) && $_REQUEST['action'] === 'coupon_add') {
-			$this->storeCoupon();
+			$this->store();
 		}
 
 		View::render('admin/coupons/add.twig', []);
 	}
 
-	public function storeCoupon()
+	public function store()
 	{
 		// $permission = wp_verify_nonce($_GET['nonce'], 'coupon_add_nonce');
 		$permission = true;
@@ -108,15 +81,15 @@ class CouponController
         }
 	}
 
-	public function showCoupon()
+	public function edit()
 	{
 		if (isset($_REQUEST['action']) && $_REQUEST['action'] === 'coupon_update') {
-			$this->updateCoupon();
+			$this->update();
 		}
 		
  		if (current_user_can('delete_posts')) {
-			$nonce = wp_create_nonce('coupon_delete_nonce');
-			$button['delete'] = 'or <a href="' . admin_url( 'admin-ajax.php?action=coupon_delete&id=' . $_GET['id'] . '&nonce=' . $nonce ) . '" data-id="' . $_GET['id'] . '" data-nonce="' . $nonce . '" data-redirect="' . admin_url('admin.php?page=ash-coupon') . '" class="ash-coupon-delete">Delete</a>';
+			$nonce = wp_create_nonce('ash_coupon_delete_nonce');
+			$button['delete'] = 'or <a href="' . admin_url( 'admin-ajax.php?action=ash_coupon_delete&id=' . $_GET['id'] . '&nonce=' . $nonce ) . '" data-id="' . $_GET['id'] . '" data-nonce="' . $nonce . '" data-redirect="' . admin_url('admin.php?page=ash-coupon') . '" class="ash-coupon-delete">Delete</a>';
 		} else {
 			$button['delete'] = '';
 		}
@@ -133,7 +106,7 @@ class CouponController
 		}
 	}
 
-	public function updateCoupon()
+	public function update()
 	{
 		// $permission = wp_verify_nonce($_GET['nonce'], 'coupon_add_nonce');
 		$permission = true;
@@ -168,9 +141,9 @@ class CouponController
         }
 	}
 
-	public function deleteCoupon()
+	public function destroy()
 	{
-		$permission = check_ajax_referer('coupon_delete_nonce', 'nonce', false);
+		$permission = check_ajax_referer('ash_coupon_delete_nonce', 'nonce', false);
 
         if ($permission === false) {
             echo 'Permission Denied';
