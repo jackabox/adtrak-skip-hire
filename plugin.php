@@ -4,7 +4,7 @@
  * Plugin Name: 	Adtrak: Skip Hire
  * Plugin URI: 		https://github.com/adtrak/adtrak-skip-hire
  * Description: 	Boilerplate for rapid plugin development. Built initially for Adtrak.
- * Version: 		0.1.0
+ * Version: 		2.0.0 beta
  * Author: 			Adtrak
  * Author URI: 		https://adtrak.co.uk
  * License: 		GPL-2.0+

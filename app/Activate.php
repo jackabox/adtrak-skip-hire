@@ -3,7 +3,6 @@
 /** @var  \Billy\Framework\Enqueue $enqueue */
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Adtrak\Skips\Helper;
-use Billy\Framework\Models\Option;
 
 $version = get_option('adtrak_skips_version', false);
 
