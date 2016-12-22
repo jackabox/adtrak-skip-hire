@@ -1,6 +1,6 @@
 jQuery(document).ready(function ($) {
 
-	$('.adskip-delete').click(function () {
+	$('.ash-skip-delete').click(function () {
 		var truly = confirm('Are you sure you want to delete this skip?'),
 			id = $(this).data('id'),
 			nonce = $(this).data('nonce'),
@@ -12,7 +12,7 @@ jQuery(document).ready(function ($) {
 				type: 'post',
 				url: SHajax.ajaxurl,
 				data: {
-					action: 'skip_delete',
+					action: 'ash_skip_delete',
 					nonce: nonce,
 					id: id
 				},

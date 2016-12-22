@@ -2,7 +2,7 @@
 
 $admin = Controllers\AdminController::instance();
 $locations = Controllers\LocationController::instance();
-$skips = Controllers\SkipController::instance();
+$skips =  new Controllers\Admin\SkipController;
 $permits = new Controllers\Admin\PermitController;
 $coupons = new Controllers\Admin\CouponController;
 
@@ -22,8 +22,8 @@ $loader->action([
 ]);
 
 $loader->action([
-	 'method' 	=> 'wp_ajax_skip_delete', 
-	 'uses' 	=> [$skips, 'deleteSkip'] 
+	 'method' 	=> 'wp_ajax_ash_skip_delete', 
+	 'uses' 	=> [$skips, 'destroy'] 
 ]);
 
 $loader->action([

@@ -14,8 +14,8 @@ class CouponController extends Admin
 	public function menu() 
 	{
 		$this->addMenu('Coupons', 'ash-coupon', 'manage_options', [$this, 'index'], 'adskip');
-		$this->addMenu('Permits - Add', 'ash-coupon-add', 'manage_options', [$this, 'create'], 'adskip');
-		$this->addMenu('Permits - Edit', 'ash-coupon-edit', 'manage_options', [$this, 'edit'], 'adskip');
+		$this->addMenu('Coupons - Add', 'ash-coupon-add', 'manage_options', [$this, 'create'], 'adskip');
+		$this->addMenu('Coupons - Edit', 'ash-coupon-edit', 'manage_options', [$this, 'edit'], 'adskip');
 		$this->createMenu();
 	}
 

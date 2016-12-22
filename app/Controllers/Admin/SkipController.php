@@ -1,76 +1,49 @@
-<?php namespace Adtrak\Skips\Controllers;
+<?php namespace Adtrak\Skips\Controllers\Admin;
 
-use Adtrak\Skips\View;
+use Adtrak\Skips\Facades\Admin;
 use Adtrak\Skips\Models\Skip;
-use Billy\Framework\Facades\DB;
+use Adtrak\Skips\View;
 
-class SkipController 
+class SkipController extends Admin
 {
-	private static $instance = null;
-
-	public static function instance()
+	public function __construct()
 	{
- 		null === self::$instance and self::$instance = new self;
-        return self::$instance;
+		self::instance();
 	}
 
 	public function menu() 
 	{
-		add_submenu_page(
-			'adskip',			
-			__( 'Skips', 'adskip' ),
-			'Skips',
-			'manage_options',
-			'ash-skips',
-			[$this, 'index'],
-			''
-		);
-
-		add_submenu_page(
-			'adskip',			
-			__( 'Skips', 'adskip' ),
-			'Skips - Add',
-			'manage_options',
-			'ash-skips-add',
-			[$this, 'addSkip'],
-			''
-		);
-
-		add_submenu_page(
-			'adskip',			
-			__( 'Skips', 'adskip' ),
-			'Skips - Edit',
-			'manage_options',
-			'ash-skips-edit',
-			[$this, 'showSkip'],
-			''
-		);
+		$this->addMenu('Skips', 'ash-skips', 'manage_options', [$this, 'index'], 'adskip');
+		$this->addMenu('Skips - Add', 'ash-skips-add', 'manage_options', [$this, 'create'], 'adskip');
+		$this->addMenu('Skips - Edit', 'ash-skips-edit', 'manage_options', [$this, 'edit'], 'adskip');
+		$this->createMenu();
 	}
 
 	public function index() 
 	{
 		$skips = Skip::all();
+
 		$link = [
 			'edit' => admin_url('admin.php?page=ash-skips-edit&id='),
-			'add' => admin_url('admin.php?page=ash-skips-add')
+			'add'  => admin_url('admin.php?page=ash-skips-add')
 		];
 
 		View::render('admin/skips/index.twig', [
-			'skips' 		=> $skips,
-			'link'			=> $link
+			'skips' 	=> $skips,
+			'link'		=> $link
 		]);
 	}
 
-	public function addSkip() 
+	public function create() 
 	{
 		if (isset($_REQUEST['action']) && $_REQUEST['action'] === 'skip_add') {
-			$this->storeSkip();
+			$this->store();
 		}
 
 		View::render('admin/skips/add.twig', []);
 	}
 
-	public function storeSkip()
+	public function store()
 	{
 		// $permission = wp_verify_nonce($_GET['nonce'], 'skip_add_nonce');
 		$permission = true;
@@ -114,15 +87,15 @@ class SkipController
         }
 	}
 
-	public function showSkip() 
+	public function edit() 
 	{
 		if (isset($_REQUEST['action']) && $_REQUEST['action'] === 'skip_update') {
-			$this->updateSkip();
+			$this->update();
 		}
 		
  		if (current_user_can('delete_posts')) {
-			$nonce = wp_create_nonce('skip_delete_nonce');
-			$button['delete'] = 'or <a href="' . admin_url( 'admin-ajax.php?action=skip_delete&id=' . $_GET['id'] . '&nonce=' . $nonce ) . '" data-id="' . $_GET['id'] . '" data-nonce="' . $nonce . '" data-redirect="' . admin_url('admin.php?page=ash-skips') . '" class="adskip-delete">Delete</a>';
+			$nonce = wp_create_nonce('ash_skip_delete_nonce');
+			$button['delete'] = 'or <a href="' . admin_url( 'admin-ajax.php?action=ash_skip_delete&id=' . $_GET['id'] . '&nonce=' . $nonce ) . '" data-id="' . $_GET['id'] . '" data-nonce="' . $nonce . '" data-redirect="' . admin_url('admin.php?page=ash-skips') . '" class="ash-skip-delete">Delete</a>';
 		} else {
 			$button['delete'] = '';
 		}
@@ -139,7 +112,7 @@ class SkipController
 		}
 	}
 
-	public function updateSkip()
+	public function update()
 	{
 		// $permission = wp_verify_nonce($_GET['nonce'], 'skip_add_nonce');
 		$permission = true;
@@ -180,9 +153,9 @@ class SkipController
         }
 	}
 
-	public function deleteSkip()
+	public function destroy()
 	{
-		$permission = check_ajax_referer('skip_delete_nonce', 'nonce', false);
+		$permission = check_ajax_referer('ash_skip_delete_nonce', 'nonce', false);
 
         if ($permission === false) {
             echo 'Permission Denied';
