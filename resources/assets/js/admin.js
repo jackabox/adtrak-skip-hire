@@ -196,4 +196,48 @@ jQuery(document).ready(function ($) {
 			});
 		}
 	});
+
+	$(function() {
+		var myData = {
+			labels: ["Mo","Tu","We","Th","Fr","Sa","Su"],
+			datasets: [{
+				label: 'Total Orders',
+				data : [65,59,90,81,56,55,40]
+			},{
+				label: 'Pending Orders',
+				data : [40,48,40,40,90,27,90],
+				backgroundColor: [
+					'rgba(90, 190, 90, .5)',
+					'rgba(90, 190, 90, .5)',
+					'rgba(90, 190, 90, .5)',
+					'rgba(90, 190, 90, .5)',
+					'rgba(90, 190, 90, .5)',
+					'rgba(90, 190, 90, .5)',
+					'rgba(90, 190, 90, .5)'
+				],
+				borderColor: [
+					'rgba(90, 190, 90, 1)',
+					'rgba(90, 190, 90, 1)',
+					'rgba(90, 190, 90, 1)',
+					'rgba(90, 190, 90, 1)',
+					'rgba(90, 190, 90, 1)',
+					'rgba(90, 190, 90, 1)',
+					'rgba(90, 190, 90, 1)'
+				]
+			}]
+		};
+
+		var chart = new Chart( document.getElementById("canvas").getContext("2d"), {
+			type: 'bar',
+			data: myData, 
+			options: {
+				responsive: true,
+				bezierCurve: false,
+				scaleShowVerticalLines: false,
+				legend: {
+					display: false
+				}
+			}
+		});
+	});
 });

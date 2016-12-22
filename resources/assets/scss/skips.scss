@@ -3,6 +3,12 @@
 
 $box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
 
+#canvas {
+    display: block;
+    padding: 20px;
+    max-width: 100%;
+}
+
 #toplevel_page_ash ul.wp-submenu {
     li:nth-child(5),
 	li:nth-child(6),
