@@ -13,9 +13,9 @@ class SkipController extends Admin
 
 	public function menu() 
 	{
-		$this->addMenu('Skips', 'ash-skips', 'manage_options', [$this, 'index'], 'adskip');
-		$this->addMenu('Skips - Add', 'ash-skips-add', 'manage_options', [$this, 'create'], 'adskip');
-		$this->addMenu('Skips - Edit', 'ash-skips-edit', 'manage_options', [$this, 'edit'], 'adskip');
+		$this->addMenu('Skips', 'ash-skips', 'manage_options', [$this, 'index'], 'ash');
+		$this->addMenu('Skips - Add', 'ash-skips-add', 'manage_options', [$this, 'create'], 'ash');
+		$this->addMenu('Skips - Edit', 'ash-skips-edit', 'manage_options', [$this, 'edit'], 'ash');
 		$this->createMenu();
 	}
 
