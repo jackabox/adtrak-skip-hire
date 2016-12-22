@@ -76,7 +76,7 @@ jQuery(document).ready(function ($) {
 				type: 'post',
 				url: SHajax.ajaxurl,
 				data: {
-					action: 'coupon_delete',
+					action: 'ash_coupon_delete',
 					nonce: nonce,
 					id: id
 				},
