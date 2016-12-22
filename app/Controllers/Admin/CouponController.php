@@ -29,8 +29,8 @@ class CouponController extends Admin
 		];
 
 		View::render('admin/coupons/index.twig', [
-			'coupons' 		=> $coupons,
-			'link'			=> $link
+			'coupons' 	=> $coupons,
+			'link'		=> $link
 		]);
 	}
 
