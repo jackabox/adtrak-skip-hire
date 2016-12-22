@@ -17,9 +17,9 @@ class LocationController extends Admin
 
 	public function menu() 
 	{
-		$this->addMenu('Locations', 'ash-location', 'manage_options', [$this, 'index'], 'adskip');
-		$this->addMenu('Locations - Add', 'ash-location-add', 'manage_options', [$this, 'create'], 'adskip');
-		$this->addMenu('Locations - Edit', 'ash-location-edit', 'manage_options', [$this, 'edit'], 'adskip');
+		$this->addMenu('Locations', 'ash-locations', 'manage_options', [$this, 'index'], 'ash');
+		$this->addMenu('Locations - Add', 'ash-locations-add', 'manage_options', [$this, 'create'], 'ash');
+		$this->addMenu('Locations - Edit', 'ash-locations-edit', 'manage_options', [$this, 'edit'], 'ash');
 		$this->createMenu();
 	}
 
@@ -28,8 +28,8 @@ class LocationController extends Admin
 		$locations = Location::all();
 
 		$link = [
-			'edit' => admin_url('admin.php?page=ash-location-edit&id='),
-			'add'  => admin_url('admin.php?page=ash-location-add')
+			'edit' => admin_url('admin.php?page=ash-locations-edit&id='),
+			'add'  => admin_url('admin.php?page=ash-locations-add')
 		];
 
 		View::render('admin/locations/index.twig', [
@@ -75,7 +75,7 @@ class LocationController extends Admin
 				$loc->radius 		= $_REQUEST['radius'];
 				$loc->save();
 
-				$url = admin_url('admin.php?page=ash-location-edit&id=' . $loc->id);
+				$url = admin_url('admin.php?page=ash-locations-edit&id=' . $loc->id);
 				echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $url . '">';
 				echo '<script>window.location.href=' . $url . ';</script>';
 				die();
