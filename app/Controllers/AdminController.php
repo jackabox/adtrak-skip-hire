@@ -1,7 +1,7 @@
 <?php namespace Adtrak\Skips\Controllers;
 
 use Adtrak\Skips\View;
-use Adtrak\Skips\Controllers\LocationController;
+use Adtrak\Skips\Controllers\Admin\LocationController;
 use Adtrak\Skips\Controllers\Admin\SkipController;
 use Adtrak\Skips\Controllers\Admin\PermitController;
 use Adtrak\Skips\Controllers\Admin\CouponController;
@@ -13,11 +13,13 @@ class AdminController
 	protected $permit;
 	protected $coupon;
 	protected $skip;
+	protected $location;
 	
 	public function __construct()
 	{
 		$this->permit = new PermitController;
 		$this->coupon = new CouponController;
+		$this->location = new LocationController;
 		$this->skip = new SkipController;
 	}
 	
@@ -35,14 +37,14 @@ class AdminController
 			'manage_options',
 			'adskip',
 			'',
-			'', //n	one',
+			'', //none',
 			100
 		);
 
 		\Adtrak\Skips\Controllers\OrderController::instance()->menu();
-		\Adtrak\Skips\Controllers\LocationController::instance()->menu();
-		
+
 		$this->skip->menu();
+		$this->location->menu();
 		$this->permit->menu();
 		$this->coupon->menu();
 

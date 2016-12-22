@@ -1,7 +1,7 @@
 <?php namespace Adtrak\Skips;
 
 $admin = Controllers\AdminController::instance();
-$locations = Controllers\LocationController::instance();
+$locations = new Controllers\Admin\LocationController;
 $skips =  new Controllers\Admin\SkipController;
 $permits = new Controllers\Admin\PermitController;
 $coupons = new Controllers\Admin\CouponController;
@@ -18,7 +18,7 @@ $loader->action([
 
 $loader->action([
 	 'method' 	=> 'wp_ajax_ash_location_delete', 
-	 'uses' 	=> [$locations, 'deleteLocation'] 
+	 'uses' 	=> [$locations, 'destroy'] 
 ]);
 
 $loader->action([

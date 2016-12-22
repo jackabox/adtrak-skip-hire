@@ -1,52 +1,26 @@
 <?php 
-namespace Adtrak\Skips\Controllers;
+namespace Adtrak\Skips\Controllers\Admin;
 
 use Adtrak\Skips\View;
 use Adtrak\Skips\Models\Location;
+use Adtrak\Skips\Facades\Admin;
 use Billy\Framework\Facades\DB;
 
-class LocationController
+class LocationController extends Admin
 {
-	private static $instance = null;
-
-	public function __construct() {
-		 add_shortcode('ash_location_lookup', [$this, 'showLocationForm']);
-	}
-
-	public static function instance()
+	public function __construct()
 	{
- 		null === self::$instance and self::$instance = new self;
-        return self::$instance;
+		self::instance();
+
+		add_shortcode('ash_location_lookup', [$this, 'showLocationForm']);
 	}
 
 	public function menu() 
 	{
-		add_submenu_page(
-			'adskip',			
-			__( 'Locations', 'adskip' ),
-			'Locations',
-			'manage_options',
-			'ash-location',
-			[$this, 'index']
-		);
-
-		add_submenu_page(
-			'adskip',			
-			__( 'Add Location', 'adskip' ),
-			'Locations - Add',
-			'manage_options',
-			'ash-location-add',
-			[$this, 'addLocation']
-		);
-
-		add_submenu_page(
-			'adskip',			
-			__( 'Edit Location', 'adskip' ),
-			'Locations - Edit',
-			'manage_options',
-			'ash-location-edit',
-			[$this, 'showLocation']
-		);
+		$this->addMenu('Locations', 'ash-location', 'manage_options', [$this, 'index'], 'adskip');
+		$this->addMenu('Locations - Add', 'ash-location-add', 'manage_options', [$this, 'create'], 'adskip');
+		$this->addMenu('Locations - Edit', 'ash-location-edit', 'manage_options', [$this, 'edit'], 'adskip');
+		$this->createMenu();
 	}
 
 	public function index() 
@@ -55,7 +29,7 @@ class LocationController
 
 		$link = [
 			'edit' => admin_url('admin.php?page=ash-location-edit&id='),
-			'add' => admin_url('admin.php?page=ash-location-add')
+			'add'  => admin_url('admin.php?page=ash-location-add')
 		];
 
 		View::render('admin/locations/index.twig', [
@@ -64,16 +38,16 @@ class LocationController
 		]);
 	}
 
-	public function addLocation() 
+	public function create() 
 	{
 		if (isset($_REQUEST['action']) && $_REQUEST['action'] === 'location_add') {
-			$this->storeLocation();
+			$this->store();
 		}
 
 		View::render('admin/locations/add.twig', []);
 	}
 
-	public function storeLocation()
+	public function store()
 	{
 		$permission = true;
 		$errors 	= [];
@@ -113,15 +87,15 @@ class LocationController
         die();
 	}
 
-	public function showLocation()
+	public function edit()
 	{
 		if (isset($_REQUEST['action']) && $_REQUEST['action'] === 'location_update') {
-			$this->updateLocation();
+			$this->update();
 		}
 
  		if (current_user_can('delete_posts')) {
 			$nonce = wp_create_nonce('ash_location_delete_nonce');
-			$button['delete'] = 'or <a href="' . admin_url('admin-ajax.php?action=location_delete&id=' . $_GET['id'] . '&nonce=' . $nonce ) . '" data-id="' . $_GET['id'] . '" data-nonce="' . $nonce . '" data-redirect="' . admin_url('admin.php?page=ash-location') . '" class="ash-location-delete">Delete</a>';
+			$button['delete'] = 'or <a href="' . admin_url('admin-ajax.php?action=ash_location_delete&id=' . $_GET['id'] . '&nonce=' . $nonce ) . '" data-id="' . $_GET['id'] . '" data-nonce="' . $nonce . '" data-redirect="' . admin_url('admin.php?page=ash-location') . '" class="ash-location-delete">Delete</a>';
 		} else {
 			$button['delete'] = '';
 		}
@@ -138,7 +112,7 @@ class LocationController
 		}
 	}
 
-	public function updateLocation()
+	public function update()
 	{
 		$permission = true;
 		$errors 	= [];
@@ -173,7 +147,7 @@ class LocationController
         }
 	}
 
-	public function deleteLocation()
+	public function destroy()
 	{
 		$permission = check_ajax_referer('ash_location_delete_nonce', 'nonce', false);
 
