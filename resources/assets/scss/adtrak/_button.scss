@@ -1,0 +1,26 @@
+.ad-button {
+    color: $button-color;
+    border-color: $button-border;
+    font-size: $button-font-size;
+    padding: $button-padding;
+    border-radius: 3px;
+    background: $button-bg;
+    transition: all ease-in-out .3s;
+    text-decoration: none;
+    &--orange {
+        background: #F2533A;
+        color: #fff;
+        &:hover {
+            color: #fff;
+            background: darken(#f2533a, 10%);
+        }
+    }
+    &--grey {
+        background: #1D2024;
+        color: #fff;
+        &:hover {
+            color: #fff;
+            background: darken(#1D2024, 10%);
+        }
+    }
+}

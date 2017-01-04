@@ -1,7 +1,4 @@
-@import "icons";
-@import "tables";
-
-$box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+@import "adtrak/adtrak";
 
 #canvas {
     display: block;
@@ -49,25 +46,11 @@ $box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
     }
 }
 
-.wrap--as {
-    position: relative;
 
-    header {
-        padding: 20px 0;
-        position: relative;
-        margin-bottom: 20px;
-
-        &:after {
-            clear: both; display: table; content: '';
-        }
-
-        h1 {
-            float: left;
-        }
-        
-        .action {
-            margin-top: 7px;
-            float: right;
+.ad-table {
+    .details {
+        span {
+            margin-right: 20px;
         }
     }
 }
@@ -92,14 +75,15 @@ $box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
         background: #fff;
         padding: 20px;
         margin-bottom: 20px;
-        box-shadow: $box-shadow;
+        border: 2px solid #E2E2E2;
 
         .section-header {
             margin: -20px -20px 20px -20px;
             padding: 14px 20px;
             font-weight: $table-header-font-weight;
             color: #757575;
-            border-bottom: 1px solid rgba(0,0,0,.12);
+            border-bottom: 1px solid #E2E2E2;
+            
             * {
                 margin: 0;
             }
