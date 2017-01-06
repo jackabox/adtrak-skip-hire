@@ -1,56 +1,70 @@
-<div class="wrap wrap--as">
-	<div class="as-notification"></div>
-	
-	<header>
+{% include 'admin/partials/header.twig' %}
+
+	<header class="ad-header">
 		<h1>Add New Skip</h1>
 	</header>
-
-	<form class="container" id="skips" action="" method="POST">
+	
+	<form class="container ad-form" action="" method="POST">
 		<div class="content">
-			<div class="section-header">
-				<h4>Skip Information</h4>
+			<div class="ad-form-row ad-form-row--inline">
+				<label for="title">Name</label>
+				<div>
+					<input type="text" name="title" placeholder="Enter a Name">
+				</div>
 			</div>
 
-			<p>
-				<label for="title">Name</label>
-				<input type="text" name="title" placeholder="Enter a Name" value="">
-			</p>
-			<p>
+			<div class="ad-form-row ad-form-row--inline">
 				<label for="width">Width</label>
-				<input type="text" name="width" placeholder="Enter a Width" value="">
-			</p>
-			<p>
-				<label for="height">Height</label>
-				<input type="text" name="height" placeholder="Enter a Height" value="">
-			</p>
-			<p>
-				<label for="length">Length</label>
-				<input type="text" name="length" placeholder="Enter a Length" value="">
-			</p>
-			<p>
-				<label for="capacity">Capacity</label>
-				<input type="text" name="capacity" placeholder="Enter a Capacity" value="">
-			</p>
-			<p>
-				<label for="price">Price</label>
-				<input type="text" name="price" placeholder="Enter a price" value="">
-			</p>
-			<p>
-				<label for="description">Description</label>
-				<textarea name="description" placeholder="Enter a Description"></textarea>
-			</p>
+				
+				<div>
+					<input type="text" name="width" placeholder="Enter a Width">
+				</div>					
+			</div>
+
+			<div class="ad-form-row ad-form-row--inline">
+				<label for="height">Height</label>				
+				<div>
+					<input type="text" name="height" placeholder="Enter a Height">
+				</div>
+			</div>
+
+			<div class="ad-form-row ad-form-row--inline">
+				<label for="length">Length</label>			
+				<div>
+					<input type="text" name="length" placeholder="Enter a Length">
+				</div>
+			</div>
+
+			<div class="ad-form-row ad-form-row--inline">
+				<label for="capacity">Capacity</label>			
+				<div>
+					<input type="text" name="capacity" placeholder="Enter a Capacity">
+				</div>
+			</div>
+
+			<div class="ad-form-row ad-form-row--inline">
+				<label for="price">Price</label>		
+				<div>
+					<input type="text" name="price" placeholder="Enter a price">
+				</div>
+			</div>
+
+			<div class="ad-form-row ad-form-row--inline">
+				<label for="description">Description</label>		
+				<div>
+					<textarea name="description" placeholder="Enter a Description"></textarea>
+				</div>
+			</div>
 
 			<input type="hidden" name="action" value="skip_add">
-		</div>	
-
-		<aside class="sidebar">
-			<div class="sidebar__item">
-				<div class="section-header">
-					<h4>Save?</h4>
+			
+			<div class="ad-form-row ad-form-row--inline">
+				<label>&nbsp;</label>
+				<div>
+					<button type="submit" class="ad-button ad-button--orange">Add Skip</button>
 				</div>
-
-				<p><button type="submit" class="button">Save</button></p>
 			</div>
-		</aside>
+		</div>	
 	</form>
-</div>
+
+{% include 'admin/partials/footer.twig' %}

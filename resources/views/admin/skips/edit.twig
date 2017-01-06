@@ -1,57 +1,71 @@
-<div class="wrap wrap--as">
-	<div class="as-notification"></div>
+{% include 'admin/partials/header.twig' %}
 
-	<header>
+	<header class="ad-header">
 		<h1>Edit: {{ skip.name }} (#{{ skip.id }})</h1>
 	</header>
 
-	<form class="container" id="skips" action="" method="POST">
+	<form class="container ad-form" action="" method="POST">
 		<div class="content">
-			<div class="section-header">
-				<h4>Skip Information</h4>
+			<div class="ad-form-row ad-form-row--inline">
+				<label for="title">Name</label>
+				<div>
+					<input type="text" name="title" placeholder="Enter a Name" value="{{ skip.name }}">
+				</div>
 			</div>
 
-			<p>
-				<label for="title">Name</label>
-				<input type="text" name="title" placeholder="Enter a Name" value="{{ skip.name }}">
-			</p>
-			<p>
+			<div class="ad-form-row ad-form-row--inline">
 				<label for="width">Width</label>
-				<input type="text" name="width" placeholder="Enter a Width" value="{{ skip.width }}">
-			</p>
-			<p>
-				<label for="height">Height</label>
-				<input type="text" name="height" placeholder="Enter a Height" value="{{ skip.height }}">
-			</p>
-			<p>
-				<label for="length">Length</label>
-				<input type="text" name="length" placeholder="Enter a Length" value="{{ skip.length }}">
-			</p>
-			<p>
-				<label for="capacity">Capacity</label>
-				<input type="text" name="capacity" placeholder="Enter a Capacity" value="{{ skip.capacity }}">
-			</p>
-			<p>
-				<label for="price">Price</label>
-				<input type="text" name="price" placeholder="Enter a price" value="{{ skip.price }}">
-			</p>
-			<p>
-				<label for="description">Description</label>
-				<textarea name="description" placeholder="Enter a Description">{{ skip.description }}</textarea>
-			</p>
+				
+				<div>
+					<input type="text" name="width" placeholder="Enter a Width" value="{{ skip.width }}">
+				</div>					
+			</div>
+
+			<div class="ad-form-row ad-form-row--inline">
+				<label for="height">Height</label>				
+				<div>
+					<input type="text" name="height" placeholder="Enter a Height" value="{{ skip.height }}">
+				</div>
+			</div>
+
+			<div class="ad-form-row ad-form-row--inline">
+				<label for="length">Length</label>			
+				<div>
+					<input type="text" name="length" placeholder="Enter a Length" value="{{ skip.length }}">
+				</div>
+			</div>
+
+			<div class="ad-form-row ad-form-row--inline">
+				<label for="capacity">Capacity</label>			
+				<div>
+					<input type="text" name="capacity" placeholder="Enter a Capacity" value="{{ skip.capacity }}">
+				</div>
+			</div>
+
+			<div class="ad-form-row ad-form-row--inline">
+				<label for="price">Price</label>		
+				<div>
+					<input type="text" name="price" placeholder="Enter a price" value="{{ skip.price }}">
+				</div>
+			</div>
+
+			<div class="ad-form-row ad-form-row--inline">
+				<label for="description">Description</label>		
+				<div>
+					<textarea name="description" placeholder="Enter a Description">{{ skip.description }}</textarea>
+				</div>
+			</div>
 
 			<input type="hidden" name="action" value="skip_update">
 			<input type="hidden" name="id" value="{{ skip.id }}">
-		</div>	
-
-		<aside class="sidebar">
-			<div class="sidebar__item">
-				<div class="section-header">
-					<h4>Update</h4>
+			
+			<div class="ad-form-row ad-form-row--inline">
+				<label>&nbsp;</label>
+				<div>
+					<button type="submit" class="ad-button ad-button--orange">Save</button> {{ button.delete | raw }}
 				</div>
-
-				<p><button type="submit" class="button">Save</button> {{ button.delete | raw }}</p>
 			</div>
-		</aside>
+		</div>	
 	</form>
-</div>
+
+{% include 'admin/partials/footer.twig' %}

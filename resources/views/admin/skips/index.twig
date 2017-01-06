@@ -1,4 +1,5 @@
-<div class="wrap">
+{% include 'admin/partials/header.twig' %}
+
 	<header class="ad-header">
 		<h1>Skips</h1>
 		<a href="{{ link.add }}" class="button action">Add New Skip</a>
@@ -35,4 +36,5 @@
 	{% else %}
 	<p>No skips added</p>
 	{% endif %}
-</div>
+
+{% include 'admin/partials/footer.twig' %}
