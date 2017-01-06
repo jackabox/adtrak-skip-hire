@@ -2,7 +2,7 @@
 
 	<header class="ad-header">
 		<h1>Skips</h1>
-		<a href="{{ link.add }}" class="button action">Add New Skip</a>
+		<a href="{{ link.add }}" class="ad-button action">Add New Skip</a>
 	</header>
 
 	{% if skips %}
@@ -27,7 +27,7 @@
 				</td>
 				<td>£{{ skip.price }}</td>
 				<td>
-					<a href="{{ link.edit }}{{ skip.id }}">Manage</a>
+					<a href="{{ link.edit }}{{ skip.id }}" class="ad-button">Manage</a>
 				</td>
 			</tr>
 			{% endfor %}
