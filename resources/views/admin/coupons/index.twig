@@ -1,4 +1,5 @@
-<div class="wrap wrap--as">
+{% include 'admin/partials/header.twig' %}
+
 	<header>
 		<h1>Coupons</h1>
 		<a href="{{ link.add }}" class="button action">Add New Coupon</a>
@@ -40,4 +41,5 @@
 	{% else %}
 	<p>No coupons added</p>
 	{% endif %}
-</div>
+
+{% include 'admin/partials/footer.twig' %}

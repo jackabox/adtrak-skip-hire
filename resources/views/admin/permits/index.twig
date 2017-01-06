@@ -1,5 +1,6 @@
-<div class="wrap wrap--as">
-	<header>
+{% include 'admin/partials/header.twig' %}
+
+	<header class="ad-header">
 		<h1>Permits</h1>
 		<a href="{{ link.add }}" class="button action">Add New Permit</a>
 	</header>
@@ -28,4 +29,5 @@
 	{% else %}
 	<p>No permits added</p>
 	{% endif %}
-</div>
+
+{% include 'admin/partials/footer.twig' %}

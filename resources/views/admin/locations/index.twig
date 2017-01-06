@@ -1,4 +1,5 @@
-<div class="wrap wrap--as">
+{% include 'admin/partials/header.twig' %}
+
 	<header>
 		<h1>Locations</h1>
 		<a href="{{ link.add }}" class="button action">Add New Location</a>
@@ -28,4 +29,5 @@
 			{% endfor %}
 		</tbody>
 	</table>
-</div>
+	
+{% include 'admin/partials/footer.twig' %}
