@@ -2,11 +2,11 @@
 
 	<header class="ad-header">
 		<h1>Permits</h1>
-		<a href="{{ link.add }}" class="button action">Add New Permit</a>
+		<a href="{{ link.add }}" class="ad-button action">Add New Permit</a>
 	</header>
 
 	{% if permits %}
-	<table class="as-table as-table__permits">
+	<table class="ad-table ad-table__permits">
 		<thead>
 			<tr>
 				<th>Name</th>
@@ -20,7 +20,7 @@
 				<td><a href="{{ link.edit }}{{ permit.id }}">{{ permit.name }}</a></td>
 				<td>£{{ permit.price }}</td>
 				<td>
-					<a href="{{ link.edit }}{{ permit.id }}">Manage</a>
+					<a href="{{ link.edit }}{{ permit.id }}" class="ad-button">Manage</a>
 				</td>
 			</tr>
 			{% endfor %}
