@@ -1,11 +1,11 @@
 {% include 'admin/partials/header.twig' %}
 
-	<header>
+	<header class="ad-header">
 		<h1>Locations</h1>
-		<a href="{{ link.add }}" class="button action">Add New Location</a>
+		<a href="{{ link.add }}" class="ad-button action">Add New Location</a>
 	</header>
 
-	<table class="as-table as-table__locations">
+	<table class="ad-table ad-table__locations">
 		<thead>
 			<tr>
 				<th>Name</th>
@@ -23,7 +23,7 @@
 				<td>{{ loc.lng }}</td>
 				<td>{{ loc.radius }}</td>
 				<td>
-					<a href="{{ link.edit }}{{ loc.id }}">Manage</a>
+					<a href="{{ link.edit }}{{ loc.id }}" class="ad-button">Manage</a>
 				</td>
 			</tr>
 			{% endfor %}
