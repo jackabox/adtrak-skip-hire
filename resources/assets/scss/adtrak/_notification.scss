@@ -1,0 +1,16 @@
+.ad-notification {
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    background: #212121;
+    color: #fff;
+    display: none;
+    &.success {
+        background: green;
+    }
+    &.error {
+        background: red;
+    }
+    &.warning {
+        background: orange;
+    }
+}

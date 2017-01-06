@@ -1,0 +1,46 @@
+
+.ad-form {
+    width: 100%;
+
+    label {
+        display: block;
+        width: 100%;
+        font-weight: 600;
+        margin-bottom: 8px;
+        font-size: 15px;
+    }
+
+    input,
+    select,
+    textarea {
+        width: 100%;
+        padding: 10px;
+        font-size: 14px;
+        margin: 0;
+    }
+
+    textarea {
+        min-height: 140px;
+    }
+
+    .ad-form-row {
+        margin-bottom: 20px;
+    }
+
+    .ad-form-row--inline {    
+        label {
+            display: inline-block;
+            width: 160px;
+            margin-right: 1em;
+            vertical-align: top;
+            margin-top: 12px;            
+        }
+
+        div {
+            vertical-align: top;        
+            display: inline-block;
+            width: 100%;
+            max-width: 600px;
+        }
+    }
+}
