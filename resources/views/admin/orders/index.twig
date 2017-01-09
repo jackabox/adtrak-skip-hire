@@ -1,0 +1,33 @@
+{% include 'admin/partials/header.twig' %}
+
+	<header class="ad-header">
+		<h1>Orders</h1>
+	</header>
+
+	{% if orders %}
+	<table class="ad-table ad-table__orders">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Details</th>
+				<th>Price</th>
+				<th class="manage"></th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for order in orders %}
+			<tr>
+				<td><a href="{{ link.edit }}{{ order.id }}">{{ order.id }}</a></td>
+				<td><a href="{{ link.edit }}{{ order.id }}">{{ order.forename }} {{ order.surname }}</a></td>
+				<td>
+					<a href="{{ link.edit }}{{ order.id }}" class="ad-button">Manage</a>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	{% else %}
+	<p>No Orders Placed</p>
+	{% endif %}
+
+{% include 'admin/partials/footer.twig' %}

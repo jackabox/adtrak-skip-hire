@@ -2,6 +2,8 @@
 namespace Adtrak\Skips\Controllers\Admin;
 
 use Adtrak\Skips\Facades\Admin;
+use Adtrak\Skips\Models\Order;
+use Adtrak\Skips\View;
 
 class OrderController extends Admin
 {
@@ -18,6 +20,17 @@ class OrderController extends Admin
 
 	public function index()
 	{
-		echo 'index';
+		$orders = Order::all();
+
+		$link = [
+			'edit' => admin_url('admin.php?page=ash-orders-edit&id='),
+			'add'  => admin_url('admin.php?page=ash-orders-add')
+		];
+
+		View::render('admin/orders/index.twig', [
+			'orders' 	=> $orders,
+			'link'		=> $link
+		]);
+
 	}
 }
