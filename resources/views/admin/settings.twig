@@ -5,26 +5,29 @@
 	</header>
 
 	<form class="ad-grid ad-form" action="" method="POST">
-		<div class="content ad-box">
-			<div class="section-header">
-				<h4>Settings</h4>
-			</div>
+		<div class="content">
+			<div class="ad-box">
+				<div class="section-header">
+					<h4>Settings</h4>
+				</div>
 
-			<p>
-				<label for="gmaps_api">Google Maps API Key</label>
-				<input type="text" name="gmaps_api" value="{{ options.gmaps_api }}">
-			</p>
+				<p>
+					<label for="gmaps_api">Google Maps API Key</label>
+					<input type="text" name="gmaps_api" value="{{ options.gmaps_api }}">
+				</p>
 		
-			<input type="hidden" name="action" value="settings_save">
+				<input type="hidden" name="action" value="settings_save">
+			</div>
+			<p><button type="submit" class="ad-button ad-button--orange">Save</button></p>
 		</div>	
 
 		<aside class="sidebar">
 			<div class="sidebar__item ad-box">
 				<div class="section-header">
-					<h4>Update</h4>
+					<h4>Helpers</h4>
 				</div>
 
-				<p><button type="submit" class="ad-button">Save</button></p>
+				<p>Need Help? This would be the helper text for admins setting it up</p>
 			</div>
 		</aside>
 	</form>

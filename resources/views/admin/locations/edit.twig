@@ -4,38 +4,40 @@
 		<h1>Edit: {{ location.name }} (#{{ location.id }})</h1>
 	</header>
 
-	<form class="ad-form" id="locations" action="" method="POST">
-		<div class="section-header">
-			<h4>Location Information</h4>
-		</div>
+	<form class="ad-grid ad-form" action="" method="POST">
+		<div class="content">
+			<div class="ad-form-row ad-form-row--inline">
+				<label for="title">Name</label>
+				<div><input type="text" name="title" placeholder="Enter a Name for the Location" value="{{ location.name }}"></div>
+			</div>
 
-		<p>
-			<label for="title">Name</label>
-			<input type="text" name="title" placeholder="Enter a Name for the Location" value="{{ location.name }}">
-		</p>
+			<div class="ad-form-row ad-form-row--inline">
+				<label for="description">Description</label>
+				<div><textarea name="description" placeholder="Enter a Description">{{ location.description }}</textarea></div>
+			</div>
 
-		<p>
-			<label for="description">Description</label>
-			<textarea name="description" placeholder="Enter a Description">{{ location.description }}</textarea>
-		</p>
+			<div class="ad-form-row ad-form-row--inline">	
+				<label for="location">Location</label>
+				<div>
+					<input type="text" name="location" id="as_location" placeholder="Enter a Post Code" value="{{ location.address }}">
+				</div>
+			</div>
 
-		<p>
-			<label for="location">Location</label>
-			<input type="text" name="location" id="as_location" placeholder="Enter a Post Code" value="{{ location.address }}">
-			<div id="map"></div>
+			<div class="ad-form-row ad-form-row--inline">	
+				<label for="radius">Radius</label>
+				<div><input type="number" name="radius" placeholder="Enter a Delivery Radius" value="{{ location.radius }}"></div>
+			</div>
+
 			<input type="hidden" name="as_lat" id="as_lat" value="{{ location.lat }}">
-			<input type="hidden" name="as_lng" id="as_lng" value="{{ location.lng }}">
-		</p>
-
-		<p>
-			<label for="radius">Radius</label>
-			<input type="number" name="radius" placeholder="Enter a Delivery Radius" value="{{ location.radius }}">
-		</p>
-
-		<input type="hidden" name="action" value="location_update">
-		<input type="hidden" name="id" value="{{ location.id }}">
-		
-		<p><button type="submit" class="ad-button">Save</button> {{ button.delete | raw }}</p>
+			<input type="hidden" name="as_lng" id="as_lng" value="{{ location.lng }}">			
+			<input type="hidden" name="action" value="location_update">
+			<input type="hidden" name="id" value="{{ location.id }}">
+			
+			<div class="ad-form-row ad-form-row--inline">	
+				<label>&nbsp;</label>		
+				<div><button type="submit" class="ad-button ad-button--orange">Save</button> {{ button.delete | raw }}</div>
+			</div>
+		</div>
 	</form>
 	
 {% include 'admin/partials/footer.twig' %}

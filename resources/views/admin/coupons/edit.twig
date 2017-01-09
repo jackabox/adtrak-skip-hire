@@ -1,42 +1,54 @@
 {% include 'admin/partials/header.twig' %}
 
 	<header class="ad-header">
-		<h1>Edit: {{ coupon.name }} (#{{ coupon.id }})</h1>
+		<h1>Edit Coupon: {{ coupon.name }} (#{{ coupon.id }})</h1>
 	</header>
 
 	<form class="ad-form" id="coupons" action="" method="POST">
-		<div class="section-header">
-			<h4>Coupon Information</h4>
+		<div class="content">
+			<div class="ad-form-row ad-form-row--inline">
+				<label for="code">Code</label>
+				<div><input type="text" name="code" placeholder="Enter a Code Name" value="{{ coupon.code }}"></div>
+			</div>
+
+			<div class="ad-form-row ad-form-row--inline">
+				<label for="amount">Amount</label>
+				<div>
+					<input type="number" name="amount" placeholder="Enter an Amount" value="{{ coupon.amount }}">
+				</div>
+			</div>
+
+			<div class="ad-form-row ad-form-row--inline">
+				<label for="type">Type</label>
+				<div>
+					<select name="type">
+						<option value="">Pick a Type</option>
+						<option value="percentage" {% if coupon.type == 'percentage' %}selected{% endif %}>Percentage</option>
+						<option value="flat" {% if coupon.type == 'flat' %}selected{% endif %}>Flat Rate</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="ad-form-row ad-form-row--inline">
+				<label for="starts">Start Date</label>
+				<div><input type="date" name="starts" placeholder="dd/mm/yyyy" value="{{ coupon.starts }}"></div>
+			</div>
+
+			<div class="ad-form-row ad-form-row--inline">
+				<label for="expires">Expiry Date</label>
+				<div>
+					<input type="date" name="expires" placeholder="dd/mm/yyyy" value="{{ coupon.expires }}">
+				</div>
+			</div>
+
+			<input type="hidden" name="action" value="coupon_update">
+			<input type="hidden" name="id" value="{{ coupon.id }}">	
+
+			<div class="ad-form-row ad-form-row--inline">
+				<label>&nbsp;</label>
+				<div><button type="submit" class="ad-button ad-button--orange">Save</button> {{ button.delete | raw }}</div>
+			</div>
 		</div>
-		<p>
-			<label for="code">Code</label>
-			<input type="text" name="code" placeholder="Enter a Code Name" value="{{ coupon.code }}">
-		</p>
-		<p>
-			<label for="amount">Amount</label>
-			<input type="number" name="amount" placeholder="Enter an Amount" value="{{ coupon.amount }}">
-		</p>
-		<p>
-			<label for="type">Type</label>
-			<select name="type">
-				<option value="">Pick a Type</option>
-				<option value="percentage" {% if coupon.type == 'percentage' %}selected{% endif %}>Percentage</option>
-				<option value="flat" {% if coupon.type == 'flat' %}selected{% endif %}>Flat Rate</option>
-			</select>
-		</p>
-		<p>
-			<label for="starts">Start Date</label>
-			<input type="date" name="starts" placeholder="dd/mm/yyyy" value="{{ coupon.starts }}">
-		</p>
-		<p>
-			<label for="expires">Expiry Date</label>
-			<input type="date" name="expires" placeholder="dd/mm/yyyy" value="{{ coupon.expires }}">
-		</p>
-
-		<input type="hidden" name="action" value="coupon_update">
-		<input type="hidden" name="id" value="{{ coupon.id }}">	
-
-		<p><button type="submit" class="ad-button">Save</button> {{ button.delete | raw }}</p>
 	</form>
 	
 {% include 'admin/partials/footer.twig' %}
