@@ -63,7 +63,7 @@ if ($version === false) {
 		$table->string('county', 200);
 		$table->string('country', 200)->nullable(false);
 		$table->string('city', 200)->nullable(false);
-		$table->date('delivery_time');	
+		$table->date('delivery_date');	
 		$table->string('delivery_slot', 20);
 		$table->text('waste');
 		$table->text('notes');
