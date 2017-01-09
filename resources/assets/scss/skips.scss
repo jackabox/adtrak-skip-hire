@@ -7,14 +7,16 @@
 }
 
 #toplevel_page_ash ul.wp-submenu {
-    li:nth-child(5),
-	li:nth-child(6),
-	li:nth-child(8),
-	li:nth-child(9),
-	li:nth-child(11),
-	li:nth-child(12),
-    li:nth-child(14),
-	li:nth-child(15) {
+    li:nth-child(4), // orders-edit
+    li:nth-child(6), // skips-edit
+	li:nth-child(7), // skips-add
+	li:nth-child(9), // location-add
+	li:nth-child(10), // location-edit
+	li:nth-child(12), // permits-add
+	li:nth-child(13), // permits-edit
+    li:nth-child(15), // coupons-add
+	li:nth-child(16) // coupons-edit
+     {
     	display: none;
 	}
 }

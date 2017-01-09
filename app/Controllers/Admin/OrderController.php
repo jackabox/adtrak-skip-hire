@@ -15,6 +15,7 @@ class OrderController extends Admin
 	public function menu() 
 	{
 		$this->addMenu('Orders', 'ash-orders', 'manage_options', [$this, 'index'], 'ash');
+		$this->addMenu('Orders - Edit', 'ash-orders-edit', 'manage_options', [$this, 'show'], 'ash');
 		$this->createMenu();
 	}
 
@@ -32,5 +33,10 @@ class OrderController extends Admin
 			'link'		=> $link
 		]);
 
+	}
+
+	public function show() 
+	{
+		
 	}
 }
