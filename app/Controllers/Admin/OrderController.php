@@ -15,7 +15,7 @@ class OrderController extends Admin
 	public function menu() 
 	{
 		$this->addMenu('Orders', 'ash-orders', 'manage_options', [$this, 'index'], 'ash');
-		$this->addMenu('Orders - Edit', 'ash-orders-edit', 'manage_options', [$this, 'show'], 'ash');
+		$this->addMenu('Orders - Edit', 'ash-orders-edit', 'manage_options', [$this, 'edit'], 'ash');
 		$this->createMenu();
 	}
 
@@ -35,8 +35,28 @@ class OrderController extends Admin
 
 	}
 
-	public function show() 
+	public function edit() 
 	{
+		if (isset($_REQUEST['action']) && $_REQUEST['action'] === 'order_update') {
+			$this->update();
+		}
 		
+ 		if (current_user_can('delete_posts')) {
+			$nonce = wp_create_nonce('ash_order_delete_nonce');
+			$button['delete'] = 'or <a href="' . admin_url( 'admin-ajax.php?action=ash_order_delete&id=' . $_GET['id'] . '&nonce=' . $nonce ) . '" data-id="' . $_GET['id'] . '" data-nonce="' . $nonce . '" data-redirect="' . admin_url('admin.php?page=ash-orders') . '" class="ash-order-delete">Delete</a>';
+		} else {
+			$button['delete'] = '';
+		}
+
+		$order = Order::find($_GET['id']);
+
+		if ($order) {
+			View::render('admin/orders/edit.twig', [
+				'order' 	=> $order,
+				'button'	=> $button
+			]);
+		} else {
+			echo "Sorry, the order you're looking for does not exist.";
+		}
 	}
 }
