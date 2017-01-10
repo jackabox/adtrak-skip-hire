@@ -49,10 +49,12 @@ class OrderController extends Admin
 		}
 
 		$order = Order::find($_GET['id']);
+		$items = $order->orderItems;
 
 		if ($order) {
 			View::render('admin/orders/edit.twig', [
 				'order' 	=> $order,
+				'items' 	=> $items,
 				'button'	=> $button
 			]);
 		} else {
