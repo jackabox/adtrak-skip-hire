@@ -39,9 +39,14 @@ $loader->action([
 /**
  * FRONT SCRIPTS/ACTIONS
  */
-$front = Controllers\FrontController::instance();
+$front = new Controllers\FrontController;
 
 $loader->action([
 	'method' 	=> 'wp_enqueue_scripts',
 	'uses' 		=> [$front, 'scripts']
+]);
+
+$loader->action([
+	'method'	=> 'template_include',
+	'uses'		=> [$front, 'loadTemplates']
 ]);

@@ -18,6 +18,11 @@ return [
     'views' => __DIR__ . '/resources/views',
 
     /**
+     * Templates
+     */
+    'templates' => __DIR__ . '/resources/templates/',
+
+    /**
      * Activate
      */
     'activators' => [

@@ -1,15 +1,48 @@
 <?php namespace Adtrak\Skips\Controllers;
 
 use Adtrak\Skips\Helper;
+use Adtrak\Skips\Controllers\Front\SkipController;
 
 class FrontController
 {
+	private $skip;
+
 	private static $instance = null;
 
-	public static function instance()
+	private $templates = [
+		'skips' 		=> 'ash-skips.php',
+		'checkout' 		=> 'ash-checkout.php',
+		'confirmation' 	=> 'ash-confirmation.php'
+	];
+
+	public function __construct()
+	{
+		// $this->skip = new SkipController;
+
+		$this->templatePaths();
+	}
+
+	private static function instance()
 	{
  		null === self::$instance and self::$instance = new self;
         return self::$instance;
+	}
+
+	public function loadTemplates($template) 
+	{
+		foreach ($this->templates as $page => $file) {
+			if (is_page($page)) {
+				$overriden = locate_template($file);
+		
+				if ($overriden) {
+					$template = $overriden;
+				} else {
+					$template = Helper::get('templates') . $file;
+				}
+			}
+		}
+
+		return $template;
 	}
 
 	public function scripts()
