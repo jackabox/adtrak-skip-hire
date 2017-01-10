@@ -35,9 +35,17 @@
             width: 100%;
         }
 
-        .sidebar {
+        .sidebar,
+        .info {
             width: 300px;
-            margin-left: 40px;
+        }
+
+        .sidebar {
+            margin-left: 40px;            
+        }
+
+        .info {
+            margin-right: 40px;
         }
     }
 
