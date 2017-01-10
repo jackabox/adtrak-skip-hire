@@ -60,22 +60,26 @@ if ($version === false) {
 		$table->string('number', 20)->nullable(false);
 		$table->string('address1', 200)->nullable(false);
 		$table->string('address2', 200);
+		$table->string('city', 200)->nullable(false);		
 		$table->string('county', 200);
 		$table->string('country', 200)->nullable(false);
-		$table->string('city', 200)->nullable(false);
+		$table->string('postcode', 10)->nullable(false);				
 		$table->date('delivery_date');	
 		$table->string('delivery_slot', 20);
 		$table->text('waste');
 		$table->text('notes');
-		$table->decimal('subtotal', 10, 2)->nullable(false);	
 		$table->decimal('total', 10, 2)->nullable(false);	
-		$table->integer('permit_id')->unsigned();	
-		$table->foreign('permit_id')->references('id')->on('as_permits');
-		$table->integer('coupon_id')->unsigned();
-		$table->foreign('coupon_id')->references('id')->on('as_coupons');
-		$table->integer('skip_id')->unsigned();
-		$table->foreign('skip_id')->references('id')->on('as_skips');
     	$table->timestamps();
+	});
+
+	Capsule::schema()->create('as_order_item'. function($table)
+	{
+		$table->increments('id');
+		$table->integer('order_id')->unsigned();
+		$table->string('name')->nullable(false);
+		$table->string('type')->nullable(false);
+		$table->decimal('total', 10, 2)->nullable(false);
+		$table->timestamps();
 	});
 
 	add_option('adtrak_skips_version', Helper::get('version'));	
