@@ -40,7 +40,7 @@ $loader->action([
  * FRONT SCRIPTS/ACTIONS
  */
 $front = Controllers\FrontController::instance();
- 
+
 $loader->action([
 	'method' 	=> 'wp_enqueue_scripts',
 	'uses' 		=> [$front, 'scripts']
