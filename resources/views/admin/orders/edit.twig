@@ -4,4 +4,115 @@
 		<h1>Manage Order #{{ order.id }}</h1>
 	</header>
 
+	<!-- order items -->
+	<table class="ad-table ad-table__items">
+		<thead>
+			<tr>
+				<th>Type</th>
+				<th>Name</th>
+				<th class="manage">Price</th>		
+			</tr>
+		</thead>
+		<tbody>
+			{% for item in items %}
+			<tr>
+				<td>{{ item.type }}</td>
+				<td>{{ item.name }}</td>
+				<td>£{{ item.price }}</td>
+			</tr>
+			{% endfor %}
+			<tr class="total" style="border-top: 1px solid #ddd;">
+				<td></td>
+				<td style="text-align: right;"><b>Total</b></td>
+				<td>£{{ order.total }}</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<div class="ad-grid">
+		<div class="info">
+			<div class="ad-box">
+				<div class="section-header">
+					<h4>User Details</h4>
+				</div>
+
+				<h4>Name</h4>
+				<p>{{ order.forename }} {{ order.surname }}</p>
+
+				<h4>Email</h4>
+				<p>{{ order.email }}</p>
+
+				<h4>Phone</h4>
+				<p>{{ order.number }}</p>
+			</div>
+
+			<div class="ad-box">
+				<div class="section-header">		
+					<h4>Delivery Details</h4>
+				</div>
+				<h4>Address</h4>
+				<p>
+				{{ order.address1 }}<br>
+				{% if order.address2 != false %}
+					{{ order.address2 }} <br>
+				{% endif %}
+				{{ order.city }}<br>
+				{% if order.county != false %}
+					{{ order.county }} <br>
+				{% endif %}
+				{{ order.country }} <br>
+				{{ order.post_code }}
+				</p>
+				<h4>Date &amp; Time</h4>
+				<p>{{ order.delivery_date|date("d/m/Y") }} ({{ order.delivery_slot }})</p>
+			</div>
+		</div>
+
+		<div class="content">	
+			<div class="ad-box">
+				<div class="section-header">		
+					<h4>Waste</h4>
+				</div>
+				{% if order.waste != false %}				
+					{{ order.waste }}
+				{% else %}
+					No details on waste provided.
+				{% endif %}
+			</div>
+			
+			<div class="ad-box">
+				<div class="section-header">		
+					<h4>Notes</h4>
+				</div>
+				{% if order.notes != false %}				
+					{{ order.notes }}
+				{% else %}
+					No notes provided
+				{% endif %}
+			</div>
+
+			<div class="ad-box">
+				<div class="section-header">		
+					<h4>Payment Details</h4>
+				</div>
+				{% if order.payment_method != false %}				
+					{{ order.payment_method }}
+				{% else %}
+					No payment information provided
+				{% endif %}
+			</div>
+
+			<div class="ad-box">
+				<div class="section-header">		
+					<h4>Update</h4>
+				</div>
+
+				<form action="" class="ad-form">
+					<p>Form stuff</p>
+					<button type="submit" class="ad-button ad-button--orange">Change</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
 {% include 'admin/partials/footer.twig' %}
