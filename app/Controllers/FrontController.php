@@ -18,8 +18,6 @@ class FrontController
 	public function __construct()
 	{
 		// $this->skip = new SkipController;
-
-		$this->templatePaths();
 	}
 
 	private static function instance()
