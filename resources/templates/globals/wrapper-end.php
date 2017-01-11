@@ -1,6 +1,6 @@
 <?php
 /**
- * Skip - Loop End
+ * Wrapper End
  *
  * This template can be overridden by copying it to yourtheme/adtrak-skips/skips/loop-end.php.
  *
@@ -12,5 +12,4 @@
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
 ?>
 	
-	</div><!-- /ash-skips-holder -->
 </div><!-- /wrap -->
