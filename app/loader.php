@@ -50,3 +50,6 @@ $loader->action([
 	'method'	=> 'template_include',
 	'uses'		=> [$front, 'loadTemplates']
 ]);
+
+
+$skips = new Controllers\Front\SkipController;
