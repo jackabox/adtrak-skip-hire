@@ -19,7 +19,7 @@ jQuery(document).ready(function ($) {
 				},
 				success: function(result) {
 					if (result === "success") {
-						console.log('true');
+						window.location.replace(redirect);
 					} else {
 						notification.removeClass('success')
 							.addClass('error')
