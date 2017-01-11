@@ -1,0 +1,28 @@
+.ash-skips-holder {
+	.ash-skip__item {
+		margin-bottom: 1em;
+		display: flex;
+	}
+
+	.ash-skip__content {
+		width: 100%;
+	}
+
+	.ash-skip__content--float {
+		width: 60%;
+		padding-left: 0.5em;
+	}
+
+	.ash-skip__image {
+		width: 40%;
+		padding-right: 0.5em;
+	}
+
+	.ask-skip__meta {
+		span {
+			width: 49%;
+			display: inline-block;
+			margin-bottom: 10px;
+		}
+	}
+}
