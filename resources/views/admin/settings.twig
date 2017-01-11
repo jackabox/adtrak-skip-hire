@@ -8,12 +8,39 @@
 		<div class="content">
 			<div class="ad-box">
 				<div class="section-header">
-					<h4>Settings</h4>
+					<h4>General Settings</h4>
 				</div>
 
 				<p>
 					<label for="gmaps_api">Google Maps API Key</label>
 					<input type="text" name="gmaps_api" value="{{ options.gmaps_api }}">
+				</p>
+		
+				<input type="hidden" name="action" value="settings_save">
+			</div>
+			<div class="ad-box">
+				<div class="section-header">
+					<h4>Payment Settings</h4>
+				</div>
+
+				<div class="ad-form-row ad-form-row--inline">
+					<label for="paypal_client_id">PayPal Client ID</label>
+					<div><input type="text" name="paypal_client_id" value=""></div>
+				</div>
+
+				<p>
+					<label for="paypal_client_secret">PayPal Client Secret</label>
+					<input type="text" name="paypal_client_secret" value="">
+				</p>
+
+				<p>
+					<label for="paypal_invoice_message">PayPal Invoice Message</label>
+					<input type="text" name="paypal_client_id" value="">
+				</p>
+
+				<p>
+					<label for="paypal_sandbox_mode">Enable PayPal Sandbox?</label>
+					<input type="text" name="paypal_sandbox_mode" value="">
 				</p>
 		
 				<input type="hidden" name="action" value="settings_save">
