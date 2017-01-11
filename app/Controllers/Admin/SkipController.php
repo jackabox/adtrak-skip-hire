@@ -67,18 +67,7 @@ class SkipController extends Admin
 			echo '</ul>';
 		} else {	
 
-			// save image
-			if (isset($_FILES) && isset($_FILES['uploadimage']) && (0 === $_FILES['uploadimage']['error'])) {
-				if (!function_exists( 'wp_handle_upload')) 
-					require_once(ABSPATH . 'wp-admin/includes/file.php');
-
-				$upload_overrides = array('test_form' => false);
-				$uploadedImage = wp_handle_upload($_FILES['uploadimage'], $upload_overrides);
-				
-				if (! $uploadedImage) {
-					echo "Possible file upload attack!\n";
-				}
-  			}
+			$uploadedImage = $this->handleImageUpload('uploadimage');
 
 			try {
 				$skip 				= new Skip;
@@ -89,8 +78,12 @@ class SkipController extends Admin
 				$skip->capacity 	= $_REQUEST['capacity'];
 				$skip->price 		= $_REQUEST['price'];
 				$skip->description 	= $_REQUEST['description'];
-				$skip->iimage_path  = $uploadedImage['path'];
-				$skip->image_url    = $uploadedImage['url'];
+				
+				if($uploadedImage) {
+					$skip->image_path   = $uploadedImage['file'];
+					$skip->image_url    = $uploadedImage['url'];
+				}
+
 				$skip->save();
 
 				$url = admin_url('admin.php?page=ash-skips-edit&id=' . $skip->id);
@@ -150,7 +143,7 @@ class SkipController extends Admin
 				echo '<li>' . $error . '</li>';
 			}
 			echo '</ul>';
-		} else {	
+		} else {			
 			try {
 				$skip 				= Skip::findOrFail($_REQUEST['id']);
 				$skip->name 		= $_REQUEST['title'];
@@ -160,6 +153,15 @@ class SkipController extends Admin
 				$skip->capacity 	= $_REQUEST['capacity'];
 				$skip->price 		= $_REQUEST['price'];
 				$skip->description 	= $_REQUEST['description'];
+				
+				$uploadedImage = $this->handleImageUpload('uploadimage');
+				if($uploadedImage) {
+					$this->handleImagedelete($skip->image_path);
+
+					$skip->image_path   = $uploadedImage['file'];
+					$skip->image_url    = $uploadedImage['url'];
+				}
+
 				$skip->save();
 
 				echo "Skip has been updated";
@@ -177,10 +179,37 @@ class SkipController extends Admin
             echo 'Permission Denied';
         } else {
 			$skip = Skip::findOrFail($_REQUEST['id']);
+			$this->handleImageDelete($skip->image_path);
 			$skip->delete();
 			echo 'success';
 		}
 
-        die();
+		die();
+	}
+
+	protected function handleImageUpload($fieldname) 
+	{
+		$uploadedImage = null;
+
+		if (isset($_FILES) && isset($_FILES[$fieldname]) && (0 === $_FILES[$fieldname]['error'])) {
+			if (!function_exists( 'wp_handle_upload')) 
+				require_once(ABSPATH . 'wp-admin/includes/file.php');
+
+			$upload_overrides = array('test_form' => false);
+			$uploadedImage = wp_handle_upload($_FILES[$fieldname], $upload_overrides);
+			
+			if (! $uploadedImage) {
+				echo "Possible file upload attack!\n";
+			}
+		}
+
+		return $uploadedImage;
+	}
+
+	protected function handleImageDelete($file = null)
+	{
+		if($file !== null) {
+			unlink($file);
+		}
 	}
 }

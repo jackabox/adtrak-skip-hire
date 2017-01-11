@@ -50,6 +50,17 @@
 			</div>
 
 			<div class="ad-form-row ad-form-row--inline">
+				<label for="image">Image</label>
+				<div>
+					{% if skip.image_url != null %}
+						<p><img src="{{ skip.image_url }}" style="max-width: 300px; height: auto;"></p>
+						<b>Upload New Image</b>
+					{% endif %}
+					<input type="file" name="uploadimage" id="uploadimage">
+				</div>
+			</div>
+
+			<div class="ad-form-row ad-form-row--inline">
 				<label for="description">Description</label>		
 				<div>
 					<textarea name="description" placeholder="Enter a Description">{{ skip.description }}</textarea>

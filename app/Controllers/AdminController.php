@@ -66,7 +66,9 @@ class AdminController
 
 	public function scripts()
 	{
-		wp_localize_script('adtrak-skips-ajax', 'SHajax', ['ajaxurl' => admin_url('admin-ajax.php')]);
+		wp_enqueue_script('adtrak-skips', Helper::assetUrl('js/admin.js'), ['jquery'], '', true);
+		wp_localize_script('adtrak-skips', 'SHajax', ['ajaxurl' => admin_url('admin-ajax.php')]);
+		
 		wp_enqueue_script('google_maps_api', '//maps.googleapis.com/maps/api/js?key='. get_option('ash_google_maps_api', '') .'&libraries=places');
 	}
 

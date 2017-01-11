@@ -9,8 +9,14 @@ class Skip extends Model
 	 protected $table = 'as_skips';
 
 	 protected $fillable = [
-		 'name', 'width', 'length', 
-		 'height', 'capacity',
-		 'description', 'price'
+		 'name', 
+		 'width', 
+		 'length', 
+		 'height', 
+		 'capacity',
+		 'description', 
+		 'price',
+		 'image_path',
+		 'image_url'
 	 ];
 }

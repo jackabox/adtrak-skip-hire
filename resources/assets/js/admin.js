@@ -1,4 +1,5 @@
 jQuery(document).ready(function ($) {
+	var notification = $('#ad-notification');
 
 	$('.ash-skip-delete').click(function () {
 		var truly = confirm('Are you sure you want to delete this skip?'),
@@ -16,15 +17,15 @@ jQuery(document).ready(function ($) {
 					nonce: nonce,
 					id: id
 				},
-				success: function (result) {
-					if (result === "error") {
+				success: function(result) {
+					if (result === "success") {
+						console.log('true');
+					} else {
 						notification.removeClass('success')
 							.addClass('error')
-							.html("Sorry, an error occured with deleting the skip. Please try again.")
+							.html("Sorry, an error occured when deleting the skip. Please try again.")
 							.show(500);
-					} else if (result === "success") {
-						window.location.replace(redirect);
-					}
+					} 
 				}
 			});
 		}
@@ -112,13 +113,13 @@ jQuery(document).ready(function ($) {
 					nonce: nonce,
 					id: id
 				},
-				success: function (result) {
+				success: function(result) {
 					if (result === "error") {
 						notification.removeClass('success')
 							.addClass('error')
 							.html("Sorry, an error occured with deleting the location. Please try again.")
 							.show(500);
-					} else if (result === "success") {
+					} else if (result == "success") {
 						window.location.replace(redirect);
 					}
 				}
