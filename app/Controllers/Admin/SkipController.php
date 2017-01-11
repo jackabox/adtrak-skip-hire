@@ -89,7 +89,8 @@ class SkipController extends Admin
 				$skip->capacity 	= $_REQUEST['capacity'];
 				$skip->price 		= $_REQUEST['price'];
 				$skip->description 	= $_REQUEST['description'];
-				$skip->image        = $uploadedImage['url'];
+				$skip->iimage_path  = $uploadedImage['path'];
+				$skip->image_url    = $uploadedImage['url'];
 				$skip->save();
 
 				$url = admin_url('admin.php?page=ash-skips-edit&id=' . $skip->id);
