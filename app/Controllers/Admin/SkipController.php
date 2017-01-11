@@ -66,6 +66,20 @@ class SkipController extends Admin
 			}
 			echo '</ul>';
 		} else {	
+
+			// save image
+			if (isset($_FILES) && isset($_FILES['uploadimage']) && (0 === $_FILES['uploadimage']['error'])) {
+				if (!function_exists( 'wp_handle_upload')) 
+					require_once(ABSPATH . 'wp-admin/includes/file.php');
+
+				$upload_overrides = array('test_form' => false);
+				$uploadedImage = wp_handle_upload($_FILES['uploadimage'], $upload_overrides);
+				
+				if (! $uploadedImage) {
+					echo "Possible file upload attack!\n";
+				}
+  			}
+
 			try {
 				$skip 				= new Skip;
 				$skip->name 		= $_REQUEST['title'];
@@ -75,6 +89,7 @@ class SkipController extends Admin
 				$skip->capacity 	= $_REQUEST['capacity'];
 				$skip->price 		= $_REQUEST['price'];
 				$skip->description 	= $_REQUEST['description'];
+				$skip->image        = $uploadedImage['url'];
 				$skip->save();
 
 				$url = admin_url('admin.php?page=ash-skips-edit&id=' . $skip->id);

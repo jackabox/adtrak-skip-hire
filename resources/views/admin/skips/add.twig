@@ -4,7 +4,7 @@
 		<h1>Add New Skip</h1>
 	</header>
 	
-	<form class="container ad-form" action="" method="POST">
+	<form class="container ad-form" action="" method="POST" enctype="multipart/form-data">
 		<div class="content">
 			<div class="ad-form-row ad-form-row--inline">
 				<label for="title">Name</label>
@@ -46,6 +46,13 @@
 				<label for="price">Price</label>		
 				<div>
 					<input type="text" name="price" placeholder="Enter a price">
+				</div>
+			</div>
+
+			<div class="ad-form-row ad-form-row--inline">
+				<label for="image">Image</label>
+				<div>
+					<input type="file" name="uploadimage" id="uploadimage">
 				</div>
 			</div>
 

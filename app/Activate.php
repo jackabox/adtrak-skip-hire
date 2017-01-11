@@ -28,6 +28,7 @@ if ($version === false) {
 		$table->string('height', 20);
 		$table->string('capacity', 20);
 		$table->text('description');
+		$table->string('image');
 		$table->decimal('price', 10, 2)->nullable(false);
     	$table->timestamps();		
 	});

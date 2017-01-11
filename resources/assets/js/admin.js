@@ -227,17 +227,19 @@ jQuery(document).ready(function ($) {
 			}]
 		};
 
-		var chart = new Chart( document.getElementById("canvas").getContext("2d"), {
-			type: 'bar',
-			data: myData, 
-			options: {
-				responsive: true,
-				bezierCurve: false,
-				scaleShowVerticalLines: false,
-				legend: {
-					display: false
+		if($('#canvas').length) {
+			var chart = new Chart(document.getElementById("canvas").getContext("2d"), {
+				type: 'bar',
+				data: myData, 
+				options: {
+					responsive: true,
+					bezierCurve: false,
+					scaleShowVerticalLines: false,
+					legend: {
+						display: false
+					}
 				}
-			}
-		});
+			});
+		}
 	});
 });
