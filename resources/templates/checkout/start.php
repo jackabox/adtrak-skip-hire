@@ -1,8 +1,8 @@
 <?php
 /**
- * Skip - Loop End
+ * Skip - Checkout Start
  *
- * This template can be overridden by copying it to yourtheme/adtrak-skips/skips/loop-end.php.
+ * This template can be overridden by copying it to yourtheme/adtrak-skips/skips/loop-start.php.
  *
  * @author 		Adtrak
  * @package 	Adtrak/Skips/Templates
@@ -11,5 +11,5 @@
 
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
 ?>
-	
-</div><!-- /ash-skips-holder -->
+
+<div class="ash-checkout-holder">
