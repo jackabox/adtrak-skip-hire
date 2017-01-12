@@ -111,6 +111,6 @@
 	</fieldset>
 
 	<input type="hidden" name="ash_skip" value="<?= $skip->id; ?>">
-	<button type="submit" name="ash_submit" id="ash_submit">Confirm Order</button>
+	<button type="submit" name="ash_submit" id="ash_submit" value="true">Confirm Order</button>
 
 </form>

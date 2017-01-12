@@ -3,12 +3,12 @@
 use Adtrak\Skips\Helper;
 use Adtrak\Skips\Models\Skip;
 use Adtrak\Skips\Models\Permit;
+use Adtrak\Skips\Models\Coupon;
 
 class CheckoutController
 {
 	private static $instance = null;
 	public $skip;
-	public $noSkip = false;
 
 	public function __construct()
 	{
@@ -30,13 +30,16 @@ class CheckoutController
 	{
 		$this->beforeCheckout();
 		
+		// if (! $_POST['postcode']) {
+		// 	echo 'We need to know your location to see if we can deliver skips to your area. Please use the location form below and then proceed.';
+		// }
+
+		// if($_POST['skip_id'] && $_POST['postcode']) {
 		if($_POST['skip_id']) {
 			$this->skip = Skip::findOrFail($_POST['skip_id']);
 			$this->permit = Permit::all();
 
 			$this->checkoutForm($this->skip, $this->permit);
-		} else {
-			echo 'Suggest pick a skip here.';
 		}
 
 		$this->afterCheckout();

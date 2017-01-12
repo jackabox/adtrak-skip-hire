@@ -53,6 +53,7 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
 			<form action="<?= site_url('checkout/'); ?>" method="POST">
 				<input type="hidden" name="skip_id" value="<?= $skip->id; ?>">
+				<input type="hidden" name="postcode" value="<?= $postcode ?>">
 				<p><button type="submit" class="ash-button">Purchase</button></p>
 			</form>
 		</div>

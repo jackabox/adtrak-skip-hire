@@ -54,3 +54,4 @@ $loader->action([
 
 $skips = new Controllers\Front\SkipController;
 $checkout = new Controllers\Front\CheckoutController;
+$confirmation = new Controllers\Front\ConfirmationController;

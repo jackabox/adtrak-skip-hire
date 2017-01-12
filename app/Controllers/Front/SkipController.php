@@ -54,6 +54,9 @@ class SkipController
 	public function skipLoop() 
 	{
 		$skips = $this->skips;
+		$postcode = null;
+
+		if ($_REQUEST['ash_postcode']) $postcode = $_REQUEST['ash_postcode'];
 
 		if ($overriden = locate_template('adtrak-skips/skips/loop.php')) {
 			$template = $overriden;
