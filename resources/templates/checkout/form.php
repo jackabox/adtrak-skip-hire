@@ -71,7 +71,9 @@
 			<div>
 				<label for="ash_permit">Permit</label>
 				<select name="ash_permit" id="ash_permit">
-					<option value="Nottingham">Nottingham (£40)</option>
+					<?php foreach($permits as $permit): ?>
+						<option value="<?= $permit->id; ?>"><?= $permit->name; ?> (£<?= $permit->price; ?>)</option>
+					<?php endforeach; ?>
 				</select>
 			</div>
 		</div>
@@ -108,6 +110,7 @@
 		</div>
 	</fieldset>
 
+	<input type="hidden" name="ash_skip" value="<?= $skip->id; ?>">
 	<button type="submit" name="ash_submit" id="ash_submit">Confirm Order</button>
 
 </form>

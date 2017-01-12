@@ -2,6 +2,7 @@
 
 use Adtrak\Skips\Helper;
 use Adtrak\Skips\Models\Skip;
+use Adtrak\Skips\Models\Permit;
 
 class CheckoutController
 {
@@ -31,9 +32,9 @@ class CheckoutController
 		
 		if($_POST['skip_id']) {
 			$this->skip = Skip::findOrFail($_POST['skip_id']);
+			$this->permit = Permit::all();
 
-			// $this->skip
-			$this->checkoutForm();
+			$this->checkoutForm($this->skip, $this->permit);
 		} else {
 			echo 'Suggest pick a skip here.';
 		}
@@ -53,7 +54,7 @@ class CheckoutController
 		include_once $template;
 	}
 
-	public function checkoutForm()
+	public function checkoutForm($skip, $permits)
 	{
 		$template = $this->templateLocater('checkout/form.php');
 		include_once $template;
