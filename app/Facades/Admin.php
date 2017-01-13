@@ -9,29 +9,28 @@ class Admin
 	 * The menus to load content
 	 * @var array
 	 */
-	protected $menuArray = array();
+	protected $menuArray = [];
 
-	/**
-	 * Set up the instance of the class
-	 *
-	 * @version 	1.0.0
-	 * @since   	2.0.0
-	 * @author 		Jack Whiting 	 
-	 */
-	public static function instance()
+
+    /**
+     * 	/**
+     * Set up the instance of the class
+     *
+     * @since   2.0.0
+     * @return  Admin|null
+     */
+    public static function instance()
 	{
  		null === self::$instance and self::$instance = new self;
         return self::$instance;
 	}
 
-	/**
-	 * Create menu functionality. Loops around all menus bound via add.
-	 *
-	 * @version 	1.0.0
-	 * @since   	2.0.0
-	 * @author 		Jack Whiting 	 
-	 */
-	public function createMenu()
+    /**
+     * Create menu functionality. Loops around all menus bound via add.
+     *
+     * @since   	2.0.0
+     */
+    public function createMenu()
 	{
 		foreach($this->menuArray as $menu) {
 			if ($menu['parent'] === null) {
@@ -42,22 +41,20 @@ class Admin
 		}
 	}
 
-	/**
-	 * Add menu functionality. Sets up parent / child pages.
-	 *
-	 * @param 		string 		$title 
-	 * @param 		string 		$slug 
-	 * @param 		string 		$capability 
-	 * @param 		array 		$uses
-	 * @param 		mixed 		$parent
-	 * @param 		integer 	$priority 
-	 * @param 		string 		$icon
-	 *
-	 * @version 	1.0.0
-	 * @since   	2.0.0
-	 * @author 		Jack Whiting 	 
-	 */
-	protected function addMenu($title, $slug, $capability, $uses, $parent = null, $priority = 100, $icon = '')
+
+    /**
+     * Add menu functionality. Sets up parent / child pages.
+     *
+     * @param $title
+     * @param $slug
+     * @param $capability
+     * @param $uses
+     * @param null $parent
+     * @param int $priority
+     * @param string $icon
+     * @since 2.0.0
+     */
+    protected function addMenu($title, $slug, $capability, $uses, $parent = null, $priority = 100, $icon = '')
 	{
 		$menu = [
 			'parent'     => $parent,

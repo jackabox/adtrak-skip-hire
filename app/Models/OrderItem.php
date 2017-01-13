@@ -12,7 +12,7 @@ class OrderItem extends Model
 		'type',
 		'price'
 	];
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
