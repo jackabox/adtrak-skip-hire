@@ -8,7 +8,7 @@ use Adtrak\Skips\Models\Coupon;
 class CheckoutController
 {
 	private static $instance = null;
-	
+
 	public $skip;
 
     /**

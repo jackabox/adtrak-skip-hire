@@ -5,18 +5,27 @@ use Adtrak\Skips\View;
 
 class DashboardController extends Admin
 {
-	public function __construct()
+    /**
+     * DashboardController constructor.
+     */
+    public function __construct()
 	{
 		self::instance();
 	}
 
-	public function menu() 
+    /**
+     *
+     */
+    public function menu()
 	{
 		$this->addMenu('Dashboard', 'ash', 'manage_options', [$this, 'index'], 'ash');
 		$this->createMenu();
 	}
 
-	public function index() 
+    /**
+     *
+     */
+    public function index()
 	{
 		View::render('admin/dashboard.twig', []);
 	}

@@ -6,12 +6,19 @@ use Adtrak\Skips\View;
 
 class CouponController extends Admin
 {
-	public function __construct()
+
+    /**
+     * CouponController constructor.
+     */
+    public function __construct()
 	{
 		self::instance();
 	}
 
-	public function menu() 
+    /**
+     *
+     */
+    public function menu()
 	{
 		$this->addMenu('Coupons', 'ash-coupons', 'manage_options', [$this, 'index'], 'ash');
 		$this->addMenu('Coupons - Add', 'ash-coupons-add', 'manage_options', [$this, 'create'], 'ash');
@@ -19,7 +26,10 @@ class CouponController extends Admin
 		$this->createMenu();
 	}
 
-	public function index() 
+    /**
+     *
+     */
+    public function index()
 	{
 		$coupons = Coupon::all();
 		
@@ -34,7 +44,10 @@ class CouponController extends Admin
 		]);
 	}
 
-	public function create() 
+    /**
+     *
+     */
+    public function create()
 	{
 		if (isset($_REQUEST['action']) && $_REQUEST['action'] === 'coupon_add') {
 			$this->store();
@@ -43,7 +56,10 @@ class CouponController extends Admin
 		View::render('admin/coupons/add.twig', []);
 	}
 
-	public function store()
+    /**
+     *
+     */
+    public function store()
 	{
 		// $permission = wp_verify_nonce($_GET['nonce'], 'coupon_add_nonce');
 		$permission = true;
@@ -81,7 +97,10 @@ class CouponController extends Admin
         }
 	}
 
-	public function edit()
+    /**
+     *
+     */
+    public function edit()
 	{
 		if (isset($_REQUEST['action']) && $_REQUEST['action'] === 'coupon_update') {
 			$this->update();
@@ -106,7 +125,10 @@ class CouponController extends Admin
 		}
 	}
 
-	public function update()
+    /**
+     *
+     */
+    public function update()
 	{
 		// $permission = wp_verify_nonce($_GET['nonce'], 'coupon_add_nonce');
 		$permission = true;
@@ -141,7 +163,10 @@ class CouponController extends Admin
         }
 	}
 
-	public function destroy()
+    /**
+     *
+     */
+    public function destroy()
 	{
 		$permission = check_ajax_referer('ash_coupon_delete_nonce', 'nonce', false);
 

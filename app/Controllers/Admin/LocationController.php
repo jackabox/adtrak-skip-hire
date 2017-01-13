@@ -8,14 +8,20 @@ use Billy\Framework\Facades\DB;
 
 class LocationController extends Admin
 {
-	public function __construct()
+    /**
+     * LocationController constructor.
+     */
+    public function __construct()
 	{
 		self::instance();
 
 		add_shortcode('ash_location_lookup', [$this, 'showLocationForm']);
 	}
 
-	public function menu() 
+    /**
+     *
+     */
+    public function menu()
 	{
 		$this->addMenu('Locations', 'ash-locations', 'manage_options', [$this, 'index'], 'ash');
 		$this->addMenu('Locations - Add', 'ash-locations-add', 'manage_options', [$this, 'create'], 'ash');
@@ -23,7 +29,10 @@ class LocationController extends Admin
 		$this->createMenu();
 	}
 
-	public function index() 
+    /**
+     *
+     */
+    public function index()
 	{
 		$locations = Location::all();
 
@@ -38,7 +47,10 @@ class LocationController extends Admin
 		]);
 	}
 
-	public function create() 
+    /**
+     *
+     */
+    public function create()
 	{
 		if (isset($_REQUEST['action']) && $_REQUEST['action'] === 'location_add') {
 			$this->store();
@@ -47,7 +59,10 @@ class LocationController extends Admin
 		View::render('admin/locations/add.twig', []);
 	}
 
-	public function store()
+    /**
+     *
+     */
+    public function store()
 	{
 		$permission = true;
 		$errors 	= [];
@@ -87,7 +102,10 @@ class LocationController extends Admin
         die();
 	}
 
-	public function edit()
+    /**
+     *
+     */
+    public function edit()
 	{
 		if (isset($_REQUEST['action']) && $_REQUEST['action'] === 'location_update') {
 			$this->update();
@@ -112,7 +130,10 @@ class LocationController extends Admin
 		}
 	}
 
-	public function update()
+    /**
+     *
+     */
+    public function update()
 	{
 		$permission = true;
 		$errors 	= [];
@@ -147,7 +168,10 @@ class LocationController extends Admin
         }
 	}
 
-	public function destroy()
+    /**
+     *
+     */
+    public function destroy()
 	{
 		$permission = check_ajax_referer('ash_location_delete_nonce', 'nonce', false);
 
