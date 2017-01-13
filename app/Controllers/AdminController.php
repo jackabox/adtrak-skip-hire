@@ -33,8 +33,11 @@ class AdminController
 		null === self::$instance and self::$instance = new self;
 		return self::$instance;
 	}
-	
-	public function menu() 
+
+    /**
+     *
+     */
+    public function menu()
 	{
 		add_menu_page(
 			__( 'Skips', 'adskip' ),
@@ -64,7 +67,10 @@ class AdminController
 		);
 	}
 
-	public function scripts()
+    /**
+     *
+     */
+    public function scripts()
 	{
 		wp_enqueue_script('adtrak-skips', Helper::assetUrl('js/admin.js'), ['jquery'], '', true);
 		wp_localize_script('adtrak-skips', 'SHajax', ['ajaxurl' => admin_url('admin-ajax.php')]);
@@ -72,19 +78,27 @@ class AdminController
 		wp_enqueue_script('google_maps_api', '//maps.googleapis.com/maps/api/js?key='. get_option('ash_google_maps_api', '') .'&libraries=places');
 	}
 
-	public function showSettings()
+    /**
+     *
+     */
+    public function showSettings()
 	{
 		if (isset($_REQUEST['action']) && $_REQUEST['action'] === 'settings_save') {
 			$this->updateSettings();
 		}
+
 		$options = [];
 		$options['gmaps_api'] = get_option('ash_google_maps_api', '');
+
 		View::render('admin/settings.twig', [
 			'options' 		=> $options
 		]);
 	}
 
-	public function updateSettings()
+    /**
+     *
+     */
+    public function updateSettings()
 	{
 		update_option('ash_google_maps_api', $_REQUEST['gmaps_api']);
 	}
