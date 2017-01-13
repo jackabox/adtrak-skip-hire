@@ -3,18 +3,24 @@
 use Adtrak\Skips\Helper;
 use Adtrak\Skips\Models\Location;
 
-class ConfirmationController
+class LocationController
 {
 	private static $instance = null;
-	public $skip;
-	public $noSkip = false;
 
-	public function __construct()
+	public $skip;
+
+    /**
+     * LocationController constructor.
+     */
+    public function __construct()
 	{
 		$this->addActions();
 	}
 
-	public static function instance()
+    /**
+     * @return LocationController|null
+     */
+    public static function instance()
 	{
  		null === self::$instance and self::$instance = new self;
         return self::$instance;
@@ -25,10 +31,14 @@ class ConfirmationController
 		// add_action('ash_checkout', [$this, 'checkout']);
 	}
 
-	protected function templateLocater($filename)
+    /**
+     * @param $filename
+     * @return string
+     */
+    protected function templateLocater($filename)
 	{
-		if ($overriden = locate_template('adtrak-skips/' . $filename)) {
-			$template = $overriden;
+		if ($overwrite = locate_template('adtrak-skips/' . $filename)) {
+			$template = $overwrite;
 		} else {
 			$template = Helper::get('templates') . $filename;
 		}
