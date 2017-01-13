@@ -23,7 +23,10 @@ class Order extends Model
 		'total'
 	];
 
-	public function orderItems()
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function orderItems()
 	{
 		return $this->hasMany(__NAMESPACE__ . '\OrderItem');
 	}

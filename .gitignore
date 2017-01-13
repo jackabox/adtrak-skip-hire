@@ -2,3 +2,4 @@ vendor
 composer.lock
 prepros-6.config
 *.codekit3
+.idea

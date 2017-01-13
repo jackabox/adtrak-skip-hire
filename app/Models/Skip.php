@@ -1,6 +1,4 @@
-<?php
-
-namespace Adtrak\Skips\Models;
+<?php namespace Adtrak\Skips\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
