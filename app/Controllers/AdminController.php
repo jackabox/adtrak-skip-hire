@@ -17,8 +17,11 @@ class AdminController
 	protected $skip;
 	protected $location;
 	protected $dashboard;
-	
-	public function __construct()
+
+    /**
+     * AdminController constructor.
+     */
+    public function __construct()
 	{
 		$this->dashboard = new DashboardController;
 		$this->permit = new PermitController;
@@ -27,8 +30,11 @@ class AdminController
 		$this->skip = new SkipController;
 		$this->order = new OrderController;
 	}
-	
-	public static function instance()
+
+    /**
+     * @return AdminController|null
+     */
+    public static function instance()
 	{
 		null === self::$instance and self::$instance = new self;
 		return self::$instance;
