@@ -49,10 +49,7 @@ class ConfirmationController
 
 	public function beforeConfirmation()
 	{
-		$this->getSkip();
-		$this->getPermit();		
-		$this->getCoupon();
-		$this->getOrderDetails();
+
 	}
 
 	public function confirmationDetails()
@@ -67,7 +64,7 @@ class ConfirmationController
 				$subTotal = $skip->price - $coupon->price;
 			} else {
 				// 90 = 100 - (100 * (10 / 100));
-				$subTotal = $skip->price - ($skip->price * ($coupon->amount / 100));
+				$subTotal = $skip->price - ($skip->price * ($coupon->amount / 100)); 
 			}
 		} else {
 			$subTotal = $skip->price;
@@ -114,7 +111,7 @@ class ConfirmationController
 	public function getOrderDetails()
 	{
 		if ($_POST['ash_submit']) {
-			$this->orderDetails = $_POST;
+			$this->orderDetails = (object) $_POST;
 		}
 
 		return $this->orderDetails;
