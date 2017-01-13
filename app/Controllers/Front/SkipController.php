@@ -8,62 +8,78 @@ class SkipController
 	private static $instance = null;
 	public $skips;
 
-	public function __construct()
+    /**
+     * SkipController constructor.
+     */
+    public function __construct()
 	{
-		// self::instance();
 		$this->skips = Skip::all();
-
 		$this->addActions();
 	}
 
-	public static function instance()
+    /**
+     * @return SkipController|null
+     */
+    public static function instance()
 	{
  		null === self::$instance and self::$instance = new self;
         return self::$instance;
 	}
 
-	public function addActions()
+    /**
+     *
+     */
+    public function addActions()
 	{
 		add_action('ash_before_skip_loop', [$this, 'beforeSkipLoop']);
 		add_action('ash_after_skip_loop', [$this, 'afterSkipLoop']);
 		add_action('ash_skip_loop', [$this, 'skipLoop']);
 	}
 
-	public function beforeSkipLoop()
+    /**
+     *
+     */
+    public function beforeSkipLoop()
 	{
-		if ($overriden = locate_template('adtrak-skips/skips/loop-start.php')) {
-			$template = $overriden;
-		} else {
-			$template = Helper::get('templates') . 'skips/loop-start.php';
-		}
-		
-		include_once $template;
+        $template = $this->templateLocater('skips/loop-start.php');
+        include_once $template;
 	}
 
-	public function afterSkipLoop()
+    /**
+     *
+     */
+    public function afterSkipLoop()
 	{
-		if ($overriden = locate_template('adtrak-skips/skips/loop-end.php')) {
-			$template = $overriden;
-		} else {
-			$template = Helper::get('templates') . 'skips/loop-end.php';
-		}
-		
-		include_once $template;
+        $template = $this->templateLocater('skips/loop-end.php');
+        include_once $template;
 	}
 
-	public function skipLoop() 
+    /**
+     *
+     */
+    public function skipLoop()
 	{
 		$skips = $this->skips;
 		$postcode = null;
 
 		if ($_REQUEST['ash_postcode']) $postcode = $_REQUEST['ash_postcode'];
 
-		if ($overriden = locate_template('adtrak-skips/skips/loop.php')) {
-			$template = $overriden;
-		} else {
-			$template = Helper::get('templates') . 'skips/loop.php';
-		}
-
+        $template = $this->templateLocater('skips/loop.php');
 		include_once $template;
 	}
+
+    /**
+     * @param $filename
+     * @return string
+     */
+    protected function templateLocater($filename)
+    {
+        if ($overwrite = locate_template('adtrak-skips/' . $filename)) {
+            $template = $overwrite;
+        } else {
+            $template = Helper::get('templates') . $filename;
+        }
+
+        return $template;
+    }
 }
