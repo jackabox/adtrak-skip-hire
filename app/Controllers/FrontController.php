@@ -5,29 +5,28 @@ use Adtrak\Skips\Controllers\Front\SkipController;
 
 class FrontController
 {
-	private $skip;
-
 	private static $instance = null;
 
 	private $templates = [
+	    'booking'       => 'booking.php',
 		'skips' 		=> 'skips.php',
 		'checkout' 		=> 'checkout.php',
 		'confirmation' 	=> 'confirmation.php'
 	];
 
-	public function __construct()
+    /**
+     * FrontController constructor.
+     */
+    public function __construct()
 	{
-		// $this->skip = new SkipController;
 		$this->addActions();
 	}
 
-	private static function instance()
-	{
- 		null === self::$instance and self::$instance = new self;
-        return self::$instance;
-	}
-
-	public function loadTemplates($template) 
+    /**
+     * @param $template
+     * @return string
+     */
+    public function loadTemplates($template)
 	{
 		foreach ($this->templates as $page => $file) {
 			if (is_page($page)) {
@@ -44,37 +43,54 @@ class FrontController
 		return $template;
 	}
 
-	public function scripts()
+    /**
+     *
+     */
+    public function scripts()
 	{
 		wp_enqueue_script('maps-api', '//maps.googleapis.com/maps/api/js?key='. get_option('ash_google_maps_api', '') .'&libraries=places');
 		wp_enqueue_script('adtrak-skips', Helper::assetUrl('js/location.js'), ['jquery'], '', true);
 	}
 
-	public function addActions()
+    /**
+     *
+     */
+    public function addActions()
 	{
 		add_action('ash_wrapper_start', [$this, 'wrapperStart']);
 		add_action('ash_wrapper_end', [$this, 'wrapperEnd']);
 	}
 
-	public function wrapperStart()
+    /**
+     *
+     */
+    public function wrapperStart()
 	{
-		if ($overriden = locate_template('adtrak-skips/globals/wrapper-start.php')) {
-			$template = $overriden;
-		} else {
-			$template = Helper::get('templates') . 'globals/wrapper-start.php';
-		}
-		
-		include_once $template;
+        $template = $this->templateLocater('globals/wrapper-start.php');
+        include_once $template;
 	}
 
-	public function wrapperEnd()
+    /**
+     *
+     */
+    public function wrapperEnd()
 	{
-		if ($overriden = locate_template('adtrak-skips/globals/wrapper-end.php')) {
-			$template = $overriden;
-		} else {
-			$template = Helper::get('templates') . 'globals/wrapper-end.php';
-		}
-		
-		include_once $template;
+        $template = $this->templateLocater('globals/wrapper-end.php');
+        include_once $template;
 	}
+
+    /**
+     * @param $filename
+     * @return string
+     */
+    protected function templateLocater($filename)
+    {
+        if ($overwrite = locate_template('adtrak-skips/' . $filename)) {
+            $template = $overwrite;
+        } else {
+            $template = Helper::get('templates') . $filename;
+        }
+
+        return $template;
+    }
 }
