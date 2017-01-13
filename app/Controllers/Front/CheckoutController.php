@@ -8,25 +8,38 @@ use Adtrak\Skips\Models\Coupon;
 class CheckoutController
 {
 	private static $instance = null;
+	
 	public $skip;
 
-	public function __construct()
+    /**
+     * CheckoutController constructor.
+     */
+    public function __construct()
 	{
 		$this->addActions();
 	}
 
-	public static function instance()
+    /**
+     * @return CheckoutController|null
+     */
+    public static function instance()
 	{
  		null === self::$instance and self::$instance = new self;
         return self::$instance;
 	}
 
-	public function addActions()
+    /**
+     *
+     */
+    public function addActions()
 	{
 		add_action('ash_checkout', [$this, 'checkout']);
 	}
 
-	public function checkout() 
+    /**
+     *
+     */
+    public function checkout()
 	{
 		$this->beforeCheckout();
 		
@@ -45,33 +58,50 @@ class CheckoutController
 		$this->afterCheckout();
 	}
 
-	public function beforeCheckout($skip)
+    /**
+     * @param $skip
+     */
+    public function beforeCheckout($skip)
 	{
 		$template = $this->templateLocater('checkout/start.php');
 		include_once $template;
 	}
 
-	public function afterCheckout()
+    /**
+     *
+     */
+    public function afterCheckout()
 	{
 		$template = $this->templateLocater('checkout/end.php');		
 		include_once $template;
 	}
 
-	public function checkoutForm($skip, $permits)
+    /**
+     * @param $skip
+     * @param $permits
+     */
+    public function checkoutForm($skip, $permits)
 	{
 		$template = $this->templateLocater('checkout/form.php');
 		include_once $template;
 	}
 
-	public function paypal()
+    /**
+     *
+     */
+    public function paypal()
 	{
 
 	}
 
-	protected function templateLocater($filename)
+    /**
+     * @param $filename
+     * @return string
+     */
+    protected function templateLocater($filename)
 	{
-		if ($overriden = locate_template('adtrak-skips/' . $filename)) {
-			$template = $overriden;
+		if ($overwrite = locate_template('adtrak-skips/' . $filename)) {
+			$template = $overwrite;
 		} else {
 			$template = Helper::get('templates') . $filename;
 		}
