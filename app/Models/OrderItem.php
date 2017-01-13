@@ -12,4 +12,12 @@ class OrderItem extends Model
 		'type',
 		'price'
 	];
+    
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function order()
+    {
+        return $this->belongsTo(__NAMESPACE__ . '\Order');
+    }
 }
