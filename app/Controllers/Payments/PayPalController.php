@@ -2,10 +2,22 @@
 
 uses Adtrak\Skips\Helper;
 
+use PayPal\Rest\ApiContext;
+use PayPal\Auth\OAuthTokenCredential;
+
+use PayPal\Api\Amount;
+use PayPal\Api\Item;
+use PayPal\Api\ItemList;
+use PayPal\Api\Payer;
+use PayPal\Api\Payment;
+use PayPal\Api\RedirectUrls;
+use PayPal\Api\Transaction;
+use PayPal\Api\ExecutePayment;
+//use PayPal\Api\PaymentExecution;
+
 class PayPalController
 {
-//    protected static $instance = null;
-
+    protected static $instance = null;
     protected $apiContext;
     protected $email;
     protected $sandbox;
@@ -26,8 +38,8 @@ class PayPalController
             $this->email = $paypalOptions->email;
 
         // create a new instance of the PayPal api using the auth tokens provided.
-        $this->apiContext = new \PayPal\Rest\ApiContext(
-            new \PayPal\Auth\OAuthTokenCredential(
+        $this->apiContext = new ApiContext(
+            new OAuthTokenCredential(
                 $paypalOptions->client_id,
                 $paypalOptions->client_secret
             )
@@ -39,6 +51,13 @@ class PayPalController
         }
     }
 
+    /**
+     * @param $skipData
+     * @param $total
+     * @param null $permitData
+     * @param null $couponData
+     * @return null|string
+     */
     public function generateLink($skipData, $total, $permitData = null, $couponData = null)
     {
         $payee = new Payer();
@@ -103,7 +122,6 @@ class PayPalController
         try {
             $payment->create($this->apiContext);
         } catch (Exception $ex) {
-            // error
             echo $ex->getData();
             exit(1);
         }

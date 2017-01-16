@@ -12,7 +12,8 @@
 
     "require": {
         "getbilly/framework" : "dev-master",
-		"sentry/sentry": "^1.6"
+		"sentry/sentry": "^1.6",
+		"paypal/rest-api-sdk-php": "^1.11"
     },
 
 	"autoload": {
