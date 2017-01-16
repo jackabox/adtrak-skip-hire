@@ -41,7 +41,7 @@ class SkipController
      */
     public function beforeSkipLoop()
 	{
-        $template = $this->templateLocater('skips/loop-start.php');
+        $template = $this->templateLocator('skips/loop-start.php');
         include_once $template;
 	}
 
@@ -50,7 +50,7 @@ class SkipController
      */
     public function afterSkipLoop()
 	{
-        $template = $this->templateLocater('skips/loop-end.php');
+        $template = $this->templateLocator('skips/loop-end.php');
         include_once $template;
 	}
 
@@ -64,7 +64,7 @@ class SkipController
 
 		if ($_REQUEST['ash_postcode']) $postcode = $_REQUEST['ash_postcode'];
 
-        $template = $this->templateLocater('skips/loop.php');
+        $template = $this->templateLocator('skips/loop.php');
 		include_once $template;
 	}
 
@@ -72,7 +72,7 @@ class SkipController
      * @param $filename
      * @return string
      */
-    protected function templateLocater($filename)
+    protected function templateLocator($filename)
     {
         if ($overwrite = locate_template('adtrak-skips/' . $filename)) {
             $template = $overwrite;

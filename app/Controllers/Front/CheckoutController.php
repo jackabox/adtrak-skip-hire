@@ -10,6 +10,7 @@ class CheckoutController
 	private static $instance = null;
 
 	public $skip;
+	public $permit;
 
     /**
      * CheckoutController constructor.
@@ -63,7 +64,7 @@ class CheckoutController
      */
     public function beforeCheckout($skip)
 	{
-		$template = $this->templateLocater('checkout/start.php');
+		$template = $this->templateLocator('checkout/start.php');
 		include_once $template;
 	}
 
@@ -72,7 +73,7 @@ class CheckoutController
      */
     public function afterCheckout()
 	{
-		$template = $this->templateLocater('checkout/end.php');		
+		$template = $this->templateLocator('checkout/end.php');
 		include_once $template;
 	}
 
@@ -82,7 +83,7 @@ class CheckoutController
      */
     public function checkoutForm($skip, $permits)
 	{
-		$template = $this->templateLocater('checkout/form.php');
+		$template = $this->templateLocator('checkout/form.php');
 		include_once $template;
 	}
 
@@ -98,7 +99,7 @@ class CheckoutController
      * @param $filename
      * @return string
      */
-    protected function templateLocater($filename)
+    protected function templateLocator($filename)
 	{
 		if ($overwrite = locate_template('adtrak-skips/' . $filename)) {
 			$template = $overwrite;

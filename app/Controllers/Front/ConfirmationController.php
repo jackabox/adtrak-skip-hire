@@ -72,7 +72,7 @@ class ConfirmationController
 
 		$total = $subTotal + $permit->price;
 
-		$template = $this->templateLocater('confirmation/details.php');
+		$template = $this->templateLocator('confirmation/details.php');
 		include_once $template;
 	}
 
@@ -117,10 +117,10 @@ class ConfirmationController
 		return $this->orderDetails;
 	}
 
-	protected function templateLocater($filename)
+	protected function templateLocator($filename)
 	{
-		if ($overriden = locate_template('adtrak-skips/' . $filename)) {
-			$template = $overriden;
+		if ($overwrite = locate_template('adtrak-skips/' . $filename)) {
+			$template = $overwrite;
 		} else {
 			$template = Helper::get('templates') . $filename;
 		}

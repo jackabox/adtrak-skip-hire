@@ -35,7 +35,7 @@ class LocationController
      * @param $filename
      * @return string
      */
-    protected function templateLocater($filename)
+    protected function templateLocator($filename)
 	{
 		if ($overwrite = locate_template('adtrak-skips/' . $filename)) {
 			$template = $overwrite;
