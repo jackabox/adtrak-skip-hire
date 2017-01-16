@@ -87,44 +87,46 @@ if ($version === false) {
 	add_option('adtrak_skips_version', Helper::get('version'));	
 }
 
-if (get_page_by_title('Skips') == null) {
-	$post = [
-		'ping_status' 	=> 'closed',
-		'post_date' 	=> date('Y-m-d H:i:s'),
-		'post_name' 	=> 'skips',
-		'post_status' 	=> 'publish',
-		'post_title' 	=> 'Skips',
-		'post_type' 	=> 'page',
-		'post_content' 	=> '[ash_skips]'
-	];
+if (get_page_by_title('Booking') == null) {
+    wp_insert_post([
+        'ping_status' 	=> 'closed',
+        'post_date' 	=> date('Y-m-d H:i:s'),
+        'post_name' 	=> 'booking',
+        'post_status' 	=> 'publish',
+        'post_title' 	=> 'Booking',
+        'post_type' 	=> 'page'
+    ]);
+}
 
-	$post_id = wp_insert_post($post);
+if (get_page_by_title('Skips') == null) {
+	wp_insert_post([
+        'ping_status' 	=> 'closed',
+        'post_date' 	=> date('Y-m-d H:i:s'),
+        'post_name' 	=> 'skips',
+        'post_status' 	=> 'publish',
+        'post_title' 	=> 'Skips',
+        'post_type' 	=> 'page'
+    ]);
 }
 
 if (get_page_by_title('Checkout') == null) {
-	$post = [
-		'ping_status' 	=> 'closed',
-		'post_date' 	=> date('Y-m-d H:i:s'),
-		'post_name' 	=> 'checkout',
-		'post_status' 	=> 'publish',
-		'post_title' 	=> 'Checkout',
-		'post_type' 	=> 'page',
-		'post_content' 	=> '[ash_checkout]'
-	];
-
-	$post_id = wp_insert_post($post);
+	wp_insert_post([
+        'ping_status' 	=> 'closed',
+        'post_date' 	=> date('Y-m-d H:i:s'),
+        'post_name' 	=> 'checkout',
+        'post_status' 	=> 'publish',
+        'post_title' 	=> 'Checkout',
+        'post_type' 	=> 'page'
+    ]);
 }
 
 if (get_page_by_title('Confirmation') == null) {
-	$post = [
-		'ping_status' 	=> 'closed',
-		'post_date' 	=> date('Y-m-d H:i:s'),
-		'post_name' 	=> 'confirmation',
-		'post_status' 	=> 'publish',
-		'post_title' 	=> 'Confirmation',
-		'post_type' 	=> 'page',
-		'post_content' 	=> '[ash_confirmation]'
-	];
-
-	$post_id = wp_insert_post($post);
+	wp_insert_post([
+        'ping_status' 	=> 'closed',
+        'post_date' 	=> date('Y-m-d H:i:s'),
+        'post_name' 	=> 'confirmation',
+        'post_status' 	=> 'publish',
+        'post_title' 	=> 'Confirmation',
+        'post_type' 	=> 'page'
+    ]);
 }
