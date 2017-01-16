@@ -46,7 +46,7 @@ class PayPalController
         );
 
         // set the config of the api to live if we don't have enable sandbox as true
-        if ($paypalOptions->enable_sandbox !== true) {
+        if ($this->sandbox !== true) {
             $this->apiContext->setConfig(['mode' => 'live']);
         }
     }
