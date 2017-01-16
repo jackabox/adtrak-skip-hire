@@ -84,8 +84,9 @@ class AdminController
 		wp_enqueue_script('google_maps_api', '//maps.googleapis.com/maps/api/js?key='. get_option('ash_google_maps_api', '') .'&libraries=places');
 	}
 
+
     /**
-     *
+     * @return mixed
      */
     public function showSettings()
 	{
@@ -93,10 +94,17 @@ class AdminController
 			$this->updateSettings();
 		}
 
-		$options = [];
-		$options['gmaps_api'] = get_option('ash_google_maps_api', '');
+		$options = (object) [];
+		$options->gmaps_api = get_option('ash_google_maps_api', '');
 
-		View::render('admin/settings.twig', [
+		$paypal = (object) get_option('ash_paypal', '');
+        $options->paypal_client_id = $paypal->client_id;
+        $options->paypal_client_secret = $paypal->client_secret;
+        $options->paypal_invoice_message = $paypal->invoice_message;
+        $options->paypal_enable_sandbox = $paypal->enable_sandbox;
+        $options->paypal_email = $paypal->email;
+
+		return View::render('admin/settings.twig', [
 			'options' 		=> $options
 		]);
 	}
@@ -107,5 +115,17 @@ class AdminController
     public function updateSettings()
 	{
 		update_option('ash_google_maps_api', $_REQUEST['gmaps_api']);
+
+		$paypalOptions = [
+		    'client_id' => $_REQUEST['paypal_client_id'],
+            'client_secret' => $_REQUEST['paypal_client_secret'],
+            'invoice_message' => $_REQUEST['paypal_invoice_message'],
+            'enable_sandbox' => $_REQUEST['paypal_enable_sandbox'],
+            'email' => $_REQUEST['paypal_email']
+        ];
+
+//		dd($paypalOptions);
+
+        update_option('ash_paypal', $paypalOptions);
 	}
 }

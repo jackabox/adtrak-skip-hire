@@ -11,40 +11,64 @@
 					<h4>General Settings</h4>
 				</div>
 
-				<p>
+                <div class="ad-form-row ad-form-row--inline">
 					<label for="gmaps_api">Google Maps API Key</label>
-					<input type="text" name="gmaps_api" value="{{ options.gmaps_api }}">
-				</p>
+                    <div><input type="text" name="gmaps_api" value="{{ options.gmaps_api }}"></div>
+				</div>
 		
 				<input type="hidden" name="action" value="settings_save">
 			</div>
+
 			<div class="ad-box">
 				<div class="section-header">
-					<h4>Payment Settings</h4>
+					<h4>PayPal Settings</h4>
 				</div>
 
 				<div class="ad-form-row ad-form-row--inline">
-					<label for="paypal_client_id">PayPal Client ID</label>
-					<div><input type="text" name="paypal_client_id" value=""></div>
+					<label for="paypal_client_id">Client ID</label>
+					<div>
+                        <input type="text" name="paypal_client_id" value="{{ options.paypal_client_id }}">
+                        <p>Enter your Client ID for the PayPal REST Api.</p>
+                    </div>
 				</div>
 
-				<p>
-					<label for="paypal_client_secret">PayPal Client Secret</label>
-					<input type="text" name="paypal_client_secret" value="">
-				</p>
+				<div class="ad-form-row ad-form-row--inline">
+					<label for="paypal_client_secret">Client Secret</label>
+					<div>
+                        <input type="text" name="paypal_client_secret" value="{{ options.paypal_client_secret }}">
+                        <p>Enter your Client Secret for the PayPal REST Api.</p>
+                    </div>
+				</div>
 
-				<p>
-					<label for="paypal_invoice_message">PayPal Invoice Message</label>
-					<input type="text" name="paypal_client_id" value="">
-				</p>
+                <div class="ad-form-row ad-form-row--inline">
+                    <label for="paypal_email">Email</label>
+                    <div>
+                        <input type="text" name="paypal_email" value="{{ options.paypal_email }}">
+                        <p>The email associated with your PayPal account.</p>
+                    </div>
+                </div>
 
-				<p>
-					<label for="paypal_sandbox_mode">Enable PayPal Sandbox?</label>
-					<input type="text" name="paypal_sandbox_mode" value="">
-				</p>
+				<div class="ad-form-row ad-form-row--inline">
+					<label for="paypal_invoice_message">Invoice Message</label>
+					<div>
+                        <input type="text" name="paypal_invoice_message" value="{{ options.paypal_invoice_message }}">
+                        <p>The message which will appear on your invoice.</p>
+                    </div>
+				</div>
+
+				<div class="ad-form-row ad-form-row--inline">
+					<label>Enable Sandbox?</label>
+                    <div>
+                        <label class="ash-label--inline">
+                            <input type="checkbox" name="paypal_enable_sandbox" value="true" {% if options.paypal_enable_sandbox %}checked{% endif %}>
+                            Enable sandbox mode for PayPal?
+                        </label>
+                    </div>
+				</div>
 		
 				<input type="hidden" name="action" value="settings_save">
 			</div>
+
 			<p><button type="submit" class="ad-button ad-button--orange">Save</button></p>
 		</div>	
 
