@@ -6,7 +6,7 @@ use Adtrak\Skips\Models\Permit;
 use Adtrak\Skips\Models\Coupon;
 use Adtrak\Skips\Models\Order;
 use Adtrak\Skips\Models\OrderItem;
-// use Adtrak\Skips\Controllers\PayPalController;
+use Adtrak\Skips\Controllers\Payments\PayPalController as PayPal;
 
 class ConfirmationController
 {
@@ -20,7 +20,8 @@ class ConfirmationController
 
 	public function __construct()
 	{
-		$this->addActions();
+        $this->paypal = new PayPal();
+        $this->addActions();
 	}
 
 	public static function instance()
@@ -49,12 +50,18 @@ class ConfirmationController
 
 	public function beforeConfirmation()
 	{
-
+        if (isset($_GET['success']) && $_GET['success'] == 'true') {
+            $this->authorisePayment($_GET['paymentId']);
+        } else if ($_GET['success'] == 'false') {
+            // user canceled
+        } else {
+            // coming in organic / post
+        }
 	}
 
 	public function confirmationDetails()
 	{
-		$skip = $this->getSkip();
+        $skip = $this->getSkip();
 		$permit = $this->getPermit();		
 		$coupon = $this->getCoupon();
 		$details = $this->getOrderDetails();
@@ -71,8 +78,9 @@ class ConfirmationController
 		}
 
 		$total = $subTotal + $permit->price;
+        $paypal = $this->getPaymentLink($skip, $total, $permit, $coupon);
 
-		$template = $this->templateLocator('confirmation/details.php');
+        $template = $this->templateLocator('confirmation/details.php');
 		include_once $template;
 	}
 
@@ -81,7 +89,21 @@ class ConfirmationController
 
 	}
 
-	public function getSkip()
+    /**
+     *
+     */
+    public function getPaymentLink($skip, $total, $permit, $coupon)
+    {
+        return $this->paypal->generateLink($skip, $total, $permit, $coupon);
+    }
+
+    public function authorisePayment($paymentID)
+    {
+        return $this->paypal->authorisedPaymentCheck($paymentID);
+    }
+
+
+    public function getSkip()
 	{
 		if ($_POST['ash_skip']) {
 			$this->skip = Skip::findOrFail($_POST['ash_skip']);

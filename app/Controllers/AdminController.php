@@ -124,8 +124,6 @@ class AdminController
             'email' => $_REQUEST['paypal_email']
         ];
 
-//		dd($paypalOptions);
-
         update_option('ash_paypal', $paypalOptions);
 	}
 }

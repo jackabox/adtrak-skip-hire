@@ -93,5 +93,5 @@
 
 <div>
     <p>Payments are processed via PayPal.</p>
-    <button type="button" class="ash-button">Pay Via PayPal</button>
+    <a class="ash-button" href="<?= $paypal; ?>">Pay Via PayPal</a>
 </div>

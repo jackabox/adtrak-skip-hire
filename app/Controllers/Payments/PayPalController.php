@@ -1,7 +1,6 @@
 <?php namespace Adtrak\Skips\Controllers\Payments;
 
-uses Adtrak\Skips\Helper;
-
+use Adtrak\Skips\Helper;
 use PayPal\Rest\ApiContext;
 use PayPal\Auth\OAuthTokenCredential;
 
@@ -13,29 +12,31 @@ use PayPal\Api\Payment;
 use PayPal\Api\RedirectUrls;
 use PayPal\Api\Transaction;
 use PayPal\Api\ExecutePayment;
-//use PayPal\Api\PaymentExecution;
+use PayPal\Api\PaymentExecution;
 
 class PayPalController
 {
     protected static $instance = null;
     protected $apiContext;
     protected $email;
-    protected $sandbox;
+    protected $sandboxed;
     protected $invoiceMessage;
 
     public function __construct()
     {
-        $paypalOptions = (object) get_option('ash_paypal');
-        dd($paypalOptions);
+        $paypalOptions = (object) get_option('ash_paypal', true);
 
-        if ($paypalOptions->enable_sandbox)
-            $this->sandbox = $paypalOptions->enable_sandbox
+        if ($paypalOptions->enable_sandbox) {
+            $this->sandboxed = $paypalOptions->enable_sandbox;
+        }
 
-        if ($paypalOptions->invoice_message)
+        if ($paypalOptions->invoice_message) {
             $this->invoiceMessage = $paypalOptions->invoice_message;
+        }
 
-        if ($paypalOptions->email)
+        if ($paypalOptions->email) {
             $this->email = $paypalOptions->email;
+        }
 
         // create a new instance of the PayPal api using the auth tokens provided.
         $this->apiContext = new ApiContext(
@@ -46,7 +47,7 @@ class PayPalController
         );
 
         // set the config of the api to live if we don't have enable sandbox as true
-        if ($this->sandbox !== true) {
+        if ($this->sandboxed != true) {
             $this->apiContext->setConfig(['mode' => 'live']);
         }
     }
@@ -64,33 +65,33 @@ class PayPalController
         $payee->setPaymentMethod('paypal');
 
         $skip = new Item();
-        $skip->setName('')
+        $skip->setName($skipData->name)
             ->setCurrency('GBP')
             ->setQuantity(1)
-            ->setSku('')
-            ->setPrice(floatval(''));
+            ->setSku($skipData->id)
+            ->setPrice(floatval($skipData->price));
 
         $items = [];
         $items[] = $skip;
 
         if ($permitData) {
             $permit = new Item();
-            $permit->setName('')
+            $permit->setName($permitData->name)
                 ->setCurrency('GBP')
                 ->setQuantity(1)
-                ->setSku('')
-                ->setPrice(floatval(''));
+                ->setSku($permitData->id)
+                ->setPrice(floatval($permitData->price));
 
             $items[] = $permit;
         }
 
         if ($couponData) {
             $coupon = new Item();
-            $coupon->setName('')
+            $coupon->setName($couponData->name)
                 ->setCurrency('GBP')
                 ->setQuantity(1)
-                ->setSku('')
-                ->setPrice(floatval('') * -1);
+                ->setSku($couponData->id)
+                ->setPrice(floatval($couponData->price) * -1);
 
             $items[] = $coupon;
         }
@@ -105,7 +106,7 @@ class PayPalController
         $transaction = new Transaction();
         $transaction->setAmount($amount)
             ->setItemList($itemList)
-            ->setDescription($this->invoiceMessage])
+            ->setDescription($this->invoiceMessage)
             ->setInvoiceNumber(uniqid());
 
         $baseUrl = home_url();
@@ -128,6 +129,38 @@ class PayPalController
 
         $approvalUrl = $payment->getApprovalLink();
         return $approvalUrl;
+    }
+
+    public function authorisedPaymentCheck($paymentID)
+    {
+        $payment = Payment::get($paymentID, $this->apiContext);
+
+        $execution = new PaymentExecution();
+        $execution->setPayerId($_GET['PayerID']);
+
+        $transaction = new Transaction();
+        $amount = new Amount();
+
+        $amount->setCurrency('GBP')
+            ->setTotal(260);
+
+        $transaction->setAmount($amount);
+        $execution->addTransaction($transaction);
+
+        try {
+            $result = $payment->execute($execution, $this->apiContext);
+            try {
+                $payment = Payment::get($paymentID, $this->apiContext);
+            } catch (Exception $ex) {
+                // error
+                exit(1);
+            }
+        } catch (Exception $ex) {
+            // error
+            exit(1);
+        }
+
+        return $result;
     }
 
     /**

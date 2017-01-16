@@ -3,7 +3,6 @@
 use Adtrak\Skips\Helper;
 use Adtrak\Skips\Models\Skip;
 use Adtrak\Skips\Models\Permit;
-use Adtrak\Skips\Models\Coupon;
 
 class CheckoutController
 {
@@ -85,14 +84,6 @@ class CheckoutController
 	{
 		$template = $this->templateLocator('checkout/form.php');
 		include_once $template;
-	}
-
-    /**
-     *
-     */
-    public function paypal()
-	{
-
 	}
 
     /**
