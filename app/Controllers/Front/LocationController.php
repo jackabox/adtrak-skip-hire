@@ -1,12 +1,12 @@
-<?php namespace Adtrak\Skips\Controllers\Front;
+<?php 
 
-use Adtrak\Skips\Helper;
+namespace Adtrak\Skips\Controllers\Front;
+
+use Adtrak\Skips\Facades\Front;
 use Adtrak\Skips\Models\Location;
 
-class LocationController
+class LocationController extends Front
 {
-	private static $instance = null;
-
 	public $skip;
 
     /**
@@ -17,32 +17,20 @@ class LocationController
 		$this->addActions();
 	}
 
-    /**
-     * @return LocationController|null
-     */
-    public static function instance()
-	{
- 		null === self::$instance and self::$instance = new self;
-        return self::$instance;
-	}
-
 	public function addActions()
 	{
-		// add_action('ash_checkout', [$this, 'checkout']);
+		 add_action('ash_booking_form', [$this, 'locationForm']);
 	}
 
-    /**
-     * @param $filename
-     * @return string
-     */
-    protected function templateLocator($filename)
-	{
-		if ($overwrite = locate_template('adtrak-skips/' . $filename)) {
-			$template = $overwrite;
-		} else {
-			$template = Helper::get('templates') . $filename;
-		}
+	public function locationForm()
+    {
+        // do the location output (template)
+        $template = $this->templateLocator('booking/form.php');
+        include_once $template;
+    }
 
-		return $template;
-	}
+    public function locationCheck()
+    {
+        //
+    }
 }

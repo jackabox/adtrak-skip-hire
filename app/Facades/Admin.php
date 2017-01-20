@@ -1,4 +1,6 @@
-<?php namespace Adtrak\Skips\Facades;
+<?php 
+
+namespace Adtrak\Skips\Facades;
 
 class Admin 
 {

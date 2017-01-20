@@ -1,6 +1,8 @@
-<?php namespace Adtrak\Skips\Controllers\Front;
+<?php 
 
-use Adtrak\Skips\Helper;
+namespace Adtrak\Skips\Controllers\Front;
+
+use Adtrak\Skips\Facades\Front;
 use Adtrak\Skips\Models\Skip;
 use Adtrak\Skips\Models\Permit;
 use Adtrak\Skips\Models\Coupon;
@@ -8,10 +10,8 @@ use Adtrak\Skips\Models\Order;
 use Adtrak\Skips\Models\OrderItem;
 use Adtrak\Skips\Controllers\Payments\PayPalController as PayPal;
 
-class ConfirmationController
+class ConfirmationController extends Front
 {
-	private static $instance = null;
-	
 	public $skip;
 	public $coupon;
 	public $permit;
@@ -22,12 +22,6 @@ class ConfirmationController
 	{
         $this->paypal = new PayPal();
         $this->addActions();
-	}
-
-	public static function instance()
-	{
- 		null === self::$instance and self::$instance = new self;
-        return self::$instance;
 	}
 
 	public function addActions()
@@ -137,16 +131,5 @@ class ConfirmationController
 		}
 
 		return $this->orderDetails;
-	}
-
-	protected function templateLocator($filename)
-	{
-		if ($overwrite = locate_template('adtrak-skips/' . $filename)) {
-			$template = $overwrite;
-		} else {
-			$template = Helper::get('templates') . $filename;
-		}
-
-		return $template;
 	}
 }

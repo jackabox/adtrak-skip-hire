@@ -1,13 +1,13 @@
-<?php namespace Adtrak\Skips\Controllers\Front;
+<?php 
 
-use Adtrak\Skips\Helper;
+namespace Adtrak\Skips\Controllers\Front;
+
+use Adtrak\Skips\Facades\Front;
 use Adtrak\Skips\Models\Skip;
 use Adtrak\Skips\Models\Permit;
 
-class CheckoutController
+class CheckoutController extends Front
 {
-	private static $instance = null;
-
 	public $skip;
 	public $permit;
 
@@ -17,15 +17,6 @@ class CheckoutController
     public function __construct()
 	{
 		$this->addActions();
-	}
-
-    /**
-     * @return CheckoutController|null
-     */
-    public static function instance()
-	{
- 		null === self::$instance and self::$instance = new self;
-        return self::$instance;
 	}
 
     /**
@@ -47,13 +38,15 @@ class CheckoutController
 		// 	echo 'We need to know your location to see if we can deliver skips to your area. Please use the location form below and then proceed.';
 		// }
 
-		// if($_POST['skip_id'] && $_POST['postcode']) {
+//      if($_POST['skip_id'] && $_POST['postcode']) {
 		if($_POST['skip_id']) {
 			$this->skip = Skip::findOrFail($_POST['skip_id']);
 			$this->permit = Permit::all();
 
 			$this->checkoutForm($this->skip, $this->permit);
-		}
+		} else {
+            echo 'should show location';
+        }
 
 		$this->afterCheckout();
 	}
@@ -84,20 +77,5 @@ class CheckoutController
 	{
 		$template = $this->templateLocator('checkout/form.php');
 		include_once $template;
-	}
-
-    /**
-     * @param $filename
-     * @return string
-     */
-    protected function templateLocator($filename)
-	{
-		if ($overwrite = locate_template('adtrak-skips/' . $filename)) {
-			$template = $overwrite;
-		} else {
-			$template = Helper::get('templates') . $filename;
-		}
-
-		return $template;
 	}
 }

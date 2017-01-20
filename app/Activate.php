@@ -11,7 +11,8 @@ if ($version === false) {
 	{
     	$table->increments('id');
     	$table->string('lat', 100)->nullable(false);
-    	$table->string('lng', 100)->nullable(false);
+        /** @noinspection PhpUndefinedMethodInspection */
+        $table->string('lng', 100)->nullable(false);
     	$table->decimal('radius', 5, 2)->nullable(false);
 		$table->string('name')->nullable(false);
 		$table->text('description');

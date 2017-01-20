@@ -1,11 +1,12 @@
-<?php namespace Adtrak\Skips\Controllers\Front;
+<?php 
 
-use Adtrak\Skips\Helper;
+namespace Adtrak\Skips\Controllers\Front;
+
+use Adtrak\Skips\Facades\Front;
 use Adtrak\Skips\Models\Skip;
 
-class SkipController
+class SkipController extends Front
 {
-	private static $instance = null;
 	public $skips;
 
     /**
@@ -15,15 +16,6 @@ class SkipController
 	{
 		$this->skips = Skip::all();
 		$this->addActions();
-	}
-
-    /**
-     * @return SkipController|null
-     */
-    public static function instance()
-	{
- 		null === self::$instance and self::$instance = new self;
-        return self::$instance;
 	}
 
     /**
@@ -67,19 +59,4 @@ class SkipController
         $template = $this->templateLocator('skips/loop.php');
 		include_once $template;
 	}
-
-    /**
-     * @param $filename
-     * @return string
-     */
-    protected function templateLocator($filename)
-    {
-        if ($overwrite = locate_template('adtrak-skips/' . $filename)) {
-            $template = $overwrite;
-        } else {
-            $template = Helper::get('templates') . $filename;
-        }
-
-        return $template;
-    }
 }
