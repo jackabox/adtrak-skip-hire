@@ -99,13 +99,13 @@ if (get_page_by_title('Booking') == null) {
     ]);
 }
 
-if (get_page_by_title('Skips') == null) {
+if (get_page_by_title('Skip Sizes') == null) {
 	wp_insert_post([
         'ping_status' 	=> 'closed',
         'post_date' 	=> date('Y-m-d H:i:s'),
-        'post_name' 	=> 'skips',
+        'post_name' 	=> 'skip-sizes',
         'post_status' 	=> 'publish',
-        'post_title' 	=> 'Skips',
+        'post_title' 	=> 'Skip Sizes',
         'post_type' 	=> 'page'
     ]);
 }

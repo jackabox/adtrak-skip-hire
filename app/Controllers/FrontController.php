@@ -9,7 +9,7 @@ class FrontController
 
 	private $templates = [
 	    'booking'       => 'booking.php',
-		'skips' 		=> 'skips.php',
+		'skip-sizes' 	=> 'skips.php',
 		'checkout' 		=> 'checkout.php',
 		'confirmation' 	=> 'confirmation.php'
 	];
