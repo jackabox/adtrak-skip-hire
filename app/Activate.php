@@ -88,18 +88,20 @@ if ($version === false) {
 	add_option('adtrak_skips_version', Helper::get('version'));	
 }
 
-if (get_page_by_title('Booking') == null) {
-    wp_insert_post([
+if (get_page_by_path('skip-booking') === null) {
+    $bookingID = wp_insert_post([
         'ping_status' 	=> 'closed',
         'post_date' 	=> date('Y-m-d H:i:s'),
-        'post_name' 	=> 'booking',
+        'post_name' 	=> 'skip-booking',
         'post_status' 	=> 'publish',
         'post_title' 	=> 'Booking',
         'post_type' 	=> 'page'
     ]);
+} else {
+	$bookingID = get_page_by_path('skip-booking')->ID;
 }
 
-if (get_page_by_title('Skip Sizes') == null) {
+if (get_page_by_path('skip-sizes') === null) {
 	wp_insert_post([
         'ping_status' 	=> 'closed',
         'post_date' 	=> date('Y-m-d H:i:s'),
@@ -110,24 +112,38 @@ if (get_page_by_title('Skip Sizes') == null) {
     ]);
 }
 
-if (get_page_by_title('Checkout') == null) {
+if (get_page_by_path('skip-booking/checkout') === null) {
 	wp_insert_post([
         'ping_status' 	=> 'closed',
         'post_date' 	=> date('Y-m-d H:i:s'),
         'post_name' 	=> 'checkout',
         'post_status' 	=> 'publish',
         'post_title' 	=> 'Checkout',
-        'post_type' 	=> 'page'
+        'post_type' 	=> 'page',
+		'post_parent'	=> $bookingID
     ]);
 }
 
-if (get_page_by_title('Confirmation') == null) {
+if (get_page_by_path('skip-booking/cart') === null) {
+	wp_insert_post([
+        'ping_status' 	=> 'closed',
+        'post_date' 	=> date('Y-m-d H:i:s'),
+        'post_name' 	=> 'cart',
+        'post_status' 	=> 'publish',
+        'post_title' 	=> 'Cart',
+        'post_type' 	=> 'page',
+		'post_parent'	=> $bookingID
+    ]);
+}
+
+if (get_page_by_path('skip-booking/confirmation') === null) {
 	wp_insert_post([
         'ping_status' 	=> 'closed',
         'post_date' 	=> date('Y-m-d H:i:s'),
         'post_name' 	=> 'confirmation',
         'post_status' 	=> 'publish',
         'post_title' 	=> 'Confirmation',
-        'post_type' 	=> 'page'
+        'post_type' 	=> 'page',
+		'post_parent'	=> $bookingID
     ]);
 }
