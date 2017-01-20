@@ -10,7 +10,7 @@ use Adtrak\Skips\Models\Order;
 use Adtrak\Skips\Models\OrderItem;
 use Adtrak\Skips\Controllers\Payments\PayPalController as PayPal;
 
-class ConfirmationController extends Front
+class CartController extends Front
 {
 	public $skip;
 	public $coupon;
@@ -26,23 +26,23 @@ class ConfirmationController extends Front
 
 	public function addActions()
 	{
-		add_action('ash_confirmation', [$this, 'confirmation']);
+		add_action('ash_cart', [$this, 'cart']);
 	}
 
-	public function confirmation()
+	public function cart()
 	{
-		$this->beforeConfirmation();
+		$this->beforeCart();
 
 		if ($_POST['ash_submit']) {
-			$this->confirmationDetails();
+			$this->cartDetails();
 		} else {
 			echo 'Sorry, looks like you have not placed an order';
 		}
 
-		$this->afterConfirmation();		
+		$this->afterCart();		
 	}
 
-	public function beforeConfirmation()
+	public function beforeCart()
 	{
         if (isset($_GET['success']) && $_GET['success'] == 'true') {
             $this->authorisePayment($_GET['paymentId']);
@@ -53,7 +53,7 @@ class ConfirmationController extends Front
         }
 	}
 
-	public function confirmationDetails()
+	public function cartDetails()
 	{
         $skip = $this->getSkip();
 		$permit = $this->getPermit();		
@@ -74,11 +74,11 @@ class ConfirmationController extends Front
 		$total = $subTotal + $permit->price;
         $paypal = $this->getPaymentLink($skip, $total, $permit, $coupon);
 
-        $template = $this->templateLocator('confirmation/details.php');
+        $template = $this->templateLocator('cart/details.php');
 		include_once $template;
 	}
 
-	public function afterConfirmation()
+	public function afterCart()
 	{
 
 	}

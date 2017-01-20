@@ -51,7 +51,7 @@ $loader->action([
 	'uses'		=> [$front, 'loadTemplates']
 ]);
 
-
+$location = new Controllers\Front\LocationController;
 $skips = new Controllers\Front\SkipController;
 $checkout = new Controllers\Front\CheckoutController;
-$confirmation = new Controllers\Front\ConfirmationController;
+$cart = new Controllers\Front\CartController;
