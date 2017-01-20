@@ -8,10 +8,11 @@ class FrontController
 	private static $instance = null;
 
 	private $templates = [
-	    'booking'       => 'booking.php',
+	    'skip-booking'  => 'booking.php',
 		'skip-sizes' 	=> 'skips.php',
 		'checkout' 		=> 'checkout.php',
-		'confirmation' 	=> 'confirmation.php'
+		'cart' 	        => 'cart.php',
+        'confirmation'  => 'confirmation.php'
 	];
 
     /**
