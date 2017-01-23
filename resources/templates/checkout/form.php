@@ -62,7 +62,7 @@
 
 			<div class="ash-field--half">
 				<label>Delivery Time</label>
-				<label class="ash-label--inline"><input type="radio" name="ash_delivery_time" value="Morning" selected> Morning</label>
+				<label class="ash-label--inline"><input type="radio" name="ash_delivery_time" value="Morning" checked> Morning</label>
 				<label class="ash-label--inline"><input type="radio" name="ash_delivery_time" value="Afternoon"> Afternoon</label>
 			</div>
 

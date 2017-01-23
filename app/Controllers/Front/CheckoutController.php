@@ -42,14 +42,9 @@ class CheckoutController extends Front
 		}
 
 		if (!isset($_SESSION['ash_location']) || $_SESSION['ash_location'] == null) {
-			echo '<p>We need to know your location to see if we can deliver skips to your area. Please use the location form below and then proceed.</p>';
-
 			$this->location->form();
 		} else if (!isset($_SESSION['ash_skip']) || $_SESSION['ash_skip'] == null) {
-			
-			echo '<p>Please select a skip below.</p>';
-
-			$this->skip->skipLoop();
+			$this->skip->loop();
 		} else {
 			$this->checkout();			
 		}

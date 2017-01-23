@@ -30,7 +30,7 @@ class SkipController extends Front
      */
     public function beforeLoop()
 	{
-        $template = $this->templateLocator('skips/start.php');
+        $template = $this->templateLocator('skips/header.php');
         include_once $template;
 	}
 
@@ -39,7 +39,7 @@ class SkipController extends Front
      */
     public function afterLoop()
 	{
-        $template = $this->templateLocator('skips/end.php');
+        $template = $this->templateLocator('skips/footer.php');
         include_once $template;
 	}
 
