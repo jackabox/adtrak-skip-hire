@@ -42,6 +42,11 @@ $loader->action([
 $front = new Controllers\FrontController;
 
 $loader->action([
+	'method'	=> 'init',
+	'uses'		=> [$front, 'sessionStart']
+]);
+
+$loader->action([
 	'method' 	=> 'wp_enqueue_scripts',
 	'uses' 		=> [$front, 'scripts']
 ]);
