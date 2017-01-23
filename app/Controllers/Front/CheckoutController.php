@@ -75,7 +75,7 @@ class CheckoutController extends Front
      */
     public function beforeCheckout()
 	{
-		$template = $this->templateLocator('checkout/start.php');
+		$template = $this->templateLocator('checkout/header.php');
 		include_once $template;
 	}
 
@@ -84,7 +84,7 @@ class CheckoutController extends Front
      */
     public function afterCheckout()
 	{
-		$template = $this->templateLocator('checkout/end.php');
+		$template = $this->templateLocator('checkout/footer.php');
 		include_once $template;
 	}
 

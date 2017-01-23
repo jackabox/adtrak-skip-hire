@@ -25,10 +25,18 @@ class LocationController extends Front
 
 	public function form()
     {
+		$this->beforeForm();
+		
         // do the location output (template)
         $template = $this->templateLocator('booking/form.php');
         include_once $template;
     }
+
+	public function beforeForm()
+	{
+		$template = $this->templateLocator('booking/header.php');
+        include_once $template;
+	}
 
     public function checkPostcode()
     {

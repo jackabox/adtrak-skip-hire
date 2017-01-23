@@ -1,5 +1,3 @@
-<p>Please fill out your details below, you will be asked to confirm your information, skip and payment on the next page.</p>
-
 <form action="<?= site_url('skip-booking/cart/'); ?>" method="POST" class="ash-form">
 	<fieldset>
 		<legend>Your Details</legend>

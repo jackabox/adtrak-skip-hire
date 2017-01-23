@@ -1,14 +1,11 @@
-<?php get_header(); ?>
+<?php 
 
-	<?php do_action('ash_wrapper_start'); ?>
+get_header(); 
 
-	<div class="ash-page-header">
-		<h2>Please Select a Skip</h2>
-		<!-- Location search description -->
-	</div>
+	do_action('ash_wrapper_start'); 
 
-	<?php do_action('ash_skip_loop'); ?>
+	do_action('ash_skip_loop'); 
 
-	<?php do_action('ash_wrapper_end'); ?>
+	do_action('ash_wrapper_end'); 
 	
-<?php get_footer(); ?>
+get_footer(); 

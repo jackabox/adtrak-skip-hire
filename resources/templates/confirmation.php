@@ -1,20 +1,16 @@
-<?php get_header(); ?>
+<?php 
 
-	<?php do_action('ash_wrapper_start'); ?>
+get_header();
 
-	<div class="ash-page-header">
-		<h2>Confirmation</h2>
-		<!-- Location search description -->
-	</div>
+	do_action('ash_wrapper_start');
 	
-	<?php 
 	/**
 	 * @ash_before_checkout_form
 	 * @ash_checkout_form
 	 * @ash_after_checkout_form
 	 */
-	do_action('ash_confirmation'); ?>
+	do_action('ash_confirmation');
 
-	<?php do_action('ash_wrapper_end'); ?>
+	do_action('ash_wrapper_end');
 	
-<?php get_footer(); ?>
+get_footer();
