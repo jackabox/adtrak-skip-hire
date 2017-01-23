@@ -37,10 +37,12 @@
 	<tr>
 		<th>Waste</th>
 		<td><?php 
-			foreach($details->ash_waste as $waste):
-				echo $waste;
-				if ($waste !== end($details->ash_waste)) echo ', ';
-			endforeach; 
+			if(isset($details->ash_waste)):
+				foreach($details->ash_waste as $waste):
+					echo $waste;
+					if ($waste !== end($details->ash_waste)) echo ', ';
+				endforeach; 
+			endif;
 		?></td>
 	</tr>
 	<tr>

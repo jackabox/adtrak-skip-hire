@@ -1,6 +1,6 @@
 <p>Please fill out your details below, you will be asked to confirm your information, skip and payment on the next page.</p>
 
-<form action="<?= site_url('confirmation/'); ?>" method="POST" class="ash-form">
+<form action="<?= site_url('skip-booking/cart/'); ?>" method="POST" class="ash-form">
 	<fieldset>
 		<legend>Your Details</legend>
 
@@ -64,7 +64,7 @@
 
 			<div class="ash-field--half">
 				<label>Delivery Time</label>
-				<label class="ash-label--inline"><input type="radio" name="ash_delivery_time" value="Morning"> Morning</label>
+				<label class="ash-label--inline"><input type="radio" name="ash_delivery_time" value="Morning" selected> Morning</label>
 				<label class="ash-label--inline"><input type="radio" name="ash_delivery_time" value="Afternoon"> Afternoon</label>
 			</div>
 
