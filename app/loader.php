@@ -60,3 +60,4 @@ $location = new Controllers\Front\LocationController;
 $skips = new Controllers\Front\SkipController;
 $checkout = new Controllers\Front\CheckoutController;
 $cart = new Controllers\Front\CartController;
+$confirmation = new Controllers\Front\ConfirmationController;

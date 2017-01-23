@@ -1,4 +1,4 @@
 <div class="ash-page-header">
-	<h2>Cart</h2>
-	<!-- Location search description -->
+	<h1>Cart</h1>
+	<p>Please check your details below, and if everything is correct use the PayPal button to proceed to payment.</p>
 </div>

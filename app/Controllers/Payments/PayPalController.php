@@ -111,8 +111,8 @@ class PayPalController
 
         $baseUrl = home_url();
         $redirectUrls = new RedirectUrls();
-        $redirectUrls->setReturnUrl($baseUrl . '/confirmation?success=true')
-            ->setCancelUrl($baseUrl . '/confirmation?success=false');
+        $redirectUrls->setReturnUrl($baseUrl . '/skip-booking/confirmation?success=true')
+            ->setCancelUrl($baseUrl . '/skip-booking/confirmation?success=false');
 
         $payment = new Payment();
         $payment->setIntent('sale')

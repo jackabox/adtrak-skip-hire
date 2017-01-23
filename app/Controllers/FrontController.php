@@ -67,6 +67,7 @@ class FrontController
 	{
 		add_action('ash_wrapper_start', [$this, 'wrapperStart']);
 		add_action('ash_wrapper_end', [$this, 'wrapperEnd']);
+        
 	}
 
     /**

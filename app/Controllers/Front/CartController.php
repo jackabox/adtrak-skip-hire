@@ -44,13 +44,8 @@ class CartController extends Front
 
 	public function beforeCart()
 	{
-        if (isset($_GET['success']) && $_GET['success'] == 'true') {
-            $this->authorisePayment($_GET['paymentId']);
-        } else if (isset($_GET['success'])  && $_GET['success'] == 'false') {
-            // user canceled
-        } else {
-     
-        }
+		$template = $this->templateLocator('cart/header.php');
+		include_once $template;
 	}
 
 	public function cartDetails()
@@ -89,11 +84,6 @@ class CartController extends Front
     public function getPaymentLink($skip, $total, $permit, $coupon)
     {
         return $this->paypal->generateLink($skip, $total, $permit, $coupon);
-    }
-
-    public function authorisePayment($paymentID)
-    {
-        return $this->paypal->authorisedPaymentCheck($paymentID);
     }
 
 
