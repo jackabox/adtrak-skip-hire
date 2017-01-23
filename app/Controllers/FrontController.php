@@ -23,6 +23,13 @@ class FrontController
 		$this->addActions();
 	}
 
+    public function sessionStart()
+    {
+        if (! session_id()) {
+            session_start();
+        }
+    }
+
     /**
      * @param $template
      * @return string
