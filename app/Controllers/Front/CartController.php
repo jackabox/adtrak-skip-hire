@@ -33,7 +33,7 @@ class CartController extends Front
 	{
 		$this->beforeCart();
 
-		if ($_POST['ash_submit']) {
+		if (isset($_POST['ash_submit'])) {
 			$this->cartDetails();
 		} else {
 			echo 'Sorry, looks like you have not placed an order';
@@ -46,10 +46,10 @@ class CartController extends Front
 	{
         if (isset($_GET['success']) && $_GET['success'] == 'true') {
             $this->authorisePayment($_GET['paymentId']);
-        } else if ($_GET['success'] == 'false') {
+        } else if (isset($_GET['success'])  && $_GET['success'] == 'false') {
             // user canceled
         } else {
-            // coming in organic / post
+     
         }
 	}
 

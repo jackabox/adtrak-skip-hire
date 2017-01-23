@@ -22,34 +22,34 @@ class SkipController extends Front
      */
     public function addActions()
 	{
-		add_action('ash_before_skip_loop', [$this, 'beforeSkipLoop']);
-		add_action('ash_after_skip_loop', [$this, 'afterSkipLoop']);
-		add_action('ash_skip_loop', [$this, 'skipLoop']);
+		add_action('ash_skip_loop', [$this, 'loop']);
 	}
 
     /**
      *
      */
-    public function beforeSkipLoop()
+    public function beforeLoop()
 	{
-        $template = $this->templateLocator('skips/loop-start.php');
+        $template = $this->templateLocator('skips/start.php');
         include_once $template;
 	}
 
     /**
      *
      */
-    public function afterSkipLoop()
+    public function afterLoop()
 	{
-        $template = $this->templateLocator('skips/loop-end.php');
+        $template = $this->templateLocator('skips/end.php');
         include_once $template;
 	}
 
     /**
      *
      */
-    public function skipLoop()
+    public function loop()
 	{
+		$this->beforeLoop();
+
 		// work out if pages
 		$limit = 2;		
 		$pagenum = isset($_GET['pagenum']) ? absint($_GET['pagenum']) : 1;
@@ -60,15 +60,6 @@ class SkipController extends Front
 		// get results
 		$skips = Skip::orderBy('created_at', 'desc')->skip($offset)->take($limit)->get();
 
-		$pagination = paginate_links( array(
-    		'base'      => add_query_arg( 'pagenum', '%#%' ),
-    		'format'    => '',
-    		'prev_text' => __( '&laquo;', 'text-domain' ),
-    		'next_text' => __( '&raquo;', 'text-domain' ),
-    		'total'     => $totalPages,
-    		'current'   => $pagenum
-		));
-
         $postcode = null;
 
         if (isset($_SESSION['ash_postcode'])) {
@@ -76,6 +67,25 @@ class SkipController extends Front
         }
 
         $template = $this->templateLocator('skips/loop.php');
+		include_once $template;
+
+		$this->pagination($totalPages, $pagenum);		
+
+		$this->afterLoop();		
+	}
+
+	public function pagination($pages, $pagenum)
+	{
+		$pagination = paginate_links( array(
+    		'base'      => add_query_arg( 'pagenum', '%#%' ),
+    		'format'    => '',
+    		'prev_text' => __( '&laquo;', 'text-domain' ),
+    		'next_text' => __( '&raquo;', 'text-domain' ),
+    		'total'     => $pages,
+    		'current'   => $pagenum
+		));
+
+		$template = $this->templateLocator('skips/pagination.php');
 		include_once $template;
 	}
 }

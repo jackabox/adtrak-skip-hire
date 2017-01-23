@@ -10,9 +10,8 @@
  */
 
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
-?>
 
-<?php foreach($skips as $skip): ?>
+foreach($skips as $skip): ?>
 
 	<div class="ash-skip__item">
 
@@ -59,6 +58,5 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
 		</div>
 	</div>
 
-<?php endforeach; ?>
-
-<?= $pagination; ?>
+<?php 
+endforeach;
