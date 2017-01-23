@@ -69,22 +69,4 @@
             });
         });
     }
-
-    if ($('#as_map').length) {
-        $(function() {
-            var $lat = $('#as_map').data('lat'),
-                $lng = $('#as_map').data('lng');
-
-            var map = new google.maps.Map(document.getElementById('as_map'), {
-                center: { lat: $lat, lng: $lng },
-                zoom: 13
-            });
-
-            var marker = new google.maps.Marker({
-                position: { lat: $lat, lng: $lng },
-                map: map
-            });
-
-        });
-    }
 } (jQuery));
