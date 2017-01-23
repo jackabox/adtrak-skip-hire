@@ -14,7 +14,6 @@ class SkipController extends Front
      */
     public function __construct()
 	{
-		$this->skips = Skip::all();
 		$this->addActions();
 	}
 
@@ -51,10 +50,30 @@ class SkipController extends Front
      */
     public function skipLoop()
 	{
-		$skips = $this->skips;
-		$postcode = null;
+		// work out if pages
+		$limit = 2;		
+		$pagenum = isset($_GET['pagenum']) ? absint($_GET['pagenum']) : 1;
+		$offset = $limit * ($pagenum - 1);
+		$total = Skip::count();
+		$totalPages = ceil($total / $limit);
 
-		if ($_REQUEST['ash_postcode']) $postcode = $_REQUEST['ash_postcode'];
+		// get results
+		$skips = Skip::orderBy('created_at', 'desc')->skip($offset)->take($limit)->get();
+
+		$pagination = paginate_links( array(
+    		'base'      => add_query_arg( 'pagenum', '%#%' ),
+    		'format'    => '',
+    		'prev_text' => __( '&laquo;', 'text-domain' ),
+    		'next_text' => __( '&raquo;', 'text-domain' ),
+    		'total'     => $totalPages,
+    		'current'   => $pagenum
+		));
+
+        $postcode = null;
+
+        if (isset($_SESSION['ash_postcode'])) {
+            $postcode = $_SESSION['ash_postcode'];
+        }
 
         $template = $this->templateLocator('skips/loop.php');
 		include_once $template;

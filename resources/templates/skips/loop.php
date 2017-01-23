@@ -51,7 +51,7 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
 				<?php endif; ?>
 			</p>
 
-			<form action="<?= site_url('checkout/'); ?>" method="POST">
+			<form action="<?= site_url('skip-booking/checkout'); ?>" method="POST">
 				<input type="hidden" name="skip_id" value="<?= $skip->id; ?>">
 				<input type="hidden" name="postcode" value="<?= $postcode ?>">
 				<p><button type="submit" class="ash-button">Purchase</button></p>
@@ -60,3 +60,5 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
 	</div>
 
 <?php endforeach; ?>
+
+<?= $pagination; ?>
