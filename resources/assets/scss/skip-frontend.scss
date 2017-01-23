@@ -80,3 +80,20 @@
 		width: 200px;
 	}
 }
+
+.as-notification {
+	padding: 15px;
+	margin-bottom: 20px;
+
+	&-warning {
+		background: rgba(red, 0.4);	
+	}
+
+	&.hidden {
+		display: none;
+	}
+
+	p {
+		margin-bottom: 0;
+	}
+}

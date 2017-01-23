@@ -69,4 +69,11 @@
             });
         });
     }
+
+    $(function() {
+        $('.ash-form').parsley().on('field:validated', function() {
+            var ok = $('.parsley-error').length === 0;
+            $('.as-notification-warning').toggleClass('hidden', ok);
+        });
+    });
 } (jQuery));

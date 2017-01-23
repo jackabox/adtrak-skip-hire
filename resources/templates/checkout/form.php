@@ -1,31 +1,36 @@
-<form action="<?= site_url('skip-booking/cart/'); ?>" method="POST" class="ash-form">
+<div class="as-notification as-notification-warning hidden">
+	<h4>Oh snap!</h4>
+	<p>Looks like the form is not valid, please check to see if we missed anything.</p>
+</div>
+
+<form action="<?= site_url('skip-booking/cart/'); ?>" method="POST" class="ash-form" data-parsley-validate>
 	<fieldset>
 		<legend>Your Details</legend>
 
 		<div>
 			<div class="ash-field--half">
 				<label for="ash_forename">Forename</label>
-				<input type="text" name="ash_forename" id="ash_forename">
+				<input type="text" name="ash_forename" id="ash_forename" required>
 			</div>
 
 			<div class="ash-field--half">
 				<label for="ash_surname">Surname</label>
-				<input type="text" name="ash_surname" id="ash_surname">
+				<input type="text" name="ash_surname" id="ash_surname" required>
 			</div>
 
 			<div class="ash-field--half">
 				<label for="ash_email">Email</label>
-				<input type="email" name="ash_email" id="ash_email">
+				<input type="email" name="ash_email" id="ash_email" data-parsley-trigger="change" required>
 			</div>
 
 			<div class="ash-field--half">
 				<label for="ash_telephone">Telephone</label>
-				<input type="tel" name="ash_telephone" id="ash_telephone">
+				<input type="tel" name="ash_telephone" id="ash_telephone" required>
 			</div>
 
 			<div class="ash-field--half">
 				<label for="ash_address1">Address 1</label>
-				<input type="text" name="ash_address1" id="ash_address1">
+				<input type="text" name="ash_address1" id="ash_address1" required>
 			</div>
 
 			<div class="ash-field--half">
@@ -35,17 +40,17 @@
 
 			<div class="ash-field--half">
 				<label for="ash_city">City</label>
-				<input type="text" name="ash_city" id="ash_city">
+				<input type="text" name="ash_city" id="ash_city" required>
 			</div>
 
 			<div class="ash-field--half">	
 				<label for="ash_county">County</label>
-				<input type="text" name="ash_county" id="ash_county">
+				<input type="text" name="ash_county" id="ash_county" required>
 			</div>
 
 			<div class="ash-field--half">
 				<label for="ash_postcode">Postcode</label>
-				<input type="text" name="ash_postcode" id="ash_postcode">
+				<input type="text" name="ash_postcode" id="ash_postcode" required>
 			</div>
 		</div>
 
@@ -57,18 +62,19 @@
 		<div>
 			<div class="ash-field--half">
 				<label for="ash_delivery_date">Delivery Date</label>
-				<input type="date" name="ash_delivery_date" id="ash_delivery_date" placeholder="DD/MM/YYYY">
+				<input type="date" name="ash_delivery_date" id="ash_delivery_date" placeholder="DD/MM/YYYY" required>
 			</div>
 
 			<div class="ash-field--half">
 				<label>Delivery Time</label>
-				<label class="ash-label--inline"><input type="radio" name="ash_delivery_time" value="Morning" checked> Morning</label>
+				<label class="ash-label--inline"><input type="radio" name="ash_delivery_time" value="Morning" checked required> Morning</label>
 				<label class="ash-label--inline"><input type="radio" name="ash_delivery_time" value="Afternoon"> Afternoon</label>
 			</div>
 
 			<div>
 				<label for="ash_permit">Permit</label>
 				<select name="ash_permit" id="ash_permit">
+					<option value="">If needed, select a permit</option>
 					<?php foreach($permits as $permit): ?>
 						<option value="<?= $permit->id; ?>"><?= $permit->name; ?> (£<?= $permit->price; ?>)</option>
 					<?php endforeach; ?>
