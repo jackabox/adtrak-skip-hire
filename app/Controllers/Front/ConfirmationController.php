@@ -32,7 +32,7 @@ class ConfirmationController extends Front
 		if (isset($_GET['success']) && $_GET['success'] == 'true') {
 
             $auth = $this->authorisePayment($_GET['paymentId']);
-			
+
 			if ($auth) {
 				$this->success();
 			} else {
@@ -109,6 +109,13 @@ class ConfirmationController extends Front
 
 			$coupon->save();			
 		}		
+
+		// free up stored sessions
+		if ($order->id) {
+			unset($_SESSION['ash_details']);
+			unset($_SESSION['ash_skip']);
+			unset($_SESSION['ash_location']);
+		}
 
 		// display thanks!
 		$template = $this->templateLocator('confirmation/success.php');
