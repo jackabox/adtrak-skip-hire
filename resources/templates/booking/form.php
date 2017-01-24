@@ -1,9 +1,9 @@
-<form action="<?= site_url('skip-booking/checkout'); ?>" method="post" class="ash-form">
+<form action="<?= site_url('skip-booking/checkout'); ?>" method="post" class="ash-form" data-parsley-validate>
 	<p class="aw_warning" style="display: none;">Please select a valid location from the drop down before submitting</p>
 
 	<div>
 		<label for="autcomplete">Enter Your Location</label>
-		<input type="text" name="autocomplete" id="as_autocomplete" palceholder="Enter your Postcode">
+		<input type="text" name="autocomplete" id="as_autocomplete" palceholder="Enter your Postcode" required>
 	</div>
 
 	<input type="hidden" name="lat" id="as_lat">

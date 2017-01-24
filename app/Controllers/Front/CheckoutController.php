@@ -37,15 +37,17 @@ class CheckoutController extends Front
 			$_SESSION['ash_skip'] = $_POST['skip_id'];
 		}
 
+		$checkPostcode = false;
+
 		if (isset($_POST['autocomplete'])) {
-			$this->location->checkPostcode();
+			$checkPostcode = $this->location->checkPostcode();
 		}
 
 		if (!isset($_SESSION['ash_location']) || $_SESSION['ash_location'] == null) {
 			$this->location->form();
-		} else if (!isset($_SESSION['ash_skip']) || $_SESSION['ash_skip'] == null) {
+		} else if ($checkPostcode && !isset($_SESSION['ash_skip']) || $_SESSION['ash_skip'] == null) {
 			$this->skip->loop();
-		} else {
+		} else if ($checkPostcode) {
 			$this->checkout();			
 		}
 	}

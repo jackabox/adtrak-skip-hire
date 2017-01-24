@@ -61,10 +61,14 @@ class LocationController extends Front
 			if ($location && ($location->distance <= $location->radius)) {
                 return true;
 			} else {
-				echo "Sorry, we do not currently deliver to your location.";
+				$template = $this->templateLocator('booking/not-available.php');
+        		include_once $template;
+				return false;
 			}		
 		} catch (Exception $e) {
-			echo "Sorry, something went wrong. Please try again.";
+			$template = $this->templateLocator('booking/error.php');
+        	include_once $template;
+			return false;
 		}
     }
 }
