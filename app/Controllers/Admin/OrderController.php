@@ -61,4 +61,11 @@ class OrderController extends Admin
 			echo "Sorry, the order you're looking for does not exist.";
 		}
 	}
+
+	protected function update()
+	{
+		$order = Order::find($_GET['id']);
+		$order->status = $_POST['ash_order_status'];
+		$order->save();
+	}
 }

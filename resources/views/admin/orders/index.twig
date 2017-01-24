@@ -28,7 +28,7 @@
 				<td>{{ order.created_at|date("d/m/Y") }}</td>
 				<td>{{ order.delivery_date|date("d/m/Y") }}</td>
 				<td>£{{ order.total }}</td>	
-				<td>{{ order.status }}</td>			
+				<td>{{ order.status|capitalize }}</td>			
 				<td>
 					<a href="{{ link.edit }}{{ order.id }}" class="ad-button">Manage</a>
 				</td>

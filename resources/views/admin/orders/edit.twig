@@ -105,11 +105,15 @@
 
 			<div class="ad-box">
 				<div class="section-header">		
-					<h4>Update</h4>
+					<h4>Order Status</h4>
 				</div>
 
-				<form action="" class="ad-form">
-					<p>Form stuff</p>
+				<form action="" class="ad-form" method="POST">				
+					<p><select name="ash_order_status" id="ash_order_status">
+						<option value="pending" {% if order.status == 'pending' %}selected{% endif %}>Pending</option>
+						<option value="completed" {% if order.status == 'completed' %}selected{% endif %}>Completed</option>
+					</select></p>
+					<input type="hidden" name="action" value="order_update">
 					<button type="submit" class="ad-button ad-button--orange">Change</button>
 				</form>
 			</div>
