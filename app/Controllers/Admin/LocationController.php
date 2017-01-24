@@ -34,7 +34,24 @@ class LocationController extends Admin
      */
     public function index()
 	{
-		$locations = Location::all();
+		// work out if pages
+		$limit = 16;		
+		$pagenum = isset($_GET['pagenum']) ? absint($_GET['pagenum']) : 1;
+		$offset = $limit * ($pagenum - 1);
+		$total = Location::count();
+		$totalPages = ceil($total / $limit);
+
+		// get results
+		$locations = Location::orderBy('created_at', 'desc')->skip($offset)->take($limit)->get();
+
+		$pagination = paginate_links( array(
+    		'base'      => add_query_arg( 'pagenum', '%#%' ),
+    		'format'    => '',
+    		'prev_text' => __( '&laquo;', 'text-domain' ),
+    		'next_text' => __( '&raquo;', 'text-domain' ),
+    		'total'     => $totalPages,
+    		'current'   => $pagenum
+		));
 
 		$link = [
 			'edit' => admin_url('admin.php?page=ash-locations-edit&id='),
@@ -43,7 +60,8 @@ class LocationController extends Admin
 
 		View::render('admin/locations/index.twig', [
 			'locations' 	=> $locations,
-			'link'			=> $link
+			'link'			=> $link,
+			'pagination'	=> $pagination
 		]);
 	}
 

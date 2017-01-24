@@ -51,7 +51,7 @@ class SkipController extends Front
 		$this->beforeLoop();
 
 		// work out if pages
-		$limit = 2;		
+		$limit = 10;		
 		$pagenum = isset($_GET['pagenum']) ? absint($_GET['pagenum']) : 1;
 		$offset = $limit * ($pagenum - 1);
 		$total = Skip::count();

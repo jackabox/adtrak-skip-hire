@@ -27,7 +27,9 @@
 		</tbody>
 	</table>
 	{% else %}
-	<p>No permits have been added yet.</p>
+		<p>No permits have been added yet.</p>
 	{% endif %}
+
+	{{ pagination|raw }}
 
 {% include 'admin/partials/footer.twig' %}

@@ -39,7 +39,9 @@
 		</tbody>
 	</table>
 	{% else %}
-	<p>No coupons have been added yet.</p>
+		<p>No coupons have been added yet.</p>
 	{% endif %}
+
+	{{ pagination|raw  }}
 
 {% include 'admin/partials/footer.twig' %}

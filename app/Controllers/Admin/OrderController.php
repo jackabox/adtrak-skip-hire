@@ -21,7 +21,24 @@ class OrderController extends Admin
 
 	public function index()
 	{
-		$orders = Order::all();
+		// work out if pages
+		$limit = 16;		
+		$pagenum = isset($_GET['pagenum']) ? absint($_GET['pagenum']) : 1;
+		$offset = $limit * ($pagenum - 1);
+		$total = Order::count();
+		$totalPages = ceil($total / $limit);
+
+		// get results
+		$orders = Order::orderBy('created_at', 'desc')->skip($offset)->take($limit)->get();
+
+		$pagination = paginate_links( array(
+    		'base'      => add_query_arg( 'pagenum', '%#%' ),
+    		'format'    => '',
+    		'prev_text' => __( '&laquo;', 'text-domain' ),
+    		'next_text' => __( '&raquo;', 'text-domain' ),
+    		'total'     => $totalPages,
+    		'current'   => $pagenum
+		));
 
 		$link = [
 			'edit' => admin_url('admin.php?page=ash-orders-edit&id='),
@@ -30,7 +47,8 @@ class OrderController extends Admin
 
 		View::render('admin/orders/index.twig', [
 			'orders' 	=> $orders,
-			'link'		=> $link
+			'link'		=> $link,
+			'pagination' => $pagination
 		]);
 
 	}

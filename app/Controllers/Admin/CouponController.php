@@ -31,7 +31,24 @@ class CouponController extends Admin
      */
     public function index()
 	{
-		$coupons = Coupon::all();
+		// work out if pages
+		$limit = 16;		
+		$pagenum = isset($_GET['pagenum']) ? absint($_GET['pagenum']) : 1;
+		$offset = $limit * ($pagenum - 1);
+		$total = Coupon::count();
+		$totalPages = ceil($total / $limit);
+
+		// get results
+		$coupons = Coupon::orderBy('created_at', 'desc')->skip($offset)->take($limit)->get();
+
+		$pagination = paginate_links( array(
+    		'base'      => add_query_arg( 'pagenum', '%#%' ),
+    		'format'    => '',
+    		'prev_text' => __( '&laquo;', 'text-domain' ),
+    		'next_text' => __( '&raquo;', 'text-domain' ),
+    		'total'     => $totalPages,
+    		'current'   => $pagenum
+		));
 		
 		$link = [
 			'edit' => admin_url('admin.php?page=ash-coupons-edit&id='),
@@ -39,8 +56,9 @@ class CouponController extends Admin
 		];
 
 		View::render('admin/coupons/index.twig', [
-			'coupons' 	=> $coupons,
-			'link'		=> $link
+			'coupons'    => $coupons,
+			'link'       => $link,
+			'pagination' => $pagination
 		]);
 	}
 

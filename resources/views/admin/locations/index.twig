@@ -31,7 +31,9 @@
 		</tbody>
 	</table>
 	{% else %}
-	<p>No locations have been added yet.</p>
+		<p>No locations have been added yet.</p>
 	{% endif %}
+
+	{{ pagination|raw }}
 	
 {% include 'admin/partials/footer.twig' %}

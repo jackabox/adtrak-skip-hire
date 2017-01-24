@@ -22,8 +22,25 @@ class PermitController extends Admin
 
 	public function index() 
 	{
-		$permits = Permit::all();
+		// work out if pages
+		$limit = 16;		
+		$pagenum = isset($_GET['pagenum']) ? absint($_GET['pagenum']) : 1;
+		$offset = $limit * ($pagenum - 1);
+		$total = Permit::count();
+		$totalPages = ceil($total / $limit);
+
+		// get results
+		$permits = Permit::orderBy('created_at', 'desc')->skip($offset)->take($limit)->get();
 		
+		$pagination = paginate_links( array(
+    		'base'      => add_query_arg( 'pagenum', '%#%' ),
+    		'format'    => '',
+    		'prev_text' => __( '&laquo;', 'text-domain' ),
+    		'next_text' => __( '&raquo;', 'text-domain' ),
+    		'total'     => $totalPages,
+    		'current'   => $pagenum
+		));
+
 		$link = [
 			'edit' => admin_url('admin.php?page=ash-permits-edit&id='),
 			'add' => admin_url('admin.php?page=ash-permits-add')
@@ -31,7 +48,8 @@ class PermitController extends Admin
 
 		View::render('admin/permits/index.twig', [
 			'permits' 		=> $permits,
-			'link'			=> $link
+			'link'			=> $link,
+			'pagination'	=> $pagination
 		]);
 	}
 
