@@ -72,6 +72,9 @@ if ($version === false) {
 		$table->text('waste');
 		$table->text('notes');
 		$table->decimal('total', 10, 2)->nullable(false);
+		$table->string('payment_method', 20)->nullable(false);
+		$table->string('payment_reference', 50);
+		$table->decimal('total', 10, 2)->nullable(false);
 		$table->string('status', 20)->nullable(false);
     	$table->timestamps();
 	});

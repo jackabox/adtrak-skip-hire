@@ -69,22 +69,24 @@ class ConfirmationController extends Front
 		// handle adding the order here.
 		$details = (object) $_SESSION['ash_details'];
 
-		$order                = new Order();
-		$order->forename      = $details->user->ash_forename;
-		$order->surname       = $details->user->ash_surname;
-		$order->email         = $details->user->ash_email;
-		$order->number        = $details->user->ash_telephone;
-		$order->address1      = $details->user->ash_address1;
-		$order->address2      = $details->user->ash_address2;
-		$order->city          = $details->user->ash_city;
-		$order->county        = $details->user->ash_county;
-		$order->country       = '';
-		$order->postcode      = $details->user->ash_postcode;
-		$order->delivery_date = $details->user->ash_delivery_date;
-		$order->delivery_slot = $details->user->ash_delivery_time;
-		$order->notes         = $details->user->ash_notes;
-		$order->total         = $this->total;
-		$order->status        = 'pending';
+		$order                    = new Order();
+		$order->forename          = $details->user->ash_forename;
+		$order->surname           = $details->user->ash_surname;
+		$order->email             = $details->user->ash_email;
+		$order->number            = $details->user->ash_telephone;
+		$order->address1          = $details->user->ash_address1;
+		$order->address2          = $details->user->ash_address2;
+		$order->city              = $details->user->ash_city;
+		$order->county            = $details->user->ash_county;
+		$order->country           = '';
+		$order->postcode          = $details->user->ash_postcode;
+		$order->delivery_date     = $details->user->ash_delivery_date;
+		$order->delivery_slot     = $details->user->ash_delivery_time;
+		$order->notes             = $details->user->ash_notes;
+		$order->total             = $this->total;
+		$order->status            = 'pending';
+		$order->payment_method    = 'PayPal';
+		$order->payment_reference = $_GET['paymentId'];
 
 		if ($order->waste) {
 			$order->waste = $user->ash_waste;

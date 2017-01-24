@@ -96,7 +96,8 @@
 					<h4>Payment Details</h4>
 				</div>
 				{% if order.payment_method != false %}				
-					{{ order.payment_method }}
+					Paid Via: {{ order.payment_method }}<br>
+					Reference: {{ order.payment_reference}}
 				{% else %}
 					No payment information provided
 				{% endif %}
