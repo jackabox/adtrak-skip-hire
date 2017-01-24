@@ -9,38 +9,64 @@
 			<div class="section-header">
 				Revenue <span>Last 31 Days</span>
 			</div>
-			<p>&pound;1,097</p>
+			<p>&pound;{{ stats.revenue_month }}</p>
 		</div>
 
 		<div class="widget ad-box">
 			<div class="section-header">
 				Revenue <span>Lifetime</span>
 			</div>
-			<p>&pound;12,012</p>
+			<p>&pound;{{ stats.revenue_lifetime }}</p>
 		</div>
 
 		<div class="widget ad-box">
 			<div class="section-header">
 				Orders <span>Last 31 Days</span>
 			</div>
-			<p>31</p>
+			<p>{{ stats.orders_month }}</p>
 		</div>
 
 		<div class="widget ad-box">
 			<div class="section-header">
 				Orders <span>Lifetime</span>
 			</div>
-			<p>457</p>
+			<p>{{ stats.orders_lifetime }}</p>
 		</div>
 	</div>
 
-	<div class="ad-grid dashboard" id="graph">
-		<div class="content ad-box">
-			<div class="section-header">
-				Orders Within The Last 7 Days
-			</div>
-			<canvas id="canvas" style="height: 340px; width: 960px;" height="340"></canvas>
-		</div>
-	</div>
+	<h2>Orders Outstanding</h2>
+	{% if orders is not empty %}
+		<table class="ad-table ad-table__orders">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Name &amp; Address</th>
+					<th>Order Date</th>
+					<th>Delivery Date</th>
+					<th>Total (£)</th>				
+					<th class="manage"></th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for order in orders %}
+				<tr>
+					<td><a href="/wp-admin/admin.php?page=ash-orders-edit&id={{ order.id }}">{{ order.id }}</a></td>
+					<td>
+						<a href="/wp-admin/admin.php?page=ash-orders-edit&id={{ order.id }}">{{ order.forename }} {{ order.surname }}</a></br>
+						{{ order.address1 }}, {{ order.city }}, {{ order.postcode}}
+					</td>
+					<td>{{ order.created_at|date("d/m/Y") }}</td>
+					<td>{{ order.delivery_date|date("d/m/Y") }}</td>
+					<td>£{{ order.total }}</td>				
+					<td>
+						<a href="/wp-admin/admin.php?page=ash-orders-edit&id={{ order.id }}" class="ad-button">Manage</a>
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	{% else %}
+		<p>No Orders Outstanding</p>
+	{% endif %}
 
 {% include 'admin/partials/footer.twig' %}

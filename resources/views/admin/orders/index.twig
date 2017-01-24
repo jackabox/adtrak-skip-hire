@@ -21,13 +21,13 @@
 			{% for order in orders %}
 			<tr>
 				<td><a href="{{ link.edit }}{{ order.id }}">{{ order.id }}</a></td>
-				<td><a href="{{ link.edit }}{{ order.id }}">{{ order.forename }} {{ order.surname }}</a></td>
 				<td>
-					<span>Skip: </span> <br><span>Permit: </span>
+					<a href="{{ link.edit }}{{ order.id }}">{{ order.forename }} {{ order.surname }}</a></br>
+					{{ order.address1 }}, {{ order.city }}, {{ order.postcode}}
 				</td>
-				<td>{{ order.created_at }}</td>
-				<td>{{ order.delivery_date }}</td>
-				<td>{{ order.total }}</td>				
+				<td>{{ order.created_at|date("d/m/Y") }}</td>
+				<td>{{ order.delivery_date|date("d/m/Y") }}</td>
+				<td>£{{ order.total }}</td>				
 				<td>
 					<a href="{{ link.edit }}{{ order.id }}" class="ad-button">Manage</a>
 				</td>
