@@ -71,7 +71,8 @@ if ($version === false) {
 		$table->string('delivery_slot', 20);
 		$table->text('waste');
 		$table->text('notes');
-		$table->decimal('total', 10, 2)->nullable(false);	
+		$table->decimal('total', 10, 2)->nullable(false);
+		$table->string('status', 20)->nullable(false);
     	$table->timestamps();
 	});
 

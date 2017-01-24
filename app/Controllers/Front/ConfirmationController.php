@@ -84,6 +84,7 @@ class ConfirmationController extends Front
 		$order->delivery_slot = $details->user->ash_delivery_time;
 		$order->notes         = $details->user->ash_notes;
 		$order->total         = $this->total;
+		$order->status        = 'pending';
 
 		if ($order->waste) {
 			$order->waste = $user->ash_waste;
