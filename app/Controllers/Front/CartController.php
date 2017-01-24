@@ -68,6 +68,8 @@ class CartController extends Front
 
 		$total = $subTotal + $permit->price;
         $paypal = $this->getPaymentLink($skip, $total, $permit, $coupon);
+		
+		dd($_SESSION['ash_details']);
 
         $template = $this->templateLocator('cart/details.php');
 		include_once $template;
@@ -93,6 +95,12 @@ class CartController extends Front
 			$this->skip = Skip::findOrFail($_POST['ash_skip']);
 		}
 
+		if ($this->skip) {
+			$_SESSION['ash_details']['skip'] = $this->skip;
+		} else {
+			$_SESSION['ash_details']['skip'] = [];
+		}
+
 		return $this->skip;
 	}
 
@@ -102,6 +110,12 @@ class CartController extends Front
 			$this->permit = Permit::findOrFail($_POST['ash_permit']);
 		}
 
+		if ($this->permit) {
+			$_SESSION['ash_details']['permit'] = $this->permit;
+		} else {
+			$_SESSION['ash_details']['permit'] = [];
+		}
+
 		return $this->permit;		
 	}
 
@@ -109,6 +123,12 @@ class CartController extends Front
 	{
 		if ($_POST['ash_coupon']) {
 			$this->coupon = Coupon::where('name', '=', $_POST['ash_coupon'])->first();
+		} 
+
+		if ($this->coupon) {
+			$_SESSION['ash_details']['coupon'] = $this->coupon;
+		} else {
+			$_SESSION['ash_details']['coupon'] = [];
 		}
 		
 		return $this->coupon;		
@@ -118,6 +138,12 @@ class CartController extends Front
 	{
 		if ($_POST['ash_submit']) {
 			$this->orderDetails = (object) $_POST;
+		}
+
+		if ($this->orderDetails) {
+			$_SESSION['ash_details']['user'] = $this->orderDetails;
+		} else {
+			$_SESSION['ash_details']['user'] = [];
 		}
 
 		return $this->orderDetails;
