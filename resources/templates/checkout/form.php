@@ -45,7 +45,12 @@
 
 			<div class="ash-field--half">	
 				<label for="ash_county">County</label>
-				<input type="text" name="ash_county" id="ash_county" required>
+				<input type="text" name="ash_county" id="ash_county">
+			</div>
+
+			<div class="ash-field--half">	
+				<label for="ash_country">Country</label>
+				<input type="text" name="ash_country" id="ash_country" required>
 			</div>
 
 			<div class="ash-field--half">

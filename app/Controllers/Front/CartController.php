@@ -68,10 +68,7 @@ class CartController extends Front
 
 		$total = $subTotal + $permit->price;
         $paypal = $this->getPaymentLink($skip, $total, $permit, $coupon);
-		
-		dd($_SESSION['ash_details']);
-
-        $template = $this->templateLocator('cart/details.php');
+	    $template = $this->templateLocator('cart/details.php');
 		include_once $template;
 	}
 
