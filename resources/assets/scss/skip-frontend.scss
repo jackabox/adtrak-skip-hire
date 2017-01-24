@@ -83,10 +83,12 @@
 
 .as-notification {
 	padding: 15px;
-	margin-bottom: 20px;
+	margin-bottom: 30px;
 
 	&-warning {
-		background: rgba(red, 0.4);	
+		background: #F2DEDE;
+		border-color: #EBCCD1 !important;
+		color: #A94442;
 	}
 
 	&.hidden {
@@ -96,4 +98,21 @@
 	p {
 		margin-bottom: 0;
 	}
+}
+
+
+// validation
+.parsley-error {
+	background: #F2DEDE !important;
+	border-color: #EBCCD1 !important;
+}
+
+.parsley-errors-list {
+	list-style: none;
+	padding: 5px;
+	color: #A94442;
+	font-weight: 600;
+	font-style: italic;
+	font-size: 14px;
+	margin: 0;
 }

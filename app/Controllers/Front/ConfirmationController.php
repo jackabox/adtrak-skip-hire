@@ -32,13 +32,11 @@ class ConfirmationController extends Front
 		if (isset($_GET['success']) && $_GET['success'] == 'true') {
 
             // $this->authorisePayment($_GET['paymentId']);
-
 			$this->success();
 
         } else if (isset($_GET['success'])  && $_GET['success'] == 'false') {
 
 			$this->fail();			
-            // user canceled
 
         } else {
 			echo 'Should not be here';

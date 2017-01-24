@@ -1,6 +1,6 @@
 <div class="as-notification as-notification-warning hidden">
 	<h4>Oh snap!</h4>
-	<p>Looks like the form is not valid, please check to see if we missed anything.</p>
+	<p>Looks like something went wrong, please check the form below and try resubmitting.</p>
 </div>
 
 <form action="<?= site_url('skip-booking/cart/'); ?>" method="POST" class="ash-form" data-parsley-validate>
