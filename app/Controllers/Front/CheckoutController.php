@@ -44,11 +44,11 @@ class CheckoutController extends Front
 
 		if (!isset($_SESSION['ash_location']) || $_SESSION['ash_location'] == null) {
 			$this->location->form();
-		} else if ($this->checkPostcode && !isset($_SESSION['ash_skip']) || $_SESSION['ash_skip'] == null) {
+		} 
+		else if (!isset($_SESSION['ash_skip']) || $_SESSION['ash_skip'] == null) {
 			$this->skip->loop();
 		}
-		
-		if (isset($_SESSION['ash_skip']) && isset($_SESSION['ash_location'])) {
+		else if (isset($_SESSION['ash_skip']) && isset($_SESSION['ash_location'])) {
 			$this->checkout();			
 		}
 	}
