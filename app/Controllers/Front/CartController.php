@@ -56,11 +56,12 @@ class CartController extends Front
 		$details = $this->getOrderDetails();
 
 		if ($coupon) {
-			if ($coupon->type = 'flat') {
-				$subTotal = $skip->price - $coupon->price;
+			if ($coupon->type == 'flat') {
+				$couponValue = $coupon->amount * -1;
+				$subTotal = $skip->price + $couponValue;
 			} else {
-				// 90 = 100 - (100 * (10 / 100));
-				$subTotal = $skip->price - ($skip->price * ($coupon->amount / 100)); 
+				$couponValue = $skip->price * ($coupon->amount / 100) * -1;
+				$subTotal = $skip->price + $couponValue; 
 			}
 		} else {
 			$subTotal = $skip->price;
@@ -124,7 +125,7 @@ class CartController extends Front
 	public function getCoupon()
 	{
 		if ($_POST['ash_coupon']) {
-			$this->coupon = Coupon::where('name', '=', $_POST['ash_coupon'])->first();
+			$this->coupon = Coupon::where('code', '=', $_POST['ash_coupon'])->first();
 		} 
 
 		if ($this->coupon) {

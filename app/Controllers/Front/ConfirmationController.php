@@ -28,8 +28,8 @@ class ConfirmationController extends Front
 		$details = (object) $_SESSION['ash_details'];
 		
 		if ($details->coupon) {
-			if ($details->coupon->type = 'flat') {
-				$subTotal = $details->skip->price - $details->coupon->price;
+			if ($details->coupon->type == 'flat') {
+				$subTotal = $details->skip->price - $details->coupon->amount;
 			} else {
 				$subTotal = $details->skip->price - ($details->skip->price * ($details->coupon->amount / 100)); 
 			}
@@ -116,10 +116,10 @@ class ConfirmationController extends Front
 			$coupon           = new OrderItem();
 			$coupon->order_id = $order->id;
 			$coupon->type     = "Coupon";
-			$coupon->name     = $details->coupon->name;
+			$coupon->name     = $details->coupon->code;
 
 			if ($details->coupon->type = 'flat') {
-				$coupon->price = $details->coupon->price * -1;
+				$coupon->price = $details->coupon->amount * -1;
 			} else {
 				$coupon->price = ($details->skip->price * ($details->coupon->amount / 100)) * -1; 
 			}

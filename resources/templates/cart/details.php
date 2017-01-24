@@ -80,8 +80,8 @@
     <?php if ($coupon): ?>
         <tr>
             <td>Coupon</td>
-            <td><?= $coupon->name; ?></td>
-            <td>-&pound;<?= number_format(round($coupon->price, 2), 2, '.', ''); ?></td>
+            <td><?= $coupon->code; ?></td>
+			<td>- &pound;<?= number_format(round($couponValue * -1, 2), 2, '.', '') ; ?></td>
         </tr>
     <?php endif; ?>
 

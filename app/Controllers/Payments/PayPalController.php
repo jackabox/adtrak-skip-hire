@@ -87,12 +87,18 @@ class PayPalController
         }
 
         if ($couponData) {
+            if ($couponData->type == 'flat') {
+				$couponValue = $couponData->amount * -1;
+			} else {
+				$couponValue = $skipData->price * ($couponData->amount / 100) * -1;
+			}
+
             $coupon = new Item();
             $coupon->setName($couponData->name)
                 ->setCurrency('GBP')
                 ->setQuantity(1)
                 ->setSku($couponData->id)
-                ->setPrice(floatval($couponData->price) * -1);
+                ->setPrice(floatval($couponValue));
 
             $items[] = $coupon;
         }
