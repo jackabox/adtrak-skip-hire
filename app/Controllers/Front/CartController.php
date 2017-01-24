@@ -66,7 +66,12 @@ class CartController extends Front
 			$subTotal = $skip->price;
 		}
 
-		$total = $subTotal + $permit->price;
+		if ($permit) {
+			$total = $subTotal + $permit->price;
+		} else {
+			$total = $subTotal;
+		}
+
         $paypal = $this->getPaymentLink($skip, $total, $permit, $coupon);
 	    $template = $this->templateLocator('cart/details.php');
 		include_once $template;

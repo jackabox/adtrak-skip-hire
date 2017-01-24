@@ -12,6 +12,7 @@ class CheckoutController extends Front
 {
 	protected $location;
 	protected $skip;
+	protected $checkPostcode;
 
     /**
      * CheckoutController constructor.
@@ -37,17 +38,17 @@ class CheckoutController extends Front
 			$_SESSION['ash_skip'] = $_POST['skip_id'];
 		}
 
-		$checkPostcode = false;
-
 		if (isset($_POST['autocomplete'])) {
-			$checkPostcode = $this->location->checkPostcode();
+			$this->checkPostcode = $this->location->checkPostcode();
 		}
 
 		if (!isset($_SESSION['ash_location']) || $_SESSION['ash_location'] == null) {
 			$this->location->form();
-		} else if ($checkPostcode && !isset($_SESSION['ash_skip']) || $_SESSION['ash_skip'] == null) {
+		} else if ($this->checkPostcode && !isset($_SESSION['ash_skip']) || $_SESSION['ash_skip'] == null) {
 			$this->skip->loop();
-		} else if ($checkPostcode) {
+		}
+		
+		if (isset($_SESSION['ash_skip']) && isset($_SESSION['ash_location'])) {
 			$this->checkout();			
 		}
 	}

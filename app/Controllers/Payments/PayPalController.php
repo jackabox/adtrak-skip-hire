@@ -5,6 +5,7 @@ use PayPal\Rest\ApiContext;
 use PayPal\Auth\OAuthTokenCredential;
 
 use PayPal\Api\Amount;
+use PayPal\Api\Details;
 use PayPal\Api\Item;
 use PayPal\Api\ItemList;
 use PayPal\Api\Payer;
@@ -131,8 +132,9 @@ class PayPalController
         return $approvalUrl;
     }
 
-    public function authorisedPaymentCheck($paymentID)
+    public function authorisedPaymentCheck($subTotal, $total)
     {
+        $paymentID = $_GET['paymentId'];
         $payment = Payment::get($paymentID, $this->apiContext);
 
         $execution = new PaymentExecution();
@@ -140,9 +142,15 @@ class PayPalController
 
         $transaction = new Transaction();
         $amount = new Amount();
+        $details = new Details();
+
+        $details->setShipping(0)
+            ->setTax(0)
+            ->setSubtotal($subTotal);
 
         $amount->setCurrency('GBP')
-            ->setTotal(260);
+            ->setTotal($total)
+            ->setDetails($details);
 
         $transaction->setAmount($amount);
         $execution->addTransaction($transaction);
@@ -160,7 +168,7 @@ class PayPalController
             exit(1);
         }
 
-        return $result;
+        return $payment;
     }
 
     /**

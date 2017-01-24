@@ -10,6 +10,7 @@ use Adtrak\Skips\Controllers\Payments\PayPalController as PayPal;
 class ConfirmationController extends Front
 {
 	protected $paypal;
+	protected $total;
 
 	public function __construct()
 	{
@@ -22,29 +23,44 @@ class ConfirmationController extends Front
 		add_action('ash_confirmation', [$this, 'checkState']);
 	}
 
-    public function authorisePayment($paymentID)
+    public function authorisePayment()
     {
-        return $this->paypal->authorisedPaymentCheck($paymentID);
+		$details = (object) $_SESSION['ash_details'];
+		
+		if ($details->coupon) {
+			if ($details->coupon->type = 'flat') {
+				$subTotal = $details->skip->price - $details->coupon->price;
+			} else {
+				$subTotal = $details->skip->price - ($details->skip->price * ($details->coupon->amount / 100)); 
+			}
+		} else {
+			$subTotal = $details->skip->price;
+		}
+
+		if ($details->permit) {
+			$this->total = $subTotal + $details->permit->price;
+		} else {
+			$this->total = $subTotal;
+		}
+
+        return $this->paypal->authorisedPaymentCheck($subTotal, $this->total);
     }
 
 	public function checkState() 
 	{
-		if (isset($_GET['success']) && $_GET['success'] == 'true') {
+		if (isset($_SESSION['ash_details'])) {
+			if (isset($_GET['success']) && $_GET['success'] == 'true') {
 
-            $auth = $this->authorisePayment($_GET['paymentId']);
-
-			if ($auth) {
+            	$this->authorisePayment();
 				$this->success();
-			} else {
-				$this->fail();
-			}
 
-        } else if (isset($_GET['success'])  && $_GET['success'] == 'false') {
+        	} else if (isset($_GET['success'])  && $_GET['success'] == 'false') {
 
-			$this->fail();			
+				$this->fail();			
 
-        } else {
-			echo 'Should not be here';
+        	}
+		} else {
+			echo 'No order details found';
 		}
 	}
 
@@ -67,6 +83,7 @@ class ConfirmationController extends Front
 		$order->delivery_date = $details->user->ash_delivery_date;
 		$order->delivery_slot = $details->user->ash_delivery_time;
 		$order->notes         = $details->user->ash_notes;
+		$order->total         = $this->total;
 
 		if ($order->waste) {
 			$order->waste = $user->ash_waste;
