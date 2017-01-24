@@ -1,0 +1,41 @@
+{% if orders is not empty %}
+	<p>You have <b>{{ order_count }}</b> orders due to be delivered. Below is your next delivery, for the remainder of orders please <a href="{{link}}">visit the orders page</a>.</p>
+
+	<table class="ad-table ad-table--condensed" style="border-left: 0; border-right: 0; border-bottom: 0; margin-bottom: 0;">
+		{% for order in orders %}
+		<tbody>
+			<tr>
+				<th>ID</th>
+				<td><a href="/wp-admin/admin.php?page=ash-orders-edit&id={{ order.id }}">{{ order.id }}</a></td>
+			</tr>
+			<tr>
+				<th>Name &amp; Address</th>			
+				<td>
+					<a href="/wp-admin/admin.php?page=ash-orders-edit&id={{ order.id }}">{{ order.forename }} {{ order.surname }}</a></br>
+					{{ order.address1 }}, {{ order.city }}, {{ order.postcode}}
+				</td>
+			</tr>
+			<tr>
+				<th>Order Date</th>
+				<td>{{ order.created_at|date("d/m/Y") }}</td>
+			</tr>
+			<tr>
+				<th>Delivery Date</th>
+				<td>{{ order.delivery_date|date("d/m/Y") }}</td>
+			</tr>
+			<tr>
+				<th>Total (£)</th>				
+				<td>£{{ order.total }}</td>				
+			<tr>
+			<tr>
+				<th></th>			
+				<td>
+					<p><a href="/wp-admin/admin.php?page=ash-orders-edit&id={{ order.id }}" class="ad-button">Manage</a></p>
+				</td>
+			</tr>
+		</tbody>			
+		{% endfor %}
+	</table>
+{% else %}
+	<p>No orders pending.</p>
+{% endif %}

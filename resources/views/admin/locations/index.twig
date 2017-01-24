@@ -5,6 +5,7 @@
 		<a href="{{ link.add }}" class="ad-button ad-button--orange action">Add New Location</a>
 	</header>
 
+	{% if locations is not empty %}
 	<table class="ad-table ad-table__locations">
 		<thead>
 			<tr>
@@ -29,5 +30,8 @@
 			{% endfor %}
 		</tbody>
 	</table>
+	{% else %}
+	<p>No locations have been added yet.</p>
+	{% endif %}
 	
 {% include 'admin/partials/footer.twig' %}

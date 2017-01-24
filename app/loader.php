@@ -17,6 +17,11 @@ $loader->action([
 ]);
 
 $loader->action([
+	 'method' 	=> 'wp_dashboard_setup',
+	 'uses' 	=> [$admin, 'dashboard']
+]);
+
+$loader->action([
 	 'method' 	=> 'wp_ajax_ash_location_delete', 
 	 'uses' 	=> [$locations, 'destroy'] 
 ]);

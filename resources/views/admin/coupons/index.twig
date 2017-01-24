@@ -5,7 +5,7 @@
 		<a href="{{ link.add }}" class="ad-button ad-button--orange action">Add New Coupon</a>
 	</header>
 
-	{% if coupons %}
+	{% if coupons is not empty %}
 	<table class="ad-table ad-table__coupons">
 		<thead>
 			<tr>
@@ -39,7 +39,7 @@
 		</tbody>
 	</table>
 	{% else %}
-	<p>No coupons added</p>
+	<p>No coupons have been added yet.</p>
 	{% endif %}
 
 {% include 'admin/partials/footer.twig' %}

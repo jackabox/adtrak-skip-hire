@@ -25,6 +25,7 @@ class DashboardController extends Admin
 		$this->createMenu();
 	}
 
+
     /**
      *
      */
@@ -40,7 +41,7 @@ class DashboardController extends Admin
         $stats['revenue_month'] = Order::where('created_at', '>=', $lastMonth)->sum('total');
        
         // get orders (not delivered)
-        $orders = Order::where('status', '!=', 'pending')->get();
+        $orders = Order::where('status', '=', 'pending')->get();
 
 		View::render('admin/dashboard.twig', [
             'orders'  => $orders,

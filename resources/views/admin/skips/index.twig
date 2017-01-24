@@ -5,7 +5,7 @@
 		<a href="{{ link.add }}" class="ad-button ad-button--orange action">Add New Skip</a>
 	</header>
 
-	{% if skips %}
+	{% if skips is not empty %}
 	<table class="ad-table ad-table__skips">
 		<thead>
 			<tr>
@@ -34,7 +34,7 @@
 		</tbody>
 	</table>
 	{% else %}
-	<p>No skips added</p>
+	<p>No skips have been added yet.</p>
 	{% endif %}
 
 {% include 'admin/partials/footer.twig' %}

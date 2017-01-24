@@ -8,6 +8,7 @@ use Adtrak\Skips\Controllers\Admin\PermitController;
 use Adtrak\Skips\Controllers\Admin\CouponController;
 use Adtrak\Skips\Controllers\Admin\OrderController;
 use Adtrak\Skips\Helper;
+use Adtrak\Skips\Models\Order;
 
 class AdminController
 {
@@ -72,6 +73,36 @@ class AdminController
 			''
 		);
 	}
+
+	public function dashboard() 
+	{
+		if(current_user_can('manage_options')) {
+			wp_add_dashboard_widget(
+				'ash_order_overview', 
+				'Skips: Pending Orders', 
+				[$this, 'pendingOrders']
+			);
+		}
+	}
+
+	public function pendingOrders()
+    {
+		$orderCount = Order::where('status', '=', 'pending')->count();
+
+		$orders = Order::where('status', '=', 'pending')
+						->orderBy('delivery_date')
+						->take(1)
+						->get();
+
+		$link = admin_url('admin.php?page=ash-orders');
+
+		View::render('admin/widgets/orders.twig', [
+			'order_count' => $orderCount,
+            'orders'  => $orders,
+			'link'	=> $link
+        ]);
+    }
+
 
     /**
      *

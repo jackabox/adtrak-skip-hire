@@ -5,7 +5,7 @@
 		<a href="{{ link.add }}" class="ad-button ad-button--orange action">Add New Permit</a>
 	</header>
 
-	{% if permits %}
+	{% if permits is not empty %}
 	<table class="ad-table ad-table__permits">
 		<thead>
 			<tr>
@@ -27,7 +27,7 @@
 		</tbody>
 	</table>
 	{% else %}
-	<p>No permits added</p>
+	<p>No permits have been added yet.</p>
 	{% endif %}
 
 {% include 'admin/partials/footer.twig' %}

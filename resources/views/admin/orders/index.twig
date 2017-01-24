@@ -4,7 +4,7 @@
 		<h1>Orders</h1>
 	</header>
 
-	{% if orders %}
+	{% if orders is not empty %}
 	<table class="ad-table ad-table__orders">
 		<thead>
 			<tr>
@@ -36,7 +36,7 @@
 		</tbody>
 	</table>
 	{% else %}
-	<p>No Orders Placed</p>
+	<p>No orders have been placed yet.</p>
 	{% endif %}
 
 {% include 'admin/partials/footer.twig' %}
