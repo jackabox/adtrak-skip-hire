@@ -54,19 +54,18 @@ class CartController extends Front
 		$permit = $this->getPermit();		
 		$coupon = $this->getCoupon();
 		$details = $this->getOrderDetails();
+		$subTotal = $skip->price;
 
-		if ($coupon) {
-			if ($coupon->type == 'flat') {
-				$couponValue = $coupon->amount * -1;
-				$subTotal = $skip->price + $couponValue;
-			} else {
-				$couponValue = $skip->price * ($coupon->amount / 100) * -1;
-				$subTotal = $skip->price + $couponValue; 
-			}
-		} else {
-			$subTotal = $skip->price;
+		if ($coupon && $coupon->type == 'flat') {
+			$couponValue = $coupon->amount * -1;
+			$subTotal = $skip->price + $couponValue;
+		} 
+		
+		if ($coupon && $coupon->type == 'percentage') {
+			$couponValue = $skip->price * ($coupon->amount / 100) * -1;
+			$subTotal = $skip->price + $couponValue; 
 		}
-
+		
 		if ($permit) {
 			$total = $subTotal + $permit->price;
 		} else {
@@ -124,15 +123,29 @@ class CartController extends Front
 
 	public function getCoupon()
 	{
+		$_SESSION['ash_details']['coupon'] = [];
+		
 		if ($_POST['ash_coupon']) {
-			$this->coupon = Coupon::where('code', '=', $_POST['ash_coupon'])->first();
-		} 
+			$coupon = Coupon::where('code', '=', $_POST['ash_coupon'])->first();
+			
+			$datePasses = true;
+			$today = date('Y-m-d');
 
-		if ($this->coupon) {
-			$_SESSION['ash_details']['coupon'] = $this->coupon;
-		} else {
-			$_SESSION['ash_details']['coupon'] = [];
-		}
+			// if today is less than it's start, when it's not null
+			if(!(!is_null($coupon->starts) && $coupon->starts <= $today)) {
+				$datePasses = false;
+			}
+
+			// if today is greater than it's than, when it's not null
+			if(!(!is_null($coupon->expires) && $coupon->expires >= $today)) {
+				$datePasses = false;			
+			}
+
+			if ($datePasses) {
+				$this->coupon = $coupon;
+				$_SESSION['ash_details']['coupon'] = $this->coupon;	
+			}
+		} 
 		
 		return $this->coupon;		
 	}

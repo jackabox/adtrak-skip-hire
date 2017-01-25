@@ -28,7 +28,7 @@
 <table class="ash-table--left">
 	<tr>
 		<th>Delivery Date</th>
-		<td><?= date('d/m/Y', strtotime($details->ash_delivery_date)); ?></td>
+		<td><?= $details->ash_delivery_date; ?></td>
 	</tr>
 	<tr>
 		<th>Delivery Time</th>
@@ -50,6 +50,12 @@
 		<td><?= $details->ash_notes; ?></td>
 	</tr>
 </table>
+
+<?php if (isset($datePasses) && $datePasses === false): ?>
+	<div class="as-notification as-notification-warning">
+		<p>The coupon you entered has expired.</p>
+	</div>
+<?php endif; ?>
 
 <h3>Order Items</h3>
 <table>
@@ -77,7 +83,7 @@
         <?php endif; ?>
     </tr>
 
-    <?php if ($coupon): ?>
+	<?php if ($coupon): ?>
         <tr>
             <td>Coupon</td>
             <td><?= $coupon->code; ?></td>
