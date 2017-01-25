@@ -13,6 +13,11 @@ $enqueue->front([
 ]);
 
 $enqueue->front([
+	'as' => 'adtrak-skips',
+	'src' => Helper::assetUrl('js/location.js')
+], 'footer');
+
+$enqueue->front([
 	'as' => 'parsleyjs',
 	'src' => 'https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.6.2/parsley.min.js'
 ], 'footer');
