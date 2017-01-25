@@ -19,7 +19,6 @@ class PayPalController
 {
     protected static $instance = null;
     protected $apiContext;
-    protected $email;
     protected $sandboxed;
     protected $invoiceMessage;
 
@@ -33,10 +32,6 @@ class PayPalController
 
         if ($paypalOptions->invoice_message) {
             $this->invoiceMessage = $paypalOptions->invoice_message;
-        }
-
-        if ($paypalOptions->email) {
-            $this->email = $paypalOptions->email;
         }
 
         // create a new instance of the PayPal api using the auth tokens provided.
