@@ -128,12 +128,23 @@ class AdminController
 		$options = (object) [];
 		$options->gmaps_api = get_option('ash_google_maps_api', '');
 
-		$paypal = (object) get_option('ash_paypal', '');
+		$paypal = (object) get_option('ash_paypal', [
+			'client_id' => '',
+			'client_secret' => '',
+			'invoice_message' => '',
+			'enable_sandbox' => true
+		]);
         $options->paypal_client_id = $paypal->client_id;
         $options->paypal_client_secret = $paypal->client_secret;
         $options->paypal_invoice_message = $paypal->invoice_message;
         $options->paypal_enable_sandbox = $paypal->enable_sandbox;
-        $options->paypal_email = $paypal->email;
+
+		$delivery = (object) get_option('ash_delivery', [
+			'available_days' => 5, 
+			'future_days' => 0
+		]);
+		$options->delivery_future = $delivery->future_days;
+		$options->delivery_days = $delivery->available_days;
 
 		return View::render('admin/settings.twig', [
 			'options' 		=> $options
@@ -151,10 +162,14 @@ class AdminController
 		    'client_id' => $_REQUEST['paypal_client_id'],
             'client_secret' => $_REQUEST['paypal_client_secret'],
             'invoice_message' => $_REQUEST['paypal_invoice_message'],
-            'enable_sandbox' => $_REQUEST['paypal_enable_sandbox'],
-            'email' => $_REQUEST['paypal_email']
+            'enable_sandbox' => $_REQUEST['paypal_enable_sandbox']
         ];
-
         update_option('ash_paypal', $paypalOptions);
+
+		$delivery_options = [
+			'future_days' => $_REQUEST['delivery_future_days'],
+			'available_days' => $_REQUEST['delivery_available_days']
+		];
+        update_option('ash_delivery', $delivery_options);
 	}
 }

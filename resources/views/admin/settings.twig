@@ -21,6 +21,32 @@
 
 			<div class="ad-box">
 				<div class="section-header">
+					<h4>Delivery Settings</h4>
+				</div>
+				
+				<div class="ad-form-row ad-form-row--inline">
+					<label for="delivery_future_days">Turnaround</label>
+					<div>
+                        <input type="number" name="delivery_future_days" value="{{ options.delivery_future }}" min="0">
+                        <p>How many days in the future would you like to schedule deliveries for?</p>
+                    </div>
+				</div>
+
+				<div class="ad-form-row ad-form-row--inline">
+					<label for="delivery_available_days">Delivery Days</label>
+					<div>
+						<select name="delivery_available_days">
+							<option value="5" {% if options.delivery_days == 5 %}selected{% endif %}>Weekdays Only</option>
+							<option value="6" {% if options.delivery_days == 6 %}selected{% endif %}>Weekdays + Saturday</option>
+							<option value="7" {% if options.delivery_days == 7 %}selected{% endif %}>Weekdays + Weekend</option>
+						</select>
+                        <p>How many days a week will you deliver the skips?</p>
+                    </div>
+				</div>
+			</div>
+
+			<div class="ad-box">
+				<div class="section-header">
 					<h4>PayPal Settings</h4>
 				</div>
 
@@ -39,14 +65,6 @@
                         <p>Enter your Client Secret for the PayPal REST Api.</p>
                     </div>
 				</div>
-
-                <div class="ad-form-row ad-form-row--inline">
-                    <label for="paypal_email">Email</label>
-                    <div>
-                        <input type="text" name="paypal_email" value="{{ options.paypal_email }}">
-                        <p>The email associated with your PayPal account.</p>
-                    </div>
-                </div>
 
 				<div class="ad-form-row ad-form-row--inline">
 					<label for="paypal_invoice_message">Invoice Message</label>

@@ -75,5 +75,28 @@
             var ok = $('.parsley-error').length === 0;
             $('.as-notification-warning').toggleClass('hidden', ok);
         });
+
+        // get a date 2 days in the future
+        if($("#ash_delivery_date").length) {
+            var date = new Date();
+            date.setDate(date.getDate() + parseInt($("#ash_delivery_date").data('delivery-from')));
+            // get the amount of days to deliver
+            var days = parseInt($("#ash_delivery_date").data('days'));
+            $("#ash_delivery_date").datepicker({
+                minDate: date,
+                dateFormat: 'dd/mm/yy',
+                beforeShowDay: function(date) {
+                    var day = date.getDay();
+                    if(days === 5) {
+                        return [(day != 0 && day != 6)];
+                    } else if(days === 6) {
+                        return [(day != 0)];
+                    } else {
+                        // slight hack to get it to show all
+                        return [(day != 7)];
+                    }
+                }
+            });
+        }
     });
 } (jQuery));

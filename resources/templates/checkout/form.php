@@ -67,7 +67,7 @@
 		<div>
 			<div class="ash-field--half">
 				<label for="ash_delivery_date">Delivery Date</label>
-				<input type="date" name="ash_delivery_date" id="ash_delivery_date" placeholder="DD/MM/YYYY" required>
+				<input type="text" name="ash_delivery_date" id="ash_delivery_date" placeholder="DD/MM/YYYY" required data-days="<?= get_option('ash_delivery')['available_days'] ?>" data-delivery-from="<?= get_option('ash_delivery')['future_days']; ?>">
 			</div>
 
 			<div class="ash-field--half">

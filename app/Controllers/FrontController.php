@@ -57,6 +57,7 @@ class FrontController
     public function scripts()
 	{
 		wp_enqueue_script('maps-api', '//maps.googleapis.com/maps/api/js?key='. get_option('ash_google_maps_api', '') .'&libraries=places');
+		wp_enqueue_script('adtrak-skips', Helper::assetUrl('js/location.js'), ['jquery', 'jquery-ui-datepicker'], '', true);
 	}
 
     /**

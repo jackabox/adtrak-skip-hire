@@ -80,7 +80,7 @@ class ConfirmationController extends Front
 		$order->county            = $details->user->ash_county;
 		$order->country           = '';
 		$order->postcode          = $details->user->ash_postcode;
-		$order->delivery_date     = $details->user->ash_delivery_date;
+		$order->delivery_date     = date('Y-m-d', strtotime($details->user->ash_delivery_date));
 		$order->delivery_slot     = $details->user->ash_delivery_time;
 		$order->notes             = $details->user->ash_notes;
 		$order->total             = $this->total;
