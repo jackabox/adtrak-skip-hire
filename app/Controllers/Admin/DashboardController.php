@@ -48,7 +48,7 @@ class DashboardController extends Admin
         // get orders (not delivered)
         $orders = Order::where('status', '=', 'pending')->get();
 
-		return View::render('admin/dashboard.twig', [
+		return View::render('dashboard.twig', [
             'orders'  => $orders,
             'stats' => $stats,
         ]);
