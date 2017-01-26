@@ -18,12 +18,10 @@ class LocationController extends Admin
     public function __construct()
 	{
 		self::instance();
-
-		add_shortcode('ash_location_lookup', [$this, 'showLocationForm']);
 	}
 
     /**
-     *
+     * Create any needed menus, bind them to the parent array
      */
     public function menu()
 	{
@@ -34,6 +32,8 @@ class LocationController extends Admin
 	}
 
     /**
+     * Location overview, display locations by pagination.
+     *
      * @return mixed
      */
     public function index()
@@ -76,6 +76,9 @@ class LocationController extends Admin
 	}
 
     /**
+     * function to create the location (add form)
+     * if posted to, run the store function
+     *
      * @return mixed
      */
     public function create()
@@ -88,11 +91,12 @@ class LocationController extends Admin
 	}
 
     /**
-     *
+     * On post, check for any errors, if none, create a new location
+     * add the details from the form, save, refresh page
      */
     public function store()
 	{
-		$errors 	= [];
+		$errors = [];
 
 		if (empty($_REQUEST['title'])) {
 			$errors[] = 'Please enter a name.';
@@ -128,7 +132,7 @@ class LocationController extends Admin
 	}
 
     /**
-     *
+     * If posted to, run the updater, then show the view / form to edit
      */
     public function edit()
 	{
