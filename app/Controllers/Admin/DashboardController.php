@@ -1,11 +1,14 @@
 <?php
-
 namespace Adtrak\Skips\Controllers\Admin;
 
 use Adtrak\Skips\Facades\Admin;
 use Adtrak\Skips\View;
 use Adtrak\Skips\Models\Order;
 
+/**
+ * Class DashboardController
+ * @package Adtrak\Skips\Controllers\Admin
+ */
 class DashboardController extends Admin
 {
     /**
@@ -17,7 +20,7 @@ class DashboardController extends Admin
 	}
 
     /**
-     *
+     * Add the menus, and create hte array using the parent class.
      */
     public function menu()
 	{
@@ -27,7 +30,9 @@ class DashboardController extends Admin
 
 
     /**
+     * Dashboard view, renders the stats and pending orders to be quickly visible
      *
+     * @return mixed
      */
     public function index()
 	{
@@ -43,7 +48,7 @@ class DashboardController extends Admin
         // get orders (not delivered)
         $orders = Order::where('status', '=', 'pending')->get();
 
-		View::render('admin/dashboard.twig', [
+		return View::render('admin/dashboard.twig', [
             'orders'  => $orders,
             'stats' => $stats,
         ]);
