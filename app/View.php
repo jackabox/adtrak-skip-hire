@@ -1,5 +1,4 @@
-<?php 
-
+<?php
 namespace Adtrak\Skips;
 
 use Twig_Loader_Filesystem;
@@ -9,10 +8,24 @@ use Twig_SimpleFunction;
 
 class View
 {
+    /**
+     * @var $template;
+     */
 	public static $template;
-	public static $loader;
-	public static $twig; 
 
+    /**
+     * @var $loader
+     */
+	public static $loader;
+
+    /**
+     * @var $twig;
+     */
+	public static $twig;
+
+    /**
+     *
+     */
 	public static function constructTwig()
 	{
 		self::$loader = new Twig_Loader_Filesystem();

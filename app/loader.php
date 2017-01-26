@@ -1,4 +1,5 @@
-<?php namespace Adtrak\Skips;
+<?php
+namespace Adtrak\Skips;
 
 $admin = new Controllers\AdminController;
 $locations = new Controllers\Admin\LocationController;
