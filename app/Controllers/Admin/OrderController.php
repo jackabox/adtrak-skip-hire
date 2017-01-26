@@ -5,13 +5,23 @@ use Adtrak\Skips\Facades\Admin;
 use Adtrak\Skips\Models\Order;
 use Adtrak\Skips\View;
 
+/**
+ * Class OrderController
+ * @package Adtrak\Skips\Controllers\Admin
+ */
 class OrderController extends Admin
 {
+    /**
+     * OrderController constructor.
+     */
 	public function __construct() 
 	{
 		self::instance();
 	}
 
+    /**
+     * Add menus, utilise parent function to push them to the menu
+     */
 	public function menu() 
 	{
 		$this->addMenu('Orders', 'ash-orders', 'manage_options', [$this, 'index'], 'ash');
@@ -19,70 +29,76 @@ class OrderController extends Admin
 		$this->createMenu();
 	}
 
+    /**
+     * Default view for orders, show list of all orders.
+     * Paginate results.
+     * 
+     * @return mixed
+     */
 	public function index()
 	{
-		// work out if pages
+		# work out pages, offset, limit
 		$limit = 16;		
 		$pagenum = isset($_GET['pagenum']) ? absint($_GET['pagenum']) : 1;
 		$offset = $limit * ($pagenum - 1);
 		$total = Order::count();
 		$totalPages = ceil($total / $limit);
 
-		// get results
-		$orders = Order::orderBy('created_at', 'desc')->skip($offset)->take($limit)->get();
+		# get results based on vars
+		$orders = Order::orderBy('created_at', 'desc')
+                    ->skip($offset)
+                    ->take($limit)
+                    ->get();
 
+		# set the pagination
 		$pagination = paginate_links( array(
-    		'base'      => add_query_arg( 'pagenum', '%#%' ),
+    		'base'      => add_query_arg('pagenum', '%#%'),
     		'format'    => '',
-    		'prev_text' => __( '&laquo;', 'text-domain' ),
-    		'next_text' => __( '&raquo;', 'text-domain' ),
+    		'prev_text' => __('&laquo;', 'text-domain'),
+    		'next_text' => __('&raquo;', 'text-domain'),
     		'total'     => $totalPages,
     		'current'   => $pagenum
 		));
 
+        # set link urls
 		$link = [
 			'edit' => admin_url('admin.php?page=ash-orders-edit&id='),
 			'add'  => admin_url('admin.php?page=ash-orders-add')
 		];
 
-		View::render('admin/orders/index.twig', [
-			'orders' 	=> $orders,
-			'link'		=> $link,
+		return View::render('orders/index.twig', [
+			'orders' 	 => $orders,
+			'link'		 => $link,
 			'pagination' => $pagination
 		]);
-
 	}
 
+    /**
+     * Edit function, show order and what is needed.
+     * If posted to, run the updater then show edit.
+     */
 	public function edit() 
 	{
+	    # Check if posted to
 		if (isset($_REQUEST['action']) && $_REQUEST['action'] === 'order_update') {
 			$this->update();
 		}
-		
- 		if (current_user_can('delete_posts')) {
-			$nonce = wp_create_nonce('ash_order_delete_nonce');
-			$button['delete'] = 'or <a href="' . admin_url( 'admin-ajax.php?action=ash_order_delete&id=' . $_GET['id'] . '&nonce=' . $nonce ) . '" data-id="' . $_GET['id'] . '" data-nonce="' . $nonce . '" data-redirect="' . admin_url('admin.php?page=ash-orders') . '" class="ash-order-delete">Delete</a>';
-		} else {
-			$button['delete'] = '';
-		}
 
-		$order = Order::find($_GET['id']);
+		$order = Order::findOrFail($_GET['id']);
 		$items = $order->orderItems;
 
-		if ($order) {
-			View::render('admin/orders/edit.twig', [
-				'order' 	=> $order,
-				'items' 	=> $items,
-				'button'	=> $button
-			]);
-		} else {
-			echo "Sorry, the order you're looking for does not exist.";
-		}
+        return View::render('orders/edit.twig', [
+            'order' 	=> $order,
+            'items' 	=> $items
+        ]);
 	}
 
+    /**
+     * Small updater, update post, change status.
+     */
 	protected function update()
 	{
-		$order = Order::find($_GET['id']);
+		$order = Order::findOrFail($_GET['id']);
 		$order->status = $_POST['ash_order_status'];
 		$order->save();
 	}
