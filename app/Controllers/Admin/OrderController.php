@@ -32,7 +32,7 @@ class OrderController extends Admin
     /**
      * Default view for orders, show list of all orders.
      * Paginate results.
-     * 
+     *
      * @return mixed
      */
 	public function index()
