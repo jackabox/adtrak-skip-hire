@@ -6,6 +6,10 @@ use Adtrak\Skips\Models\Location;
 use Adtrak\Skips\Facades\Admin;
 use Billy\Framework\Facades\DB;
 
+/**
+ * Class LocationController
+ * @package Adtrak\Skips\Controllers\Admin
+ */
 class LocationController extends Admin
 {
     /**
@@ -30,20 +34,24 @@ class LocationController extends Admin
 	}
 
     /**
-     *
+     * @return mixed
      */
     public function index()
 	{
-		// work out if pages
+        # work out what page / content to display
 		$limit = 16;		
 		$pagenum = isset($_GET['pagenum']) ? absint($_GET['pagenum']) : 1;
 		$offset = $limit * ($pagenum - 1);
 		$total = Location::count();
 		$totalPages = ceil($total / $limit);
 
-		// get results
-		$locations = Location::orderBy('created_at', 'desc')->skip($offset)->take($limit)->get();
+		# get the location results, offset and take only the limit
+		$locations = Location::orderBy('created_at', 'desc')
+                            ->skip($offset)
+                            ->take($limit)
+                            ->get();
 
+        # Generate the pagination from the page, and what else is left.
 		$pagination = paginate_links( array(
     		'base'      => add_query_arg( 'pagenum', '%#%' ),
     		'format'    => '',
@@ -53,12 +61,14 @@ class LocationController extends Admin
     		'current'   => $pagenum
 		));
 
+		# Links to edit / add new locations
 		$link = [
 			'edit' => admin_url('admin.php?page=ash-locations-edit&id='),
 			'add'  => admin_url('admin.php?page=ash-locations-add')
 		];
 
-		View::render('admin/locations/index.twig', [
+		# Return the view
+		return View::render('locations/index.twig', [
 			'locations' 	=> $locations,
 			'link'			=> $link,
 			'pagination'	=> $pagination
@@ -66,7 +76,7 @@ class LocationController extends Admin
 	}
 
     /**
-     *
+     * @return mixed
      */
     public function create()
 	{
@@ -74,7 +84,7 @@ class LocationController extends Admin
 			$this->store();
 		}
 
-		View::render('admin/locations/add.twig', []);
+		return View::render('locations/add.twig', []);
 	}
 
     /**
@@ -82,16 +92,13 @@ class LocationController extends Admin
      */
     public function store()
 	{
-		$permission = true;
 		$errors 	= [];
 
 		if (empty($_REQUEST['title'])) {
 			$errors[] = 'Please enter a name.';
 		}
 
-        if ($permission == false) {
-            echo 'Permission Denied';
-        } else if (!empty($errors)) {
+        if (!empty($errors)) {
 			echo '<ul>';
 			foreach($errors as $error) {
 				echo '<li>' . $error . '</li>';
@@ -136,16 +143,12 @@ class LocationController extends Admin
 			$button['delete'] = '';
 		}
 
-		$location = Location::find($_GET['id']);
+		$location = Location::findOrFail($_GET['id']);
 
-		if ($location) {
-			View::render('admin/locations/edit.twig', [
-				'location' 	 => $location,
-				'button'	 => $button
-			]);
-		} else {
-			echo "Sorry, the location you're looking for does not exist.";
-		}
+		return View::render('locations/edit.twig', [
+            'location' 	 => $location,
+            'button'	 => $button
+        ]);
 	}
 
     /**
@@ -153,16 +156,13 @@ class LocationController extends Admin
      */
     public function update()
 	{
-		$permission = true;
 		$errors 	= [];
 
 		if (empty($_REQUEST['title'])) {
 			$errors[] = 'Please enter a name.';
 		}
 
-        if ($permission == false) {
-            echo 'error';
-        } else if (!empty($errors)) {
+        if (!empty($errors)) {
 			echo '<ul>';
 			foreach($errors as $error) {
 				echo '<li>' . $error . '</li>';
@@ -202,39 +202,5 @@ class LocationController extends Admin
 		}
 
         die();
-	}
-
-	public function showLocationForm()
-	{	
-		if ($_POST) {
-			 $this->frontGetLocation();
-		} else {
-			View::render('front/location-lookup.twig', []);		
-		}
-	}
-
-	public function frontGetLocation()
-	{
-		$lat    = $_POST['lat'];
-		$lng    = $_POST['lng'];
-		$radius = 50;
-
-		try {
-			$location = DB::table('as_locations')
-						->select(DB::raw('id, name, lat, lng, radius, address, description, ( 3959 * acos( cos( radians(' . $lat . ') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(' . $lng . ') ) + sin( radians(' . $lat . ') ) * sin( radians( lat ) ) ) ) AS distance '))
-						->having('distance', '<', 50)
-						->orderBy('distance')
-						->first();
-
-			if ($location && ($location->distance <= $location->radius)) {
-				View::render('front/location-result.twig', [
-					'location' => $location
-				]);
-			} else {
-				echo "Sorry, we couldn't find any services in your location.";
-			}		
-		} catch (Exception $e) {
-			echo "Sorry, something went wrong. Please try again.";
-		}
 	}
 }
