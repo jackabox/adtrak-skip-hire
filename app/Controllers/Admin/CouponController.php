@@ -90,16 +90,13 @@ class CouponController extends Admin
      */
     public function store()
 	{
-		$permission = true;
 		$errors = [];
 
 		if (empty($_REQUEST['code'])) {
 			$errors[] = 'Please enter a name.';
 		}
 
-        if ($permission === false) {
-            echo 'Permission Denied';
-        } else if (! empty($errors)) {
+        if (! empty($errors)) {
 			echo '<ul>';
 			foreach($errors as $error) {
 				echo '<li>' . $error . '</li>';
