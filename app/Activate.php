@@ -1,14 +1,20 @@
 <?php 
 
 /** @var  \Billy\Framework\Enqueue $enqueue */
+
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Adtrak\Skips\Helper;
 
+# Get the version
 $version = get_option('adtrak_skips_version');
 
+/**
+ * If the version returns false, i.e. first install run the code to
+ * this will check if tables exist.
+ */
 if ($version === false) {
-    if (! Capsule::schema()->hasTable('as_locations')) {
-        Capsule::schema()->create('as_locations', function ($table) {
+    if (! Capsule::schema()->hasTable('ash_locations')) {
+        Capsule::schema()->create('ash_locations', function ($table) {
             $table->increments('id');
             $table->string('lat', 100)->nullable(false);
             $table->string('lng', 100)->nullable(false);
@@ -20,8 +26,8 @@ if ($version === false) {
         });
     }
 
-    if (! Capsule::schema()->hasTable('as_skips')) {
-        Capsule::schema()->create('as_skips', function ($table) {
+    if (! Capsule::schema()->hasTable('ash_skips')) {
+        Capsule::schema()->create('ash_skips', function ($table) {
             $table->increments('id');
             $table->string('name', 200)->nullable(false);
             $table->string('width', 20);
@@ -36,8 +42,8 @@ if ($version === false) {
         });
     }
 
-    if (! Capsule::schema()->hasTable('as_coupons')) {
-        Capsule::schema()->create('as_coupons', function ($table) {
+    if (! Capsule::schema()->hasTable('ash_coupons')) {
+        Capsule::schema()->create('ash_coupons', function ($table) {
             $table->increments('id');
             $table->string('code', 200)->nullable(false);
             $table->string('type', 20)->nullable(false);
@@ -48,8 +54,8 @@ if ($version === false) {
         });
     }
 
-    if (! Capsule::schema()->hasTable('as_permits')) {
-        Capsule::schema()->create('as_permits', function ($table) {
+    if (! Capsule::schema()->hasTable('ash_permits')) {
+        Capsule::schema()->create('ash_permits', function ($table) {
             $table->increments('id');
             $table->string('name', 200)->nullable(false);
             $table->decimal('price', 10, 2)->nullable(false);
@@ -57,8 +63,8 @@ if ($version === false) {
         });
     }
 
-    if (! Capsule::schema()->hasTable('as_orders')) {
-        Capsule::schema()->create('as_orders', function ($table) {
+    if (! Capsule::schema()->hasTable('ash_orders')) {
+        Capsule::schema()->create('ash_orders', function ($table) {
             $table->increments('id');
             $table->string('forename', 200)->nullable(false);
             $table->string('surname', 200)->nullable(false);
@@ -74,16 +80,16 @@ if ($version === false) {
             $table->string('delivery_slot', 20);
             $table->text('waste');
             $table->text('notes');
+            $table->decimal('total', 10, 2)->nullable(false);
             $table->string('payment_method', 20)->nullable(false);
             $table->string('payment_reference', 50);
-            $table->decimal('total', 10, 2)->nullable(false);
             $table->string('status', 20)->nullable(false);
             $table->timestamps();
         });
     }
 
-    if (! Capsule::schema()->hasTable('as_order_item')) {
-        Capsule::schema()->create('as_order_item', function ($table)
+    if (! Capsule::schema()->hasTable('ash_order_item')) {
+        Capsule::schema()->create('ash_order_item', function ($table)
         {
             $table->increments('id');
             $table->integer('order_id')->unsigned();
@@ -94,65 +100,83 @@ if ($version === false) {
         });
 	}
 
-	add_option('adtrak_skips_version', Helper::get('version'));	
+    /**
+     * If the skip-booking page does not exist, create it.
+     * If it does exist, get the page by it's url and return the ID.
+     */
+    if (get_page_by_path('skip-booking') === null) {
+        $bookingID = wp_insert_post([
+            'ping_status' 	=> 'closed',
+            'post_date' 	=> date('Y-m-d H:i:s'),
+            'post_name' 	=> 'skip-booking',
+            'post_status' 	=> 'publish',
+            'post_title' 	=> 'Booking',
+            'post_type' 	=> 'page'
+        ]);
+    } else {
+        $bookingID = get_page_by_path('skip-booking')->ID;
+    }
+
+    /**
+     * If the skip-sizes page does not exist, create it.
+     */
+    if (get_page_by_path('skip-sizes') === null) {
+        wp_insert_post([
+            'ping_status' 	=> 'closed',
+            'post_date' 	=> date('Y-m-d H:i:s'),
+            'post_name' 	=> 'skip-sizes',
+            'post_status' 	=> 'publish',
+            'post_title' 	=> 'Skip Sizes',
+            'post_type' 	=> 'page'
+        ]);
+    }
+
+    /**
+     * If the skip-sizes/checkout page does not exist, create it.
+     */
+    if (get_page_by_path('skip-booking/checkout') === null) {
+        wp_insert_post([
+            'ping_status' 	=> 'closed',
+            'post_date' 	=> date('Y-m-d H:i:s'),
+            'post_name' 	=> 'checkout',
+            'post_status' 	=> 'publish',
+            'post_title' 	=> 'Checkout',
+            'post_type' 	=> 'page',
+            'post_parent'	=> $bookingID
+        ]);
+    }
+
+    /**
+     * If the skip-booking/cart page does not exist, create it.
+     */
+    if (get_page_by_path('skip-booking/cart') === null) {
+        wp_insert_post([
+            'ping_status' 	=> 'closed',
+            'post_date' 	=> date('Y-m-d H:i:s'),
+            'post_name' 	=> 'cart',
+            'post_status' 	=> 'publish',
+            'post_title' 	=> 'Cart',
+            'post_type' 	=> 'page',
+            'post_parent'	=> $bookingID
+        ]);
+    }
+
+    /**
+     * If the skip-booking/confirmation page does not exist, create it.
+     */
+    if (get_page_by_path('skip-booking/confirmation') === null) {
+        wp_insert_post([
+            'ping_status' 	=> 'closed',
+            'post_date' 	=> date('Y-m-d H:i:s'),
+            'post_name' 	=> 'confirmation',
+            'post_status' 	=> 'publish',
+            'post_title' 	=> 'Confirmation',
+            'post_type' 	=> 'page',
+            'post_parent'	=> $bookingID
+        ]);
+    }
+
+    # Set the version, based on the Helper
+    add_option('adtrak_skips_version', Helper::get('version'));
 }
 
-if (get_page_by_path('skip-booking') === null) {
-    $bookingID = wp_insert_post([
-        'ping_status' 	=> 'closed',
-        'post_date' 	=> date('Y-m-d H:i:s'),
-        'post_name' 	=> 'skip-booking',
-        'post_status' 	=> 'publish',
-        'post_title' 	=> 'Booking',
-        'post_type' 	=> 'page'
-    ]);
-} else {
-	$bookingID = get_page_by_path('skip-booking')->ID;
-}
-
-if (get_page_by_path('skip-sizes') === null) {
-	wp_insert_post([
-        'ping_status' 	=> 'closed',
-        'post_date' 	=> date('Y-m-d H:i:s'),
-        'post_name' 	=> 'skip-sizes',
-        'post_status' 	=> 'publish',
-        'post_title' 	=> 'Skip Sizes',
-        'post_type' 	=> 'page'
-    ]);
-}
-
-if (get_page_by_path('skip-booking/checkout') === null) {
-	wp_insert_post([
-        'ping_status' 	=> 'closed',
-        'post_date' 	=> date('Y-m-d H:i:s'),
-        'post_name' 	=> 'checkout',
-        'post_status' 	=> 'publish',
-        'post_title' 	=> 'Checkout',
-        'post_type' 	=> 'page',
-		'post_parent'	=> $bookingID
-    ]);
-}
-
-if (get_page_by_path('skip-booking/cart') === null) {
-	wp_insert_post([
-        'ping_status' 	=> 'closed',
-        'post_date' 	=> date('Y-m-d H:i:s'),
-        'post_name' 	=> 'cart',
-        'post_status' 	=> 'publish',
-        'post_title' 	=> 'Cart',
-        'post_type' 	=> 'page',
-		'post_parent'	=> $bookingID
-    ]);
-}
-
-if (get_page_by_path('skip-booking/confirmation') === null) {
-	wp_insert_post([
-        'ping_status' 	=> 'closed',
-        'post_date' 	=> date('Y-m-d H:i:s'),
-        'post_name' 	=> 'confirmation',
-        'post_status' 	=> 'publish',
-        'post_title' 	=> 'Confirmation',
-        'post_type' 	=> 'page',
-		'post_parent'	=> $bookingID
-    ]);
-}
