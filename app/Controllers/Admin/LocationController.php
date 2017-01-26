@@ -138,16 +138,16 @@ class LocationController extends Admin
 
  		if (current_user_can('delete_posts')) {
 			$nonce = wp_create_nonce('ash_location_delete_nonce');
-			$button['delete'] = 'or <a href="' . admin_url('admin-ajax.php?action=ash_location_delete&id=' . $_GET['id'] . '&nonce=' . $nonce ) . '" data-id="' . $_GET['id'] . '" data-nonce="' . $nonce . '" data-redirect="' . admin_url('admin.php?page=ash-location') . '" class="ash-location-delete">Delete</a>';
+			$delete = 'or <a href="' . admin_url('admin-ajax.php?action=ash_location_delete&id=' . $_GET['id'] . '&nonce=' . $nonce ) . '" data-id="' . $_GET['id'] . '" data-nonce="' . $nonce . '" data-redirect="' . admin_url('admin.php?page=ash-location') . '" class="ash-location-delete">Delete</a>';
 		} else {
-			$button['delete'] = '';
+			$delete = '';
 		}
 
 		$location = Location::findOrFail($_GET['id']);
 
 		return View::render('locations/edit.twig', [
             'location' 	 => $location,
-            'button'	 => $button
+            'delete'	 => $delete
         ]);
 	}
 
