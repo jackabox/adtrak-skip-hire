@@ -28,7 +28,9 @@ class Front
      */
     protected function templateLocator($filename)
     {
-        if ($overwrite = locate_template('adtrak-skips/' . $filename)) {
+        $overwrite = locate_template('adtrak-skips/' . $filename);
+
+        if ($overwrite) {
             $template = $overwrite;
         } else {
             $template = Helper::get('templates') . $filename;
