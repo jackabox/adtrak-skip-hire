@@ -10,25 +10,57 @@ use Adtrak\Skips\Models\Order;
 use Adtrak\Skips\Models\OrderItem;
 use Adtrak\Skips\Controllers\Payments\PayPalController as PayPal;
 
+/**
+ * Class CartController
+ * @package Adtrak\Skips\Controllers\Front
+ */
 class CartController extends Front
 {
+    /**
+     * @var
+     */
 	public $skip;
+
+	/**
+     * @var
+     */
 	public $coupon;
+
+    /**
+     * @var
+     */
 	public $permit;
+
+    /**
+     * @var PayPal
+     */
 	public $paypal;
+
+    /**
+     * @var
+     */
 	public $orderDetails;
 
+    /**
+     * CartController constructor.
+     */
 	public function __construct()
 	{
         $this->paypal = new PayPal();
         $this->addActions();
 	}
 
+    /**
+     * set up the actions so they can be hooked
+     */
 	public function addActions()
 	{
 		add_action('ash_cart', [$this, 'cart']);
 	}
 
+    /**
+     * set up the cart hooks / before and after
+     */
 	public function cart()
 	{
 		$this->beforeCart();
@@ -42,12 +74,18 @@ class CartController extends Front
 		$this->afterCart();		
 	}
 
+    /**
+     * include the cart header
+     */
 	public function beforeCart()
 	{
 		$template = $this->templateLocator('cart/header.php');
 		include_once $template;
 	}
 
+    /**
+     * Process the cart details, generate a payment link, bind data for save
+     */
 	public function cartDetails()
 	{
         $skip = $this->getSkip();
@@ -77,20 +115,33 @@ class CartController extends Front
 		include_once $template;
 	}
 
+    /**
+     * After cart function
+     */
 	public function afterCart()
 	{
-
+	    // to be
 	}
 
     /**
+     * Generate a payment link based on details
      *
+     * @param $skip
+     * @param $total
+     * @param $permit
+     * @param $coupon
+     * @return null|string
      */
     public function getPaymentLink($skip, $total, $permit, $coupon)
     {
         return $this->paypal->generateLink($skip, $total, $permit, $coupon);
     }
 
-
+    /**
+     * Get the skip based on the ID passed.
+     *
+     * @return mixed
+     */
     public function getSkip()
 	{
 		if ($_POST['ash_skip']) {
@@ -106,6 +157,11 @@ class CartController extends Front
 		return $this->skip;
 	}
 
+    /**
+     * Get hte permit based on the ID passed.
+     *
+     * @return mixed
+     */
 	public function getPermit()
 	{
 		if ($_POST['ash_permit']) {
@@ -121,6 +177,11 @@ class CartController extends Front
 		return $this->permit;		
 	}
 
+    /**
+     * Get the first coupon, if it exists by name, and check the dates
+     *
+     * @return mixed
+     */
 	public function getCoupon()
 	{
 		$_SESSION['ash_details']['coupon'] = [];
@@ -150,6 +211,11 @@ class CartController extends Front
 		return $this->coupon;		
 	}
 
+    /**
+     * Get the details from the Post, bind them as an object
+     *
+     * @return object
+     */
 	public function getOrderDetails()
 	{
 		if ($_POST['ash_submit']) {
