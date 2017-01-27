@@ -1,4 +1,5 @@
 <h3>Your Details</h3>
+
 <table class="ash-table--left">
 	<tr>
 		<th>Name</th>
@@ -25,6 +26,7 @@
 </table>
 
 <h3>Order Details</h3>
+
 <table class="ash-table--left">
 	<tr>
 		<th>Delivery Date</th>

@@ -53,7 +53,7 @@ class Helper
 		return array_get(Self::$config, $key, $default);
 	}
 
-	    /**
+    /**
      * Gets a path to a relative file.
      *
      * @param  string $file

@@ -11,6 +11,8 @@ return [
      * The asset path.
      */
     'assets' => '/resources/assets/',
+
+    'sentryUrl' => 'https://b8752607c9f74cfcbc12681e3b50dedc:2ba1e8b0f0264760947658a89cfb0f33@sentry.io/122240',
     
     /**
      * Views
