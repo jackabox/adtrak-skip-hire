@@ -1,17 +1,28 @@
-<?php namespace Adtrak\Skips\Models;
+<?php
+namespace Adtrak\Skips\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Location
+ * @package Adtrak\Skips\Models
+ */
 class Location extends Model
 {
-	 protected $table = 'as_locations';
+    /**
+     * @var string
+     */
+	protected $table = 'as_locations';
 
-	 protected $fillable = [
-		 'lat', 
-		 'lng', 
-		 'radius', 
-		 'name',
-		 'description',
-		 'address'
-	 ];
+    /**
+     * @var array
+     */
+	protected $fillable = [
+        'lat',
+		'lng',
+		'radius',
+		'name',
+		'description',
+		'address'
+	];
 }

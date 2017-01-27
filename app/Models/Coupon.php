@@ -1,16 +1,27 @@
-<?php namespace Adtrak\Skips\Models;
+<?php
+namespace Adtrak\Skips\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Coupon
+ * @package Adtrak\Skips\Models
+ */
 class Coupon extends Model
 {
-	 protected $table = 'as_coupons';
+    /**
+     * @var string
+     */
+	protected $table = 'as_coupons';
 
-	 protected $fillable = [
-		 'name',
-         'type',
-         'amount',
-		 'starts',
-         'expires'
-	 ];
+    /**
+     * @var array
+     */
+    protected $fillable = [
+        'name',
+        'type',
+        'amount',
+        'starts',
+        'expires'
+    ];
 }

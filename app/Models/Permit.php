@@ -1,13 +1,24 @@
-<?php namespace Adtrak\Skips\Models;
+<?php
+namespace Adtrak\Skips\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Permit
+ * @package Adtrak\Skips\Models
+ */
 class Permit extends Model
 {
-	 protected $table = 'as_permits';
+    /**
+     * @var string
+     */
+	protected $table = 'as_permits';
 
-	 protected $fillable = [
-		 'name',
-         'price'
-	 ];
+    /**
+     * @var array
+     */
+	protected $fillable = [
+	    'name',
+        'price'
+	];
 }

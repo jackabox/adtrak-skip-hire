@@ -1,11 +1,22 @@
-<?php namespace Adtrak\Skips\Models;
+<?php
+namespace Adtrak\Skips\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Order
+ * @package Adtrak\Skips\Models
+ */
 class Order extends Model
 {
+    /**
+     * @var string
+     */
 	protected $table = 'as_orders';
 
+    /**
+     * @var array
+     */
 	protected $fillable = [
 		'forename', 
 		'surname', 

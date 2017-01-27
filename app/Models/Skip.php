@@ -1,20 +1,31 @@
-<?php namespace Adtrak\Skips\Models;
+<?php
+namespace Adtrak\Skips\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Skip
+ * @package Adtrak\Skips\Models
+ */
 class Skip extends Model
 {
-	 protected $table = 'as_skips';
+    /**
+     * @var string
+     */
+	protected $table = 'as_skips';
 
-	 protected $fillable = [
-		 'name', 
-		 'width', 
-		 'length', 
-		 'height', 
-		 'capacity',
-		 'description', 
-		 'price',
-		 'image_path',
-		 'image_url'
-	 ];
+    /**
+     * @var array
+     */
+	protected $fillable = [
+        'name',
+        'width',
+        'length',
+        'height',
+        'capacity',
+        'description',
+        'price',
+        'image_path',
+	    'image_url'
+	];
 }

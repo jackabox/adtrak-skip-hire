@@ -1,12 +1,27 @@
-<?php namespace Adtrak\Skips\Models;
+<?php
+namespace Adtrak\Skips\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class OrderItem
+ * @package Adtrak\Skips\Models
+ */
 class OrderItem extends Model
 {
+    /**
+     * @var string
+     */
 	protected $table = 'as_order_item';
-	public $timestamps = false;
 
+    /**
+     * @var bool
+     */
+	protected $timestamps = false;
+
+    /**
+     * @var array
+     */
 	protected $fillable = [
 		'order_id',
 		'name',
