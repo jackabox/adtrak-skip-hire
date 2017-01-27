@@ -1,14 +1,15 @@
-<?php 
-
+<?php
 namespace Adtrak\Skips\Controllers\Front;
 
 use Adtrak\Skips\Facades\Front;
 use Adtrak\Skips\Models\Skip;
 
+/**
+ * Class SkipController
+ * @package Adtrak\Skips\Controllers\Front
+ */
 class SkipController extends Front
 {
-	public $skips;
-
     /**
      * SkipController constructor.
      */
@@ -22,11 +23,11 @@ class SkipController extends Front
      */
     public function addActions()
 	{
-		add_action('ash_skip_loop', [$this, 'loop']);
+		add_action('ash_skip_loop', [$this, 'loop'], 10, 2);
 	}
 
     /**
-     *
+     * before the loop, show the header info
      */
     public function beforeLoop()
 	{
@@ -35,7 +36,7 @@ class SkipController extends Front
 	}
 
     /**
-     *
+     * after the loop, show the footer info
      */
     public function afterLoop()
 	{
@@ -44,26 +45,32 @@ class SkipController extends Front
 	}
 
     /**
+     * Loop through avialable skips, order by.
      *
+     * @param int $limit
+     * @param string $orderby
      */
-    public function loop()
+    public function loop($limit = 10, $orderby = 'name')
 	{
 		$this->beforeLoop();
 
-		// work out if pages
-		$limit = 10;		
+		# set up the params
 		$pagenum = isset($_GET['pagenum']) ? absint($_GET['pagenum']) : 1;
 		$offset = $limit * ($pagenum - 1);
 		$total = Skip::count();
 		$totalPages = ceil($total / $limit);
 
-		// get results
-		$skips = Skip::orderBy('created_at', 'desc')->skip($offset)->take($limit)->get();
+		# get the skips available
+		$skips = Skip::orderBy($orderby, 'asc')
+                    ->skip($offset)
+                    ->take($limit)
+                    ->get();
 
-        $postcode = null;
-
+		# session post code, find it, else null
         if (isset($_SESSION['ash_postcode'])) {
             $postcode = $_SESSION['ash_postcode'];
+        } else {
+            $postcode = null;
         }
 
         $template = $this->templateLocator('skips/loop.php');
@@ -74,6 +81,10 @@ class SkipController extends Front
 		$this->afterLoop();		
 	}
 
+    /**
+     * @param $pages
+     * @param $pagenum
+     */
 	public function pagination($pages, $pagenum)
 	{
 		$pagination = paginate_links( array(

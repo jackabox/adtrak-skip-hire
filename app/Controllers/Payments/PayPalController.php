@@ -15,13 +15,35 @@ use PayPal\Api\Transaction;
 use PayPal\Api\ExecutePayment;
 use PayPal\Api\PaymentExecution;
 
+/**
+ * Class PayPalController
+ * @package Adtrak\Skips\Controllers\Payments
+ */
 class PayPalController
 {
+    /**
+     * @var null
+     */
     protected static $instance = null;
+
+    /**
+     * @var ApiContext
+     */
     protected $apiContext;
+
+    /**
+     * @var
+     */
     protected $sandboxed;
+
+    /**
+     * @var
+     */
     protected $invoiceMessage;
 
+    /**
+     * PayPalController constructor.
+     */
     public function __construct()
     {
         $paypalOptions = (object) get_option('ash_paypal', true);
@@ -133,6 +155,11 @@ class PayPalController
         return $approvalUrl;
     }
 
+    /**
+     * @param $subTotal
+     * @param $total
+     * @return Payment
+     */
     public function authorisedPaymentCheck($subTotal, $total)
     {
         $paymentID = $_GET['paymentId'];
@@ -173,7 +200,7 @@ class PayPalController
     }
 
     /**
-     * @return AdminController|null
+     * @return PayPalController|null
      */
     public static function instance()
     {

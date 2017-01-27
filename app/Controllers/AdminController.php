@@ -117,6 +117,8 @@ class AdminController
 
 
     /**
+     * Show any options available in the settings
+     *
      * @return mixed
      */
     public function showSettings()
@@ -152,7 +154,7 @@ class AdminController
 	}
 
     /**
-     *
+     * update any settings based on what's posted
      */
     public function updateSettings()
 	{

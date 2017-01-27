@@ -84,6 +84,7 @@ class CheckoutController extends Front
 		# Find the skip for
 		$skip = Skip::findOrFail($_SESSION['ash_skip']);
 
+		# find all the permits available
 		$permit = Permit::all();
 
 		$this->checkoutForm($skip, $permit);

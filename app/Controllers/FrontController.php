@@ -3,10 +3,20 @@
 use Adtrak\Skips\Helper;
 use Adtrak\Skips\Controllers\Front\SkipController;
 
+/**
+ * Class FrontController
+ * @package Adtrak\Skips\Controllers
+ */
 class FrontController
 {
+    /**
+     * @var null
+     */
 	private static $instance = null;
 
+    /**
+     * @var array
+     */
 	private $templates = [
 	    'skip-booking'  => 'booking.php',
 		'skip-sizes' 	=> 'skips.php',
@@ -23,6 +33,9 @@ class FrontController
 		$this->addActions();
 	}
 
+    /**
+     * start session if not started
+     */
     public function sessionStart()
     {
         if (! session_id()) {
@@ -52,7 +65,7 @@ class FrontController
 	}
 
     /**
-     *
+     * load dependant skips
      */
     public function scripts()
 	{

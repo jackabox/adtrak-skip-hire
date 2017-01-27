@@ -1,15 +1,16 @@
-<?php 
-
+<?php
 namespace Adtrak\Skips\Controllers\Front;
 
 use Adtrak\Skips\Facades\Front;
 use Adtrak\Skips\Models\Location;
 use Billy\Framework\Facades\DB;
 
+/**
+ * Class LocationController
+ * @package Adtrak\Skips\Controllers\Front
+ */
 class LocationController extends Front
 {
-	public $skip;
-
     /**
      * LocationController constructor.
      */
@@ -18,11 +19,17 @@ class LocationController extends Front
 		$this->addActions();
 	}
 
+    /**
+     * Set the actions for the templates to hook into
+     */
 	public function addActions()
 	{
 		 add_action('ash_booking_form', [$this, 'form']);
 	}
 
+    /**
+     * Show the form to search for locations
+     */
 	public function form()
     {
 		$this->beforeForm();
@@ -32,12 +39,20 @@ class LocationController extends Front
         include_once $template;
     }
 
+    /**
+     * before the form, output any header information
+     */
 	public function beforeForm()
 	{
 		$template = $this->templateLocator('booking/header.php');
         include_once $template;
 	}
 
+    /**
+     * Check if the location is in the database, and if it is within the distance.
+     *
+     * @return bool
+     */
     public function checkPostcode()
     {
         // check here
@@ -63,11 +78,13 @@ class LocationController extends Front
 			} else {
 				$template = $this->templateLocator('booking/not-available.php');
         		include_once $template;
+
 				return false;
 			}		
 		} catch (Exception $e) {
 			$template = $this->templateLocator('booking/error.php');
         	include_once $template;
+
 			return false;
 		}
     }
