@@ -113,7 +113,7 @@ class PayPalController
 			}
 
             $coupon = new Item();
-            $coupon->setName($couponData->name)
+            $coupon->setName('Coupon ' . $couponData->code)
                 ->setCurrency('GBP')
                 ->setQuantity(1)
                 ->setSku($couponData->id)
