@@ -5,20 +5,23 @@
 	</header>
 
 	<form class="ad-form" id="permits" action="" method="POST">
-		<div class="section-header">
-			<h4>Permit Information</h4>
-		</div>
-		<p>
-			<label for="title">Name</label>
-			<input type="text" name="title" placeholder="Enter a Name" value="">
-		</p>
-		<p>
-			<label for="price">Price</label>
-			<input type="text" name="price" placeholder="Enter a price" value="">
-		</p>
-		<input type="hidden" name="action" value="permit_add">
+		<div class="content">
+			<div class="ad-form-row ad-form-row--inline">
+				<label for="title">Name</label>
+				<div><input type="text" name="title" placeholder="Enter a Name" value=""></div>
+			</div>
+			<div class="ad-form-row ad-form-row--inline">
+				<label for="price">Price</label>
+				<div><input type="number" name="price" placeholder="Enter a price" value=""></div>
+			</div>
 
-		<p><button type="submit" class="ad-button">Save</button></p>
+			<input type="hidden" name="action" value="permit_add">
+
+			<div class="ad-form-row ad-form-row--inline">
+				<label>&nbsp;</label>
+				<div><button type="submit" class="ad-button ad-button--orange">Save</button></div>
+			</div>
+		</div>
 	</form>
 
 {% include 'partials/footer.twig' %}
