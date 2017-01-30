@@ -150,10 +150,14 @@ jQuery(document).ready(function ($) {
 				}
 			};
 
+			// create the autocomplete
+			var autocomplete = new google.maps.places.Autocomplete(pac_input, options);
+
 			// create an event listener on the autocomplete
 			autocomplete.addListener('place_changed', function () {
 				var place = autocomplete.getPlace();
-               
+				
+				// set the lat / lng of the button dependant on if lat / lng exist
 				document.getElementById('as_lat').value = place.geometry.location.lat();
 				document.getElementById('as_lng').value = place.geometry.location.lng();
 			});
