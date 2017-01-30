@@ -117,7 +117,8 @@ class LocationController extends Admin
 				$loc->lat 			= $_REQUEST['as_lat'];
 				$loc->lng 			= $_REQUEST['as_lng'];
 				$loc->radius 		= $_REQUEST['radius'];
-				$loc->save();
+				$loc->delivery_fee  = $_REQUEST['delivery_fee'];
+                $loc->save();
 
 				$url = admin_url('admin.php?page=ash-locations-edit&id=' . $loc->id);
 				echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $url . '">';
@@ -181,7 +182,8 @@ class LocationController extends Admin
 				$loc->lat 			= $_REQUEST['as_lat'];
 				$loc->lng 			= $_REQUEST['as_lng'];
 				$loc->radius 		= $_REQUEST['radius'];
-				$loc->save();
+                $loc->delivery_fee  = $_REQUEST['delivery_fee'];
+                $loc->save();
 
 				echo "Location has been updated";
 			} catch (Exception $e) {

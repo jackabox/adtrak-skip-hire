@@ -15,12 +15,13 @@ if ($version === false) {
     if (! Capsule::schema()->hasTable('ash_locations')) {
         Capsule::schema()->create('ash_locations', function ($table) {
             $table->increments('id');
+            $table->string('name')->nullable(false);
+            $table->string('address', 255);
+            $table->text('description');
             $table->string('lat', 100)->nullable(false);
             $table->string('lng', 100)->nullable(false);
             $table->decimal('radius', 5, 2)->nullable(false);
-            $table->string('name')->nullable(false);
-            $table->text('description');
-            $table->string('address', 255);
+            $table->decimal('delivery_fee', 6, 2)->nullable(false);
             $table->timestamps();
         });
     }
