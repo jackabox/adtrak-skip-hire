@@ -61,11 +61,11 @@ class ConfirmationController extends Front
         $this->total = $subTotal;
 
 		if ($details->permit) {
-			$this->total = $this->total + $details->permit->price;
+			$subTotal = $subTotal + $details->permit->price;
 		}
 
         if ($delivery->fee) {
-            $this->total = $this->total + $delivery->fee;
+            $this->total = $subTotal + $delivery->fee;
         }
 
         return $this->paypal->authorisedPaymentCheck($subTotal, $this->total, $delivery->fee);
