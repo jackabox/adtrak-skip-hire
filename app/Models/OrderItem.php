@@ -17,7 +17,7 @@ class OrderItem extends Model
     /**
      * @var bool
      */
-	protected $timestamps = false;
+	public $timestamps = false;
 
     /**
      * @var array

@@ -68,12 +68,13 @@ class LocationController extends Front
 
 		try {
 			$location = DB::table('as_locations')
-						->select(DB::raw('id, name, lat, lng, radius, description, ( 3959 * acos( cos( radians(' . $lat . ') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(' . $lng . ') ) + sin( radians(' . $lat . ') ) * sin( radians( lat ) ) ) ) AS distance '))
+						->select(DB::raw('id, name, lat, lng, radius, delivery_fee, description, ( 3959 * acos( cos( radians(' . $lat . ') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(' . $lng . ') ) + sin( radians(' . $lat . ') ) * sin( radians( lat ) ) ) ) AS distance '))
 						->having('distance', '<', $radius)
 						->orderBy('distance')
 						->first();
 
 			if ($location && ($location->distance <= $location->radius)) {
+			    $_SESSION['ash_location']['fee'] = $location->delivery_fee;
                 return true;
 			} else {
 				$template = $this->templateLocator('booking/not-available.php');

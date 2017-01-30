@@ -69,35 +69,50 @@
     </tr>
     </thead>
     <tbody>
-    <tr>
-        <td>Skip</td>
-        <td><?= $skip->name; ?></td>
-        <td>&pound;<?= number_format(round($skip->price, 2), 2, '.', ''); ?></td>
-    </tr>
-    <tr>
-        <td>Permit</td>
-        <?php if ($permit): ?>
-            <td><?= $permit->name; ?></td>
-            <td>&pound;<?= number_format(round($permit->price, 2), 2, '.', ''); ?></td>
-        <?php else: ?>
-            <td>N/A</td>
-            <td>&pound;0.00</td>
-        <?php endif; ?>
-    </tr>
-
-	<?php if ($coupon): ?>
         <tr>
-            <td>Coupon</td>
-            <td><?= $coupon->code; ?></td>
-			<td>- &pound;<?= number_format(round($couponValue * -1, 2), 2, '.', '') ; ?></td>
+            <td>Skip</td>
+            <td><?= $skip->name; ?></td>
+            <td>&pound;<?= number_format(round($skip->price, 2), 2, '.', ''); ?></td>
         </tr>
-    <?php endif; ?>
+        <tr>
+            <td>Permit</td>
+            <?php if ($permit): ?>
+                <td><?= $permit->name; ?></td>
+                <td>&pound;<?= number_format(round($permit->price, 2), 2, '.', ''); ?></td>
+            <?php else: ?>
+                <td>N/A</td>
+                <td>&pound;0.00</td>
+            <?php endif; ?>
+        </tr>
+    </tbody>
+    <tbody>
+        <tr>
+            <td></td>
+            <td>Subtotal</td>
+            <td>&pound;<?= number_format(round($subTotal, 2), 2, '.', ''); ?></td>
+        </tr>
 
-    <tr>
-        <td></td>
-        <td><b>Total</b></td>
-        <td>&pound;<?= number_format(round($total, 2), 2, '.', ''); ?></td>
-    </tr>
+        <?php if ($coupon): ?>
+            <tr>
+                <td></td>
+                <td>Coupon</td>
+                <td>- &pound;<?= number_format(round($couponValue * -1, 2), 2, '.', '') ; ?></td>
+            </tr>
+        <?php endif; ?>
+
+        <?php if ($delivery): ?>
+            <tr>
+                <td></td>
+                <td>Delivery</td>
+                <td>&pound;<?= number_format(round($delivery->fee, 2), 2, '.', '') ; ?></td>
+            </tr>
+        <?php endif; ?>
+
+        <tr>
+            <td></td>
+            <td><b>Total</b></td>
+            <td>&pound;<?= number_format(round($total, 2), 2, '.', ''); ?></td>
+        </tr>
     </tbody>
 </table>
 

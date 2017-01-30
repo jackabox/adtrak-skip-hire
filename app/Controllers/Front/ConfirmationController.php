@@ -46,6 +46,7 @@ class ConfirmationController extends Front
     public function authorisePayment()
     {
 		$details = (object) $_SESSION['ash_details'];
+		$delivery = (object) $_SESSION['ash_location'];
 		
 		if ($details->coupon) {
 			if ($details->coupon->type == 'flat') {
@@ -57,13 +58,17 @@ class ConfirmationController extends Front
 			$subTotal = $details->skip->price;
 		}
 
+        $this->total = $subTotal;
+
 		if ($details->permit) {
-			$this->total = $subTotal + $details->permit->price;
-		} else {
-			$this->total = $subTotal;
+			$this->total = $this->total + $details->permit->price;
 		}
 
-        return $this->paypal->authorisedPaymentCheck($subTotal, $this->total);
+        if ($delivery->fee) {
+            $this->total = $this->total + $delivery->fee;
+        }
+
+        return $this->paypal->authorisedPaymentCheck($subTotal, $this->total, $delivery->fee);
     }
 
     /**

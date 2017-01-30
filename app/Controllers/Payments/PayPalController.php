@@ -77,7 +77,7 @@ class PayPalController
      * @param null $couponData
      * @return null|string
      */
-    public function generateLink($skipData, $total, $permitData = null, $couponData = null)
+    public function generateLink($skipData, $subTotal, $total, $delivery, $permitData = null, $couponData = null)
     {
         $payee = new Payer();
         $payee->setPaymentMethod('paypal');
@@ -124,8 +124,15 @@ class PayPalController
         $itemList->setItems($items);
 
         $amount = new Amount();
+        $details = new Details();
+
+        $details->setShipping($delivery->fee)
+            ->setTax(0)
+            ->setSubtotal($subTotal);
+
         $amount->setCurrency('GBP')
-            ->setTotal(floatval($total));
+            ->setTotal(floatval($total))
+            ->setDetails($details);
 
         $transaction = new Transaction();
         $transaction->setAmount($amount)
@@ -160,7 +167,7 @@ class PayPalController
      * @param $total
      * @return Payment
      */
-    public function authorisedPaymentCheck($subTotal, $total)
+    public function authorisedPaymentCheck($subTotal, $total, $delivery)
     {
         $paymentID = $_GET['paymentId'];
         $payment = Payment::get($paymentID, $this->apiContext);
@@ -172,7 +179,7 @@ class PayPalController
         $amount = new Amount();
         $details = new Details();
 
-        $details->setShipping(0)
+        $details->setShipping($delivery)
             ->setTax(0)
             ->setSubtotal($subTotal);
 

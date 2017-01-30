@@ -31,6 +31,8 @@ class CartController extends Front
      */
 	public $permit;
 
+	public $delivery;
+
     /**
      * @var PayPal
      */
@@ -91,6 +93,7 @@ class CartController extends Front
         $skip = $this->getSkip();
 		$permit = $this->getPermit();		
 		$coupon = $this->getCoupon();
+		$delivery = $this->getDelivery();
 		$details = $this->getOrderDetails();
 		$subTotal = $skip->price;
 
@@ -103,14 +106,18 @@ class CartController extends Front
 			$couponValue = $skip->price * ($coupon->amount / 100) * -1;
 			$subTotal = $skip->price + $couponValue; 
 		}
-		
-		if ($permit) {
-			$total = $subTotal + $permit->price;
-		} else {
-			$total = $subTotal;
+
+        $total = $subTotal;
+
+        if ($permit) {
+			$total = $total + $permit->price;
 		}
 
-        $paypal = $this->getPaymentLink($skip, $total, $permit, $coupon);
+		if ($delivery) {
+		    $total = $total + $delivery->fee;
+        }
+
+        $paypal = $this->getPaymentLink($skip, $subTotal, $total, $delivery, $permit, $coupon);
 	    $template = $this->templateLocator('cart/details.php');
 		include_once $template;
 	}
@@ -176,6 +183,18 @@ class CartController extends Front
 
 		return $this->permit;		
 	}
+
+	public function getDelivery()
+    {
+        $this->delivery = [
+            'name' => $_SESSION['ash_location']['name'],
+            'fee' => $_SESSION['ash_location']['fee']
+        ];
+
+        $_SESSION['ash_details']['delivery'] = $this->delivery;
+
+        return (object) $this->delivery;
+    }
 
     /**
      * Get the first coupon, if it exists by name, and check the dates
