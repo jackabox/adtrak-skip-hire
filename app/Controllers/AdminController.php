@@ -96,7 +96,7 @@ class AdminController
 
 		$link = admin_url('admin.php?page=ash-orders');
 
-		return View::render('admin/widgets/orders.twig', [
+		return View::render('widgets/orders.twig', [
 			'order_count' => $orderCount,
             'orders'  => $orders,
 			'link'	=> $link
@@ -147,8 +147,8 @@ class AdminController
 		$options->delivery_future = $delivery->future_days;
 		$options->delivery_days = $delivery->available_days;
 
-		return View::render('admin/settings.twig', [
-			'options' 		=> $options
+		return View::render('settings.twig', [
+			'options' => $options
 		]);
 	}
 

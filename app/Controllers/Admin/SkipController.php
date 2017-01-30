@@ -64,7 +64,7 @@ class SkipController extends Admin
 		];
 
 		# return the view
-		return View::render('admin/skips/index.twig', [
+		return View::render('skips/index.twig', [
 			'skips' 	 => $skips,
 			'link'		 => $link,
 			'pagination' => $pagination
@@ -83,7 +83,7 @@ class SkipController extends Admin
 		}
 
 		# return the view
-		return View::render('admin/skips/add.twig', []);
+		return View::render('skips/add.twig', []);
 	}
 
     /**
@@ -157,7 +157,7 @@ class SkipController extends Admin
 
 		$skip = Skip::findOrFail($_GET['id']);
 
-        return View::render('admin/skips/edit.twig', [
+        return View::render('skips/edit.twig', [
             'skip' 		=> $skip,
             'delete'	=> $delete
         ]);
