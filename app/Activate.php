@@ -93,7 +93,7 @@ if ($version === false) {
         {
             $table->increments('id');
             $table->integer('order_id')->unsigned();
-            $table->string('name')->nullable(false);
+            $table->string('name');
             $table->string('type')->nullable(false);
             $table->decimal('total', 10, 2)->nullable(false);
             $table->timestamps();

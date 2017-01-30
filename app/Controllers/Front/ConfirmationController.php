@@ -98,7 +98,8 @@ class ConfirmationController extends Front
 	public function success()
 	{
 		// handle adding the order here.
-		$details = (object) $_SESSION['ash_details'];
+        $details = (object) $_SESSION['ash_details'];
+        $delivery = (object) $_SESSION['ash_location'];
 
 		if($details) {
             $order = new Order();
@@ -143,6 +144,16 @@ class ConfirmationController extends Front
                 $permit->type = "Permit";
                 $permit->name = $details->permit->name;
                 $permit->price = $details->permit->price;
+                $permit->save();
+            }
+
+            // permit
+            if ($delivery) {
+                $permit = new OrderItem();
+                $permit->order_id = $order->id;
+                $permit->type = "Delivery";
+                $permit->name = "";
+                $permit->price = $delivery->fee;
                 $permit->save();
             }
 
