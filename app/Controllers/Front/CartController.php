@@ -110,14 +110,14 @@ class CartController extends Front
         $total = $subTotal;
 
         if ($permit) {
-			$total = $total + $permit->price;
+            $subTotal = $subTotal + $permit->price;
 		}
 
 		if ($delivery) {
-		    $total = $total + $delivery->fee;
+		    $total = $subTotal + $delivery->fee;
         }
 
-        $paypal = $this->getPaymentLink($skip, $subTotal, $total, $delivery, $permit, $coupon);
+        $paypal = $this->getPaymentLink($subTotal, $total, $delivery, $skip, $permit, $coupon);
 	    $template = $this->templateLocator('cart/details.php');
 		include_once $template;
 	}
@@ -139,9 +139,9 @@ class CartController extends Front
      * @param $coupon
      * @return null|string
      */
-    public function getPaymentLink($skip, $total, $permit, $coupon)
+    public function getPaymentLink($subTotal, $total, $delivery, $skip, $permit, $coupon)
     {
-        return $this->paypal->generateLink($skip, $total, $permit, $coupon);
+        return $this->paypal->generateLink($subTotal, $total, $delivery, $skip, $permit, $coupon);
     }
 
     /**
@@ -151,16 +151,13 @@ class CartController extends Front
      */
     public function getSkip()
 	{
-		if ($_POST['ash_skip']) {
-			$this->skip = Skip::findOrFail($_POST['ash_skip']);
-		}
+        $this->skip = '';
 
-		if ($this->skip) {
-			$_SESSION['ash_details']['skip'] = $this->skip;
-		} else {
-			$_SESSION['ash_details']['skip'] = [];
-		}
+		if ($_POST['ash_skip'] && $_POST['ash_skip'] != '') {
+            $this->skip = Skip::findOrFail($_POST['ash_skip']);
+        }
 
+		$_SESSION['ash_details']['skip'] = $this->skip;
 		return $this->skip;
 	}
 
@@ -171,16 +168,13 @@ class CartController extends Front
      */
 	public function getPermit()
 	{
-		if ($_POST['ash_permit']) {
+        $this->permit = '';
+
+		if ($_POST['ash_permit'] && $_POST['ash_permit'] != '') {
 			$this->permit = Permit::findOrFail($_POST['ash_permit']);
 		}
 
-		if ($this->permit) {
-			$_SESSION['ash_details']['permit'] = $this->permit;
-		} else {
-			$_SESSION['ash_details']['permit'] = [];
-		}
-
+		$_SESSION['ash_details']['permit'] = $this->permit;
 		return $this->permit;		
 	}
 
@@ -204,29 +198,31 @@ class CartController extends Front
 	public function getCoupon()
 	{
 		$_SESSION['ash_details']['coupon'] = [];
-		
-		if ($_POST['ash_coupon']) {
-			$coupon = Coupon::where('code', '=', $_POST['ash_coupon'])->first();
-			
-			$datePasses = true;
-			$today = date('Y-m-d');
+        $this->coupon = '';
 
-			// if today is less than it's start, when it's not null
-			if(!(!is_null($coupon->starts) && $coupon->starts <= $today)) {
-				$datePasses = false;
-			}
+		if ($_POST['ash_coupon'] && $_POST['ash_coupon'] != '') {
+            $coupon = Coupon::where('code', '=', $_POST['ash_coupon'])->first();
 
-			// if today is greater than it's than, when it's not null
-			if(!(!is_null($coupon->expires) && $coupon->expires >= $today)) {
-				$datePasses = false;			
-			}
+            $datePasses = true;
+            $today = date('Y-m-d');
 
-			if ($datePasses) {
-				$this->coupon = $coupon;
-				$_SESSION['ash_details']['coupon'] = $this->coupon;	
-			}
-		} 
-		
+            // if today is less than it's start, when it's not null
+            if (!(!is_null($coupon->starts) && $coupon->starts <= $today)) {
+                $datePasses = false;
+            }
+
+            // if today is greater than it's than, when it's not null
+            if (!(!is_null($coupon->expires) && $coupon->expires >= $today)) {
+                $datePasses = false;
+            }
+
+            if ($datePasses) {
+                $this->coupon = $coupon;
+                $_SESSION['ash_details']['coupon'] = $this->coupon;
+            }
+        }
+
+        $_SESSION['ash_details']['coupon'] = $this->coupon;
 		return $this->coupon;		
 	}
 

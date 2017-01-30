@@ -72,12 +72,14 @@ class PayPalController
 
     /**
      * @param $skipData
+     * @param $subTotal
      * @param $total
+     * @param $delivery
      * @param null $permitData
      * @param null $couponData
      * @return null|string
      */
-    public function generateLink($skipData, $subTotal, $total, $delivery, $permitData = null, $couponData = null)
+    public function generateLink($subTotal, $total, $delivery, $skipData, $permitData, $couponData)
     {
         $payee = new Payer();
         $payee->setPaymentMethod('paypal');
@@ -128,7 +130,7 @@ class PayPalController
 
         $details->setShipping($delivery->fee)
             ->setTax(0)
-            ->setSubtotal($subTotal);
+            ->setSubtotal(floatval($subTotal));
 
         $amount->setCurrency('GBP')
             ->setTotal(floatval($total))
