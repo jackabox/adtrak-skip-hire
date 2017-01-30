@@ -67,7 +67,7 @@ class LocationController extends Front
 		$radius = 50;
 
 		try {
-			$location = DB::table('as_locations')
+			$location = DB::table('ash_locations')
 						->select(DB::raw('id, name, lat, lng, radius, delivery_fee, description, ( 3959 * acos( cos( radians(' . $lat . ') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(' . $lng . ') ) + sin( radians(' . $lat . ') ) * sin( radians( lat ) ) ) ) AS distance '))
 						->having('distance', '<', $radius)
 						->orderBy('distance')
