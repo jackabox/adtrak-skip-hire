@@ -12,7 +12,7 @@ class Location extends Model
     /**
      * @var string
      */
-	protected $table = 'as_locations';
+	protected $table = 'ash_locations';
 
     /**
      * @var array

@@ -12,7 +12,7 @@ class Coupon extends Model
     /**
      * @var string
      */
-	protected $table = 'as_coupons';
+	protected $table = 'ash_coupons';
 
     /**
      * @var array

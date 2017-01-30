@@ -12,7 +12,7 @@ class Permit extends Model
     /**
      * @var string
      */
-	protected $table = 'as_permits';
+	protected $table = 'ash_permits';
 
     /**
      * @var array

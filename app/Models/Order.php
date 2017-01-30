@@ -12,7 +12,7 @@ class Order extends Model
     /**
      * @var string
      */
-	protected $table = 'as_orders';
+	protected $table = 'ash_orders';
 
     /**
      * @var array

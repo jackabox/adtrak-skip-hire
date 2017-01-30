@@ -12,7 +12,7 @@ class Skip extends Model
     /**
      * @var string
      */
-	protected $table = 'as_skips';
+	protected $table = 'ash_skips';
 
     /**
      * @var array
