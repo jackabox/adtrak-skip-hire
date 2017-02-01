@@ -85,6 +85,7 @@ class OrderController extends Admin
 		}
 
 		$order = Order::findOrFail($_GET['id']);
+		$order->waste = unserialize($order->waste);
 		$items = $order->orderItems;
 
         return View::render('orders/edit.twig', [

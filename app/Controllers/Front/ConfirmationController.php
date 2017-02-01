@@ -113,7 +113,7 @@ class ConfirmationController extends Front
             $order->county = $details->user->ash_county;
             $order->country = '';
             $order->postcode = $details->user->ash_postcode;
-            $order->delivery_date = date('Y-m-d', strtotime(str_replace('/', '-', $_POST['ash_delivery_date'])));
+            $order->delivery_date = date('Y-m-d', strtotime(str_replace('/', '-', $details->user->ash_delivery_date)));
             $order->delivery_slot = $details->user->ash_delivery_time;
             $order->notes = $details->user->ash_notes;
             $order->total = $this->total;
@@ -121,8 +121,8 @@ class ConfirmationController extends Front
             $order->payment_method = 'PayPal';
             $order->payment_reference = $_GET['paymentId'];
 
-            if ($order->waste) {
-                $order->waste = $user->ash_waste;
+            if ($details->user->ash_waste) {
+                $order->waste = serialize($details->user->ash_waste);
             }
 
             $order->save();

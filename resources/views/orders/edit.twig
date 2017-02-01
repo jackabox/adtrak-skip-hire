@@ -73,8 +73,10 @@
 				<div class="section-header">		
 					<h4>Waste</h4>
 				</div>
-				{% if order.waste != false %}				
-					{{ order.waste }}
+				{% if order.waste is not empty %}
+					{% for waste in order.waste %}
+						{{ waste }}{% if not loop.last %}, {% endif %}
+					{% endfor %}
 				{% else %}
 					No details on waste provided.
 				{% endif %}

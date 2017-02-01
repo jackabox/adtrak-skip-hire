@@ -92,13 +92,13 @@
 		<div>
 			<div>
 				<label>What waste will you be using the skip for?</label>
-				<label class="ash-label--inline"><input type="radio" name="ash_waste[]" value="Concrete"> Concrete</label>
-				<label class="ash-label--inline"><input type="radio" name="ash_waste[]" value="Metal"> Metal</label>
-				<label class="ash-label--inline"><input type="radio" name="ash_waste[]" value="Paper / Card"> Paper / Card</label>
-				<label class="ash-label--inline"><input type="radio" name="ash_waste[]" value="Rubble / Brick"> Rubble / Brick</label>
-				<label class="ash-label--inline"><input type="radio" name="ash_waste[]" value="Soil"> Soil</label>
-				<label class="ash-label--inline"><input type="radio" name="ash_waste[]" value="Wood"> Wood</label>
-				<label class="ash-label--inline"><input type="radio" name="ash_waste[]" value="Other"> Other</label>
+				<label class="ash-label--inline"><input type="checkbox" name="ash_waste[]" value="Concrete"> Concrete</label>
+				<label class="ash-label--inline"><input type="checkbox" name="ash_waste[]" value="Metal"> Metal</label>
+				<label class="ash-label--inline"><input type="checkbox" name="ash_waste[]" value="Paper / Card"> Paper / Card</label>
+				<label class="ash-label--inline"><input type="checkbox" name="ash_waste[]" value="Rubble / Brick"> Rubble / Brick</label>
+				<label class="ash-label--inline"><input type="checkbox" name="ash_waste[]" value="Soil"> Soil</label>
+				<label class="ash-label--inline"><input type="checkbox" name="ash_waste[]" value="Wood"> Wood</label>
+				<label class="ash-label--inline"><input type="checkbox" name="ash_waste[]" value="Other"> Other</label>
 			</div>
 
 			<div>
