@@ -59,7 +59,7 @@ class CheckoutController extends Front
 		}
 
         # if autocomplete is set, check the postcode
-		if (isset($_POST['autocomplete'])) {
+		if (isset($_POST['ash_autocomplete'])) {
 			$this->checkPostcode = $this->location->checkPostcode();
 		}
 

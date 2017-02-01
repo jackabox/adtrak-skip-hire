@@ -56,8 +56,8 @@ class LocationController extends Front
     public function checkPostcode()
     {
         // check here
-        $lat = $_POST['lat'];
-		$lng = $_POST['lng'];
+        $lat = $_POST['ash_lat'];
+		$lng = $_POST['ash_lng'];
 		$radius = 50;
 
 		try {
