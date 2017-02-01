@@ -70,7 +70,7 @@ class CartController extends Front
 		if (isset($_POST['ash_submit'])) {
 			$this->cartDetails();
 		} else {
-			echo 'Sorry, looks like you have not placed an order';
+			echo 'Sorry, it looks like you have not placed an order';
 		}
 
 		$this->afterCart();		
