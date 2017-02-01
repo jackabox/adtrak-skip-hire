@@ -3,10 +3,10 @@
 
 	<div>
 		<label for="autcomplete">Enter Your Location</label>
-		<input type="text" name="autocomplete" id="as_autocomplete" palceholder="Enter your Postcode" required>
+		<input type="text" name="ash_autocomplete" id="ash_autocomplete" palceholder="Enter your Postcode" required>
 	</div>
 
-	<input type="hidden" name="lat" id="as_lat">
-	<input type="hidden" name="lng" id="as_lng">
-	<p><button type="submit" class="button" id="as_submit" disabled>Submit</button></p>
+	<input type="hidden" name="ash_lat" id="ash_lat">
+	<input type="hidden" name="ash_lng" id="ash_lng">
+	<p><button type="submit" class="button" id="ash_submit" disabled>Submit</button></p>
 </form>

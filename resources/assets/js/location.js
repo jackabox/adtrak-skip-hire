@@ -30,8 +30,8 @@
         }
     }	
 
-    if ($('#as_autocomplete').length) {
-        var pac_input = document.getElementById('as_autocomplete');
+    if ($('#ash_autocomplete').length) {
+        var pac_input = document.getElementById('ash_autocomplete');
 
         var options = {
             componentRestrictions: {
@@ -45,16 +45,16 @@
         // create an event listener on the autocomplete
         autocomplete.addListener('place_changed', function() {
             var place = autocomplete.getPlace();
-            document.getElementById('as_lat').value = place.geometry.location.lat();
-            document.getElementById('as_lng').value = place.geometry.location.lng();
-	        $('#as_submit').removeAttr('disabled');
+            document.getElementById('ash_lat').value = place.geometry.location.lat();
+            document.getElementById('ash_lng').value = place.geometry.location.lng();
+	        $('#ash_submit').removeAttr('disabled');
         });
 
         pacSelectFirst(pac_input);
 
         // on focusin, trigger the select first
         $(function() {
-            $('#as_autocomplete').focusin(function() {
+            $('#ash_autocomplete').focusin(function() {
                 $(window).keydown(function(event) {
                     if (event.keyCode == 13 || event.keyCode == 9) {
                         event.preventDefault();
@@ -62,8 +62,8 @@
                     }
 
                     if (event.keyCode == 13) {
-						$('#as_submit').removeAttr('disabled');
-                        $('#as_lookup').submit();
+						$('#ash_submit').removeAttr('disabled');
+                        $('#ash_lookup').submit();
                     }
                 });
             });
