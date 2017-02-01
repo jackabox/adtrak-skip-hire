@@ -1,7 +1,7 @@
 {% if orders is not empty %}
 	<p>You have <b>{{ order_count }}</b> orders due to be delivered. Below is your next delivery, for the remainder of orders please <a href="{{link}}">visit the orders page</a>.</p>
 
-	<table class="ad-table ad-table--condensed" style="border-left: 0; border-right: 0; border-bottom: 0; margin-bottom: 0;">
+	<table class="atk-table atk-table--condensed" style="border-left: 0; border-right: 0; border-bottom: 0; margin-bottom: 0;">
 		{% for order in orders %}
 		<tbody>
 			<tr>
@@ -30,7 +30,7 @@
 			<tr>
 				<th></th>			
 				<td>
-					<p><a href="/wp-admin/admin.php?page=ash-orders-edit&id={{ order.id }}" class="ad-button">Manage</a></p>
+					<p><a href="/wp-admin/admin.php?page=ash-orders-edit&id={{ order.id }}" class="atk-button">Manage</a></p>
 				</td>
 			</tr>
 		</tbody>			

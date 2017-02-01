@@ -1,12 +1,12 @@
 {% include 'partials/header.twig' %}
 
-	<header class="ad-header">
+	<header class="atk-header">
 		<h1>Permits</h1>
-		<a href="{{ link.add }}" class="ad-button ad-button--orange action">Add New Permit</a>
+		<a href="{{ link.add }}" class="atk-button atk-button--orange action">Add New Permit</a>
 	</header>
 
 	{% if permits is not empty %}
-	<table class="ad-table ad-table__permits">
+	<table class="atk-table atk-table__permits">
 		<thead>
 			<tr>
 				<th>Name</th>
@@ -20,7 +20,7 @@
 				<td><a href="{{ link.edit }}{{ permit.id }}">{{ permit.name }}</a></td>
 				<td>£{{ permit.price }}</td>
 				<td>
-					<a href="{{ link.edit }}{{ permit.id }}" class="ad-button">Manage</a>
+					<a href="{{ link.edit }}{{ permit.id }}" class="atk-button">Manage</a>
 				</td>
 			</tr>
 			{% endfor %}

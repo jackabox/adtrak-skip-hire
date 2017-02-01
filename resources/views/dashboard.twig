@@ -1,32 +1,32 @@
 {% include 'partials/header.twig' %}
 
-	<header class="ad-header">
+	<header class="atk-header">
 		<h1>Skip Hire</h1>
 	</header>
 
-	<div class="ad-grid dashboard">
-		<div class="widget ad-box">
+	<div class="atk-grid dashboard">
+		<div class="widget atk-box">
 			<div class="section-header">
 				Revenue <span>Last 31 Days</span>
 			</div>
 			<p>&pound;{{ stats.revenue_month }}</p>
 		</div>
 
-		<div class="widget ad-box">
+		<div class="widget atk-box">
 			<div class="section-header">
 				Revenue <span>Lifetime</span>
 			</div>
 			<p>&pound;{{ stats.revenue_lifetime }}</p>
 		</div>
 
-		<div class="widget ad-box">
+		<div class="widget atk-box">
 			<div class="section-header">
 				Orders <span>Last 31 Days</span>
 			</div>
 			<p>{{ stats.orders_month }}</p>
 		</div>
 
-		<div class="widget ad-box">
+		<div class="widget atk-box">
 			<div class="section-header">
 				Orders <span>Lifetime</span>
 			</div>
@@ -36,7 +36,7 @@
 
 	<h2>Orders Outstanding</h2>
 	{% if orders is not empty %}
-		<table class="ad-table ad-table__orders">
+		<table class="atk-table atk-table__orders">
 			<thead>
 				<tr>
 					<th>ID</th>
@@ -59,7 +59,7 @@
 					<td>{{ order.delivery_date|date("d/m/Y") }}</td>
 					<td>£{{ order.total }}</td>				
 					<td>
-						<a href="/wp-admin/admin.php?page=ash-orders-edit&id={{ order.id }}" class="ad-button">Manage</a>
+						<a href="/wp-admin/admin.php?page=ash-orders-edit&id={{ order.id }}" class="atk-button">Manage</a>
 					</td>
 				</tr>
 				{% endfor %}

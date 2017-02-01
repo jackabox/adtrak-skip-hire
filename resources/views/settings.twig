@@ -1,17 +1,17 @@
 {% include 'partials/header.twig' %}
 
-	<header class="ad-header">
+	<header class="atk-header">
 		<h1>Settings</h1>
 	</header>
 
-	<form class="ad-grid ad-form" action="" method="POST">
+	<form class="atk-grid atk-form" action="" method="POST">
 		<div class="content">
-			<div class="ad-box">
+			<div class="atk-box">
 				<div class="section-header">
 					<h4>General Settings</h4>
 				</div>
 
-                <div class="ad-form-row ad-form-row--inline">
+                <div class="atk-form-row atk-form-row--inline">
 					<label for="gmaps_api">Google Maps API Key</label>
                     <div><input type="text" name="gmaps_api" value="{{ options.gmaps_api }}"></div>
 				</div>
@@ -19,12 +19,12 @@
 				<input type="hidden" name="action" value="settings_save">
 			</div>
 
-			<div class="ad-box">
+			<div class="atk-box">
 				<div class="section-header">
 					<h4>Delivery Settings</h4>
 				</div>
 				
-				<div class="ad-form-row ad-form-row--inline">
+				<div class="atk-form-row atk-form-row--inline">
 					<label for="delivery_future_days">Turnaround</label>
 					<div>
                         <input type="number" name="delivery_future_days" value="{{ options.delivery_future }}" min="0">
@@ -32,7 +32,7 @@
                     </div>
 				</div>
 
-				<div class="ad-form-row ad-form-row--inline">
+				<div class="atk-form-row atk-form-row--inline">
 					<label for="delivery_available_days">Delivery Days</label>
 					<div>
 						<select name="delivery_available_days">
@@ -45,12 +45,12 @@
 				</div>
 			</div>
 
-			<div class="ad-box">
+			<div class="atk-box">
 				<div class="section-header">
 					<h4>PayPal Settings</h4>
 				</div>
 
-				<div class="ad-form-row ad-form-row--inline">
+				<div class="atk-form-row atk-form-row--inline">
 					<label for="paypal_client_id">Client ID</label>
 					<div>
                         <input type="text" name="paypal_client_id" value="{{ options.paypal_client_id }}">
@@ -58,7 +58,7 @@
                     </div>
 				</div>
 
-				<div class="ad-form-row ad-form-row--inline">
+				<div class="atk-form-row atk-form-row--inline">
 					<label for="paypal_client_secret">Client Secret</label>
 					<div>
                         <input type="text" name="paypal_client_secret" value="{{ options.paypal_client_secret }}">
@@ -66,7 +66,7 @@
                     </div>
 				</div>
 
-				<div class="ad-form-row ad-form-row--inline">
+				<div class="atk-form-row atk-form-row--inline">
 					<label for="paypal_invoice_message">Invoice Message</label>
 					<div>
                         <input type="text" name="paypal_invoice_message" value="{{ options.paypal_invoice_message }}">
@@ -74,7 +74,7 @@
                     </div>
 				</div>
 
-				<div class="ad-form-row ad-form-row--inline">
+				<div class="atk-form-row atk-form-row--inline">
 					<label>Enable Sandbox?</label>
                     <div>
                         <label class="ash-label--inline">
@@ -87,11 +87,11 @@
 				<input type="hidden" name="action" value="settings_save">
 			</div>
 
-			<p><button type="submit" class="ad-button ad-button--orange">Save</button></p>
+			<p><button type="submit" class="atk-button atk-button--orange">Save</button></p>
 		</div>	
 
 		<aside class="sidebar">
-			<div class="sidebar__item ad-box">
+			<div class="sidebar__item atk-box">
 				<div class="section-header">
 					<h4>Helpers</h4>
 				</div>

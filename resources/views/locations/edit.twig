@@ -1,34 +1,34 @@
 {% include 'partials/header.twig' %}
 
-	<header class="ad-header">
+	<header class="atk-header">
 		<h1>Edit: {{ location.name }} (#{{ location.id }})</h1>
 	</header>
 
-	<form class="ad-grid ad-form" action="" method="POST">
+	<form class="atk-grid atk-form" action="" method="POST">
 		<div class="content">
-			<div class="ad-form-row ad-form-row--inline">
+			<div class="atk-form-row atk-form-row--inline">
 				<label for="title">Name</label>
 				<div><input type="text" name="title" placeholder="Enter a Name for the Location" value="{{ location.name }}"></div>
 			</div>
 
-			<div class="ad-form-row ad-form-row--inline">
+			<div class="atk-form-row atk-form-row--inline">
 				<label for="description">Description</label>
 				<div><textarea name="description" placeholder="Enter a Description">{{ location.description }}</textarea></div>
 			</div>
 
-			<div class="ad-form-row ad-form-row--inline">	
+			<div class="atk-form-row atk-form-row--inline">
 				<label for="location">Location</label>
 				<div>
 					<input type="text" name="location" id="as_location" placeholder="Enter a Post Code" value="{{ location.address }}">
 				</div>
 			</div>
 
-			<div class="ad-form-row ad-form-row--inline">
+			<div class="atk-form-row atk-form-row--inline">
 				<label for="delivery_fee">Delivery Fee</label>
 				<div><input type="number" name="delivery_fee" placeholder="Apply Delivery Fee?" value="{{ location.delivery_fee }}"></div>
 			</div>
 
-			<div class="ad-form-row ad-form-row--inline">	
+			<div class="atk-form-row atk-form-row--inline">
 				<label for="radius">Radius</label>
 				<div><input type="number" name="radius" placeholder="Enter a Delivery Radius" value="{{ location.radius }}"></div>
 			</div>
@@ -38,9 +38,9 @@
 			<input type="hidden" name="action" value="location_update">
 			<input type="hidden" name="id" value="{{ location.id }}">
 			
-			<div class="ad-form-row ad-form-row--inline">	
+			<div class="atk-form-row atk-form-row--inline">
 				<label>&nbsp;</label>		
-				<div><button type="submit" class="ad-button ad-button--orange">Save</button> {{ delete | raw }}</div>
+				<div><button type="submit" class="atk-button atk-button--orange">Save</button> {{ delete | raw }}</div>
 			</div>
 		</div>
 	</form>

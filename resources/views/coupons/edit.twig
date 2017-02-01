@@ -1,24 +1,24 @@
 {% include 'partials/header.twig' %}
 
-	<header class="ad-header">
+	<header class="atk-header">
 		<h1>Edit Coupon: {{ coupon.name }} (#{{ coupon.id }})</h1>
 	</header>
 
-	<form class="ad-form" id="coupons" action="" method="POST">
+	<form class="atk-form" id="coupons" action="" method="POST">
 		<div class="content">
-			<div class="ad-form-row ad-form-row--inline">
+			<div class="atk-form-row atk-form-row--inline">
 				<label for="code">Code</label>
 				<div><input type="text" name="code" placeholder="Enter a Code Name" value="{{ coupon.code }}"></div>
 			</div>
 
-			<div class="ad-form-row ad-form-row--inline">
+			<div class="atk-form-row atk-form-row--inline">
 				<label for="amount">Amount</label>
 				<div>
 					<input type="number" name="amount" placeholder="Enter an Amount" value="{{ coupon.amount }}">
 				</div>
 			</div>
 
-			<div class="ad-form-row ad-form-row--inline">
+			<div class="atk-form-row atk-form-row--inline">
 				<label for="type">Type</label>
 				<div>
 					<select name="type">
@@ -29,12 +29,12 @@
 				</div>
 			</div>
 
-			<div class="ad-form-row ad-form-row--inline">
+			<div class="atk-form-row atk-form-row--inline">
 				<label for="starts">Start Date</label>
 				<div><input type="date" name="starts" placeholder="dd/mm/yyyy" value="{{ coupon.starts }}"></div>
 			</div>
 
-			<div class="ad-form-row ad-form-row--inline">
+			<div class="atk-form-row atk-form-row--inline">
 				<label for="expires">Expiry Date</label>
 				<div>
 					<input type="date" name="expires" placeholder="dd/mm/yyyy" value="{{ coupon.expires }}">
@@ -44,9 +44,9 @@
 			<input type="hidden" name="action" value="coupon_update">
 			<input type="hidden" name="id" value="{{ coupon.id }}">	
 
-			<div class="ad-form-row ad-form-row--inline">
+			<div class="atk-form-row atk-form-row--inline">
 				<label>&nbsp;</label>
-				<div><button type="submit" class="ad-button ad-button--orange">Save</button> {{ delete | raw }}</div>
+				<div><button type="submit" class="atk-button atk-button--orange">Save</button> {{ delete | raw }}</div>
 			</div>
 		</div>
 	</form>

@@ -1,11 +1,11 @@
 {% include 'partials/header.twig' %}
 
-	<header class="ad-header">
+	<header class="atk-header">
 		<h1>Orders</h1>
 	</header>
 
 	{% if orders is not empty %}
-	<table class="ad-table ad-table__orders">
+	<table class="atk-table atk-table__orders">
 		<thead>
 			<tr>
 				<th>ID</th>
@@ -30,7 +30,7 @@
 				<td>£{{ order.total }}</td>	
 				<td>{{ order.status|capitalize }}</td>			
 				<td>
-					<a href="{{ link.edit }}{{ order.id }}" class="ad-button">Manage</a>
+					<a href="{{ link.edit }}{{ order.id }}" class="atk-button">Manage</a>
 				</td>
 			</tr>
 			{% endfor %}

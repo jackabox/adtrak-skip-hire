@@ -1,12 +1,12 @@
 {% include 'partials/header.twig' %}
 
-	<header class="ad-header">
+	<header class="atk-header">
 		<h1>Coupons</h1>
-		<a href="{{ link.add }}" class="ad-button ad-button--orange action">Add New Coupon</a>
+		<a href="{{ link.add }}" class="atk-button atk-button--orange action">Add New Coupon</a>
 	</header>
 
 	{% if coupons is not empty %}
-	<table class="ad-table ad-table__coupons">
+	<table class="atk-table atk-table__coupons">
 		<thead>
 			<tr>
 				<th>Code</th>
@@ -32,7 +32,7 @@
 				<td>{{ coupon.starts|date('d/m/Y') }}</td>
 				<td>{{ coupon.expires|date('d/m/Y') }}</td>
 				<td>
-					<a href="{{ link.edit }}{{ coupon.id }}" class="ad-button">Manage</a>
+					<a href="{{ link.edit }}{{ coupon.id }}" class="atk-button">Manage</a>
 				</td>
 			</tr>
 			{% endfor %}

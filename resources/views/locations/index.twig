@@ -1,12 +1,12 @@
 {% include 'partials/header.twig' %}
 
-	<header class="ad-header">
+	<header class="atk-header">
 		<h1>Locations</h1>
-		<a href="{{ link.add }}" class="ad-button ad-button--orange action">Add New Location</a>
+		<a href="{{ link.add }}" class="atk-button atk-button--orange action">Add New Location</a>
 	</header>
 
 	{% if locations is not empty %}
-	<table class="ad-table ad-table__locations">
+	<table class="atk-table atk-table__locations">
 		<thead>
 			<tr>
 				<th>Name</th>
@@ -24,7 +24,7 @@
 				<td>{{ loc.lng }}</td>
 				<td>{{ loc.radius }}</td>
 				<td>
-					<a href="{{ link.edit }}{{ loc.id }}" class="ad-button">Manage</a>
+					<a href="{{ link.edit }}{{ loc.id }}" class="atk-button">Manage</a>
 				</td>
 			</tr>
 			{% endfor %}

@@ -1,12 +1,12 @@
 {% include 'partials/header.twig' %}
 
-	<header class="ad-header">
+	<header class="atk-header">
 		<h1>Skips</h1>
-		<a href="{{ link.add }}" class="ad-button ad-button--orange action">Add New Skip</a>
+		<a href="{{ link.add }}" class="atk-button atk-button--orange action">Add New Skip</a>
 	</header>
 
 	{% if skips is not empty %}
-	<table class="ad-table ad-table__skips">
+	<table class="atk-table atk-table__skips">
 		<thead>
 			<tr>
 				<th>Name</th>
@@ -27,7 +27,7 @@
 				</td>
 				<td>£{{ skip.price }}</td>
 				<td>
-					<a href="{{ link.edit }}{{ skip.id }}" class="ad-button">Manage</a>
+					<a href="{{ link.edit }}{{ skip.id }}" class="atk-button">Manage</a>
 				</td>
 			</tr>
 			{% endfor %}

@@ -1,11 +1,11 @@
 {% include 'partials/header.twig' %}
 
-	<header class="ad-header">
+	<header class="atk-header">
 		<h1>Manage Order #{{ order.id }}</h1>
 	</header>
 
 	<!-- order items -->
-	<table class="ad-table ad-table__items">
+	<table class="atk-table atk-table__items">
 		<thead>
 			<tr>
 				<th>Name</th>
@@ -29,9 +29,9 @@
 		</tbody>
 	</table>
 
-	<div class="ad-grid">
+	<div class="atk-grid">
 		<div class="info">
-			<div class="ad-box">
+			<div class="atk-box">
 				<div class="section-header">
 					<h4>User Details</h4>
 				</div>
@@ -46,7 +46,7 @@
 				<p>{{ order.number }}</p>
 			</div>
 
-			<div class="ad-box">
+			<div class="atk-box">
 				<div class="section-header">		
 					<h4>Delivery Details</h4>
 				</div>
@@ -69,7 +69,7 @@
 		</div>
 
 		<div class="content">	
-			<div class="ad-box">
+			<div class="atk-box">
 				<div class="section-header">		
 					<h4>Waste</h4>
 				</div>
@@ -80,7 +80,7 @@
 				{% endif %}
 			</div>
 			
-			<div class="ad-box">
+			<div class="atk-box">
 				<div class="section-header">		
 					<h4>Notes</h4>
 				</div>
@@ -91,7 +91,7 @@
 				{% endif %}
 			</div>
 
-			<div class="ad-box">
+			<div class="atk-box">
 				<div class="section-header">		
 					<h4>Payment Details</h4>
 				</div>
@@ -103,18 +103,18 @@
 				{% endif %}
 			</div>
 
-			<div class="ad-box">
+			<div class="atk-box">
 				<div class="section-header">		
 					<h4>Order Status</h4>
 				</div>
 
-				<form action="" class="ad-form" method="POST">				
+				<form action="" class="atk-form" method="POST">
 					<p><select name="ash_order_status" id="ash_order_status">
 						<option value="pending" {% if order.status == 'pending' %}selected{% endif %}>Pending</option>
 						<option value="completed" {% if order.status == 'completed' %}selected{% endif %}>Completed</option>
 					</select></p>
 					<input type="hidden" name="action" value="order_update">
-					<button type="submit" class="ad-button ad-button--orange">Change</button>
+					<button type="submit" class="atk-button atk-button--orange">Change</button>
 				</form>
 			</div>
 		</div>

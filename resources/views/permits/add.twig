@@ -1,25 +1,25 @@
 {% include 'partials/header.twig' %}
 
-	<header class="ad-header">
+	<header class="atk-header">
 		<h1>Add New Permit</h1>
 	</header>
 
-	<form class="ad-form" id="permits" action="" method="POST">
+	<form class="atk-form" id="permits" action="" method="POST">
 		<div class="content">
-			<div class="ad-form-row ad-form-row--inline">
+			<div class="atk-form-row atk-form-row--inline">
 				<label for="title">Name</label>
 				<div><input type="text" name="title" placeholder="Enter a Name" value=""></div>
 			</div>
-			<div class="ad-form-row ad-form-row--inline">
+			<div class="atk-form-row atk-form-row--inline">
 				<label for="price">Price</label>
 				<div><input type="number" name="price" placeholder="Enter a price" value=""></div>
 			</div>
 
 			<input type="hidden" name="action" value="permit_add">
 
-			<div class="ad-form-row ad-form-row--inline">
+			<div class="atk-form-row atk-form-row--inline">
 				<label>&nbsp;</label>
-				<div><button type="submit" class="ad-button ad-button--orange">Save</button></div>
+				<div><button type="submit" class="atk-button atk-button--orange">Save</button></div>
 			</div>
 		</div>
 	</form>

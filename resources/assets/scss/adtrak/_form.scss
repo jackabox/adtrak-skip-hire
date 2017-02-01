@@ -1,5 +1,4 @@
-
-.ad-form {
+.atk-form {
     width: 100%;
 
     label {
@@ -17,7 +16,7 @@
     select,
     textarea {
         width: 100%;
-        padding: 10px;
+        patkding: 10px;
         font-size: 14px;
         margin: 0;
         height: 36px;
@@ -27,20 +26,20 @@
         height: 140px;
     }
 
-    .ad-text--small {
+    .atk-text--small {
         max-width: 300px;
         display: inline-block;
     }
 
-    .ad-form-row {
+    .atk-form-row {
         margin-bottom: 20px;
     }
 
-    .ash-label--inline {
+    .atk-label--inline {
       font-weight: 400;
     }
 
-    .ad-form-row--inline {
+    .atk-form-row--inline {
         display: flex;
 
         > label {

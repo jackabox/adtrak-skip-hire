@@ -1,54 +1,54 @@
 {% include 'partials/header.twig' %}
 
-	<header class="ad-header">
+	<header class="atk-header">
 		<h1>Edit: {{ skip.name }} (#{{ skip.id }})</h1>
 	</header>
 
-	<form class="ad-grid ad-form" action="" method="POST" enctype="multipart/form-data">
+	<form class="atk-grid atk-form" action="" method="POST" enctype="multipart/form-data">
 		<div class="content">
-			<div class="ad-form-row ad-form-row--inline">
+			<div class="atk-form-row atk-form-row--inline">
 				<label for="title">Name</label>
 				<div>
 					<input type="text" name="title" placeholder="Enter a Name" value="{{ skip.name }}">
 				</div>
 			</div>
 
-			<div class="ad-form-row ad-form-row--inline">
+			<div class="atk-form-row atk-form-row--inline">
 				<label for="width">Width</label>
 				<div>
 					<input type="text" name="width" placeholder="Enter a Width" value="{{ skip.width }}">
 				</div>					
 			</div>
 
-			<div class="ad-form-row ad-form-row--inline">
+			<div class="atk-form-row atk-form-row--inline">
 				<label for="height">Height</label>				
 				<div>
 					<input type="text" name="height" placeholder="Enter a Height" value="{{ skip.height }}">
 				</div>
 			</div>
 
-			<div class="ad-form-row ad-form-row--inline">
+			<div class="atk-form-row atk-form-row--inline">
 				<label for="length">Length</label>			
 				<div>
 					<input type="text" name="length" placeholder="Enter a Length" value="{{ skip.length }}">
 				</div>
 			</div>
 
-			<div class="ad-form-row ad-form-row--inline">
+			<div class="atk-form-row atk-form-row--inline">
 				<label for="capacity">Capacity</label>			
 				<div>
 					<input type="text" name="capacity" placeholder="Enter a Capacity" value="{{ skip.capacity }}">
 				</div>
 			</div>
 
-			<div class="ad-form-row ad-form-row--inline">
+			<div class="atk-form-row atk-form-row--inline">
 				<label for="price">Price</label>		
 				<div>
 					<input type="text" name="price" placeholder="Enter a price" value="{{ skip.price }}">
 				</div>
 			</div>
 
-			<div class="ad-form-row ad-form-row--inline">
+			<div class="atk-form-row atk-form-row--inline">
 				<label for="image">Image</label>
 				<div>
 					{% if skip.image_url != null %}
@@ -59,7 +59,7 @@
 				</div>
 			</div>
 
-			<div class="ad-form-row ad-form-row--inline">
+			<div class="atk-form-row atk-form-row--inline">
 				<label for="description">Description</label>		
 				<div>
 					<textarea name="description" placeholder="Enter a Description">{{ skip.description }}</textarea>
@@ -69,10 +69,10 @@
 			<input type="hidden" name="action" value="skip_update">
 			<input type="hidden" name="id" value="{{ skip.id }}">
 			
-			<div class="ad-form-row ad-form-row--inline">
+			<div class="atk-form-row atk-form-row--inline">
 				<label>&nbsp;</label>
 				<div>
-					<button type="submit" class="ad-button ad-button--orange">Save</button> {{ button.delete | raw }}
+					<button type="submit" class="atk-button atk-button--orange">Save</button> {{ button.delete | raw }}
 				</div>
 			</div>
 		</div>	
