@@ -1,3 +1,3 @@
-<div class="ash-notificaiton">
-	<p>Sorry, we do not currently deliver to your location, if you think we made an error. Please use the form below to try again..</p>
+<div class="ash-notification error block">
+    <p><b>Sorry, we do not currently deliver to your location.</b> If you think we have made an error, please use the form below to try again.</p>
 </div>
