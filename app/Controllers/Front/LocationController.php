@@ -77,6 +77,8 @@ class LocationController extends Front
 
                 return true;
 			} else {
+                $location = $_POST['ash_autocomplete'];
+
 				$template = $this->templateLocator('booking/not-available.php');
         		include_once $template;
 
