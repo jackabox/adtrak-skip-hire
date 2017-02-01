@@ -8,6 +8,7 @@ get_header();
      * @header
      * @form
      */
+    do_action('ash_booking_header');
     do_action('ash_booking_form');
 
     do_action('ash_wrapper_end');

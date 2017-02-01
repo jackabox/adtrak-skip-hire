@@ -24,16 +24,15 @@ class LocationController extends Front
      */
 	public function addActions()
 	{
-		 add_action('ash_booking_form', [$this, 'form']);
-	}
+	    add_action('ash_booking_header', [$this, 'beforeForm']);
+        add_action('ash_booking_form', [$this, 'form']);
+    }
 
     /**
      * Show the form to search for locations
      */
 	public function form()
     {
-		$this->beforeForm();
-		
         // do the location output (template)
         $template = $this->templateLocator('booking/form.php');
         include_once $template;

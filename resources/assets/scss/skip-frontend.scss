@@ -98,7 +98,9 @@
 	}
 
 	.ash-field--half {
-		width: 49%;
+		@media(min-width: 768px) {
+			width: 49%;
+		}
 	}
 
 	select {
@@ -110,14 +112,12 @@
 	}
 }
 
-
-
 .ash-label--inline {
 	display: inline-block;
 	font-weight: normal;
 	
-	& + * {
-		margin-left: 20px;
+	* + & {
+		margin-right: 20px;
 	}
 }
 
