@@ -688,48 +688,6 @@
         ]
     },
     {
-        "name": "getbilly/framework",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/getbilly/framework.git",
-            "reference": "170286a2c48b1c3060aba4980444bf7c5520008b"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/getbilly/framework/zipball/170286a2c48b1c3060aba4980444bf7c5520008b",
-            "reference": "170286a2c48b1c3060aba4980444bf7c5520008b",
-            "shasum": ""
-        },
-        "require": {
-            "illuminate/database": "5.0.*",
-            "illuminate/events": "~5.0.0",
-            "symfony/var-dumper": "^3.1",
-            "twig/twig": "^1.28"
-        },
-        "time": "2016-12-19 14:37:32",
-        "type": "library",
-        "installation-source": "source",
-        "autoload": {
-            "psr-4": {
-                "Billy\\Framework\\": "Framework/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Jack Whiting",
-                "email": "hi@jackwhiting.co.uk"
-            }
-        ],
-        "description": "Baaa? Billy.",
-        "homepage": "https://github.com/getbilly/framework"
-    },
-    {
         "name": "psr/log",
         "version": "1.0.2",
         "version_normalized": "1.0.2.0",
@@ -953,5 +911,47 @@
             "log",
             "logging"
         ]
+    },
+    {
+        "name": "getbilly/framework",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/getbilly/framework.git",
+            "reference": "170286a2c48b1c3060aba4980444bf7c5520008b"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/getbilly/framework/zipball/170286a2c48b1c3060aba4980444bf7c5520008b",
+            "reference": "170286a2c48b1c3060aba4980444bf7c5520008b",
+            "shasum": ""
+        },
+        "require": {
+            "illuminate/database": "5.0.*",
+            "illuminate/events": "~5.0.0",
+            "symfony/var-dumper": "^3.1",
+            "twig/twig": "^1.28"
+        },
+        "time": "2016-12-19 14:37:32",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Billy\\Framework\\": "Framework/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Jack Whiting",
+                "email": "hi@jackwhiting.co.uk"
+            }
+        ],
+        "description": "Baaa? Billy.",
+        "homepage": "https://github.com/getbilly/framework"
     }
 ]
