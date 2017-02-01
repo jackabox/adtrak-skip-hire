@@ -56,14 +56,8 @@ class LocationController extends Front
     public function checkPostcode()
     {
         // check here
-        $_SESSION['ash_location']['name'] = $_POST['autocomplete'];
-
         $lat = $_POST['lat'];
-        $_SESSION['ash_location']['lat'] = $lat;
-
 		$lng = $_POST['lng'];
-        $_SESSION['ash_location']['lng'] = $lng;
-        
 		$radius = 50;
 
 		try {
@@ -74,7 +68,13 @@ class LocationController extends Front
 						->first();
 
 			if ($location && ($location->distance <= $location->radius)) {
-			    $_SESSION['ash_location']['fee'] = $location->delivery_fee;
+                $_SESSION['ash_location'] = [
+                    'name'  => $_POST['ash_autocomplete'],
+                    'lat'   => $lat,
+                    'lng'   => $lng,
+                    'fee'   => $location->delivery_fee
+                ];
+
                 return true;
 			} else {
 				$template = $this->templateLocator('booking/not-available.php');
