@@ -25,7 +25,6 @@ $myUpdateChecker = new $className(
  __FILE__,
  'master'
 );
-$myUpdateChecker->setAccessToken('71497a59fa8a4e89f855f2bca08271dc7c5108fd');
 $plugin = new ad_skip_hire( );
 
 
