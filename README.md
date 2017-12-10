@@ -10,7 +10,7 @@ A plugin used to set radius for skip hire, process booking, and take payments.
 
 ## Outdated
 
-This plugin is no longer under active development.
+This plugin is no longer under active development. A new version has been created and updated using the Plugin framework under Adtrak.
 
 ## Description
 
